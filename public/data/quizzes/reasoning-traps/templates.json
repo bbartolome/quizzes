@@ -1,0 +1,154 @@
+[
+  {
+    "id": "t-sunk-cost-01",
+    "pattern": "We've already spent {amount} and {duration} on {project}. We can't stop now — we'd be wasting everything we've put in.",
+    "slots": {
+      "amount": ["$15,000", "$80,000", "six months of savings", "two years of work"],
+      "duration": ["eight months", "three years", "an entire summer", "half a decade"],
+      "project": ["this app", "the renovation", "the degree", "the merger negotiation"]
+    },
+    "correctAnswers": ["Sunk cost fallacy"],
+    "distractors": ["Anchoring", "Overconfidence", "No trap — sound reasoning"],
+    "category": "fallacy",
+    "explanation": "Justifying continued investment by pointing to resources already spent, rather than future prospects, is the sunk cost fallacy."
+  },
+  {
+    "id": "t-sunk-cost-02",
+    "pattern": "I know {project} isn't working out, but after all the {resource} I've poured into it, I can't just walk away now.",
+    "slots": {
+      "project": ["this relationship", "the startup", "this research paper", "the home renovation"],
+      "resource": ["time and money", "emotional energy", "effort", "savings"]
+    },
+    "correctAnswers": ["Sunk cost fallacy"],
+    "distractors": ["Overconfidence", "Hindsight bias", "No trap — sound reasoning"],
+    "category": "fallacy",
+    "explanation": "The decision to continue is driven by past investment rather than an honest assessment of future value — the hallmark of sunk cost reasoning."
+  },
+  {
+    "id": "t-anchoring-01",
+    "pattern": "The {item} was originally listed at {highPrice}, but now it's marked down to {lowPrice} — what a deal!",
+    "slots": {
+      "item": ["sofa", "laptop", "watch", "vacation package"],
+      "highPrice": ["$2,000", "$900", "$5,000", "$1,200"],
+      "lowPrice": ["$1,400", "$650", "$3,800", "$950"]
+    },
+    "correctAnswers": ["Anchoring"],
+    "distractors": ["Hasty generalization", "Confirmation bias", "No trap — sound reasoning"],
+    "category": "bias",
+    "explanation": "The inflated original price serves as an anchor, making the discounted price feel like a bargain regardless of its actual market value."
+  },
+  {
+    "id": "t-anchoring-02",
+    "pattern": "During salary negotiations, the recruiter opens with {lowOffer}. Even after negotiating up to {finalOffer}, the candidate feels lucky, without ever researching the role's typical market rate.",
+    "slots": {
+      "lowOffer": ["$55,000", "$70,000", "$40 per hour", "$90,000"],
+      "finalOffer": ["$62,000", "$78,000", "$48 per hour", "$98,000"]
+    },
+    "correctAnswers": ["Anchoring"],
+    "distractors": ["Overconfidence", "Sunk cost fallacy", "No trap — sound reasoning"],
+    "category": "bias",
+    "explanation": "The initial low offer anchors the candidate's sense of what's reasonable, even though the final number may still be below market rate."
+  },
+  {
+    "id": "t-hasty-generalization-01",
+    "pattern": "I tried {sampleSize} {items} from {source} and they were all {quality}, so every {item} from {source} must be {quality}.",
+    "slots": {
+      "sampleSize": ["two", "three", "a couple of"],
+      "items": ["restaurants", "mechanics", "laptops", "apartments"],
+      "item": ["restaurant", "mechanic", "laptop", "apartment"],
+      "source": ["that chain", "that neighborhood", "that brand", "that building"],
+      "quality": ["disappointing", "overpriced", "unreliable", "excellent"]
+    },
+    "correctAnswers": ["Hasty generalization"],
+    "distractors": ["Survivorship bias", "Confirmation bias", "No trap — sound reasoning"],
+    "category": "fallacy",
+    "explanation": "A handful of examples from a small, unverified sample is not enough to justify a sweeping claim about the whole group."
+  },
+  {
+    "id": "t-hasty-generalization-02",
+    "pattern": "My {relative} ate {food} every day and lived to {age}, so {food} must not really be unhealthy.",
+    "slots": {
+      "relative": ["grandfather", "aunt", "neighbor", "coworker's father"],
+      "food": ["bacon", "sugar", "fried food", "red meat"],
+      "age": ["90", "95", "100", "88"]
+    },
+    "correctAnswers": ["Hasty generalization"],
+    "distractors": ["Survivorship bias", "Correlation vs. causation", "No trap — sound reasoning"],
+    "category": "fallacy",
+    "explanation": "A single anecdote about one person is far too small a sample to draw a general health conclusion."
+  },
+  {
+    "id": "t-survivorship-bias-01",
+    "pattern": "A magazine studies {sampleSize} {group} that became hugely successful and concludes that {habit} is the key to success, without looking at any of the {group} that failed despite doing the same thing.",
+    "slots": {
+      "sampleSize": ["ten", "a dozen", "twenty"],
+      "group": ["startups", "authors", "athletes", "restaurants"],
+      "habit": ["waking up at 5am", "skipping college", "working 80-hour weeks", "bootstrapping with no investors"]
+    },
+    "correctAnswers": ["Survivorship bias"],
+    "distractors": ["Hasty generalization", "Confirmation bias", "No trap — sound reasoning"],
+    "category": "bias",
+    "explanation": "Only examining the survivors of a selection process, while the failures that shared the same habits go unseen, inflates how predictive that habit really is."
+  },
+  {
+    "id": "t-survivorship-bias-02",
+    "pattern": "Looking only at the {buildings} still standing from {era}, people conclude that construction back then was built to last — ignoring the countless {buildings} from the same era that have long since collapsed or been demolished.",
+    "slots": {
+      "buildings": ["buildings", "bridges", "ships", "machines"],
+      "era": ["the 1800s", "that period", "ancient times", "the early 20th century"]
+    },
+    "correctAnswers": ["Survivorship bias"],
+    "distractors": ["Hindsight bias", "Appeal to authority", "No trap — sound reasoning"],
+    "category": "bias",
+    "explanation": "Only the structures that survived are visible for study, while the many that failed and disappeared are left out of the comparison entirely."
+  },
+  {
+    "id": "t-confirmation-bias-01",
+    "pattern": "Convinced that {belief}, {person} notices every instance that supports it, but dismisses or forgets the many times {counterEvidence} happened.",
+    "slots": {
+      "belief": ["their coworker is incompetent", "this political party is corrupt", "their horoscope is accurate", "this diet works"],
+      "person": ["she", "he", "the manager", "the fan"],
+      "counterEvidence": ["the opposite", "it didn't hold up", "contradicting results showed up", "evidence pointed the other way"]
+    },
+    "correctAnswers": ["Confirmation bias"],
+    "distractors": ["Overconfidence", "Hasty generalization", "No trap — sound reasoning"],
+    "category": "bias",
+    "explanation": "Selectively registering only the evidence that supports a preexisting belief, while discounting contradicting evidence, is confirmation bias."
+  },
+  {
+    "id": "t-confirmation-bias-02",
+    "pattern": "After deciding to buy {product}, {person} only reads reviews that praise it and skips past the negative reviews, feeling reassured about the purchase.",
+    "slots": {
+      "product": ["the new phone", "the SUV", "the mattress", "the software subscription"],
+      "person": ["she", "he", "the shopper", "the buyer"]
+    },
+    "correctAnswers": ["Confirmation bias"],
+    "distractors": ["Anchoring", "Overconfidence", "No trap — sound reasoning"],
+    "category": "bias",
+    "explanation": "Seeking out only information that validates a decision already made, while avoiding disconfirming evidence, is confirmation bias."
+  },
+  {
+    "id": "t-availability-heuristic-01",
+    "pattern": "After seeing extensive news coverage of {event}, {person} becomes convinced that {event} is common, even though official statistics show it's quite rare.",
+    "slots": {
+      "event": ["a shark attack", "a plane crash", "a kidnapping", "a lightning strike"],
+      "person": ["the tourist", "the parent", "the traveler", "the viewer"]
+    },
+    "correctAnswers": ["Availability heuristic"],
+    "distractors": ["Base-rate neglect", "Hasty generalization", "No trap — sound reasoning"],
+    "category": "bias",
+    "explanation": "Vivid, memorable media coverage makes the event feel far more probable than the actual statistics support — the availability heuristic."
+  },
+  {
+    "id": "t-availability-heuristic-02",
+    "pattern": "Right after watching a documentary about {topic}, {person} starts estimating that {topic} happens far more often than it really does.",
+    "slots": {
+      "topic": ["identity theft", "home invasions", "food poisoning outbreaks", "cyberattacks"],
+      "person": ["she", "he", "the viewer", "the student"]
+    },
+    "correctAnswers": ["Availability heuristic"],
+    "distractors": ["Confirmation bias", "Overconfidence", "No trap — sound reasoning"],
+    "category": "bias",
+    "explanation": "The recency and vividness of the documentary makes the topic easier to recall, inflating the perceived likelihood beyond its real frequency."
+  }
+]

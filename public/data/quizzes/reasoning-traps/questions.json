@@ -1,0 +1,302 @@
+[
+  {
+    "id": "q01",
+    "prompt": "\"I interviewed three people from that department and they were all disorganized. That whole department must be a mess.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Hasty generalization"],
+    "category": "fallacy",
+    "tags": ["hasty-generalization"],
+    "explanation": "Three people is far too small and potentially unrepresentative a sample to characterize an entire department.",
+    "difficulty": 1
+  },
+  {
+    "id": "q02",
+    "prompt": "A business book studies ten wildly successful companies and claims their shared habits are 'the secret to success,' without looking at any failed companies that had the same habits.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Survivorship bias"],
+    "category": "bias",
+    "tags": ["survivorship-bias"],
+    "explanation": "Only looking at the 'survivors' (successful companies) while ignoring the failures that may have done the exact same things is classic survivorship bias.",
+    "difficulty": 2
+  },
+  {
+    "id": "q03",
+    "prompt": "A lottery scratch-ticket ad features a jackpot winner. A viewer concludes that playing the lottery is a reasonably good way to get rich, without considering how rare winning actually is.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Base-rate neglect"],
+    "category": "bias",
+    "tags": ["base-rate-neglect"],
+    "explanation": "The low overall probability (base rate) of winning is being ignored in favor of a single vivid example.",
+    "difficulty": 2
+  },
+  {
+    "id": "q04",
+    "prompt": "After watching several news stories about plane crashes this month, someone decides flying is too dangerous and books a cross-country road trip instead, even though flying is statistically much safer per mile.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Availability heuristic"],
+    "category": "bias",
+    "tags": ["availability-heuristic"],
+    "explanation": "Recent, vivid news coverage makes plane crashes feel more probable than they actually are, which is the availability heuristic at work.",
+    "difficulty": 1
+  },
+  {
+    "id": "q05",
+    "prompt": "A car salesperson first quotes $45,000 for a car, then 'discounts' it to $38,000. The buyer feels like they're getting a great deal, even though $38,000 is still above the car's market value.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Anchoring"],
+    "category": "bias",
+    "tags": ["anchoring"],
+    "explanation": "The initial high price serves as an anchor, making the discounted price feel more reasonable than it actually is.",
+    "difficulty": 1
+  },
+  {
+    "id": "q06",
+    "prompt": "\"We've already put eight months and $20,000 into this failing product. We can't quit now — we'd be wasting everything we've spent.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Sunk cost fallacy"],
+    "category": "fallacy",
+    "tags": ["sunk-cost-fallacy"],
+    "explanation": "Continuing to invest based on money and time already spent, rather than on the product's future prospects, is the sunk cost fallacy.",
+    "difficulty": 1
+  },
+  {
+    "id": "q07",
+    "prompt": "After their favorite team loses a game they confidently predicted the team would win, a fan says, 'I knew they were going to lose the whole time.'",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Hindsight bias"],
+    "category": "bias",
+    "tags": ["hindsight-bias"],
+    "explanation": "Rewriting their earlier confident prediction as if the loss were obvious all along is hindsight bias.",
+    "difficulty": 2
+  },
+  {
+    "id": "q08",
+    "prompt": "A new trader with no special information insists their next stock pick 'cannot possibly lose' and bets their entire savings on it.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Overconfidence"],
+    "category": "bias",
+    "tags": ["overconfidence"],
+    "explanation": "Believing a prediction is certain, with no basis for that level of certainty, is overconfidence.",
+    "difficulty": 1
+  },
+  {
+    "id": "q09",
+    "prompt": "Convinced a coworker is lazy, a manager notices every time that coworker takes a break but never notices the long hours they put in finishing a project last week.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Confirmation bias"],
+    "category": "bias",
+    "tags": ["confirmation-bias"],
+    "explanation": "Selectively noticing evidence that confirms the existing belief ('lazy') while ignoring contradicting evidence is confirmation bias.",
+    "difficulty": 1
+  },
+  {
+    "id": "q10",
+    "prompt": "Person A says, 'We should add a crosswalk near the school.' Person B replies, 'So you want to turn this street into a pedestrian-only zone and ban all cars?'",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Straw man"],
+    "category": "fallacy",
+    "tags": ["straw-man"],
+    "explanation": "Person B distorts the modest proposal (one crosswalk) into an extreme position (banning all cars) that's easier to argue against.",
+    "difficulty": 2
+  },
+  {
+    "id": "q11",
+    "prompt": "\"Why would we listen to her proposal on cutting costs? She filed for bankruptcy ten years ago.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Ad hominem"],
+    "category": "fallacy",
+    "tags": ["ad-hominem"],
+    "explanation": "Attacking her past financial history instead of addressing the merits of her cost-cutting proposal is an ad hominem attack.",
+    "difficulty": 1
+  },
+  {
+    "id": "q12",
+    "prompt": "\"Either we fire half the staff immediately, or this company goes bankrupt by next month. Those are the only two options.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["False dilemma"],
+    "category": "fallacy",
+    "tags": ["false-dilemma"],
+    "explanation": "The claim artificially narrows a complex situation down to only two extreme choices, ignoring other options like reducing costs elsewhere.",
+    "difficulty": 2
+  },
+  {
+    "id": "q13",
+    "prompt": "\"If we allow students to turn in this one assignment a day late, soon they'll expect every assignment to be late, and eventually no one will ever turn in work on time again.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Slippery slope"],
+    "category": "fallacy",
+    "tags": ["slippery-slope"],
+    "explanation": "This assumes one small exception inevitably triggers an extreme chain reaction, without showing why each step must follow.",
+    "difficulty": 1
+  },
+  {
+    "id": "q14",
+    "prompt": "\"The company's leadership is trustworthy because they would never lie to their employees, and we know that because trustworthy leaders don't lie.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Circular reasoning"],
+    "category": "fallacy",
+    "tags": ["circular-reasoning"],
+    "explanation": "The conclusion ('leadership is trustworthy') is simply restated as its own justification, so no real support is given.",
+    "difficulty": 2
+  },
+  {
+    "id": "q15",
+    "prompt": "\"This supplement must boost immunity — a famous athlete said it works great for him.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Appeal to authority"],
+    "category": "fallacy",
+    "tags": ["appeal-to-authority"],
+    "explanation": "A famous athlete's endorsement is being treated as proof, even though athletic fame has no bearing on supplement efficacy.",
+    "difficulty": 1
+  },
+  {
+    "id": "q16",
+    "prompt": "A town notices that ice cream sales and sunburn cases both rise every July, and concludes that eating ice cream causes sunburn.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Correlation vs. causation"],
+    "category": "fallacy",
+    "tags": ["correlation-vs-causation"],
+    "explanation": "Both ice cream sales and sunburns rise because of a shared cause (hot summer weather), not because one causes the other.",
+    "difficulty": 1
+  },
+  {
+    "id": "q17",
+    "prompt": "A city reviews five years of traffic data across every intersection before deciding which ones need new stoplights.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["No trap — sound reasoning"],
+    "category": "bias",
+    "tags": ["sound-reasoning"],
+    "explanation": "Using a large, comprehensive data set to inform a decision is sound reasoning, not a reasoning trap.",
+    "difficulty": 1
+  },
+  {
+    "id": "q18",
+    "prompt": "A pharmaceutical researcher runs a double-blind trial with a control group and reports that the drug showed no statistically significant effect compared to placebo.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["No trap — sound reasoning"],
+    "category": "bias",
+    "tags": ["sound-reasoning"],
+    "explanation": "A controlled, blinded trial reporting a null result based on the evidence is a textbook example of sound reasoning.",
+    "difficulty": 2
+  },
+  {
+    "id": "q19",
+    "prompt": "After reading reviews of only the restaurants that are still open (and ignoring that many similar restaurants in the area closed), a food blogger concludes that this particular cuisine always succeeds in this city.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Survivorship bias", "Hasty generalization"],
+    "category": "bias",
+    "tags": ["survivorship-bias", "hasty-generalization"],
+    "explanation": "This combines survivorship bias (only studying restaurants that survived) with hasty generalization (a sweeping claim about 'always succeeding' from a small, skewed sample).",
+    "difficulty": 3
+  },
+  {
+    "id": "q20",
+    "prompt": "A manager insists on continuing to fund a failing project because of how much has already been invested, and adds, 'Besides, I'm sure it'll turn around — projects like this always work out for me.'",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Sunk cost fallacy", "Overconfidence"],
+    "category": "fallacy",
+    "tags": ["sunk-cost-fallacy", "overconfidence"],
+    "explanation": "The manager justifies continuing based on past investment (sunk cost fallacy) and also expresses unwarranted certainty about success (overconfidence).",
+    "difficulty": 3
+  },
+  {
+    "id": "q21",
+    "prompt": "\"Either you support the new policy completely, or you clearly don't care about public safety at all — and besides, anyone who disagrees with it is just selfish.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["False dilemma", "Ad hominem"],
+    "category": "fallacy",
+    "tags": ["false-dilemma", "ad-hominem"],
+    "explanation": "The statement forces a two-option choice (false dilemma) and also dismisses disagreement by attacking the character of anyone who disagrees (ad hominem).",
+    "difficulty": 3
+  },
+  {
+    "id": "q22",
+    "prompt": "A homeowner, after a vivid news report about a nearby burglary, buys an expensive security system, believing their neighborhood's crime rate must be high — despite official statistics showing it's one of the safest in the city.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Availability heuristic", "Base-rate neglect"],
+    "category": "bias",
+    "tags": ["availability-heuristic", "base-rate-neglect"],
+    "explanation": "The vivid, memorable news story drives the fear (availability heuristic), while the actual low crime statistics are disregarded (base-rate neglect).",
+    "difficulty": 3
+  },
+  {
+    "id": "q23",
+    "prompt": "A debate coach reviews video of a losing team's match and points out three specific moments where a different strategic choice would have changed the outcome, citing the scoreboard at each moment.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["No trap — sound reasoning"],
+    "category": "bias",
+    "tags": ["sound-reasoning"],
+    "explanation": "Pointing to specific, documented moments with concrete evidence (the scoreboard) is sound after-the-fact analysis, not hindsight bias, since no false claim of 'I knew it all along' is being made.",
+    "difficulty": 3
+  },
+  {
+    "id": "q24",
+    "prompt": "A nutritionist cites a peer-reviewed meta-analysis of 40 studies to recommend a dietary change to a patient.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["No trap — sound reasoning"],
+    "category": "bias",
+    "tags": ["sound-reasoning"],
+    "explanation": "Relying on a large body of relevant, peer-reviewed evidence from a qualified expert is legitimate appeal to genuine expertise, not the appeal-to-authority fallacy.",
+    "difficulty": 2
+  },
+  {
+    "id": "q25",
+    "prompt": "\"My uncle smoked his whole life and lived to 95, so smoking clearly isn't that dangerous.\"",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Hasty generalization"],
+    "category": "fallacy",
+    "tags": ["hasty-generalization"],
+    "explanation": "One anecdote about a single relative is far too small a sample to draw a conclusion about smoking's overall risk.",
+    "difficulty": 1
+  },
+  {
+    "id": "q26",
+    "prompt": "A hiring manager rejects a candidate's well-supported proposal to redesign the onboarding process by saying, 'Of course you'd say that, you've only been here six months.'",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Ad hominem"],
+    "category": "fallacy",
+    "tags": ["ad-hominem"],
+    "explanation": "Dismissing the proposal based on the candidate's tenure rather than the merits of the proposal itself is an ad hominem dismissal.",
+    "difficulty": 2
+  },
+  {
+    "id": "q27",
+    "prompt": "An investor refuses to sell a stock that has lost 60% of its value, reasoning, 'I can't sell now, I'd be locking in all those losses after everything I've put into this.'",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Sunk cost fallacy"],
+    "category": "fallacy",
+    "tags": ["sunk-cost-fallacy"],
+    "explanation": "The decision to hold is being driven by the amount already invested rather than the stock's actual future prospects.",
+    "difficulty": 1
+  },
+  {
+    "id": "q28",
+    "prompt": "A city council member argues, 'If we approve this one small zoning exception, next year people will demand exceptions for everything, and eventually there will be no zoning laws left at all.'",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Slippery slope"],
+    "category": "fallacy",
+    "tags": ["slippery-slope"],
+    "explanation": "This assumes a single exception inevitably escalates into total collapse of zoning laws, without justifying each step of the chain.",
+    "difficulty": 2
+  },
+  {
+    "id": "q29",
+    "prompt": "A homebuyer sees the asking price of $600,000 on a listing, then feels that a neighboring, nearly identical home listed at $550,000 is a steal, without checking what either home is actually worth.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["Anchoring"],
+    "category": "bias",
+    "tags": ["anchoring"],
+    "explanation": "The first listing price sets an anchor that distorts the perceived value of the second, unrelated listing.",
+    "difficulty": 2
+  },
+  {
+    "id": "q30",
+    "prompt": "A city compares crime statistics across all neighborhoods over ten years, controls for population size, and finds that a specific intervention correlates with reduced crime, then runs a follow-up controlled trial that confirms the effect before rolling the program out citywide.",
+    "options": ["Hasty generalization", "Survivorship bias", "Base-rate neglect", "Availability heuristic", "Anchoring", "Sunk cost fallacy", "Hindsight bias", "Overconfidence", "Confirmation bias", "Straw man", "Ad hominem", "False dilemma", "Slippery slope", "Circular reasoning", "Appeal to authority", "Correlation vs. causation", "No trap — sound reasoning"],
+    "correctAnswers": ["No trap — sound reasoning"],
+    "category": "fallacy",
+    "tags": ["sound-reasoning"],
+    "explanation": "Controlling for confounds and confirming correlation with a follow-up controlled trial before acting is exactly how to responsibly move from correlation toward causation — sound reasoning, not a trap.",
+    "difficulty": 3
+  }
+]
