@@ -1,0 +1,83 @@
+<div class="min-h-screen bg-gray-50 px-4 py-8 sm:px-8">
+  <div class="mx-auto max-w-5xl space-y-8">
+    <header class="space-y-2">
+      <h1 class="text-3xl font-semibold tracking-tight text-gray-900">
+        Quiz Collections
+      </h1>
+      <p class="text-sm text-gray-700" aria-live="polite">
+        @if (summary$ | async; as summary) {
+          <span>
+            <strong class="font-medium text-gray-900">{{ summary.totalRounds }}</strong>
+            {{ summary.totalRounds === 1 ? 'round' : 'rounds' }} played across all
+            collections
+          </span>
+          @if (summary.accuracy; as acc) {
+            <span>
+              ·
+              <strong class="font-medium text-gray-900">{{ formatPercent(acc) }}</strong>
+              overall accuracy
+            </span>
+          }
+          @if (summary.recentlyPlayed as recent) {
+            <span>
+              · most recently played:
+              <strong class="font-medium text-gray-900">{{ recent.entry.title }}</strong>
+            </span>
+          }
+        }
+      </p>
+    </header>
+
+    <section
+      aria-label="Quiz collections"
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+    >
+      @if (cards$ | async; as cards) {
+        @for (card of cards; track card.entry.id) {
+          <a
+            [routerLink]="'/quiz/' + card.entry.id"
+            [style.borderLeftColor]="card.entry.accent"
+            [style.borderLeftWidth]="'6px'"
+            [style.backgroundColor]="accentTint(card.entry.accent)"
+            class="block rounded-lg border border-gray-200 p-5 shadow-sm transition hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+            aria-label="{{ card.entry.title }}. {{ card.entry.description }}."
+          >
+            <h2 class="text-lg font-semibold text-gray-900">{{ card.entry.title }}</h2>
+            <p class="mt-1 text-sm text-gray-700">{{ card.entry.description }}</p>
+            <dl class="mt-4 space-y-1 text-sm text-gray-700">
+              <div class="flex justify-between">
+                <dt>Rounds played</dt>
+                <dd class="font-medium text-gray-900">{{ card.roundsPlayed }}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt>Accuracy</dt>
+                <dd class="font-medium text-gray-900">
+                  @if (card.accuracy; as acc) {
+                    {{ formatPercent(acc) }}
+                  }
+                </dd>
+              </div>
+              <div class="flex justify-between">
+                <dt>Current streak</dt>
+                <dd class="font-medium text-gray-900">{{ card.streak }}</dd>
+              </div>
+            </dl>
+          </a>
+        }
+      }
+    </section>
+
+    <footer
+      class="flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-6"
+    >
+      <p class="text-sm text-gray-700">Progress is stored locally in this browser only.</p>
+      <button
+        type="button"
+        (click)="resetAll()"
+        class="rounded-lg border border-gray-400 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+      >
+        Reset all progress
+      </button>
+    </footer>
+  </div>
+</div>
