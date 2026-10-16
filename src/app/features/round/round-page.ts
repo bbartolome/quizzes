@@ -35,10 +35,10 @@ export class RoundPage implements OnInit {
   private readonly engine: QuizEngineService = inject(QuizEngineService);
   private readonly templateGenerator: TemplateGeneratorService = inject(TemplateGeneratorService);
 
-  protected readonly quizTitle = signal('');
-  protected readonly questions = signal<RoundQuestion[]>([]);
-  protected readonly selections = signal<Record<string, string[]>>({});
-  protected readonly canSubmit = computed(() =>
+  readonly quizTitle = signal('');
+  readonly questions = signal<RoundQuestion[]>([]);
+  readonly selections = signal<Record<string, string[]>>({});
+  readonly canSubmit = computed(() =>
     this.questions().length > 0 &&
     this.questions().every((q) => (this.selections()[q.id] ?? []).length > 0),
   );
@@ -90,7 +90,7 @@ export class RoundPage implements OnInit {
       });
   }
 
-  protected toggle(qid: string, option: string): void {
+  toggle(qid: string, option: string): void {
     const current = this.selections()[qid] ?? [];
     const next = current.includes(option)
       ? current.filter((o) => o !== option)
@@ -98,7 +98,7 @@ export class RoundPage implements OnInit {
     this.selections.set({ ...this.selections(), [qid]: next });
   }
 
-  protected submit(): void {
+  submit(): void {
     const questions = this.questions();
     const results: ScoredQuestionResult[] = questions.map((q) =>
       this.engine.score(q, this.selections()[q.id] ?? []),
