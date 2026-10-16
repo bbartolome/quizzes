@@ -29,6 +29,8 @@ export class QuizHomePage implements OnInit, OnDestroy {
   protected category = signal<CategoryFilter>('both');
   protected traitsSelected = signal<string[]>([]);
 
+  protected readonly visibleTraits = computed(() => this.category() === 'both' ? this.traits() : this.traits().filter((t) => t.type === this.category()));
+
   // --- Derived query params for navigation ---
   protected readonly roundParams = computed<Record<string, string>>(() => {
     const params: Record<string, string> = {};
@@ -67,6 +69,8 @@ export class QuizHomePage implements OnInit, OnDestroy {
   // --- Methods used by the template ---
   protected setCategory(value: string): void {
     this.category.set(value as CategoryFilter);
+    const visible = new Set(this.visibleTraits().map((t) => t.id));
+    this.traitsSelected.set(this.traitsSelected().filter((id) => visible.has(id)));
   }
 
   protected toggleTrait(traitId: string): void {
