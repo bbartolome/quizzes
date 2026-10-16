@@ -1,5 +1,5 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EMPTY, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import {
@@ -31,6 +31,7 @@ interface ReportHistoryState {
  */
 @Component({
   selector: 'app-report-page',
+  imports: [RouterLink],
   templateUrl: './report-page.html',
 })
 export class ReportPage implements OnInit {
