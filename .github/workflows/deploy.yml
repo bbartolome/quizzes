@@ -21,7 +21,7 @@ jobs:
 
       - run: npm ci
 
-      - run: npx ng build
+      - run: npx ng build --base-href /quizzes/
 
       - run: npx ng test --watch=false
 
