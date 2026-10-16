@@ -13,18 +13,6 @@ import {
   RoundQuestion,
   Template,
 } from '../../core/models/quiz.models';
-import * as roundBuilder from './round-builder';
-
-vi.mock('./round-builder', async () => {
-  const actual = await vi.importActual<typeof import('./round-builder')>('./round-builder');
-  return {
-    ...actual,
-    parseRoundFilters: vi.fn(),
-    pickTemplate: vi.fn(),
-    weakTraitWeights: vi.fn(),
-    shuffle: vi.fn((items: unknown[]) => items),
-  };
-});
 
 describe('RoundPage', () => {
   const entry: QuizManifestEntry = {
@@ -55,16 +43,27 @@ describe('RoundPage', () => {
     id: 'tpl1',
     pattern: 'pattern',
     slots: {},
-    correctAnswers: ['A'],
+    correctAnswers: ['Straw Man'],
     distractors: ['B'],
     category: 'fallacy',
     explanation: 'explanation',
   };
 
-  const fixedQuestions: RoundQuestion[] = [
-    { id: 'q1', prompt: 'P1', options: ['A', 'B'], correctAnswers: ['A'], explanation: 'E1' },
-    { id: 'q2', prompt: 'P2', options: ['A', 'B'], correctAnswers: ['B'], explanation: 'E2' },
-  ];
+  const q1: RoundQuestion = {
+    id: 'q1',
+    prompt: 'P1',
+    options: ['A', 'B'],
+    correctAnswers: ['A'],
+    explanation: 'E1',
+  };
+  const q2: RoundQuestion = {
+    id: 'q2',
+    prompt: 'P2',
+    options: ['A', 'B'],
+    correctAnswers: ['B'],
+    explanation: 'E2',
+  };
+  const fixedQuestions: RoundQuestion[] = [q1, q2];
 
   const generatedQuestion: RoundQuestion = {
     id: 'gen1',
@@ -84,7 +83,12 @@ describe('RoundPage', () => {
   let engine: { selectRound: ReturnType<typeof vi.fn>; score: ReturnType<typeof vi.fn> };
   let templateGenerator: { render: ReturnType<typeof vi.fn> };
 
-  function configure(queryParams: Record<string, string> = {}): void {
+  function configure(
+    queryParams: Record<string, string> = {},
+    templates: Template[] = [],
+  ): void {
+    quizData.loadQuizBundle = vi.fn(() => of({ questions: [], templates, knowledgeBase: kb }));
+
     TestBed.configureTestingModule({
       imports: [RoundPage],
       providers: [
@@ -107,11 +111,11 @@ describe('RoundPage', () => {
   }
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.spyOn(Math, 'random').mockReturnValue(0);
 
     quizData = {
       loadManifest: vi.fn(() => of({ quizzes: [entry] })),
-      loadQuizBundle: vi.fn(() => of({ questions: [], templates: [tpl], knowledgeBase: kb })),
+      loadQuizBundle: vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb })),
     };
     stats = {
       migrateVersion: vi.fn(),
@@ -129,10 +133,6 @@ describe('RoundPage', () => {
       })),
     };
     templateGenerator = { render: vi.fn(() => generatedQuestion) };
-
-    vi.mocked(roundBuilder.parseRoundFilters).mockReturnValue({ weakTraits: false });
-    vi.mocked(roundBuilder.pickTemplate).mockReturnValue(undefined);
-    vi.mocked(roundBuilder.weakTraitWeights).mockReturnValue({});
   });
 
   it('loads the quiz bundle, migrates stats, and exposes the quiz title and questions', async () => {
@@ -143,12 +143,11 @@ describe('RoundPage', () => {
 
     expect(fixture.componentInstance.quizTitle()).toBe('Logic Quiz');
     expect(stats.migrateVersion).toHaveBeenCalledWith('rt', 3, ['kb1']);
-    expect(fixture.componentInstance.questions()).toEqual(fixedQuestions);
+    expect(fixture.componentInstance.questions()).toEqual([q2, q1]);
   });
 
-  it('requests a 4-question round with no template when pickTemplate finds none', async () => {
-    vi.mocked(roundBuilder.pickTemplate).mockReturnValue(undefined);
-    configure();
+  it('requests a 4-question round with no template when no template matches', async () => {
+    configure({}, []);
     const fixture = TestBed.createComponent(RoundPage);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -161,8 +160,7 @@ describe('RoundPage', () => {
   });
 
   it('requests a 3-question round and renders the picked template, merging it into the questions', async () => {
-    vi.mocked(roundBuilder.pickTemplate).mockReturnValue(tpl);
-    configure();
+    configure({}, [tpl]);
     const fixture = TestBed.createComponent(RoundPage);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -172,14 +170,12 @@ describe('RoundPage', () => {
       expect.objectContaining({ count: 3 }),
     );
     expect(templateGenerator.render).toHaveBeenCalledWith(tpl);
-    expect(fixture.componentInstance.questions()).toEqual([...fixedQuestions, generatedQuestion]);
+    expect(fixture.componentInstance.questions()).toEqual([q2, generatedQuestion, q1]);
   });
 
   it('passes weak-trait weights to selectRound when the weakTraits filter is set', async () => {
-    vi.mocked(roundBuilder.parseRoundFilters).mockReturnValue({ weakTraits: true });
-    vi.mocked(roundBuilder.weakTraitWeights).mockReturnValue({ kb1: 1 });
-    stats.getWeakTraits.mockReturnValue(['kb1']);
-    configure({ weakTraits: 'true' });
+    stats.getWeakTraits = vi.fn(() => ['kb1']);
+    configure({ weakTraits: 'true' }, []);
     const fixture = TestBed.createComponent(RoundPage);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -230,8 +226,8 @@ describe('RoundPage', () => {
     fixture.componentInstance.toggle('q2', 'B');
     fixture.componentInstance.submit();
 
-    expect(engine.score).toHaveBeenCalledWith(fixedQuestions[0], ['A']);
-    expect(engine.score).toHaveBeenCalledWith(fixedQuestions[1], ['B']);
+    expect(engine.score).toHaveBeenCalledWith(q1, ['A']);
+    expect(engine.score).toHaveBeenCalledWith(q2, ['B']);
     expect(stats.recordResult).toHaveBeenCalledTimes(2);
     expect(navigateSpy).toHaveBeenCalledWith(
       ['/quiz', 'rt', 'report'],
