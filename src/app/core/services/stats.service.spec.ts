@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { StatsService } from './stats.service';
 import { RoundQuestion, ScoredQuestionResult } from '../models/quiz.models';
 
@@ -59,11 +59,12 @@ function makeResult(
 
 describe('StatsService', () => {
   beforeEach(() => {
-    globalThis.localStorage = new MemoryStorage();
+    vi.stubGlobal('localStorage', new MemoryStorage());
   });
 
   afterEach(() => {
     globalThis.localStorage.clear();
+    vi.unstubAllGlobals();
   });
 
   describe('storage namespacing', () => {
