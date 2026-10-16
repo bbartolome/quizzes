@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Observable, map } from 'rxjs';
@@ -22,7 +23,7 @@ export interface CollectionSummary {
 
 @Component({
   selector: 'app-library-page',
-  imports: [RouterLink],
+  imports: [RouterLink, AsyncPipe],
   templateUrl: './library-page.html',
 })
 export class LibraryPage {

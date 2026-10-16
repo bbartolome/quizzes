@@ -18,7 +18,7 @@
               overall accuracy
             </span>
           }
-          @if (summary.recentlyPlayed as recent) {
+          @if (summary.recentlyPlayed; as recent) {
             <span>
               · most recently played:
               <strong class="font-medium text-gray-900">{{ recent.entry.title }}</strong>
