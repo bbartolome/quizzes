@@ -1,0 +1,73 @@
+<div class="min-h-screen bg-slate-50 text-slate-900">
+  <header class="flex items-center justify-between gap-4 border-b border-slate-200 bg-white px-6 py-4">
+    <a
+      data-testid="back-home"
+      [routerLink]="['/quiz', id()]"
+      class="rounded text-sm font-medium text-slate-600 outline-none hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+    >
+      Back to quiz
+    </a>
+    <h1 class="text-xl font-semibold tracking-tight">{{ quizTitle() }}</h1>
+  </header>
+
+  <main class="mx-auto w-full max-w-5xl px-6 py-8">
+    <input
+      data-testid="search"
+      type="search"
+      placeholder="Search the knowledge base..."
+      (input)="onSearch($any($event.target).value)"
+      class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
+    />
+
+    <div class="mt-6 gap-6 md:grid md:grid-cols-[280px_minmax(0,1fr)]">
+      <ul class="space-y-2">
+        @for (entry of filtered(); track entry.id) {
+          <li>
+            <button
+              data-testid="trap"
+              type="button"
+              (click)="select(entry.id)"
+              class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-left text-sm font-medium outline-none hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-1"
+            >
+              {{ entry.name }}
+            </button>
+          </li>
+        }
+      </ul>
+
+      @if (selected(); as sel) {
+        <section
+          data-testid="detail"
+          class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
+        >
+          <h2 class="text-lg font-semibold">{{ sel.name }}</h2>
+          <p class="mt-2 font-medium text-slate-700">{{ sel.shortDefinition }}</p>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{{ sel.longExplanation }}</p>
+          <p class="mt-3 text-sm text-slate-600">
+            <span class="font-semibold">Example:</span> {{ sel.example }}
+          </p>
+
+          <div class="mt-6 space-y-3">
+            @for (other of confusedOthers(sel); track other.id) {
+              <div
+                data-testid="pair"
+                class="rounded-lg border border-slate-200 bg-slate-50 p-4"
+              >
+                <p class="font-medium">{{ other.name }}</p>
+                <p class="mt-1 text-sm text-slate-600">{{ sel.distinguishingTip }}</p>
+                <a
+                  data-testid="quiz-pair"
+                  [routerLink]="['/quiz', id(), 'round']"
+                  [queryParams]="{ traits: sel.id + ',' + other.id }"
+                  class="mt-2 inline-block rounded text-sm font-medium text-sky-700 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                >
+                  Quiz me on this pair
+                </a>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    </div>
+  </main>
+</div>

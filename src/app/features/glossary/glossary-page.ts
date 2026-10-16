@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { KnowledgeBaseEntry } from '../../core/models/quiz.models';
 import { filterEntries } from './glossary-search';
@@ -7,6 +7,7 @@ import { filterEntries } from './glossary-search';
 @Component({
   selector: 'app-glossary-page',
   standalone: true,
+  imports: [RouterLink],
   templateUrl: './glossary-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -47,5 +48,9 @@ export class GlossaryPage {
 
   onSearch(value: string): void {
     this.query.set(value);
+  }
+
+  confusedOthers(sel: KnowledgeBaseEntry): KnowledgeBaseEntry[] {
+    return this.kb().filter((candidate) => sel.commonlyConfusedWith.includes(candidate.id));
   }
 }
