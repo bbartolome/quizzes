@@ -65,8 +65,8 @@ export class QuizHomePage implements OnInit, OnDestroy {
   }
 
   // --- Methods used by the template ---
-  protected setCategory(value: CategoryFilter): void {
-    this.category.set(value);
+  protected setCategory(value: string): void {
+    this.category.set(value as CategoryFilter);
   }
 
   protected toggleTrait(traitId: string): void {
