@@ -163,6 +163,12 @@
       "skillPath": "skills/productivity/teach/SKILL.md",
       "computedHash": "81c196426808c270a9d4688be291405c038bba11f020b9fe10098ad0f1d8c132"
     },
+    "to-opencode": {
+      "source": "bbartolome/skills",
+      "sourceType": "github",
+      "skillPath": "to-opencode/SKILL.md",
+      "computedHash": "b75d141f2afad64ee0bd469cdc14bac4d10d789384054abd0242a6bb0d360b6b"
+    },
     "to-questionnaire": {
       "source": "mattpocock/skills",
       "sourceType": "github",
