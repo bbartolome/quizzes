@@ -65,6 +65,7 @@ export class QuizEngineService {
       prompt: q.prompt,
       options: [...q.options],
       correctAnswers: [...q.correctAnswers],
+      traitIds: [...q.tags],
       explanation: q.explanation,
     }));
   }
