@@ -115,6 +115,20 @@ describe('QuizEngineService', () => {
       expect(weakTraitHits / draws).toBeGreaterThan(0.7);
     });
 
+    it('maps each question\'s tags to traitIds on the returned RoundQuestion as a copy', () => {
+      const service = new QuizEngineService();
+      const tags = ['strawman', 'anchoring'];
+      const bank = {
+        questions: [makeQuestion({ id: 'q1', tags })],
+      };
+
+      const round = service.selectRound(bank, { count: 1 });
+
+      expect(round).toHaveLength(1);
+      expect(round[0].traitIds).toEqual(tags);
+      expect(round[0].traitIds).not.toBe(tags);
+    });
+
     it('awards partial credit as not correct and reports missed/extra selections', () => {
       const service = new QuizEngineService();
       const question = makeRoundQuestion({ id: 'q1', correctAnswers: ['A', 'B'] });
