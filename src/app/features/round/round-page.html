@@ -14,24 +14,47 @@
         </legend>
 
         @for (option of entry.question.options; track option) {
-          <label
-            class="flex cursor-pointer items-center gap-3 rounded-md p-2 text-slate-700 hover:bg-slate-50 focus-within:ring-2 focus-within:ring-indigo-500"
-          >
-            <input
-              data-testid="option"
-              type="checkbox"
-              class="h-5 w-5 rounded border-slate-300 text-indigo-600 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-              [checked]="entry.selected.includes(option)"
-              [disabled]="!!entry.result"
-              (change)="toggle(i, option)"
-            />
-            <span class="flex-1">{{ option }}</span>
-            @if (entry.result) {
-              <span class="ml-auto text-sm font-medium text-slate-500">
-                {{ statusLabels[optionStatus(entry.result, option)] }}
-              </span>
+          <div class="flex items-center gap-2">
+            <label
+              class="flex cursor-pointer items-center gap-3 rounded-md p-2 text-slate-700 hover:bg-slate-50 focus-within:ring-2 focus-within:ring-indigo-500"
+            >
+              <input
+                data-testid="option"
+                type="checkbox"
+                class="h-5 w-5 rounded border-slate-300 text-indigo-600 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+                [checked]="entry.selected.includes(option)"
+                [disabled]="!!entry.result"
+                (change)="toggle(i, option)"
+              />
+              <span class="flex-1">{{ option }}</span>
+              @if (entry.result) {
+                <span class="ml-auto text-sm font-medium text-slate-500">
+                  {{ statusLabels[optionStatus(entry.result, option)] }}
+                </span>
+              }
+            </label>
+            @if (infoFor(option); as info) {
+              <button
+                type="button"
+                data-testid="option-info"
+                class="rounded-full px-2 text-slate-500 hover:text-indigo-600"
+                [attr.aria-label]="'Definition of ' + option"
+                [attr.aria-expanded]="openInfo() === i + ':' + option"
+                (click)="toggleInfo(i, option)"
+              >
+                ⓘ
+              </button>
+              @if (openInfo() === i + ':' + option) {
+                <div
+                  data-testid="option-definition"
+                  class="rounded-md bg-indigo-50 p-3 text-sm text-indigo-900"
+                >
+                  <p>{{ info.shortDefinition }}</p>
+                  <p class="mt-1 text-indigo-700">Tip: {{ info.distinguishingTip }}</p>
+                </div>
+              }
             }
-          </label>
+          </div>
         }
 
         @if (entry.result) {
