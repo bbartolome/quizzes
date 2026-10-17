@@ -96,5 +96,23 @@ describe('TemplateGeneratorService', () => {
 
       expect(rendered.sourceTemplateId).toBe('source-id-1');
     });
+
+    it('defaults traitIds to an empty array when none are provided', () => {
+      const service = new TemplateGeneratorService();
+      const template = makeTemplate({ id: 'no-traits-1' });
+
+      const rendered = service.render(template);
+
+      expect(rendered.traitIds).toEqual([]);
+    });
+
+    it('includes the given traitIds on the rendered question', () => {
+      const service = new TemplateGeneratorService();
+      const template = makeTemplate({ id: 'with-traits-1' });
+
+      const rendered = service.render(template, ['straw-man']);
+
+      expect(rendered.traitIds).toEqual(['straw-man']);
+    });
   });
 });
