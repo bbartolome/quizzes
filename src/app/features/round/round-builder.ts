@@ -163,3 +163,7 @@ export function nextQuestion(d: NextQuestionDeps): RoundQuestion | undefined {
 
   return fixed;
 }
+
+export function kbByName(kb: KnowledgeBaseEntry[]): Map<string, KnowledgeBaseEntry> {
+  return new Map(kb.map((e) => [e.name.toLowerCase(), e]));
+}
