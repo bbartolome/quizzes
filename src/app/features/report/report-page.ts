@@ -7,6 +7,7 @@ import {
   ScoredQuestionResult,
 } from '../../core/models/quiz.models';
 import {
+  STATUS_LABELS,
   findConfusionTips,
   optionStatus,
   summaryLine,
@@ -54,12 +55,7 @@ export class ReportPage implements OnInit {
   readonly hasResults = computed(() => this.results().length > 0);
 
   /** Human-readable text for each option status (status -> label). */
-  readonly statusLabels: Record<OptionStatus, string> = {
-    correct: 'Correct',
-    wrong: 'Wrong pick',
-    missed: 'Missed',
-    neutral: 'Not picked',
-  };
+  readonly statusLabels = STATUS_LABELS;
 
   // Exposed for report-page.html, which calls these directly per result/option.
   readonly optionStatus = optionStatus;
