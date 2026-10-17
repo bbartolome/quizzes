@@ -12,7 +12,7 @@ function shuffle<T>(input: T[]): T[] {
 
 @Injectable({ providedIn: 'root' })
 export class TemplateGeneratorService {
-  render(template: Template): RoundQuestion {
+  render(template: Template, traitIds: string[] = []): RoundQuestion {
     const prompt = template.pattern.replace(/\{([^}]+)\}/g, (match, key: string) => {
       const slot = template.slots[key];
       if (slot && slot.length > 0) {
@@ -29,6 +29,7 @@ export class TemplateGeneratorService {
       prompt,
       options,
       correctAnswers,
+      traitIds: [...traitIds],
       explanation: template.explanation,
       sourceTemplateId: template.id,
     };
