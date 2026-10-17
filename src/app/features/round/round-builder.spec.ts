@@ -5,8 +5,16 @@ import {
   pickTemplate,
   shuffle,
   traitIdsForAnswers,
+  nextQuestion,
+  TEMPLATE_PROBABILITY,
+  NextQuestionDeps,
 } from './round-builder';
-import { Template, KnowledgeBaseEntry } from '../../core/models/quiz.models';
+import {
+  Template,
+  KnowledgeBaseEntry,
+  RoundQuestion,
+  Question,
+} from '../../core/models/quiz.models';
 
 function makeTemplate(overrides: Partial<Template> & { id: string }): Template {
   return {
@@ -199,5 +207,142 @@ describe('traitIdsForAnswers', () => {
     const kb = [makeKbEntry({ id: 'kb-1', name: 'Straw Man' })];
 
     expect(traitIdsForAnswers([], kb)).toEqual([]);
+  });
+});
+
+describe('nextQuestion', () => {
+  function makeRoundQuestion(overrides: Partial<RoundQuestion> & { id: string }): RoundQuestion {
+    return {
+      prompt: 'Prompt',
+      options: ['A', 'B'],
+      correctAnswers: ['A'],
+      traitIds: [],
+      explanation: 'Explanation',
+      ...overrides,
+    };
+  }
+
+  function makeDeps(overrides: Partial<NextQuestionDeps> = {}): NextQuestionDeps {
+    return {
+      questions: [] as Question[],
+      templates: [],
+      kb: [],
+      filters: { weakTraits: false },
+      usedIds: new Set<string>(),
+      selectRound: vi.fn(() => [makeRoundQuestion({ id: 'fixed-1' })]),
+      renderTemplate: vi.fn((tpl: Template, traitIds: string[]) => ({
+        id: 'rendered',
+        prompt: tpl.pattern,
+        options: [...tpl.correctAnswers, ...tpl.distractors],
+        correctAnswers: [...tpl.correctAnswers],
+        traitIds: [...traitIds],
+        explanation: tpl.explanation,
+      })),
+      serial: 1,
+      rng: () => 0.9,
+      ...overrides,
+    };
+  }
+
+  it('returns the fixed question when rng >= TEMPLATE_PROBABILITY', () => {
+    const fixed = makeRoundQuestion({ id: 'fixed-1' });
+    const selectRound = vi.fn(() => [fixed]);
+    const deps = makeDeps({ selectRound, rng: () => 0.9 });
+
+    const result = nextQuestion(deps);
+
+    expect(result).toBe(fixed);
+  });
+
+  it('passes count 1, filters, weights and avoidIds (containing usedIds) to selectRound', () => {
+    const selectRound = vi.fn(() => [makeRoundQuestion({ id: 'fixed-1' })]);
+    const usedIds = new Set(['used-1', 'used-2']);
+    const weights = { 'kb-1': 2 };
+    const filters = { categories: ['fallacy'] as const, traitIds: ['kb-1'], weakTraits: false };
+    const deps = makeDeps({ selectRound, usedIds, weights, filters, rng: () => 0.9 });
+
+    nextQuestion(deps);
+
+    expect(selectRound).toHaveBeenCalledWith(
+      { questions: deps.questions },
+      {
+        count: 1,
+        categories: filters.categories,
+        traitIds: filters.traitIds,
+        avoidIds: usedIds,
+        weakTraitWeights: weights,
+      },
+    );
+    const callArgs = selectRound.mock.calls[0][1];
+    expect(callArgs.avoidIds).not.toBe(usedIds);
+    expect(callArgs.avoidIds?.has('used-1')).toBe(true);
+    expect(callArgs.avoidIds?.has('used-2')).toBe(true);
+  });
+
+  it('returns undefined when selectRound returns an empty array', () => {
+    const selectRound = vi.fn(() => []);
+    const deps = makeDeps({ selectRound, rng: () => 0.9 });
+
+    expect(nextQuestion(deps)).toBeUndefined();
+  });
+
+  it('returns undefined when selectRound returns a question whose id is already in usedIds, even if templates exist', () => {
+    const selectRound = vi.fn(() => [makeRoundQuestion({ id: 'seen-1' })]);
+    const templates = [makeTemplate({ id: 'tpl-1' })];
+    const deps = makeDeps({
+      selectRound,
+      templates,
+      usedIds: new Set(['seen-1']),
+      rng: () => 0.1,
+    });
+
+    expect(nextQuestion(deps)).toBeUndefined();
+  });
+
+  it('with rng < TEMPLATE_PROBABILITY and a matching template, returns renderTemplate output with derived id and sourceTemplateId', () => {
+    const fixed = makeRoundQuestion({ id: 'fixed-1' });
+    const selectRound = vi.fn(() => [fixed]);
+    const kb = [makeKbEntry({ id: 'kb-1', name: 'Straw Man' })];
+    const tpl = makeTemplate({ id: 'tpl-1', correctAnswers: ['Straw Man'] });
+    const templates = [tpl];
+    const rendered = makeRoundQuestion({ id: 'rendered', traitIds: ['kb-1'] });
+    const renderTemplate = vi.fn(() => rendered);
+    const deps = makeDeps({
+      selectRound,
+      templates,
+      kb,
+      renderTemplate,
+      serial: 7,
+      rng: () => 0.1,
+    });
+
+    const result = nextQuestion(deps);
+
+    expect(renderTemplate).toHaveBeenCalledWith(tpl, traitIdsForAnswers(tpl.correctAnswers, kb));
+    expect(result).toEqual({
+      ...rendered,
+      id: `${tpl.id}#7`,
+      sourceTemplateId: tpl.id,
+    });
+  });
+
+  it('with rng < TEMPLATE_PROBABILITY but no matching template, returns the fixed question', () => {
+    const fixed = makeRoundQuestion({ id: 'fixed-1' });
+    const selectRound = vi.fn(() => [fixed]);
+    const templates = [makeTemplate({ id: 'bias-only', category: 'bias' })];
+    const deps = makeDeps({
+      selectRound,
+      templates,
+      filters: { categories: ['fallacy'], weakTraits: false },
+      rng: () => 0.1,
+    });
+
+    const result = nextQuestion(deps);
+
+    expect(result).toBe(fixed);
+  });
+
+  it('exposes TEMPLATE_PROBABILITY as 0.25', () => {
+    expect(TEMPLATE_PROBABILITY).toBe(0.25);
   });
 });
