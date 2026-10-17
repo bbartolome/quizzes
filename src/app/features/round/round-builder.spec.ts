@@ -5,6 +5,7 @@ import {
   pickTemplate,
   shuffle,
   traitIdsForAnswers,
+  kbByName,
   nextQuestion,
   TEMPLATE_PROBABILITY,
   NextQuestionDeps,
@@ -345,5 +346,34 @@ describe('nextQuestion', () => {
 
   it('exposes TEMPLATE_PROBABILITY as 0.25', () => {
     expect(TEMPLATE_PROBABILITY).toBe(0.25);
+  });
+});
+
+describe('kbByName', () => {
+  const strawMan = makeKbEntry({ id: 'kb-1', name: 'Straw Man' });
+  const adHominem = makeKbEntry({ id: 'kb-2', name: 'Ad Hominem' });
+
+  it('keys entries by lowercased name', () => {
+    const map = kbByName([strawMan, adHominem]);
+
+    expect([...map.keys()]).toEqual(['straw man', 'ad hominem']);
+  });
+
+  it('maps each key to its entry', () => {
+    const map = kbByName([strawMan, adHominem]);
+
+    expect(map.get('straw man')).toBe(strawMan);
+    expect(map.get('ad hominem')).toBe(adHominem);
+  });
+
+  it('supports lookup with a lowercased option string', () => {
+    const map = kbByName([strawMan]);
+
+    expect(map.get('Straw Man'.toLowerCase())).toBe(strawMan);
+    expect(map.get('unknown')).toBeUndefined();
+  });
+
+  it('returns an empty map for an empty kb', () => {
+    expect(kbByName([]).size).toBe(0);
   });
 });
