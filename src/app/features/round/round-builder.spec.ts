@@ -4,6 +4,7 @@ import {
   weakTraitWeights,
   pickTemplate,
   shuffle,
+  traitIdsForAnswers,
 } from './round-builder';
 import { Template, KnowledgeBaseEntry } from '../../core/models/quiz.models';
 
@@ -155,5 +156,48 @@ describe('shuffle', () => {
     // Fisher-Yates from i = n-1 downto 1, j = floor(rng() * (i+1)), swap(i, j):
     // i=3: j=0 -> [d,b,c,a]; i=2: j=0 -> [c,b,d,a]; i=1: j=0 -> [b,c,d,a]
     expect(result).toEqual(['b', 'c', 'd', 'a']);
+  });
+});
+
+describe('traitIdsForAnswers', () => {
+  it('matches answer text to kb names case-insensitively', () => {
+    const kb = [makeKbEntry({ id: 'kb-1', name: 'Straw Man' })];
+
+    const result = traitIdsForAnswers(['STRAW MAN'], kb);
+
+    expect(result).toEqual(['kb-1']);
+  });
+
+  it('returns ids in the order the answers appear', () => {
+    const kb = [
+      makeKbEntry({ id: 'kb-1', name: 'Straw Man' }),
+      makeKbEntry({ id: 'kb-2', name: 'Ad Hominem' }),
+    ];
+
+    const result = traitIdsForAnswers(['Ad Hominem', 'Straw Man'], kb);
+
+    expect(result).toEqual(['kb-2', 'kb-1']);
+  });
+
+  it('de-duplicates repeated matches', () => {
+    const kb = [makeKbEntry({ id: 'kb-1', name: 'Straw Man' })];
+
+    const result = traitIdsForAnswers(['Straw Man', 'STRAW MAN', 'straw man'], kb);
+
+    expect(result).toEqual(['kb-1']);
+  });
+
+  it('skips answers with no matching kb entry', () => {
+    const kb = [makeKbEntry({ id: 'kb-1', name: 'Straw Man' })];
+
+    const result = traitIdsForAnswers(['Straw Man', 'No trap — sound reasoning'], kb);
+
+    expect(result).toEqual(['kb-1']);
+  });
+
+  it('returns an empty array for empty input', () => {
+    const kb = [makeKbEntry({ id: 'kb-1', name: 'Straw Man' })];
+
+    expect(traitIdsForAnswers([], kb)).toEqual([]);
   });
 });
