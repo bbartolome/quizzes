@@ -83,3 +83,5 @@ export function summaryLine(results: ScoredQuestionResult[]): string {
   const total = results.length;
   return `${correct} of ${total} correct`;
 }
+
+export const STATUS_LABELS: Record<OptionStatus, string> = { correct: 'Correct', wrong: 'Wrong pick', missed: 'Missed', neutral: 'Not picked' };
