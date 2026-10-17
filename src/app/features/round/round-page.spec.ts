@@ -290,4 +290,87 @@ describe('RoundPage', () => {
 
     expect(fixture.componentInstance.entries()[0].selected).toEqual(selectedBefore);
   });
+
+  describe('option info icons', () => {
+    const qInfo: RoundQuestion = {
+      id: 'qi',
+      prompt: 'PI',
+      options: ['Straw Man', 'No trap — sound reasoning'],
+      correctAnswers: ['Straw Man'],
+      traitIds: ['kb1'],
+      explanation: 'EI',
+    };
+
+    beforeEach(() => {
+      engine.selectRound = vi.fn().mockReturnValueOnce([qInfo]).mockReturnValue([]);
+    });
+
+    async function load() {
+      configure();
+      const fixture = TestBed.createComponent(RoundPage);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      return fixture;
+    }
+
+    function infoButtons(fixture: Awaited<ReturnType<typeof load>>): HTMLButtonElement[] {
+      return Array.from(
+        fixture.nativeElement.querySelectorAll('[data-testid="option-info"]'),
+      ) as HTMLButtonElement[];
+    }
+
+    it('renders an info button only for the option that matches a knowledge-base entry', async () => {
+      const fixture = await load();
+
+      expect(infoButtons(fixture).length).toBe(1);
+    });
+
+    it('labels the info button with the option name', async () => {
+      const fixture = await load();
+
+      expect(infoButtons(fixture)[0].getAttribute('aria-label')).toBe('Definition of Straw Man');
+    });
+
+    it('clicking the info button shows the definition and tip and marks it expanded', async () => {
+      const fixture = await load();
+      expect(fixture.nativeElement.querySelector('[data-testid="option-definition"]')).toBeNull();
+
+      infoButtons(fixture)[0].click();
+      fixture.detectChanges();
+
+      const panel = fixture.nativeElement.querySelector('[data-testid="option-definition"]');
+      expect(panel).toBeTruthy();
+      expect(panel.textContent).toContain(kb[0].shortDefinition);
+      expect(panel.textContent).toContain(kb[0].distinguishingTip);
+      expect(infoButtons(fixture)[0].getAttribute('aria-expanded')).toBe('true');
+    });
+
+    it('clicking the info button does not select the option', async () => {
+      const fixture = await load();
+
+      infoButtons(fixture)[0].click();
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.entries()[0].selected).toEqual([]);
+      const checkboxes = fixture.nativeElement.querySelectorAll(
+        '[data-testid="option"]',
+      ) as NodeListOf<HTMLInputElement>;
+      for (const checkbox of Array.from(checkboxes)) {
+        expect(checkbox.checked).toBe(false);
+      }
+    });
+
+    it('clicking the info button again hides the definition', async () => {
+      const fixture = await load();
+
+      infoButtons(fixture)[0].click();
+      fixture.detectChanges();
+      infoButtons(fixture)[0].click();
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('[data-testid="option-definition"]')).toBeNull();
+      expect(infoButtons(fixture)[0].getAttribute('aria-expanded')).toBe('false');
+    });
+  });
 });
