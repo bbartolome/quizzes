@@ -1,7 +1,13 @@
-import { Template, KnowledgeBaseEntry } from '../../core/models/quiz.models';
+import {
+  Template,
+  KnowledgeBaseEntry,
+  Question,
+  RoundQuestion,
+} from '../../core/models/quiz.models';
+import type { QuestionBank, SelectRoundOptions } from '../../core/services/quiz-engine.service';
 
 export interface RoundFilters {
-  categories?: ('fallacy' | 'bias')[];
+  categories?: readonly ('fallacy' | 'bias')[];
   traitIds?: string[];
   weakTraits: boolean;
 }
@@ -107,4 +113,53 @@ export function traitIdsForAnswers(
   }
 
   return ids;
+}
+
+export const TEMPLATE_PROBABILITY = 0.25;
+
+export interface NextQuestionDeps {
+  questions: Question[];
+  templates: Template[];
+  kb: KnowledgeBaseEntry[];
+  filters: RoundFilters;
+  usedIds: ReadonlySet<string>;
+  weights?: Record<string, number>;
+  selectRound: (bank: QuestionBank, options: SelectRoundOptions) => RoundQuestion[];
+  renderTemplate: (tpl: Template, traitIds: string[]) => RoundQuestion;
+  serial: number;
+  rng?: () => number;
+}
+
+export function nextQuestion(d: NextQuestionDeps): RoundQuestion | undefined {
+  const rng = d.rng ?? Math.random;
+
+  const fixed =
+    d.selectRound(
+      { questions: d.questions },
+      {
+        count: 1,
+        categories: d.filters.categories ? [...d.filters.categories] : undefined,
+        traitIds: d.filters.traitIds,
+        avoidIds: new Set(d.usedIds),
+        weakTraitWeights: d.weights,
+      },
+    )[0];
+
+  if (!fixed || d.usedIds.has(fixed.id)) {
+    return undefined;
+  }
+
+  if (rng() < TEMPLATE_PROBABILITY) {
+    const tpl = pickTemplate(d.templates, d.kb, d.filters, rng);
+    if (tpl) {
+      const rendered = d.renderTemplate(tpl, traitIdsForAnswers(tpl.correctAnswers, d.kb));
+      return {
+        ...rendered,
+        id: `${tpl.id}#${d.serial}`,
+        sourceTemplateId: tpl.id,
+      };
+    }
+  }
+
+  return fixed;
 }
