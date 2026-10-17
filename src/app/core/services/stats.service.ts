@@ -42,22 +42,33 @@ export class StatsService {
 
   recordResult(quizId: string, result: ScoredQuestionResult): QuizStats {
     const stats = this.getStats(quizId);
-    const traitId = result.question.sourceTemplateId ?? result.question.id;
 
-    const existing: PerTraitStats = stats.perTrait[traitId] ?? {
-      traitId,
-      correct: 0,
-      attempted: 0,
-    };
-    const updated: PerTraitStats = {
-      traitId,
-      correct: existing.correct + (result.correct ? 1 : 0),
-      attempted: existing.attempted + 1,
-    };
+    const uniqueTraitIds = [...new Set(result.question.traitIds)];
+    for (const traitId of uniqueTraitIds) {
+      const existing: PerTraitStats = stats.perTrait[traitId] ?? {
+        traitId,
+        correct: 0,
+        attempted: 0,
+      };
+      stats.perTrait = {
+        ...stats.perTrait,
+        [traitId]: {
+          traitId,
+          correct: existing.correct + (result.correct ? 1 : 0),
+          attempted: existing.attempted + 1,
+        },
+      };
+    }
 
-    stats.perTrait = { ...stats.perTrait, [traitId]: updated };
     stats.streak = result.correct ? stats.streak + 1 : 0;
 
+    this.persist(quizId, stats);
+    return stats;
+  }
+
+  recordSessionEnd(quizId: string): QuizStats {
+    const stats = this.getStats(quizId);
+    stats.roundsPlayed += 1;
     this.persist(quizId, stats);
     return stats;
   }
