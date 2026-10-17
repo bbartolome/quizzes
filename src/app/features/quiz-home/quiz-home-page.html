@@ -61,7 +61,7 @@
         </div>
       </div>
 
-      @if (traits().length > 0) {
+      @if (visibleTraits().length > 0) {
         <div>
           <div class="flex items-center justify-between">
             <h2 class="text-sm font-medium text-gray-700">Traits</h2>
@@ -76,7 +76,7 @@
             }
           </div>
           <div class="mt-2 flex flex-wrap gap-2" role="group" aria-label="Trait multi-select">
-            @for (trait of traits(); track trait.id) {
+            @for (trait of visibleTraits(); track trait.id) {
               <label
                 [class]="
                   isTraitSelected(trait.id)
