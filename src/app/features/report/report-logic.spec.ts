@@ -7,6 +7,7 @@ function makeQuestion(overrides: Partial<RoundQuestion> & { id: string }): Round
     prompt: `Prompt for ${overrides.id}`,
     options: ['Alpha', 'Beta', 'Gamma'],
     correctAnswers: ['Alpha'],
+    traitIds: [],
     explanation: `Explanation for ${overrides.id}`,
     ...overrides,
   };

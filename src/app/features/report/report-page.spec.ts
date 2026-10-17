@@ -50,6 +50,7 @@ describe('ReportPage', () => {
       prompt: `Prompt for ${overrides.id}`,
       options: ['Strawman', 'Slippery Slope'],
       correctAnswers: ['Strawman'],
+      traitIds: [],
       explanation: `Explanation for ${overrides.id}`,
       ...overrides,
     };

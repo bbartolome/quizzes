@@ -37,6 +37,7 @@ function makeRoundQuestion(
     prompt: `Prompt for ${overrides.id}`,
     options: ['A', 'B', 'C', 'D'],
     correctAnswers: ['A'],
+    traitIds: [],
     explanation: `Explanation for ${overrides.id}`,
     ...overrides,
   };
@@ -48,7 +49,11 @@ function makeResult(
   overrides: Partial<ScoredQuestionResult> = {},
 ): ScoredQuestionResult {
   return {
-    question: makeRoundQuestion({ id: `q-${traitId}`, sourceTemplateId: traitId }),
+    question: makeRoundQuestion({
+      id: `q-${traitId}`,
+      sourceTemplateId: traitId,
+      traitIds: [traitId],
+    }),
     selected: correct ? ['A'] : [],
     correct,
     missed: correct ? [] : ['A'],

@@ -54,6 +54,7 @@ describe('RoundPage', () => {
     prompt: 'P1',
     options: ['A', 'B'],
     correctAnswers: ['A'],
+    traitIds: [],
     explanation: 'E1',
   };
   const q2: RoundQuestion = {
@@ -61,6 +62,7 @@ describe('RoundPage', () => {
     prompt: 'P2',
     options: ['A', 'B'],
     correctAnswers: ['B'],
+    traitIds: [],
     explanation: 'E2',
   };
   const fixedQuestions: RoundQuestion[] = [q1, q2];
@@ -70,6 +72,7 @@ describe('RoundPage', () => {
     prompt: 'Generated',
     options: ['A', 'B'],
     correctAnswers: ['A'],
+    traitIds: [],
     explanation: 'GenE',
     sourceTemplateId: 'tpl1',
   };

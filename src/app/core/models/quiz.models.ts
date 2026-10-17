@@ -64,6 +64,7 @@ export interface RoundQuestion {
   prompt: string;
   options: string[];
   correctAnswers: string[];
+  traitIds: string[];
   explanation: string;
   sourceTemplateId?: string;
 }
