@@ -11,17 +11,22 @@ import { StatsService } from '../../core/services/stats.service';
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { TemplateGeneratorService } from '../../core/services/template-generator.service';
 import {
+  nextQuestion,
   parseRoundFilters,
-  pickTemplate,
   weakTraitWeights,
-  shuffle,
+  type RoundFilters,
 } from './round-builder';
+import {
+  STATUS_LABELS,
+  findConfusionTips,
+  optionStatus,
+} from '../report/report-logic';
 
-/**
- * Module-level set of question ids already used in previously built rounds,
- * so `selectRound` can avoid re-serving the same fixed questions.
- */
-const USED_IDS = new Set<string>();
+export interface RoundEntry {
+  question: RoundQuestion;
+  selected: string[];
+  result?: ScoredQuestionResult;
+}
 
 @Component({
   selector: 'app-round-page',
@@ -35,81 +40,132 @@ export class RoundPage implements OnInit {
   private readonly engine: QuizEngineService = inject(QuizEngineService);
   private readonly templateGenerator: TemplateGeneratorService = inject(TemplateGeneratorService);
 
+  private quizId = '';
+  private bundle!: QuizBundle;
+  private filters!: RoundFilters;
+  private weights?: Record<string, number>;
+  private readonly usedIds = new Set<string>();
+  private serial = 0;
+
   readonly quizTitle = signal('');
-  readonly questions = signal<RoundQuestion[]>([]);
-  readonly selections = signal<Record<string, string[]>>({});
-  readonly canSubmit = computed(() =>
-    this.questions().length > 0 &&
-    this.questions().every((q) => (this.selections()[q.id] ?? []).length > 0),
-  );
+  readonly kb = signal<KnowledgeBaseEntry[]>([]);
+  readonly entries = signal<RoundEntry[]>([]);
+  readonly exhausted = signal(false);
+
+  readonly score = computed(() => {
+    const checked = this.entries().filter((e) => e.result !== undefined);
+    return {
+      correct: checked.filter((e) => e.result!.correct).length,
+      answered: checked.length,
+    };
+  });
+
+  readonly canCheck = computed(() => {
+    const entries = this.entries();
+    const last = entries[entries.length - 1];
+    return !!last && last.result === undefined && last.selected.length > 0;
+  });
+
+  readonly statusLabels = STATUS_LABELS;
+  readonly optionStatus = optionStatus;
+  readonly findConfusionTips = findConfusionTips;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
     const q = this.route.snapshot.queryParamMap;
-    const filters = parseRoundFilters({
+    this.quizId = id;
+    this.filters = parseRoundFilters({
       cat: q.get('cat'),
       traits: q.get('traits'),
       weakTraits: q.get('weakTraits'),
     });
 
     this.quizData.loadManifest().subscribe((manifest) => {
-        const entry = manifest.quizzes.find((e) => e.id === id) as QuizManifestEntry;
-        this.quizTitle.set(entry.title);
+      const entry = manifest.quizzes.find((e) => e.id === id) as QuizManifestEntry;
+      this.quizTitle.set(entry.title);
 
-        this.quizData.loadQuizBundle(entry).subscribe((bundle: QuizBundle) => {
-          const kb = bundle.knowledgeBase;
-          this.stats.migrateVersion(id, entry.version, kb.map((k: KnowledgeBaseEntry) => k.id));
+      this.quizData.loadQuizBundle(entry).subscribe((bundle: QuizBundle) => {
+        this.bundle = bundle;
+        this.kb.set(bundle.knowledgeBase);
+        this.weights = this.filters.weakTraits
+          ? weakTraitWeights(this.stats.getWeakTraits(id))
+          : undefined;
+        this.stats.migrateVersion(id, entry.version, bundle.knowledgeBase.map((k: KnowledgeBaseEntry) => k.id));
 
-          const tpl = pickTemplate(bundle.templates, kb, filters);
-
-          const fixed = this.engine.selectRound(
-            { questions: bundle.questions },
-            {
-              count: tpl ? 3 : 4,
-              categories: filters.categories,
-              traitIds: filters.traitIds,
-              avoidIds: USED_IDS,
-              weakTraitWeights: filters.weakTraits
-                ? weakTraitWeights(this.stats.getWeakTraits(id))
-                : undefined,
-            },
-          );
-
-          let generated: RoundQuestion[] = [];
-          if (tpl) {
-            generated = [this.templateGenerator.render(tpl)];
-          }
-          const questions = shuffle([...fixed, ...generated]);
-
-          for (const question of questions) {
-            USED_IDS.add(question.id);
-          }
-
-          this.questions.set(questions);
-        });
+        this.appendNext();
       });
+    });
   }
 
-  toggle(qid: string, option: string): void {
-    const current = this.selections()[qid] ?? [];
-    const next = current.includes(option)
-      ? current.filter((o) => o !== option)
-      : [...current, option];
-    this.selections.set({ ...this.selections(), [qid]: next });
-  }
+  private appendNext(): void {
+    const question = nextQuestion({
+      questions: this.bundle.questions,
+      templates: this.bundle.templates,
+      kb: this.kb(),
+      filters: this.filters,
+      usedIds: this.usedIds,
+      weights: this.weights,
+      selectRound: (bank, options) => this.engine.selectRound(bank, options),
+      renderTemplate: (tpl, traitIds) => this.templateGenerator.render(tpl, traitIds),
+      serial: this.serial++,
+    });
 
-  submit(): void {
-    const questions = this.questions();
-    const results: ScoredQuestionResult[] = questions.map((q) =>
-      this.engine.score(q, this.selections()[q.id] ?? []),
-    );
-
-    const id = this.route.snapshot.paramMap.get('id') ?? '';
-    for (const result of results) {
-      this.stats.recordResult(id, result);
+    if (question) {
+      this.usedIds.add(question.id);
+      this.entries.update((current) => [
+        ...current,
+        { question, selected: [] },
+      ]);
+      setTimeout(() => {
+        const els = document.querySelectorAll('[data-testid="question"]');
+        const lastEl = els[els.length - 1];
+        lastEl?.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
+      });
+    } else {
+      this.exhausted.set(true);
     }
+  }
 
-    this.router.navigate(['/quiz', id, 'report'], {
+  toggle(index: number, option: string): void {
+    const entries = this.entries();
+    if (index !== entries.length - 1) {
+      return;
+    }
+    const entry = entries[index];
+    if (entry.result !== undefined) {
+      return;
+    }
+    const selected = entry.selected.includes(option)
+      ? entry.selected.filter((o) => o !== option)
+      : [...entry.selected, option];
+    this.entries.update((current) =>
+      current.map((e, i) => (i === index ? { ...e, selected } : e)),
+    );
+  }
+
+  check(): void {
+    if (!this.canCheck()) {
+      return;
+    }
+    const entries = this.entries();
+    const lastIndex = entries.length - 1;
+    const last = entries[lastIndex];
+    const result = this.engine.score(last.question, last.selected);
+    this.stats.recordResult(this.quizId, result);
+    this.entries.update((current) =>
+      current.map((e, i) => (i === lastIndex ? { ...e, result } : e)),
+    );
+    this.appendNext();
+  }
+
+  endQuiz(): void {
+    const results = this.entries()
+      .filter((e) => e.result !== undefined)
+      .map((e) => e.result!);
+    if (results.length > 0) {
+      this.stats.recordSessionEnd(this.quizId);
+    }
+    this.router.navigate(['/quiz', this.quizId, 'report'], {
       state: { results, quizTitle: this.quizTitle() },
     });
   }
