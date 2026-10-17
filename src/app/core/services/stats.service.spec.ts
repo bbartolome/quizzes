@@ -139,6 +139,93 @@ describe('StatsService', () => {
       });
     });
 
+    it('increments perTrait for each distinct id in traitIds', () => {
+      const service = new StatsService();
+
+      service.recordResult(
+        'reasoning-traps',
+        makeResult('strawman', true, {
+          question: makeRoundQuestion({
+            id: 'q-multi',
+            traitIds: ['strawman', 'anchoring'],
+          }),
+        }),
+      );
+
+      const stats = service.getStats('reasoning-traps');
+      expect(stats.perTrait['strawman']).toEqual({
+        traitId: 'strawman',
+        correct: 1,
+        attempted: 1,
+      });
+      expect(stats.perTrait['anchoring']).toEqual({
+        traitId: 'anchoring',
+        correct: 1,
+        attempted: 1,
+      });
+    });
+
+    it('counts a duplicated trait id in traitIds only once', () => {
+      const service = new StatsService();
+
+      service.recordResult(
+        'reasoning-traps',
+        makeResult('strawman', false, {
+          question: makeRoundQuestion({
+            id: 'q-dup',
+            traitIds: ['strawman', 'strawman'],
+          }),
+        }),
+      );
+
+      const stats = service.getStats('reasoning-traps');
+      expect(stats.perTrait['strawman']).toEqual({
+        traitId: 'strawman',
+        correct: 0,
+        attempted: 1,
+      });
+    });
+
+    it('leaves perTrait unchanged when traitIds is empty', () => {
+      const service = new StatsService();
+
+      service.recordResult(
+        'reasoning-traps',
+        makeResult('strawman', true, {
+          question: makeRoundQuestion({ id: 'q-empty', traitIds: [] }),
+        }),
+      );
+
+      const stats = service.getStats('reasoning-traps');
+      expect(stats.perTrait).toEqual({});
+    });
+
+    it('updates the streak exactly once per call even with multiple traitIds', () => {
+      const service = new StatsService();
+
+      service.recordResult(
+        'reasoning-traps',
+        makeResult('strawman', true, {
+          question: makeRoundQuestion({
+            id: 'q-multi',
+            traitIds: ['strawman', 'anchoring'],
+          }),
+        }),
+      );
+      service.recordResult(
+        'reasoning-traps',
+        makeResult('strawman', true, {
+          question: makeRoundQuestion({
+            id: 'q-multi-2',
+            traitIds: ['strawman', 'anchoring'],
+          }),
+        }),
+      );
+
+      const stats = service.getStats('reasoning-traps');
+      expect(stats.streak).toBe(2);
+    });
+
     it('increments the streak on consecutive correct answers', () => {
       const service = new StatsService();
 
@@ -159,6 +246,45 @@ describe('StatsService', () => {
 
       const stats = service.getStats('reasoning-traps');
       expect(stats.streak).toBe(0);
+    });
+  });
+
+  describe('recordSessionEnd', () => {
+    it('increments roundsPlayed by 1', () => {
+      const service = new StatsService();
+
+      service.recordSessionEnd('reasoning-traps');
+
+      const stats = service.getStats('reasoning-traps');
+      expect(stats.roundsPlayed).toBe(1);
+    });
+
+    it('increments roundsPlayed by 1 on each call', () => {
+      const service = new StatsService();
+
+      service.recordSessionEnd('reasoning-traps');
+      service.recordSessionEnd('reasoning-traps');
+      service.recordSessionEnd('reasoning-traps');
+
+      const stats = service.getStats('reasoning-traps');
+      expect(stats.roundsPlayed).toBe(3);
+    });
+
+    it('persists roundsPlayed so it is visible via getStats on a fresh read', () => {
+      const service = new StatsService();
+
+      service.recordSessionEnd('reasoning-traps');
+
+      expect(globalThis.localStorage.getItem('stats:reasoning-traps')).not.toBeNull();
+      expect(new StatsService().getStats('reasoning-traps').roundsPlayed).toBe(1);
+    });
+
+    it('returns the updated stats', () => {
+      const service = new StatsService();
+
+      const stats = service.recordSessionEnd('reasoning-traps');
+
+      expect(stats.roundsPlayed).toBe(1);
     });
   });
 
