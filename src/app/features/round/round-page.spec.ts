@@ -11,7 +11,7 @@ import {
   KnowledgeBaseEntry,
   QuizManifestEntry,
   RoundQuestion,
-  Template,
+  ScoredQuestionResult,
 } from '../../core/models/quiz.models';
 
 describe('RoundPage', () => {
@@ -39,16 +39,6 @@ describe('RoundPage', () => {
     },
   ];
 
-  const tpl: Template = {
-    id: 'tpl1',
-    pattern: 'pattern',
-    slots: {},
-    correctAnswers: ['Straw Man'],
-    distractors: ['B'],
-    category: 'fallacy',
-    explanation: 'explanation',
-  };
-
   const q1: RoundQuestion = {
     id: 'q1',
     prompt: 'P1',
@@ -65,32 +55,21 @@ describe('RoundPage', () => {
     traitIds: [],
     explanation: 'E2',
   };
-  const fixedQuestions: RoundQuestion[] = [q1, q2];
-
-  const generatedQuestion: RoundQuestion = {
-    id: 'gen1',
-    prompt: 'Generated',
-    options: ['A', 'B'],
-    correctAnswers: ['A'],
-    traitIds: [],
-    explanation: 'GenE',
-    sourceTemplateId: 'tpl1',
-  };
 
   let quizData: { loadManifest: ReturnType<typeof vi.fn>; loadQuizBundle: ReturnType<typeof vi.fn> };
   let stats: {
     migrateVersion: ReturnType<typeof vi.fn>;
     getWeakTraits: ReturnType<typeof vi.fn>;
     recordResult: ReturnType<typeof vi.fn>;
+    recordSessionEnd: ReturnType<typeof vi.fn>;
   };
   let engine: { selectRound: ReturnType<typeof vi.fn>; score: ReturnType<typeof vi.fn> };
   let templateGenerator: { render: ReturnType<typeof vi.fn> };
 
-  function configure(
-    queryParams: Record<string, string> = {},
-    templates: Template[] = [],
-  ): void {
-    quizData.loadQuizBundle = vi.fn(() => of({ questions: [], templates, knowledgeBase: kb }));
+  function configure(): void {
+    quizData.loadQuizBundle = vi.fn(() =>
+      of({ questions: [], templates: [], knowledgeBase: kb }),
+    );
 
     TestBed.configureTestingModule({
       imports: [RoundPage],
@@ -101,7 +80,7 @@ describe('RoundPage', () => {
           useValue: {
             snapshot: {
               paramMap: convertToParamMap({ id: 'rt' }),
-              queryParamMap: convertToParamMap(queryParams),
+              queryParamMap: convertToParamMap({}),
             },
           },
         },
@@ -113,9 +92,16 @@ describe('RoundPage', () => {
     });
   }
 
-  beforeEach(() => {
-    vi.spyOn(Math, 'random').mockReturnValue(0);
+  function scoreStub(question: RoundQuestion, selected: string[]): ScoredQuestionResult {
+    const correctSet = new Set(question.correctAnswers);
+    const selectedSet = new Set(selected);
+    const missed = question.correctAnswers.filter((a) => !selectedSet.has(a));
+    const extra = selected.filter((s) => !correctSet.has(s));
+    const correct = question.correctAnswers.length === selected.length && missed.length === 0;
+    return { question, selected, correct, missed, extra };
+  }
 
+  beforeEach(() => {
     quizData = {
       loadManifest: vi.fn(() => of({ quizzes: [entry] })),
       loadQuizBundle: vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb })),
@@ -124,135 +110,184 @@ describe('RoundPage', () => {
       migrateVersion: vi.fn(),
       getWeakTraits: vi.fn(() => []),
       recordResult: vi.fn(),
+      recordSessionEnd: vi.fn(),
     };
     engine = {
-      selectRound: vi.fn(() => fixedQuestions),
-      score: vi.fn((question: RoundQuestion, selected: string[]) => ({
-        question,
-        selected,
-        correct: true,
-        missed: [],
-        extra: [],
-      })),
+      selectRound: vi
+        .fn()
+        .mockReturnValueOnce([q1])
+        .mockReturnValueOnce([q2])
+        .mockReturnValueOnce([]),
+      score: vi.fn(scoreStub),
     };
-    templateGenerator = { render: vi.fn(() => generatedQuestion) };
+    templateGenerator = { render: vi.fn() };
   });
 
-  it('loads the quiz bundle, migrates stats, and exposes the quiz title and questions', async () => {
+  it('renders one question after load', async () => {
     configure();
     const fixture = TestBed.createComponent(RoundPage);
     fixture.detectChanges();
     await fixture.whenStable();
+    fixture.detectChanges();
 
-    expect(fixture.componentInstance.quizTitle()).toBe('Logic Quiz');
-    expect(stats.migrateVersion).toHaveBeenCalledWith('rt', 3, ['kb1']);
-    expect(fixture.componentInstance.questions()).toEqual([q2, q1]);
+    const questionEls = fixture.nativeElement.querySelectorAll('[data-testid="question"]');
+    expect(questionEls.length).toBe(1);
   });
 
-  it('requests a 4-question round with no template when no template matches', async () => {
-    configure({}, []);
+  it('disables check-answer until an option is ticked', async () => {
+    configure();
     const fixture = TestBed.createComponent(RoundPage);
     fixture.detectChanges();
     await fixture.whenStable();
+    fixture.detectChanges();
 
-    expect(engine.selectRound).toHaveBeenCalledWith(
-      { questions: [] },
-      expect.objectContaining({ count: 4 }),
+    const checkBtn = fixture.nativeElement.querySelector('[data-testid="check-answer"]');
+    expect(checkBtn.disabled).toBe(true);
+
+    fixture.componentInstance.toggle(0, 'A');
+    fixture.detectChanges();
+
+    expect(checkBtn.disabled).toBe(false);
+  });
+
+  it('checking the correct option records a correct result and reveals feedback and the next question', async () => {
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    fixture.componentInstance.toggle(0, 'A');
+    fixture.componentInstance.check();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(stats.recordResult).toHaveBeenCalledTimes(1);
+    expect(stats.recordResult).toHaveBeenCalledWith(
+      'rt',
+      expect.objectContaining({ correct: true }),
     );
-    expect(templateGenerator.render).not.toHaveBeenCalled();
-  });
 
-  it('requests a 3-question round and renders the picked template, merging it into the questions', async () => {
-    configure({}, [tpl]);
-    const fixture = TestBed.createComponent(RoundPage);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    expect(engine.selectRound).toHaveBeenCalledWith(
-      { questions: [] },
-      expect.objectContaining({ count: 3 }),
-    );
-    expect(templateGenerator.render).toHaveBeenCalledWith(tpl);
-    expect(fixture.componentInstance.questions()).toEqual([q2, generatedQuestion, q1]);
-  });
-
-  it('passes weak-trait weights to selectRound when the weakTraits filter is set', async () => {
-    stats.getWeakTraits = vi.fn(() => ['kb1']);
-    configure({ weakTraits: 'true' }, []);
-    const fixture = TestBed.createComponent(RoundPage);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    expect(stats.getWeakTraits).toHaveBeenCalledWith('rt');
-    expect(engine.selectRound).toHaveBeenCalledWith(
-      { questions: [] },
-      expect.objectContaining({ weakTraitWeights: { kb1: 1 } }),
-    );
-  });
-
-  it('toggles option selections per question', async () => {
-    configure();
-    const fixture = TestBed.createComponent(RoundPage);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    fixture.componentInstance.toggle('q1', 'A');
-    expect(fixture.componentInstance.selections()['q1']).toEqual(['A']);
-
-    fixture.componentInstance.toggle('q1', 'A');
-    expect(fixture.componentInstance.selections()['q1']).toEqual([]);
-  });
-
-  it('canSubmit is false until every question has a selection, then true', async () => {
-    configure();
-    const fixture = TestBed.createComponent(RoundPage);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    expect(fixture.componentInstance.canSubmit()).toBe(false);
-
-    fixture.componentInstance.toggle('q1', 'A');
-    expect(fixture.componentInstance.canSubmit()).toBe(false);
-
-    fixture.componentInstance.toggle('q2', 'B');
-    expect(fixture.componentInstance.canSubmit()).toBe(true);
-  });
-
-  it('submit scores every question, records each result, and navigates to the report with state', async () => {
-    configure();
-    const fixture = TestBed.createComponent(RoundPage);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const navigateSpy = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
-
-    fixture.componentInstance.toggle('q1', 'A');
-    fixture.componentInstance.toggle('q2', 'B');
-    fixture.componentInstance.submit();
-
-    expect(engine.score).toHaveBeenCalledWith(q1, ['A']);
-    expect(engine.score).toHaveBeenCalledWith(q2, ['B']);
-    expect(stats.recordResult).toHaveBeenCalledTimes(2);
-    expect(navigateSpy).toHaveBeenCalledWith(
-      ['/quiz', 'rt', 'report'],
-      expect.objectContaining({
-        state: expect.objectContaining({ quizTitle: 'Logic Quiz' }),
-      }),
-    );
-  });
-
-  it('renders one fieldset per question with its options and a submit button', async () => {
-    configure();
-    const fixture = TestBed.createComponent(RoundPage);
-    fixture.detectChanges();
-    await fixture.whenStable();
+    const feedback = fixture.nativeElement.querySelector('[data-testid="feedback"]');
+    expect(feedback).toBeTruthy();
+    expect(feedback.textContent).toContain('E1');
 
     const questionEls = fixture.nativeElement.querySelectorAll('[data-testid="question"]');
     expect(questionEls.length).toBe(2);
 
-    const optionEls = fixture.nativeElement.querySelectorAll('[data-testid="option"]');
-    expect(optionEls.length).toBe(4);
+    const firstOptions = questionEls[0].querySelectorAll('[data-testid="option"]');
+    for (const option of Array.from(firstOptions) as HTMLInputElement[]) {
+      expect(option.disabled).toBe(true);
+    }
+  });
 
-    const submitBtn = fixture.nativeElement.querySelector('[data-testid="submit-round"]');
-    expect(submitBtn.disabled).toBe(true);
+  it('shows "1 / 1 correct" in the score footer after checking the correct option', async () => {
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    fixture.componentInstance.toggle(0, 'A');
+    fixture.componentInstance.check();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const score = fixture.nativeElement.querySelector('[data-testid="score"]');
+    expect(score.textContent).toContain('1 / 1 correct');
+  });
+
+  it('shows the exhausted message and adds no further question once selectRound returns none', async () => {
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    fixture.componentInstance.toggle(0, 'A');
+    fixture.componentInstance.check();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    fixture.componentInstance.toggle(1, 'B');
+    fixture.componentInstance.check();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.exhausted()).toBe(true);
+    expect(fixture.componentInstance.entries().length).toBe(2);
+
+    const exhaustedEl = fixture.nativeElement.querySelector('[data-testid="exhausted"]');
+    expect(exhaustedEl).toBeTruthy();
+  });
+
+  it('endQuiz navigates with the checked results and records the session end', async () => {
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const navigateSpy = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+
+    fixture.componentInstance.toggle(0, 'A');
+    fixture.componentInstance.check();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const checkedResult = fixture.componentInstance.entries()[0].result;
+
+    fixture.componentInstance.endQuiz();
+
+    expect(stats.recordSessionEnd).toHaveBeenCalledWith('rt');
+    expect(navigateSpy).toHaveBeenCalledWith(
+      ['/quiz', 'rt', 'report'],
+      {
+        state: { results: [checkedResult], quizTitle: 'Logic Quiz' },
+      },
+    );
+  });
+
+  it('endQuiz with nothing checked does not record a session end and navigates with no results', async () => {
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const navigateSpy = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+
+    fixture.componentInstance.endQuiz();
+
+    expect(stats.recordSessionEnd).not.toHaveBeenCalled();
+    expect(navigateSpy).toHaveBeenCalledWith(
+      ['/quiz', 'rt', 'report'],
+      {
+        state: { results: [], quizTitle: 'Logic Quiz' },
+      },
+    );
+  });
+
+  it('toggling an already-checked entry does nothing', async () => {
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    fixture.componentInstance.toggle(0, 'A');
+    fixture.componentInstance.check();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const selectedBefore = fixture.componentInstance.entries()[0].selected;
+
+    fixture.componentInstance.toggle(0, 'B');
+
+    expect(fixture.componentInstance.entries()[0].selected).toEqual(selectedBefore);
   });
 });
