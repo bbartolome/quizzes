@@ -11,6 +11,7 @@ import { StatsService } from '../../core/services/stats.service';
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { TemplateGeneratorService } from '../../core/services/template-generator.service';
 import {
+  kbByName,
   nextQuestion,
   parseRoundFilters,
   weakTraitWeights,
@@ -51,6 +52,7 @@ export class RoundPage implements OnInit {
   readonly kb = signal<KnowledgeBaseEntry[]>([]);
   readonly entries = signal<RoundEntry[]>([]);
   readonly exhausted = signal(false);
+  readonly openInfo = signal<string | null>(null);
 
   readonly score = computed(() => {
     const checked = this.entries().filter((e) => e.result !== undefined);
@@ -59,6 +61,8 @@ export class RoundPage implements OnInit {
       answered: checked.length,
     };
   });
+
+  private readonly kbIndex = computed(() => kbByName(this.kb()));
 
   readonly canCheck = computed(() => {
     const entries = this.entries();
@@ -124,6 +128,15 @@ export class RoundPage implements OnInit {
     } else {
       this.exhausted.set(true);
     }
+  }
+
+  infoFor(option: string): KnowledgeBaseEntry | undefined {
+    return this.kbIndex().get(option.toLowerCase());
+  }
+
+  toggleInfo(index: number, option: string): void {
+    const key = `${index}:${option}`;
+    this.openInfo.set(this.openInfo() === key ? null : key);
   }
 
   toggle(index: number, option: string): void {
