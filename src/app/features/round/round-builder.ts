@@ -86,3 +86,25 @@ export function shuffle<T>(
   }
   return arr;
 }
+
+export function traitIdsForAnswers(
+  correctAnswers: string[],
+  kb: KnowledgeBaseEntry[],
+): string[] {
+  const nameToId = new Map<string, string>();
+  for (const entry of kb) {
+    nameToId.set(entry.name.toLowerCase(), entry.id);
+  }
+
+  const ids: string[] = [];
+  const seen = new Set<string>();
+  for (const answer of correctAnswers) {
+    const id = nameToId.get(answer.toLowerCase());
+    if (id !== undefined && !seen.has(id)) {
+      seen.add(id);
+      ids.push(id);
+    }
+  }
+
+  return ids;
+}
