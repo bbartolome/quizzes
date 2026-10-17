@@ -15,6 +15,7 @@ import {
   RoundQuestion,
   Question,
 } from '../../core/models/quiz.models';
+import type { QuestionBank, SelectRoundOptions } from '../../core/services/quiz-engine.service';
 
 function makeTemplate(overrides: Partial<Template> & { id: string }): Template {
   return {
@@ -229,7 +230,7 @@ describe('nextQuestion', () => {
       kb: [],
       filters: { weakTraits: false },
       usedIds: new Set<string>(),
-      selectRound: vi.fn(() => [makeRoundQuestion({ id: 'fixed-1' })]),
+      selectRound: vi.fn((_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => [makeRoundQuestion({ id: 'fixed-1' })]),
       renderTemplate: vi.fn((tpl: Template, traitIds: string[]) => ({
         id: 'rendered',
         prompt: tpl.pattern,
@@ -246,7 +247,7 @@ describe('nextQuestion', () => {
 
   it('returns the fixed question when rng >= TEMPLATE_PROBABILITY', () => {
     const fixed = makeRoundQuestion({ id: 'fixed-1' });
-    const selectRound = vi.fn(() => [fixed]);
+    const selectRound = vi.fn((_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => [fixed]);
     const deps = makeDeps({ selectRound, rng: () => 0.9 });
 
     const result = nextQuestion(deps);
@@ -255,7 +256,7 @@ describe('nextQuestion', () => {
   });
 
   it('passes count 1, filters, weights and avoidIds (containing usedIds) to selectRound', () => {
-    const selectRound = vi.fn(() => [makeRoundQuestion({ id: 'fixed-1' })]);
+    const selectRound = vi.fn((_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => [makeRoundQuestion({ id: 'fixed-1' })]);
     const usedIds = new Set(['used-1', 'used-2']);
     const weights = { 'kb-1': 2 };
     const filters = { categories: ['fallacy'] as const, traitIds: ['kb-1'], weakTraits: false };
@@ -280,14 +281,14 @@ describe('nextQuestion', () => {
   });
 
   it('returns undefined when selectRound returns an empty array', () => {
-    const selectRound = vi.fn(() => []);
+    const selectRound = vi.fn((_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => []);
     const deps = makeDeps({ selectRound, rng: () => 0.9 });
 
     expect(nextQuestion(deps)).toBeUndefined();
   });
 
   it('returns undefined when selectRound returns a question whose id is already in usedIds, even if templates exist', () => {
-    const selectRound = vi.fn(() => [makeRoundQuestion({ id: 'seen-1' })]);
+    const selectRound = vi.fn((_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => [makeRoundQuestion({ id: 'seen-1' })]);
     const templates = [makeTemplate({ id: 'tpl-1' })];
     const deps = makeDeps({
       selectRound,
@@ -301,7 +302,7 @@ describe('nextQuestion', () => {
 
   it('with rng < TEMPLATE_PROBABILITY and a matching template, returns renderTemplate output with derived id and sourceTemplateId', () => {
     const fixed = makeRoundQuestion({ id: 'fixed-1' });
-    const selectRound = vi.fn(() => [fixed]);
+    const selectRound = vi.fn((_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => [fixed]);
     const kb = [makeKbEntry({ id: 'kb-1', name: 'Straw Man' })];
     const tpl = makeTemplate({ id: 'tpl-1', correctAnswers: ['Straw Man'] });
     const templates = [tpl];
@@ -328,7 +329,7 @@ describe('nextQuestion', () => {
 
   it('with rng < TEMPLATE_PROBABILITY but no matching template, returns the fixed question', () => {
     const fixed = makeRoundQuestion({ id: 'fixed-1' });
-    const selectRound = vi.fn(() => [fixed]);
+    const selectRound = vi.fn((_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => [fixed]);
     const templates = [makeTemplate({ id: 'bias-only', category: 'bias' })];
     const deps = makeDeps({
       selectRound,
