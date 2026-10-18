@@ -1,5 +1,8 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { PrototypeSwitcher } from '../../shared/prototype-switcher';
 import {
   KnowledgeBaseEntry,
   QuizManifestEntry,
@@ -32,6 +35,7 @@ export interface RoundEntry {
 @Component({
   selector: 'app-round-page',
   templateUrl: './round-page.html',
+  imports: [PrototypeSwitcher],
 })
 export class RoundPage implements OnInit {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
@@ -53,6 +57,17 @@ export class RoundPage implements OnInit {
   readonly entries = signal<RoundEntry[]>([]);
   readonly exhausted = signal(false);
   readonly openInfo = signal<string | null>(null);
+
+  // PROTOTYPE: three variants of the option-definition disclosure, switchable via ?variant=.
+  readonly variant = toSignal(
+    this.route.queryParamMap.pipe(map((p) => p.get('variant') ?? 'A')),
+    { initialValue: 'A' },
+  );
+  readonly infoVariants = [
+    { key: 'A', name: 'Push-down panel' },
+    { key: 'B', name: 'Expanding card' },
+    { key: 'C', name: 'Anchored popover' },
+  ];
 
   readonly score = computed(() => {
     const checked = this.entries().filter((e) => e.result !== undefined);
