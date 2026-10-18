@@ -35,7 +35,7 @@
       @if (cards$ | async; as cards) {
         @for (card of cards; track card.entry.id) {
           <a
-            [routerLink]="'/quiz/' + card.entry.id"
+            [routerLink]="routeFor(card.entry)"
             [style.borderLeftColor]="card.entry.accent"
             [style.borderLeftWidth]="'6px'"
             [style.backgroundColor]="accentTint(card.entry.accent)"
