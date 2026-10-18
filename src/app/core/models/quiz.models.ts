@@ -7,6 +7,8 @@ export interface QuizManifestEntry {
   version: number;
   dataPath: string;
   order: number;
+  kind: 'traps' | 'calibration';
+  format?: 'two-way' | 'four-way';
 }
 
 export interface QuizManifest {

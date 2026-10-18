@@ -17,6 +17,7 @@ describe('QuizHomePage', () => {
     version: 1,
     dataPath: 'data/rt/',
     order: 1,
+    kind: 'traps',
   };
 
   const strawMan: KnowledgeBaseEntry = {

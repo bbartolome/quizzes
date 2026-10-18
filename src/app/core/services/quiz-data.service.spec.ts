@@ -41,6 +41,7 @@ describe('QuizDataService', () => {
             version: 1,
             dataPath: 'data/quizzes/reasoning-traps/',
             order: 1,
+            kind: 'traps',
           },
         ],
       };
@@ -69,6 +70,7 @@ describe('QuizDataService', () => {
         version: 1,
         dataPath: 'data/quizzes/reasoning-traps/',
         order: 1,
+        kind: 'traps',
       };
 
       const questions: Question[] = [

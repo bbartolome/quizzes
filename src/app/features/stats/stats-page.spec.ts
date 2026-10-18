@@ -22,6 +22,7 @@ describe('StatsPage', () => {
     version: 3,
     dataPath: 'data/rt/',
     order: 1,
+    kind: 'traps',
   };
 
   const strawman: KnowledgeBaseEntry = {
