@@ -34,6 +34,10 @@ _Avoid_: Calibration chart, reliability diagram (in player-facing text)
 The mean squared difference between stated confidence and outcome (1 for correct, 0 for wrong). Lower is better.
 _Avoid_: Calibration score
 
+**Skill score**:
+A player's Brier score restated so that guessing scores the quiz's chance rate (50 on a two-choice quiz, 25 on a four-way quiz) and perfect answers score 100. Higher is better, and below the chance rate is worse than guessing. It rewards knowledge as well as calibration.
+_Avoid_: Calibration score, accuracy
+
 **Pending round**:
 A round that has been drawn and is being answered but hasn't been submitted. It doesn't count toward the player's record until it is.
 _Avoid_: Draft, unfinished round
