@@ -8,7 +8,32 @@
       "accent": "#3b6ea5",
       "version": 1,
       "dataPath": "data/quizzes/reasoning-traps/",
-      "order": 1
+      "order": 1,
+      "kind": "traps"
+    },
+    {
+      "id": "calibration",
+      "title": "Confidence",
+      "description": "Pick an answer and say how sure you are. See how well your confidence matches your accuracy.",
+      "icon": "icons/calibration.svg",
+      "accent": "#b45309",
+      "version": 1,
+      "dataPath": "data/quizzes/calibration/",
+      "order": 2,
+      "kind": "calibration",
+      "format": "two-way"
+    },
+    {
+      "id": "calibration-advanced",
+      "title": "Confidence: Advanced",
+      "description": "Neither, A, B or both: judge each option on its own, then rate your confidence from 0 to 100%.",
+      "icon": "icons/calibration-advanced.svg",
+      "accent": "#6d28d9",
+      "version": 1,
+      "dataPath": "data/quizzes/calibration-advanced/",
+      "order": 3,
+      "kind": "calibration",
+      "format": "four-way"
     }
   ]
 }
