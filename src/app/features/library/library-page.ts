@@ -67,6 +67,10 @@ export class LibraryPage {
     }),
   );
 
+  protected routeFor(entry: QuizManifestEntry): string {
+    return entry.kind === 'traps' ? `/quiz/${entry.id}` : `/calibration/${entry.id}`;
+  }
+
   protected formatPercent(value: number): string {
     return `${Math.round(value * 100)}%`;
   }
