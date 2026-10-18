@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "c001",
+      "prompt": "Which is farther north?",
+      "options": [
+        "Rome",
+        "New York"
+      ],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Rome lies at about 41.9°N, New York at about 40.7°N.",
+      "source": {
+        "label": "Wikipedia: Rome",
+        "url": "https://en.wikipedia.org/wiki/Rome"
+      }
+    },
+    {
+      "id": "c002",
+      "prompt": "Which lake is larger by area?",
+      "options": [
+        "Lake Victoria",
+        "Lake Superior"
+      ],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Superior covers about 82,100 km², Victoria about 59,900 km².",
+      "source": {
+        "label": "Wikipedia: Lake Superior",
+        "url": "https://en.wikipedia.org/wiki/Lake_Superior"
+      }
+    },
+    {
+      "id": "c003",
+      "prompt": "Which came first?",
+      "options": [
+        "Gutenberg's press",
+        "Fall of Constantinople"
+      ],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Gutenberg's press dates to around 1440; Constantinople fell in 1453.",
+      "source": {
+        "label": "Wikipedia: Printing press",
+        "url": "https://en.wikipedia.org/wiki/Printing_press"
+      }
+    },
+    {
+      "id": "c004",
+      "prompt": "Which canal opened first?",
+      "options": [
+        "Panama Canal",
+        "Suez Canal"
+      ],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Suez opened in 1869, Panama in 1914.",
+      "source": {
+        "label": "Wikipedia: Suez Canal",
+        "url": "https://en.wikipedia.org/wiki/Suez_Canal"
+      }
+    },
+    {
+      "id": "c005",
+      "prompt": "Which has more bones?",
+      "options": [
+        "A human hand",
+        "A human foot"
+      ],
+      "correct": 0,
+      "topic": "science",
+      "fact": "A hand with its wrist has 27 bones; a foot has 26.",
+      "source": {
+        "label": "Wikipedia: Hand",
+        "url": "https://en.wikipedia.org/wiki/Hand"
+      }
+    },
+    {
+      "id": "c006",
+      "prompt": "Which metal is denser?",
+      "options": [
+        "Lead",
+        "Gold"
+      ],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Gold is about 19.3 g/cm³, lead about 11.3 g/cm³.",
+      "source": {
+        "label": "Wikipedia: Gold",
+        "url": "https://en.wikipedia.org/wiki/Gold"
+      }
+    },
+    {
+      "id": "c007",
+      "prompt": "Which has more legs?",
+      "options": [
+        "A spider",
+        "A lobster"
+      ],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Lobsters are decapods with ten legs; spiders have eight.",
+      "source": {
+        "label": "Wikipedia: Lobster",
+        "url": "https://en.wikipedia.org/wiki/Lobster"
+      }
+    },
+    {
+      "id": "c008",
+      "prompt": "Which has more adult teeth?",
+      "options": [
+        "A dog",
+        "A human"
+      ],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Adult dogs have 42 teeth; adult humans have 32.",
+      "source": {
+        "label": "Wikipedia: Dog anatomy",
+        "url": "https://en.wikipedia.org/wiki/Dog_anatomy"
+      }
+    },
+    {
+      "id": "c009",
+      "prompt": "Which was written first?",
+      "options": [
+        "Hamlet",
+        "Don Quixote"
+      ],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Hamlet dates to about 1599–1601; Don Quixote Part One was published in 1605.",
+      "source": {
+        "label": "Wikipedia: Hamlet",
+        "url": "https://en.wikipedia.org/wiki/Hamlet"
+      }
+    },
+    {
+      "id": "c010",
+      "prompt": "Which premiered first?",
+      "options": [
+        "Beethoven's Ninth",
+        "The Barber of Seville"
+      ],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Rossini's opera premiered in 1816; Beethoven's Ninth in 1824.",
+      "source": {
+        "label": "Wikipedia: The Barber of Seville",
+        "url": "https://en.wikipedia.org/wiki/The_Barber_of_Seville"
+      }
+    },
+    {
+      "id": "c011",
+      "prompt": "Which is larger?",
+      "options": [
+        "10³",
+        "2¹⁰"
+      ],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "2¹⁰ = 1,024; 10³ = 1,000.",
+      "source": {
+        "label": "Wikipedia: Power of two",
+        "url": "https://en.wikipedia.org/wiki/Power_of_two"
+      }
+    },
+    {
+      "id": "c012",
+      "prompt": "Which is larger?",
+      "options": [
+        "7 × 8 × 9",
+        "23²"
+      ],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "23² = 529; 7 × 8 × 9 = 504.",
+      "source": {
+        "label": "Wikipedia: Square number",
+        "url": "https://en.wikipedia.org/wiki/Square_number"
+      }
+    }
+  ]
+}

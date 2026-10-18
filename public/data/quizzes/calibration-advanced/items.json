@@ -1,0 +1,257 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "a001",
+      "prompt": "Which of these is a mammal?",
+      "options": [
+        "Platypus",
+        "Penguin"
+      ],
+      "truth": [
+        true,
+        false
+      ],
+      "topic": "nature",
+      "facts": [
+        "The platypus is an egg-laying mammal.",
+        "Penguins are birds."
+      ],
+      "source": {
+        "label": "Wikipedia: Platypus",
+        "url": "https://en.wikipedia.org/wiki/Platypus"
+      }
+    },
+    {
+      "id": "a002",
+      "prompt": "Which of these borders Brazil?",
+      "options": [
+        "Chile",
+        "Ecuador"
+      ],
+      "truth": [
+        false,
+        false
+      ],
+      "topic": "geography",
+      "facts": [
+        "Chile and Ecuador are the only South American countries that don't border Brazil.",
+        "Chile and Ecuador are the only South American countries that don't border Brazil."
+      ],
+      "source": {
+        "label": "Wikipedia: Borders of Brazil",
+        "url": "https://en.wikipedia.org/wiki/Borders_of_Brazil"
+      }
+    },
+    {
+      "id": "a003",
+      "prompt": "Which of these is prime?",
+      "options": [
+        "91",
+        "97"
+      ],
+      "truth": [
+        false,
+        true
+      ],
+      "topic": "numbers",
+      "facts": [
+        "91 = 7 × 13.",
+        "97 is prime."
+      ],
+      "source": {
+        "label": "Wikipedia: List of prime numbers",
+        "url": "https://en.wikipedia.org/wiki/List_of_prime_numbers"
+      }
+    },
+    {
+      "id": "a004",
+      "prompt": "Which of these planets has rings?",
+      "options": [
+        "Neptune",
+        "Uranus"
+      ],
+      "truth": [
+        true,
+        true
+      ],
+      "topic": "science",
+      "facts": [
+        "Neptune has a faint ring system.",
+        "Uranus has 13 known rings."
+      ],
+      "source": {
+        "label": "Wikipedia: Rings of Neptune",
+        "url": "https://en.wikipedia.org/wiki/Rings_of_Neptune"
+      }
+    },
+    {
+      "id": "a005",
+      "prompt": "Which of these people was born before 1900?",
+      "options": [
+        "Albert Einstein",
+        "Frida Kahlo"
+      ],
+      "truth": [
+        true,
+        false
+      ],
+      "topic": "history",
+      "facts": [
+        "Einstein was born in 1879.",
+        "Kahlo was born in 1907."
+      ],
+      "source": {
+        "label": "Wikipedia: Albert Einstein",
+        "url": "https://en.wikipedia.org/wiki/Albert_Einstein"
+      }
+    },
+    {
+      "id": "a006",
+      "prompt": "Which of these is a noble gas?",
+      "options": [
+        "Nitrogen",
+        "Argon"
+      ],
+      "truth": [
+        false,
+        true
+      ],
+      "topic": "science",
+      "facts": [
+        "Nitrogen is in group 15.",
+        "Argon is a group 18 noble gas."
+      ],
+      "source": {
+        "label": "Wikipedia: Noble gas",
+        "url": "https://en.wikipedia.org/wiki/Noble_gas"
+      }
+    },
+    {
+      "id": "a007",
+      "prompt": "Which of these cities is a national capital?",
+      "options": [
+        "Istanbul",
+        "Zurich"
+      ],
+      "truth": [
+        false,
+        false
+      ],
+      "topic": "geography",
+      "facts": [
+        "Turkey's capital is Ankara.",
+        "Switzerland's federal city is Bern."
+      ],
+      "source": {
+        "label": "Wikipedia: Ankara",
+        "url": "https://en.wikipedia.org/wiki/Ankara"
+      }
+    },
+    {
+      "id": "a008",
+      "prompt": "Which of these is a national language of Switzerland?",
+      "options": [
+        "Romansh",
+        "Italian"
+      ],
+      "truth": [
+        true,
+        true
+      ],
+      "topic": "culture",
+      "facts": [
+        "Switzerland's four national languages are German, French, Italian and Romansh.",
+        "Switzerland's four national languages are German, French, Italian and Romansh."
+      ],
+      "source": {
+        "label": "Wikipedia: Languages of Switzerland",
+        "url": "https://en.wikipedia.org/wiki/Languages_of_Switzerland"
+      }
+    },
+    {
+      "id": "a009",
+      "prompt": "Which of these opened before 1900?",
+      "options": [
+        "Eiffel Tower",
+        "Brooklyn Bridge"
+      ],
+      "truth": [
+        true,
+        true
+      ],
+      "topic": "history",
+      "facts": [
+        "The Eiffel Tower opened in 1889.",
+        "The Brooklyn Bridge opened in 1883."
+      ],
+      "source": {
+        "label": "Wikipedia: Eiffel Tower",
+        "url": "https://en.wikipedia.org/wiki/Eiffel_Tower"
+      }
+    },
+    {
+      "id": "a010",
+      "prompt": "Which of these was written by Leo Tolstoy?",
+      "options": [
+        "War and Peace",
+        "Crime and Punishment"
+      ],
+      "truth": [
+        true,
+        false
+      ],
+      "topic": "culture",
+      "facts": [
+        "Tolstoy wrote War and Peace.",
+        "Dostoevsky wrote Crime and Punishment."
+      ],
+      "source": {
+        "label": "Wikipedia: War and Peace",
+        "url": "https://en.wikipedia.org/wiki/War_and_Peace"
+      }
+    },
+    {
+      "id": "a011",
+      "prompt": "Which of these is native to Australia?",
+      "options": [
+        "Kiwi",
+        "Wombat"
+      ],
+      "truth": [
+        false,
+        true
+      ],
+      "topic": "nature",
+      "facts": [
+        "Kiwis are native to New Zealand.",
+        "Wombats are native to Australia."
+      ],
+      "source": {
+        "label": "Wikipedia: Wombat",
+        "url": "https://en.wikipedia.org/wiki/Wombat"
+      }
+    },
+    {
+      "id": "a012",
+      "prompt": "Which of these is divisible by 7?",
+      "options": [
+        "143",
+        "187"
+      ],
+      "truth": [
+        false,
+        false
+      ],
+      "topic": "numbers",
+      "facts": [
+        "143 = 11 × 13.",
+        "187 = 11 × 17."
+      ],
+      "source": {
+        "label": "Wikipedia: Divisibility rule",
+        "url": "https://en.wikipedia.org/wiki/Divisibility_rule"
+      }
+    }
+  ]
+}
