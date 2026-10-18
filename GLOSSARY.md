@@ -41,3 +41,11 @@ _Avoid_: Draft, unfinished round
 **Lifetime**:
 All of a player's submitted answers for one quiz, the basis of the lifetime calibration curve and Brier score.
 _Avoid_: All-time, history (in player-facing text)
+
+**Overconfidence**:
+A player's mean stated confidence minus their percentage of correct answers, over a round or their lifetime, in percentage points. Positive means overconfident, negative means underconfident, and near zero means well calibrated.
+_Avoid_: Bias, calibration error
+
+**Confident answer**:
+An answer given at one of the top two confidence stops: 90 or 100% on a calibration item, 75 or 100% on a four-way item. Any other answer is hedged. The item review sorts a round's answers into confident misses, hedged misses, underplayed hits (hedged but right) and confident hits.
+_Avoid_: Sure answer, high-confidence answer
