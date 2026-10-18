@@ -65,7 +65,7 @@
           "defaultConfiguration": "development",
           "options": {
             "host": "0.0.0.0",
-            "allowedHosts": ["devcontainer"]
+            "allowedHosts": true
           }
         },
         "test": {
