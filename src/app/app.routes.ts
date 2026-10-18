@@ -5,6 +5,7 @@ import { RoundPage } from './features/round/round-page';
 import { ReportPage } from './features/report/report-page';
 import { GlossaryPage } from './features/glossary/glossary-page';
 import { StatsPage } from './features/stats/stats-page';
+import { CalibrationResultsPrototypePage } from './features/calibration-results-prototype/calibration-results-prototype-page';
 import { CalibrationRoundPrototypePage } from './features/calibration-round-prototype/calibration-round-prototype-page';
 
 export const routes: Routes = [
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'quiz/:id/glossary', component: GlossaryPage },
   { path: 'quiz/:id/stats', component: StatsPage },
   { path: 'prototype/calibration-round', component: CalibrationRoundPrototypePage }, // PROTOTYPE
+  { path: 'prototype/calibration-results', component: CalibrationResultsPrototypePage }, // PROTOTYPE
   { path: '**', redirectTo: '' },
 ];

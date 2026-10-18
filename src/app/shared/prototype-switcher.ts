@@ -38,7 +38,7 @@ export class PrototypeSwitcher {
     const keys = this.variants().map((v) => v.key);
     const i = Math.max(0, keys.indexOf(this.current()));
     const next = keys[(i + delta + keys.length) % keys.length];
-    this.router.navigate([], { relativeTo: this.route, queryParams: { variant: next }, replaceUrl: true });
+    this.router.navigate([], { relativeTo: this.route, queryParams: { variant: next }, queryParamsHandling: 'merge', replaceUrl: true });
   }
 
   @HostListener('window:keydown', ['$event'])
