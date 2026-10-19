@@ -133,6 +133,61 @@ export class CalibrationHistoryService {
     return log.slice(0, -1).flatMap((round) => round.answers);
   }
 
+  /**
+   * Re-score a stored history against a newly loaded bank.
+   *
+   * - A bank older than the manifest's version is a stale cache: return it
+   *   untouched and do not persist.
+   * - If the history already matches the bank's version, no work is needed.
+   * - Otherwise re-score every answer whose item still exists, drop answers
+   *   whose item was deleted, drop any round left empty, rebuild the summary
+   *   and stamp the history with the bank's version.
+   */
+  migrate(
+    quizId: string,
+    bank: CalibrationBank,
+    manifestVersion: number,
+  ): CalibrationHistory {
+    const h = this.getHistory(quizId);
+    if (bank.version < manifestVersion) {
+      return h;
+    }
+    if (h.bankVersion === bank.version) {
+      return h;
+    }
+
+    const byId = new Map(bank.items.map((item) => [item.id, item]));
+
+    const log: CalibrationRound[] = [];
+    const answers: CalibrationAnswer[] = [];
+    for (const round of h.log) {
+      const kept = round.answers
+        .map((answer) => {
+          const item = byId.get(answer.itemId);
+          return item === undefined ? null : { ...answer, correct: isCorrect(item, answer.pick) };
+        })
+        .filter((a): a is CalibrationAnswer => a !== null);
+      if (kept.length === 0) {
+        continue;
+      }
+      answers.push(...kept);
+      log.push({ ...round, answers: kept });
+    }
+
+    h.log = log;
+    h.summary = {
+      roundsPlayed: Math.max(h.summary.roundsPlayed, log.length),
+      brierSum: answers.reduce((sum, a) => sum + answerBrier(a.confidence, a.correct), 0),
+      answerCount: answers.length,
+    };
+    h.bankVersion = bank.version;
+    if (h.pending !== null && h.pending.bankVersion !== bank.version) {
+      h.pending = null;
+    }
+    this.persist(quizId, h);
+    return h;
+  }
+
   private zeroed(quizId: string): CalibrationHistory {
     return {
       quizId,
