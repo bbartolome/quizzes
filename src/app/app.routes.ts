@@ -5,6 +5,8 @@ import { RoundPage } from './features/round/round-page';
 import { ReportPage } from './features/report/report-page';
 import { GlossaryPage } from './features/glossary/glossary-page';
 import { StatsPage } from './features/stats/stats-page';
+// PROTOTYPE — throwaway (issue #17)
+import { FlashCardRoundPrototype } from './features/flash-cards/prototype/flash-card-round.prototype';
 
 export const routes: Routes = [
   { path: '', component: LibraryPage },
@@ -13,5 +15,8 @@ export const routes: Routes = [
   { path: 'quiz/:id/report', component: ReportPage },
   { path: 'quiz/:id/glossary', component: GlossaryPage },
   { path: 'quiz/:id/stats', component: StatsPage },
+  // PROTOTYPE — throwaway (issue #17)
+  { path: 'biases/:id/round', component: FlashCardRoundPrototype, data: { conceptType: 'bias' } },
+  { path: 'fallacies/:id/round', component: FlashCardRoundPrototype, data: { conceptType: 'fallacy' } },
   { path: '**', redirectTo: '' },
 ];
