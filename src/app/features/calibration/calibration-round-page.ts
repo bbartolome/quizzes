@@ -6,7 +6,8 @@ import { CalibrationItem, DrawnItem, PendingRound } from './calibration.models';
 import { CalibrationBankService } from './calibration-bank.service';
 import { CalibrationHistoryService } from './calibration-history.service';
 import { CalibrationContext, loadCalibrationContext } from './calibration-context';
-import { resumeOrDraw } from './pending-round';
+import { allItemsAnswered, isItemAnswered, resumeOrDraw, setPick } from './pending-round';
+import { screenOptions, twoWayBankPick, twoWayScreenSelection } from './round-sides';
 import { CALIBRATION_RNG } from './draw';
 import { BipolarScale } from './bipolar-scale';
 import { BankUnavailable } from './bank-unavailable';
@@ -60,5 +61,78 @@ export class CalibrationRoundPage {
         },
         error: () => this.loadError.set(true),
       });
+  }
+
+  readonly current = computed<{ drawn: DrawnItem; item: CalibrationItem } | null>(() => {
+    const drawn = this.pending()?.items[this.index()];
+    if (!drawn) return null;
+    const item = this.bank()?.items.find((i) => i.id === drawn.itemId);
+    if (!item) return null;
+    return { drawn, item };
+  });
+
+  readonly onScreenOptions = computed<[string, string]>(() => {
+    const c = this.current();
+    return c ? screenOptions(c.item.options, c.drawn.swapped) : ['', ''];
+  });
+
+  readonly allAnswered = computed(() => {
+    const p = this.pending();
+    return p !== null && allItemsAnswered(p);
+  });
+
+  isAnswered(i: number): boolean {
+    const p = this.pending();
+    if (!p) return false;
+    return isItemAnswered(p, p.items[i]?.itemId);
+  }
+
+  readonly selectedTwoWay = computed(() => {
+    const c = this.current();
+    if (!c) return null;
+    const stored = this.pending()?.picks[c.drawn.itemId];
+    if (stored && typeof stored.pick === 'number') {
+      return twoWayScreenSelection(stored.pick, stored.confidence ?? 0, c.drawn.swapped);
+    }
+    return null;
+  });
+
+  private record(pick: number, confidence: number | undefined, advance: boolean): void {
+    const ctx = this.ctx();
+    const c = this.current();
+    const old = this.pending();
+    if (!ctx || !c || !old) return;
+    const p = setPick(old, c.drawn.itemId, { pick, confidence });
+    this.pending.set(p);
+    this.history.savePending(ctx.quizId, p);
+    if (advance && this.index() < p.items.length - 1) {
+      this.index.update((i) => i + 1);
+    }
+  }
+
+  answerTwoWay(a: { side: 0 | 1; confidence: number }): void {
+    const swapped = this.current()?.drawn.swapped ?? false;
+    this.record(twoWayBankPick(a.side, swapped), a.confidence, true);
+  }
+
+  answerFourWay(_choice: unknown): void {
+    // implemented later
+  }
+
+  goTo(i: number): void {
+    this.index.set(i);
+  }
+
+  back(): void {
+    this.index.update((i) => Math.max(0, i - 1));
+  }
+
+  submit(): void {
+    if (!this.allAnswered()) return;
+    const ctx = this.ctx();
+    const p = this.pending();
+    if (!ctx || !p) return;
+    this.history.submit(ctx.quizId, ctx.bank, p);
+    this.router.navigate(['/calibration', ctx.quizId, 'results']);
   }
 }
