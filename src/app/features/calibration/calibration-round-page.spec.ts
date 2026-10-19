@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { CalibrationRoundPage } from './calibration-round-page';
-import { CalibrationBank, PendingRound, TwoWayItem } from './calibration.models';
+import { CalibrationBank, FourWayItem, PendingRound, TwoWayItem } from './calibration.models';
 import { CalibrationBankService } from './calibration-bank.service';
 import { CalibrationHistoryService } from './calibration-history.service';
 import { CALIBRATION_RNG } from './draw';
@@ -345,5 +345,210 @@ describe('CalibrationRoundPage (two-way)', () => {
 
       expect(bankService.loadBank).toHaveBeenCalledTimes(2);
     });
+  });
+});
+
+describe('CalibrationRoundPage (four-way)', () => {
+  const QUIZ_ID = 'calibration-advanced';
+
+  const entry: QuizManifestEntry = {
+    id: QUIZ_ID,
+    title: 'Calibration Advanced',
+    description: 'desc',
+    icon: 'icon',
+    accent: 'accent',
+    version: 1,
+    dataPath: 'data/calibration-advanced/',
+    order: 3,
+    kind: 'calibration',
+    format: 'four-way',
+  };
+
+  function makeItem(n: number, truth: [boolean, boolean]): FourWayItem {
+    return {
+      id: `f${n}`,
+      prompt: `Statement ${n}`,
+      options: [`Alpha${n}`, `Beta${n}`],
+      truth,
+      topic: 'science',
+      facts: [`Fact A${n}`, `Fact B${n}`],
+      source: { label: 'Source', url: 'https://example.com' },
+    };
+  }
+
+  const bank: CalibrationBank = {
+    version: 1,
+    items: [makeItem(1, [true, false]), makeItem(2, [false, false]), makeItem(3, [true, true])],
+  };
+
+  function seededPending(swapped: boolean[] = [false, false, false]): PendingRound {
+    return {
+      bankVersion: 1,
+      items: bank.items.map((item, i) => ({ itemId: item.id, swapped: swapped[i] })),
+      picks: {},
+    };
+  }
+
+  let quizData: { loadManifest: ReturnType<typeof vi.fn> };
+  let bankService: { loadBank: ReturnType<typeof vi.fn> };
+  let history: CalibrationHistoryService;
+  let navigate: ReturnType<typeof vi.spyOn>;
+
+  function configure(): void {
+    TestBed.configureTestingModule({
+      imports: [CalibrationRoundPage],
+      providers: [
+        provideRouter([]),
+        {
+          provide: ActivatedRoute,
+          useValue: { paramMap: of(convertToParamMap({ id: QUIZ_ID })) },
+        },
+        { provide: QuizDataService, useValue: quizData },
+        { provide: CalibrationBankService, useValue: bankService },
+        { provide: CALIBRATION_RNG, useValue: () => 0.9 },
+      ],
+    });
+    history = TestBed.inject(CalibrationHistoryService);
+    navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+  }
+
+  async function settle(fixture: ComponentFixture<CalibrationRoundPage>): Promise<void> {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  }
+
+  async function render(): Promise<ComponentFixture<CalibrationRoundPage>> {
+    const fixture = TestBed.createComponent(CalibrationRoundPage);
+    await settle(fixture);
+    return fixture;
+  }
+
+  function root(fixture: ComponentFixture<CalibrationRoundPage>): HTMLElement {
+    return fixture.nativeElement as HTMLElement;
+  }
+
+  function buttonByExactText(fixture: ComponentFixture<CalibrationRoundPage>, text: string): HTMLButtonElement {
+    const button = Array.from(root(fixture).querySelectorAll<HTMLButtonElement>('button')).find(
+      (b) => (b.textContent ?? '').trim() === text,
+    );
+    if (!button) {
+      throw new Error(`No button with text "${text}"`);
+    }
+    return button;
+  }
+
+  function buttonByLabel(fixture: ComponentFixture<CalibrationRoundPage>, label: string): HTMLButtonElement {
+    const button = root(fixture).querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
+    if (!button) {
+      throw new Error(`No button with aria-label "${label}"`);
+    }
+    return button;
+  }
+
+  async function tap(fixture: ComponentFixture<CalibrationRoundPage>, text: string): Promise<void> {
+    buttonByExactText(fixture, text).click();
+    await settle(fixture);
+  }
+
+  function submitButton(fixture: ComponentFixture<CalibrationRoundPage>): HTMLButtonElement {
+    return Array.from(root(fixture).querySelectorAll<HTMLButtonElement>('button')).find((b) =>
+      /submit round/i.test(b.textContent ?? ''),
+    )!;
+  }
+
+  beforeEach(() => {
+    vi.stubGlobal('localStorage', new MemoryStorage());
+    quizData = { loadManifest: vi.fn(() => of({ quizzes: [entry] })) };
+    bankService = { loadBank: vi.fn(() => of(bank)) };
+    configure();
+    history.savePending(QUIZ_ID, seededPending());
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('renders the four-way control and no bipolar scale', async () => {
+    const fixture = await render();
+
+    expect(root(fixture).querySelector('app-four-way-control')).not.toBeNull();
+    expect(root(fixture).querySelector('app-bipolar-scale')).toBeNull();
+  });
+
+  it('saves a Neither pick with confidence 50 and moves to the next item', async () => {
+    const fixture = await render();
+
+    await tap(fixture, 'Neither');
+    await tap(fixture, '50%');
+
+    expect(history.getPending(QUIZ_ID)!.picks['f1']).toEqual({ pick: [false, false], confidence: 50 });
+    expect(root(fixture).textContent).toContain('Statement 2');
+    expect(root(fixture).textContent).not.toContain('Statement 1');
+  });
+
+  it('saves a choice alone without answering the item or advancing', async () => {
+    const fixture = await render();
+
+    await tap(fixture, 'Both');
+
+    const saved = history.getPending(QUIZ_ID)!.picks['f1'];
+    expect(saved.pick).toEqual([true, true]);
+    expect(saved.confidence ?? null).toBeNull();
+    expect(root(fixture).textContent).toContain('Statement 1');
+    expect(submitButton(fixture).disabled).toBe(true);
+  });
+
+  it('maps the on-screen left option back to bank order on a swapped item', async () => {
+    history.savePending(QUIZ_ID, seededPending([true, false, false]));
+    const fixture = await render();
+
+    // swapped: on-screen left (A) is bank option 1 (Beta1)
+    await tap(fixture, 'Beta1');
+
+    expect(history.getPending(QUIZ_ID)!.picks['f1'].pick).toEqual([false, true]);
+  });
+
+  it('saves Both as [true, true] regardless of swap', async () => {
+    history.savePending(QUIZ_ID, seededPending([true, false, false]));
+    const fixture = await render();
+
+    await tap(fixture, 'Both');
+
+    expect(history.getPending(QUIZ_ID)!.picks['f1'].pick).toEqual([true, true]);
+  });
+
+  it('shows the choice and confidence as pressed when an item is revisited', async () => {
+    const fixture = await render();
+    await tap(fixture, 'Alpha1');
+    await tap(fixture, '75%');
+    expect(root(fixture).textContent).toContain('Statement 2');
+
+    buttonByLabel(fixture, 'Item 1').click();
+    await settle(fixture);
+
+    expect(root(fixture).textContent).toContain('Statement 1');
+    expect(buttonByExactText(fixture, 'Alpha1').getAttribute('aria-pressed')).toBe('true');
+    expect(buttonByExactText(fixture, '75%').getAttribute('aria-pressed')).toBe('true');
+    expect(buttonByExactText(fixture, '50%').getAttribute('aria-pressed')).not.toBe('true');
+  });
+
+  it('submits the round once every item is answered', async () => {
+    const fixture = await render();
+    await tap(fixture, 'Alpha1');
+    await tap(fixture, '100%');
+    await tap(fixture, 'Neither');
+    await tap(fixture, '25%');
+    expect(submitButton(fixture).disabled).toBe(true);
+    await tap(fixture, 'Both');
+    await tap(fixture, '0%');
+    expect(submitButton(fixture).disabled).toBe(false);
+
+    submitButton(fixture).click();
+    await settle(fixture);
+
+    expect(history.lastRound(QUIZ_ID)!.answers.length).toBe(3);
+    expect(history.getPending(QUIZ_ID)).toBeNull();
+    expect(navigate).toHaveBeenCalledWith(['/calibration', QUIZ_ID, 'results']);
   });
 });
