@@ -2,20 +2,21 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
-import { CalibrationItem, DrawnItem, PendingRound } from './calibration.models';
+import { CalibrationItem, DrawnItem, PendingRound, type FourWayChoice } from './calibration.models';
 import { CalibrationBankService } from './calibration-bank.service';
 import { CalibrationHistoryService } from './calibration-history.service';
 import { CalibrationContext, loadCalibrationContext } from './calibration-context';
 import { allItemsAnswered, isItemAnswered, resumeOrDraw, setPick } from './pending-round';
-import { screenOptions, twoWayBankPick, twoWayScreenSelection } from './round-sides';
+import { fourWayBankPick, fourWayScreenChoice, screenOptions, twoWayBankPick, twoWayScreenSelection } from './round-sides';
 import { CALIBRATION_RNG } from './draw';
 import { BipolarScale } from './bipolar-scale';
 import { BankUnavailable } from './bank-unavailable';
+import { FourWayControl } from './four-way-control';
 
 @Component({
   selector: 'app-calibration-round-page',
   templateUrl: './calibration-round-page.html',
-  imports: [BipolarScale, BankUnavailable],
+  imports: [BipolarScale, BankUnavailable, FourWayControl],
 })
 export class CalibrationRoundPage {
   private readonly route = inject(ActivatedRoute);
@@ -32,6 +33,7 @@ export class CalibrationRoundPage {
 
   readonly entry = computed(() => this.ctx()?.entry ?? null);
   readonly bank = computed(() => this.ctx()?.bank ?? null);
+  readonly isFourWay = computed(() => this.ctx()?.format === 'four-way');
 
   constructor() {
     this.load();
@@ -97,7 +99,17 @@ export class CalibrationRoundPage {
     return null;
   });
 
-  private record(pick: number, confidence: number | undefined, advance: boolean): void {
+  readonly selectedFourWay = computed<{ choice?: FourWayChoice; confidence?: number }>(() => {
+    const c = this.current();
+    if (!c) return {};
+    const stored = this.pending()?.picks[c.drawn.itemId];
+    if (stored && Array.isArray(stored.pick)) {
+      return { choice: fourWayScreenChoice(stored.pick, c.drawn.swapped), confidence: stored.confidence };
+    }
+    return {};
+  });
+
+  private record(pick: number | [boolean, boolean], confidence: number | undefined, advance: boolean): void {
     const ctx = this.ctx();
     const c = this.current();
     const old = this.pending();
@@ -115,8 +127,9 @@ export class CalibrationRoundPage {
     this.record(twoWayBankPick(a.side, swapped), a.confidence, true);
   }
 
-  answerFourWay(_choice: unknown): void {
-    // implemented later
+  answerFourWay(a: { choice: FourWayChoice; confidence: number | null }): void {
+    const swapped = this.current()!.drawn.swapped;
+    this.record(fourWayBankPick(a.choice, swapped), a.confidence ?? undefined, a.confidence !== null);
   }
 
   goTo(i: number): void {
