@@ -28,11 +28,19 @@
       @if (cur !== null) {
         <p class="mt-6 text-lg font-medium text-gray-900">{{ cur.item.prompt }}</p>
         <div class="mt-4">
-          <app-bipolar-scale
-            [options]="onScreenOptions()!"
-            [selected]="selectedTwoWay()"
-            (answer)="answerTwoWay($event)"
-          />
+          @if (!isFourWay()) {
+            <app-bipolar-scale
+              [options]="onScreenOptions()!"
+              [selected]="selectedTwoWay()"
+              (answer)="answerTwoWay($event)"
+            />
+          } @else {
+            <app-four-way-control
+              [options]="onScreenOptions()"
+              [selected]="selectedFourWay()"
+              (change)="answerFourWay($event)"
+            />
+          }
         </div>
       }
 
