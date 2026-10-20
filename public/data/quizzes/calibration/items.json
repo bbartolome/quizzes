@@ -3984,6 +3984,246 @@
         "label": "Wikipedia: Great Wall of China",
         "url": "https://en.wikipedia.org/wiki/Great_Wall_of_China"
       }
+    },
+    {
+      "id": "c333",
+      "prompt": "Which can have more legs?",
+      "options": ["Millipede", "Centipede"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Millipedes reach over 1,300 legs; centipedes have at most 191 pairs (382 legs).",
+      "source": {
+        "label": "Wikipedia: Millipede",
+        "url": "https://en.wikipedia.org/wiki/Millipede"
+      }
+    },
+    {
+      "id": "c334",
+      "prompt": "Which is a fungus?",
+      "options": ["Kelp", "Truffle"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Truffles are fruiting bodies of fungi; kelps are large brown algae.",
+      "source": {
+        "label": "Wikipedia: Truffle",
+        "url": "https://en.wikipedia.org/wiki/Truffle"
+      }
+    },
+    {
+      "id": "c335",
+      "prompt": "Which is a plant?",
+      "options": ["Moss", "Kelp"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Mosses are non-vascular land plants; kelp is a stramenopile, not a plant.",
+      "source": {
+        "label": "Wikipedia: Kelp",
+        "url": "https://en.wikipedia.org/wiki/Kelp"
+      }
+    },
+    {
+      "id": "c336",
+      "prompt": "Which is a reptile?",
+      "options": ["Axolotl", "Tuatara"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The tuatara is a reptile (order Rhynchocephalia); the axolotl is an amphibian.",
+      "source": {
+        "label": "Wikipedia: Tuatara",
+        "url": "https://en.wikipedia.org/wiki/Tuatara"
+      }
+    },
+    {
+      "id": "c337",
+      "prompt": "Which is an amphibian?",
+      "options": ["Newt", "Skink"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Newts are salamanders (amphibians); skinks are lizards (reptiles).",
+      "source": {
+        "label": "Wikipedia: Newt",
+        "url": "https://en.wikipedia.org/wiki/Newt"
+      }
+    },
+    {
+      "id": "c338",
+      "prompt": "Which is a marsupial?",
+      "options": ["Aardvark", "Numbat"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The numbat is a marsupial; the aardvark is a placental of the order Tubulidentata.",
+      "source": {
+        "label": "Wikipedia: Numbat",
+        "url": "https://en.wikipedia.org/wiki/Numbat"
+      }
+    },
+    {
+      "id": "c339",
+      "prompt": "Which lays eggs?",
+      "options": ["Echidna", "Pangolin"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Echidnas are egg-laying monotremes; pangolins give birth and nurse their young.",
+      "source": {
+        "label": "Wikipedia: Echidna",
+        "url": "https://en.wikipedia.org/wiki/Echidna"
+      }
+    },
+    {
+      "id": "c340",
+      "prompt": "Which is a cephalopod?",
+      "options": ["Abalone", "Nautilus"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The nautilus is a cephalopod; abalone are sea snails (gastropods).",
+      "source": {
+        "label": "Wikipedia: Nautilus",
+        "url": "https://en.wikipedia.org/wiki/Nautilus"
+      }
+    },
+    {
+      "id": "c341",
+      "prompt": "Which is an echinoderm?",
+      "options": ["Sea cucumber", "Jellyfish"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Sea cucumbers are echinoderms; jellyfish belong to the phylum Cnidaria.",
+      "source": {
+        "label": "Wikipedia: Sea cucumber",
+        "url": "https://en.wikipedia.org/wiki/Sea_cucumber"
+      }
+    },
+    {
+      "id": "c342",
+      "prompt": "Which is a crustacean?",
+      "options": ["Millipede", "Woodlouse"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Woodlice are crustaceans; millipedes are myriapods.",
+      "source": {
+        "label": "Wikipedia: Woodlouse",
+        "url": "https://en.wikipedia.org/wiki/Woodlouse"
+      }
+    },
+    {
+      "id": "c343",
+      "prompt": "Which is eaten as flower buds?",
+      "options": ["Broccoli", "Cabbage"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Broccoli is eaten as a flowering head of buds; cabbage is eaten for its leaves.",
+      "source": {
+        "label": "Wikipedia: Broccoli",
+        "url": "https://en.wikipedia.org/wiki/Broccoli"
+      }
+    },
+    {
+      "id": "c344",
+      "prompt": "Which has the larger eyes?",
+      "options": ["Blue whale", "Colossal squid"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The colossal squid has the largest eyes of any known animal, about 27–30 cm across.",
+      "source": {
+        "label": "Wikipedia: Colossal squid",
+        "url": "https://en.wikipedia.org/wiki/Colossal_squid"
+      }
+    },
+    {
+      "id": "c345",
+      "prompt": "Which is venomous?",
+      "options": ["Coral snake", "Scarlet kingsnake"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Coral snakes are venomous; the scarlet kingsnake is a non-venomous mimic.",
+      "source": {
+        "label": "Wikipedia: Scarlet kingsnake",
+        "url": "https://en.wikipedia.org/wiki/Scarlet_kingsnake"
+      }
+    },
+    {
+      "id": "c346",
+      "prompt": "Which is flightless?",
+      "options": ["Kea", "Kākāpō"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The kākāpō is the world's only flightless parrot; the kea flies.",
+      "source": {
+        "label": "Wikipedia: Kākāpō",
+        "url": "https://en.wikipedia.org/wiki/K%C4%81k%C4%81p%C5%8D"
+      }
+    },
+    {
+      "id": "c347",
+      "prompt": "Which has the stronger bite?",
+      "options": ["Saltwater crocodile", "Great white shark"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The saltwater crocodile has the strongest bite of any living animal, measured at over 16,000 N.",
+      "source": {
+        "label": "Wikipedia: Saltwater crocodile",
+        "url": "https://en.wikipedia.org/wiki/Saltwater_crocodile"
+      }
+    },
+    {
+      "id": "c348",
+      "prompt": "Which has the longer pregnancy?",
+      "options": ["Cow", "Horse"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Horses carry foals for about 11 months (around 340 days); cows for about nine.",
+      "source": {
+        "label": "Wikipedia: Horse",
+        "url": "https://en.wikipedia.org/wiki/Horse"
+      }
+    },
+    {
+      "id": "c349",
+      "prompt": "Which is a legume?",
+      "options": ["Lentil", "Quinoa"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Lentils are legumes; quinoa is a pseudocereal in the amaranth family.",
+      "source": {
+        "label": "Wikipedia: Lentil",
+        "url": "https://en.wikipedia.org/wiki/Lentil"
+      }
+    },
+    {
+      "id": "c350",
+      "prompt": "Which is a true cereal grass?",
+      "options": ["Buckwheat", "Maize"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Maize is a cereal grass (Poaceae); buckwheat is a pseudocereal related to rhubarb.",
+      "source": {
+        "label": "Wikipedia: Maize",
+        "url": "https://en.wikipedia.org/wiki/Maize"
+      }
+    },
+    {
+      "id": "c351",
+      "prompt": "Which is an amphibian?",
+      "options": ["Caecilian", "Slow worm"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Caecilians are limbless amphibians; the slow worm is a legless lizard.",
+      "source": {
+        "label": "Wikipedia: Caecilian",
+        "url": "https://en.wikipedia.org/wiki/Caecilian"
+      }
+    },
+    {
+      "id": "c352",
+      "prompt": "Which is related to spinach?",
+      "options": ["Buckwheat", "Quinoa"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Quinoa is in the amaranth family, related to spinach; buckwheat is in the knotweed family.",
+      "source": {
+        "label": "Wikipedia: Quinoa",
+        "url": "https://en.wikipedia.org/wiki/Quinoa"
+      }
     }
   ]
 }
