@@ -2,10 +2,7 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EMPTY, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
-import {
-  KnowledgeBaseEntry,
-  ScoredQuestionResult,
-} from '../../core/models/quiz.models';
+import { KnowledgeBaseEntry, ScoredQuestionResult } from '../../core/models/quiz.models';
 import {
   STATUS_LABELS,
   findConfusionTips,

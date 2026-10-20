@@ -1,6 +1,6 @@
-import { KnowledgeBaseEntry, ScoredQuestionResult } from "../../core/models/quiz.models";
+import { KnowledgeBaseEntry, ScoredQuestionResult } from '../../core/models/quiz.models';
 
-export type OptionStatus = "correct" | "wrong" | "missed" | "neutral";
+export type OptionStatus = 'correct' | 'wrong' | 'missed' | 'neutral';
 
 export interface ConfusionTip {
   a: string;
@@ -10,21 +10,18 @@ export interface ConfusionTip {
 
 export function optionStatus(r: ScoredQuestionResult, option: string): OptionStatus {
   if (r.extra.includes(option)) {
-    return "wrong";
+    return 'wrong';
   }
   if (r.missed.includes(option)) {
-    return "missed";
+    return 'missed';
   }
   if (r.selected.includes(option) && r.question.correctAnswers.includes(option)) {
-    return "correct";
+    return 'correct';
   }
-  return "neutral";
+  return 'neutral';
 }
 
-export function findConfusionTips(
-  options: string[],
-  kb: KnowledgeBaseEntry[]
-): ConfusionTip[] {
+export function findConfusionTips(options: string[], kb: KnowledgeBaseEntry[]): ConfusionTip[] {
   // Map lowercased entry name -> entry (first wins on duplicate names).
   const byName = new Map<string, KnowledgeBaseEntry>();
   for (const entry of kb) {
@@ -64,9 +61,7 @@ export function findConfusionTips(
       if (!y || !matchedSet.has(y)) {
         continue;
       }
-      const pairKey = [x.name.toLowerCase(), y.name.toLowerCase()]
-        .sort()
-        .join("\u0000");
+      const pairKey = [x.name.toLowerCase(), y.name.toLowerCase()].sort().join('\u0000');
       if (seenPairs.has(pairKey)) {
         continue;
       }
@@ -84,4 +79,9 @@ export function summaryLine(results: ScoredQuestionResult[]): string {
   return `${correct} of ${total} correct`;
 }
 
-export const STATUS_LABELS: Record<OptionStatus, string> = { correct: 'Correct', wrong: 'Wrong pick', missed: 'Missed', neutral: 'Not picked' };
+export const STATUS_LABELS: Record<OptionStatus, string> = {
+  correct: 'Correct',
+  wrong: 'Wrong pick',
+  missed: 'Missed',
+  neutral: 'Not picked',
+};

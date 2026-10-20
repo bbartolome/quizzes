@@ -1,6 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { optionStatus, findConfusionTips, summaryLine } from './report-logic';
-import { KnowledgeBaseEntry, RoundQuestion, ScoredQuestionResult } from '../../core/models/quiz.models';
+import {
+  KnowledgeBaseEntry,
+  RoundQuestion,
+  ScoredQuestionResult,
+} from '../../core/models/quiz.models';
 
 function makeQuestion(overrides: Partial<RoundQuestion> & { id: string }): RoundQuestion {
   return {
@@ -24,7 +28,9 @@ function makeResult(overrides: Partial<ScoredQuestionResult> = {}): ScoredQuesti
   };
 }
 
-function makeKbEntry(overrides: Partial<KnowledgeBaseEntry> & { id: string; name: string }): KnowledgeBaseEntry {
+function makeKbEntry(
+  overrides: Partial<KnowledgeBaseEntry> & { id: string; name: string },
+): KnowledgeBaseEntry {
   return {
     type: 'fallacy',
     shortDefinition: 'short',
@@ -66,7 +72,12 @@ describe('optionStatus', () => {
 describe('findConfusionTips', () => {
   it('matches options to kb entries case-insensitively and returns a tip for a confused pair', () => {
     const kb: KnowledgeBaseEntry[] = [
-      makeKbEntry({ id: 'strawman', name: 'Strawman', commonlyConfusedWith: ['slippery-slope'], distinguishingTip: 'Strawman misrepresents the argument.' }),
+      makeKbEntry({
+        id: 'strawman',
+        name: 'Strawman',
+        commonlyConfusedWith: ['slippery-slope'],
+        distinguishingTip: 'Strawman misrepresents the argument.',
+      }),
       makeKbEntry({ id: 'slippery-slope', name: 'Slippery Slope' }),
     ];
     const tips = findConfusionTips(['strawman', 'SLIPPERY SLOPE'], kb);
@@ -77,8 +88,18 @@ describe('findConfusionTips', () => {
 
   it('returns one tip per unordered pair, keeping the first match', () => {
     const kb: KnowledgeBaseEntry[] = [
-      makeKbEntry({ id: 'a', name: 'A', commonlyConfusedWith: ['b'], distinguishingTip: 'A vs B from A.' }),
-      makeKbEntry({ id: 'b', name: 'B', commonlyConfusedWith: ['a'], distinguishingTip: 'B vs A from B.' }),
+      makeKbEntry({
+        id: 'a',
+        name: 'A',
+        commonlyConfusedWith: ['b'],
+        distinguishingTip: 'A vs B from A.',
+      }),
+      makeKbEntry({
+        id: 'b',
+        name: 'B',
+        commonlyConfusedWith: ['a'],
+        distinguishingTip: 'B vs A from B.',
+      }),
     ];
     const tips = findConfusionTips(['A', 'B'], kb);
     expect(tips).toEqual([{ a: 'A', b: 'B', tip: 'A vs B from A.' }]);
@@ -86,7 +107,12 @@ describe('findConfusionTips', () => {
 
   it('omits entries whose commonlyConfusedWith id is not present in the matched options', () => {
     const kb: KnowledgeBaseEntry[] = [
-      makeKbEntry({ id: 'strawman', name: 'Strawman', commonlyConfusedWith: ['ad-hominem'], distinguishingTip: 'tip' }),
+      makeKbEntry({
+        id: 'strawman',
+        name: 'Strawman',
+        commonlyConfusedWith: ['ad-hominem'],
+        distinguishingTip: 'tip',
+      }),
     ];
     const tips = findConfusionTips(['Strawman'], kb);
     expect(tips).toEqual([]);

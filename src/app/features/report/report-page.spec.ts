@@ -68,7 +68,10 @@ describe('ReportPage', () => {
     };
   }
 
-  let quizData: { loadManifest: ReturnType<typeof vi.fn>; loadQuizBundle: ReturnType<typeof vi.fn> };
+  let quizData: {
+    loadManifest: ReturnType<typeof vi.fn>;
+    loadQuizBundle: ReturnType<typeof vi.fn>;
+  };
 
   function setHistoryState(state: unknown): void {
     vi.spyOn(window.history, 'state', 'get').mockReturnValue(state);
@@ -200,7 +203,7 @@ describe('ReportPage', () => {
     expect(optionStatuses[1].textContent).toContain('Wrong pick');
   });
 
-  it('renders one tip per confusion tip found between a result\'s options and the loaded kb', async () => {
+  it("renders one tip per confusion tip found between a result's options and the loaded kb", async () => {
     const results = [makeResult()];
     setHistoryState({ results, quizTitle: 'Logic Quiz' });
     configure();
