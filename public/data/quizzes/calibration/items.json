@@ -244,7 +244,7 @@
     {
       "id": "c021",
       "prompt": "Which is larger?",
-      "options": ["72²", "Sum of 1 to 100"],
+      "options": ["72²", "Sum 1 to 100"],
       "correct": 0,
       "topic": "numbers",
       "fact": "72² = 5,184; 1 + 2 + … + 100 = 5,050.",
@@ -1756,7 +1756,7 @@
     {
       "id": "c147",
       "prompt": "Which was painted first?",
-      "options": ["Girl with a Pearl Earring", "The Night Watch"],
+      "options": ["Vermeer's Pearl Earring", "The Night Watch"],
       "correct": 1,
       "topic": "culture",
       "fact": "Rembrandt completed The Night Watch in 1642; Vermeer painted Girl with a Pearl Earring around 1665.",
