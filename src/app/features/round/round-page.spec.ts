@@ -57,7 +57,10 @@ describe('RoundPage', () => {
     explanation: 'E2',
   };
 
-  let quizData: { loadManifest: ReturnType<typeof vi.fn>; loadQuizBundle: ReturnType<typeof vi.fn> };
+  let quizData: {
+    loadManifest: ReturnType<typeof vi.fn>;
+    loadQuizBundle: ReturnType<typeof vi.fn>;
+  };
   let stats: {
     migrateVersion: ReturnType<typeof vi.fn>;
     getWeakTraits: ReturnType<typeof vi.fn>;
@@ -68,9 +71,7 @@ describe('RoundPage', () => {
   let templateGenerator: { render: ReturnType<typeof vi.fn> };
 
   function configure(): void {
-    quizData.loadQuizBundle = vi.fn(() =>
-      of({ questions: [], templates: [], knowledgeBase: kb }),
-    );
+    quizData.loadQuizBundle = vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb }));
 
     TestBed.configureTestingModule({
       imports: [RoundPage],
@@ -245,12 +246,9 @@ describe('RoundPage', () => {
     fixture.componentInstance.endQuiz();
 
     expect(stats.recordSessionEnd).toHaveBeenCalledWith('rt');
-    expect(navigateSpy).toHaveBeenCalledWith(
-      ['/quiz', 'rt', 'report'],
-      {
-        state: { results: [checkedResult], quizTitle: 'Logic Quiz' },
-      },
-    );
+    expect(navigateSpy).toHaveBeenCalledWith(['/quiz', 'rt', 'report'], {
+      state: { results: [checkedResult], quizTitle: 'Logic Quiz' },
+    });
   });
 
   it('endQuiz with nothing checked does not record a session end and navigates with no results', async () => {
@@ -264,12 +262,9 @@ describe('RoundPage', () => {
     fixture.componentInstance.endQuiz();
 
     expect(stats.recordSessionEnd).not.toHaveBeenCalled();
-    expect(navigateSpy).toHaveBeenCalledWith(
-      ['/quiz', 'rt', 'report'],
-      {
-        state: { results: [], quizTitle: 'Logic Quiz' },
-      },
-    );
+    expect(navigateSpy).toHaveBeenCalledWith(['/quiz', 'rt', 'report'], {
+      state: { results: [], quizTitle: 'Logic Quiz' },
+    });
   });
 
   it('toggling an already-checked entry does nothing', async () => {

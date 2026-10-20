@@ -63,13 +63,9 @@ export function pickTemplate(
   if (f.traitIds && f.traitIds.length > 0) {
     const wanted = new Set(f.traitIds);
     const names = new Set(
-      kb
-        .filter((entry) => wanted.has(entry.id))
-        .map((entry) => entry.name.toLowerCase()),
+      kb.filter((entry) => wanted.has(entry.id)).map((entry) => entry.name.toLowerCase()),
     );
-    matched = matched.filter((t) =>
-      t.correctAnswers.some((a) => names.has(a.toLowerCase())),
-    );
+    matched = matched.filter((t) => t.correctAnswers.some((a) => names.has(a.toLowerCase())));
   }
 
   if (matched.length === 0) {
@@ -79,10 +75,7 @@ export function pickTemplate(
   return matched[Math.floor(rng() * matched.length)];
 }
 
-export function shuffle<T>(
-  items: readonly T[],
-  rng: () => number = Math.random,
-): T[] {
+export function shuffle<T>(items: readonly T[], rng: () => number = Math.random): T[] {
   const arr = [...items];
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
@@ -93,10 +86,7 @@ export function shuffle<T>(
   return arr;
 }
 
-export function traitIdsForAnswers(
-  correctAnswers: string[],
-  kb: KnowledgeBaseEntry[],
-): string[] {
+export function traitIdsForAnswers(correctAnswers: string[], kb: KnowledgeBaseEntry[]): string[] {
   const nameToId = new Map<string, string>();
   for (const entry of kb) {
     nameToId.set(entry.name.toLowerCase(), entry.id);
@@ -133,17 +123,16 @@ export interface NextQuestionDeps {
 export function nextQuestion(d: NextQuestionDeps): RoundQuestion | undefined {
   const rng = d.rng ?? Math.random;
 
-  const fixed =
-    d.selectRound(
-      { questions: d.questions },
-      {
-        count: 1,
-        categories: d.filters.categories ? [...d.filters.categories] : undefined,
-        traitIds: d.filters.traitIds,
-        avoidIds: new Set(d.usedIds),
-        weakTraitWeights: d.weights,
-      },
-    )[0];
+  const fixed = d.selectRound(
+    { questions: d.questions },
+    {
+      count: 1,
+      categories: d.filters.categories ? [...d.filters.categories] : undefined,
+      traitIds: d.filters.traitIds,
+      avoidIds: new Set(d.usedIds),
+      weakTraitWeights: d.weights,
+    },
+  )[0];
 
   if (!fixed || d.usedIds.has(fixed.id)) {
     return undefined;

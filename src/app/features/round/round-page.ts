@@ -17,11 +17,7 @@ import {
   weakTraitWeights,
   type RoundFilters,
 } from './round-builder';
-import {
-  STATUS_LABELS,
-  findConfusionTips,
-  optionStatus,
-} from '../report/report-logic';
+import { STATUS_LABELS, findConfusionTips, optionStatus } from '../report/report-logic';
 
 export interface RoundEntry {
   question: RoundQuestion;
@@ -94,7 +90,11 @@ export class RoundPage implements OnInit {
         this.weights = this.filters.weakTraits
           ? weakTraitWeights(this.stats.getWeakTraits(id))
           : undefined;
-        this.stats.migrateVersion(id, entry.version, bundle.knowledgeBase.map((k: KnowledgeBaseEntry) => k.id));
+        this.stats.migrateVersion(
+          id,
+          entry.version,
+          bundle.knowledgeBase.map((k: KnowledgeBaseEntry) => k.id),
+        );
 
         this.appendNext();
       });
@@ -116,10 +116,7 @@ export class RoundPage implements OnInit {
 
     if (question) {
       this.usedIds.add(question.id);
-      this.entries.update((current) => [
-        ...current,
-        { question, selected: [] },
-      ]);
+      this.entries.update((current) => [...current, { question, selected: [] }]);
       setTimeout(() => {
         const els = document.querySelectorAll('[data-testid="question"]');
         const lastEl = els[els.length - 1];
@@ -151,9 +148,7 @@ export class RoundPage implements OnInit {
     const selected = entry.selected.includes(option)
       ? entry.selected.filter((o) => o !== option)
       : [...entry.selected, option];
-    this.entries.update((current) =>
-      current.map((e, i) => (i === index ? { ...e, selected } : e)),
-    );
+    this.entries.update((current) => current.map((e, i) => (i === index ? { ...e, selected } : e)));
   }
 
   check(): void {

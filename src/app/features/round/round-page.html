@@ -67,7 +67,10 @@
         }
 
         @if (entry.result) {
-          <div data-testid="feedback" class="space-y-2 rounded-md bg-slate-50 p-3 text-sm text-slate-700">
+          <div
+            data-testid="feedback"
+            class="space-y-2 rounded-md bg-slate-50 p-3 text-sm text-slate-700"
+          >
             <p class="font-semibold">
               {{ entry.result.correct ? 'Correct' : 'Incorrect' }}
             </p>
