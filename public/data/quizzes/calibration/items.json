@@ -3264,6 +3264,246 @@
         "label": "Wikipedia: Lucas number",
         "url": "https://en.wikipedia.org/wiki/Lucas_number"
       }
+    },
+    {
+      "id": "c273",
+      "prompt": "Which came first?",
+      "options": ["Spanish Armada", "Battle of Lepanto"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Lepanto was fought on 7 October 1571; the Spanish Armada sailed in 1588.",
+      "source": {
+        "label": "Wikipedia: Battle of Lepanto",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Lepanto"
+      }
+    },
+    {
+      "id": "c274",
+      "prompt": "Which came first?",
+      "options": ["Tokugawa shogunate begins", "Jamestown founded"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Tokugawa shogunate began in 1603 (some dates give 1600); Jamestown was founded in 1607.",
+      "source": {
+        "label": "Wikipedia: Tokugawa shogunate",
+        "url": "https://en.wikipedia.org/wiki/Tokugawa_shogunate"
+      }
+    },
+    {
+      "id": "c275",
+      "prompt": "Which came first?",
+      "options": ["Battle of Panipat", "Magellan sets sail"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Magellan's fleet left Spain in September 1519; the First Battle of Panipat was fought in April 1526.",
+      "source": {
+        "label": "Wikipedia: First Battle of Panipat",
+        "url": "https://en.wikipedia.org/wiki/First_Battle_of_Panipat"
+      }
+    },
+    {
+      "id": "c276",
+      "prompt": "Which came first?",
+      "options": ["Treaty of Nanking", "Communist Manifesto"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Treaty of Nanking was signed on 29 August 1842; the Communist Manifesto was published in February 1848.",
+      "source": {
+        "label": "Wikipedia: Treaty of Nanking",
+        "url": "https://en.wikipedia.org/wiki/Treaty_of_Nanking"
+      }
+    },
+    {
+      "id": "c277",
+      "prompt": "Which came first?",
+      "options": ["Berlin Conference", "Suez Canal opens"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Suez Canal opened on 17 November 1869; the Berlin Conference began on 15 November 1884.",
+      "source": {
+        "label": "Wikipedia: Suez Canal",
+        "url": "https://en.wikipedia.org/wiki/Suez_Canal"
+      }
+    },
+    {
+      "id": "c278",
+      "prompt": "Which began first?",
+      "options": ["Taiping Rebellion", "Indian Rebellion"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Taiping Rebellion began in 1850; the Indian Rebellion in May 1857.",
+      "source": {
+        "label": "Wikipedia: Taiping Rebellion",
+        "url": "https://en.wikipedia.org/wiki/Taiping_Rebellion"
+      }
+    },
+    {
+      "id": "c279",
+      "prompt": "Which began first?",
+      "options": ["Spanish–American War", "First Sino-Japanese War"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The First Sino-Japanese War began in July 1894; the Spanish–American War in 1898.",
+      "source": {
+        "label": "Wikipedia: First Sino-Japanese War",
+        "url": "https://en.wikipedia.org/wiki/First_Sino-Japanese_War"
+      }
+    },
+    {
+      "id": "c280",
+      "prompt": "Which came first?",
+      "options": ["Wright brothers' flight", "Titanic sinking"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Wright brothers flew on 17 December 1903; the Titanic sank on 15 April 1912.",
+      "source": {
+        "label": "Wikipedia: Wright brothers",
+        "url": "https://en.wikipedia.org/wiki/Wright_brothers"
+      }
+    },
+    {
+      "id": "c281",
+      "prompt": "Which began first?",
+      "options": ["Battle of Verdun", "Gallipoli campaign"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Gallipoli campaign began in February 1915; the Battle of Verdun in February 1916.",
+      "source": {
+        "label": "Wikipedia: Gallipoli campaign",
+        "url": "https://en.wikipedia.org/wiki/Gallipoli_campaign"
+      }
+    },
+    {
+      "id": "c282",
+      "prompt": "Which came first?",
+      "options": ["March on Rome", "Beer Hall Putsch"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The March on Rome was in October 1922; the Beer Hall Putsch in November 1923.",
+      "source": {
+        "label": "Wikipedia: March on Rome",
+        "url": "https://en.wikipedia.org/wiki/March_on_Rome"
+      }
+    },
+    {
+      "id": "c283",
+      "prompt": "Which came first?",
+      "options": ["NATO founded", "Marshall Plan"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Marshall Plan was enacted in April 1948; NATO was founded in April 1949.",
+      "source": {
+        "label": "Wikipedia: Marshall Plan",
+        "url": "https://en.wikipedia.org/wiki/Marshall_Plan"
+      }
+    },
+    {
+      "id": "c284",
+      "prompt": "Which came first?",
+      "options": ["Cuban Missile Crisis", "Kennedy assassination"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Cuban Missile Crisis was in October 1962; Kennedy was assassinated on 22 November 1963.",
+      "source": {
+        "label": "Wikipedia: Cuban Missile Crisis",
+        "url": "https://en.wikipedia.org/wiki/Cuban_Missile_Crisis"
+      }
+    },
+    {
+      "id": "c285",
+      "prompt": "Which came first?",
+      "options": ["Berlin Wall falls", "Tiananmen Square crackdown"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Tiananmen crackdown was on 3–4 June 1989; the Berlin Wall opened on 9 November 1989.",
+      "source": {
+        "label": "Wikipedia: 1989 Tiananmen Square protests and massacre",
+        "url": "https://en.wikipedia.org/wiki/1989_Tiananmen_Square_protests_and_massacre"
+      }
+    },
+    {
+      "id": "c286",
+      "prompt": "Which came first?",
+      "options": ["Mandela freed", "Mandela becomes president"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Mandela was released in 1990; he took office as president on 10 May 1994.",
+      "source": {
+        "label": "Wikipedia: Nelson Mandela",
+        "url": "https://en.wikipedia.org/wiki/Nelson_Mandela"
+      }
+    },
+    {
+      "id": "c287",
+      "prompt": "Which came first?",
+      "options": ["Battle of Thermopylae", "Battle of Marathon"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Marathon was fought in 490 BC; Thermopylae in 480 BC.",
+      "source": {
+        "label": "Wikipedia: Battle of Marathon",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Marathon"
+      }
+    },
+    {
+      "id": "c288",
+      "prompt": "Which came first?",
+      "options": ["Trial of Socrates", "Battle of Gaugamela"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Socrates was tried in 399 BC; Gaugamela was fought in 331 BC.",
+      "source": {
+        "label": "Wikipedia: Trial of Socrates",
+        "url": "https://en.wikipedia.org/wiki/Trial_of_Socrates"
+      }
+    },
+    {
+      "id": "c289",
+      "prompt": "Which came first?",
+      "options": ["Council of Nicaea", "Edict of Milan"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Edict of Milan dates to 313; the First Council of Nicaea met in 325.",
+      "source": {
+        "label": "Wikipedia: Edict of Milan",
+        "url": "https://en.wikipedia.org/wiki/Edict_of_Milan"
+      }
+    },
+    {
+      "id": "c290",
+      "prompt": "Which came first?",
+      "options": ["Vesuvius destroys Pompeii", "Colosseum completed"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Vesuvius erupted in AD 79; the Colosseum was completed in AD 80.",
+      "source": {
+        "label": "Wikipedia: Colosseum",
+        "url": "https://en.wikipedia.org/wiki/Colosseum"
+      }
+    },
+    {
+      "id": "c291",
+      "prompt": "Which came first?",
+      "options": ["Charlemagne crowned emperor", "Lindisfarne Viking raid"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Lindisfarne raid was in 793; Charlemagne was crowned on 25 December 800.",
+      "source": {
+        "label": "Wikipedia: Lindisfarne",
+        "url": "https://en.wikipedia.org/wiki/Lindisfarne"
+      }
+    },
+    {
+      "id": "c292",
+      "prompt": "Which came first?",
+      "options": ["Visigoths sack Rome", "Attila dies"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Visigoths sacked Rome on 24 August 410; Attila died in 453.",
+      "source": {
+        "label": "Wikipedia: Sack of Rome (410)",
+        "url": "https://en.wikipedia.org/wiki/Sack_of_Rome_(410)"
+      }
     }
   ]
 }
