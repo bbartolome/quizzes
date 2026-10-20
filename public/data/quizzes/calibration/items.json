@@ -3024,6 +3024,246 @@
         "label": "Wikipedia: Jaws (film)",
         "url": "https://en.wikipedia.org/wiki/Jaws_(film)"
       }
+    },
+    {
+      "id": "c253",
+      "prompt": "Which is larger?",
+      "options": ["Legal Go positions", "Atoms in the universe"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "A 19×19 Go board has about 2.1 × 10¹⁷⁰ legal positions; the observable universe has roughly 10⁸⁰ atoms.",
+      "source": {
+        "label": "Wikipedia: Go (game)",
+        "url": "https://en.wikipedia.org/wiki/Go_(game)"
+      }
+    },
+    {
+      "id": "c254",
+      "prompt": "Which is larger?",
+      "options": ["Shannon number", "Legal Go positions"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "Go has about 2.1 × 10¹⁷⁰ legal positions; the Shannon number for chess is about 10¹²⁰.",
+      "source": {
+        "label": "Wikipedia: Shannon number",
+        "url": "https://en.wikipedia.org/wiki/Shannon_number"
+      }
+    },
+    {
+      "id": "c255",
+      "prompt": "Which year has more days?",
+      "options": ["Julian year", "Average Gregorian year"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The Julian year is exactly 365.25 days; the mean Gregorian year is 365.2425 days.",
+      "source": {
+        "label": "Wikipedia: Year",
+        "url": "https://en.wikipedia.org/wiki/Year"
+      }
+    },
+    {
+      "id": "c256",
+      "prompt": "Which is larger?",
+      "options": ["The speed of light", "300,000 km/s"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The speed of light is exactly 299,792,458 m/s, about 299,792 km/s.",
+      "source": {
+        "label": "Wikipedia: Speed of light",
+        "url": "https://en.wikipedia.org/wiki/Speed_of_light"
+      }
+    },
+    {
+      "id": "c257",
+      "prompt": "Which is larger?",
+      "options": ["Highest darts checkout", "Maximum snooker break"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The highest darts checkout is 170; a maximum snooker break is 147.",
+      "source": {
+        "label": "Wikipedia: Darts",
+        "url": "https://en.wikipedia.org/wiki/Darts"
+      }
+    },
+    {
+      "id": "c258",
+      "prompt": "Which is larger?",
+      "options": ["A gross", "150"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "A gross is 144 items.",
+      "source": {
+        "label": "Wikipedia: Gross (unit)",
+        "url": "https://en.wikipedia.org/wiki/Gross_(unit)"
+      }
+    },
+    {
+      "id": "c259",
+      "prompt": "Which is larger?",
+      "options": ["38²", "8th Catalan number"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The eighth Catalan number (C₈) is 1,430; 38² = 1,444.",
+      "source": {
+        "label": "Wikipedia: Catalan number",
+        "url": "https://en.wikipedia.org/wiki/Catalan_number"
+      }
+    },
+    {
+      "id": "c260",
+      "prompt": "Which is larger?",
+      "options": ["64²", "8th Bell number"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The eighth Bell number (B₈) is 4,140; 64² = 4,096.",
+      "source": {
+        "label": "Wikipedia: Bell number",
+        "url": "https://en.wikipedia.org/wiki/Bell_number"
+      }
+    },
+    {
+      "id": "c261",
+      "prompt": "Which is larger?",
+      "options": ["10th Lucas number", "11²"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The tenth Lucas number (L₁₀) is 123; 11² = 121.",
+      "source": {
+        "label": "Wikipedia: Lucas number",
+        "url": "https://en.wikipedia.org/wiki/Lucas_number"
+      }
+    },
+    {
+      "id": "c262",
+      "prompt": "Which is larger?",
+      "options": ["48²", "Product of first five primes"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "2 × 3 × 5 × 7 × 11 = 2,310; 48² = 2,304.",
+      "source": {
+        "label": "Wikipedia: Primorial",
+        "url": "https://en.wikipedia.org/wiki/Primorial"
+      }
+    },
+    {
+      "id": "c263",
+      "prompt": "Which is larger?",
+      "options": ["A kibibyte", "A kilobyte"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "A kibibyte is 1,024 bytes; a kilobyte is 1,000 bytes.",
+      "source": {
+        "label": "Wikipedia: Kibibyte",
+        "url": "https://en.wikipedia.org/wiki/Kibibyte"
+      }
+    },
+    {
+      "id": "c264",
+      "prompt": "Which has more divisors?",
+      "options": ["100", "60"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "60 has 12 divisors; 100 has 9.",
+      "source": {
+        "label": "Wikipedia: Highly composite number",
+        "url": "https://en.wikipedia.org/wiki/Highly_composite_number"
+      }
+    },
+    {
+      "id": "c265",
+      "prompt": "Which is larger?",
+      "options": ["Primes below 10,000", "35²"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "There are 1,229 primes below 10,000; 35² = 1,225.",
+      "source": {
+        "label": "Wikipedia: Prime-counting function",
+        "url": "https://en.wikipedia.org/wiki/Prime-counting_function"
+      }
+    },
+    {
+      "id": "c266",
+      "prompt": "Which is larger?",
+      "options": ["5th Mersenne prime", "91²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The fifth Mersenne prime is 2¹³ − 1 = 8,191; 91² = 8,281.",
+      "source": {
+        "label": "Wikipedia: Mersenne prime",
+        "url": "https://en.wikipedia.org/wiki/Mersenne_prime"
+      }
+    },
+    {
+      "id": "c267",
+      "prompt": "Which is larger?",
+      "options": ["16²", "22nd triangular number"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The 22nd triangular number is 253; 16² = 256.",
+      "source": {
+        "label": "Wikipedia: Triangular number",
+        "url": "https://en.wikipedia.org/wiki/Triangular_number"
+      }
+    },
+    {
+      "id": "c268",
+      "prompt": "Which is larger?",
+      "options": ["2¹⁴", "7⁵"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "7⁵ = 16,807; 2¹⁴ = 16,384.",
+      "source": {
+        "label": "Wikipedia: Power of two",
+        "url": "https://en.wikipedia.org/wiki/Power_of_two"
+      }
+    },
+    {
+      "id": "c269",
+      "prompt": "Which is larger?",
+      "options": ["2¹⁹", "5⁸"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "2¹⁹ = 524,288; 5⁸ = 390,625.",
+      "source": {
+        "label": "Wikipedia: Power of two",
+        "url": "https://en.wikipedia.org/wiki/Power_of_two"
+      }
+    },
+    {
+      "id": "c270",
+      "prompt": "Which is larger?",
+      "options": ["600²", "9!"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "9! = 362,880; 600² = 360,000.",
+      "source": {
+        "label": "Wikipedia: Factorial",
+        "url": "https://en.wikipedia.org/wiki/Factorial"
+      }
+    },
+    {
+      "id": "c271",
+      "prompt": "Which is larger?",
+      "options": ["65²", "19th Fibonacci number"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The 19th Fibonacci number is 4,181; 65² = 4,225.",
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "c272",
+      "prompt": "Which is larger?",
+      "options": ["12th Lucas number", "18²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The twelfth Lucas number (L₁₂) is 322; 18² = 324.",
+      "source": {
+        "label": "Wikipedia: Lucas number",
+        "url": "https://en.wikipedia.org/wiki/Lucas_number"
+      }
     }
   ]
 }
