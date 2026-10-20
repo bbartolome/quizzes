@@ -1104,6 +1104,246 @@
         "label": "Wikipedia: Hijrah",
         "url": "https://en.wikipedia.org/wiki/Hijrah"
       }
+    },
+    {
+      "id": "c093",
+      "prompt": "Which is denser?",
+      "options": ["Lead", "Mercury"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Mercury is about 13.55 g/cm³; lead about 11.34 g/cm³.",
+      "source": {
+        "label": "Wikipedia: Mercury (element)",
+        "url": "https://en.wikipedia.org/wiki/Mercury_(element)"
+      }
+    },
+    {
+      "id": "c094",
+      "prompt": "Which is denser?",
+      "options": ["Gold", "Tungsten"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Gold is about 19.28 g/cm³; tungsten about 19.25 g/cm³.",
+      "source": {
+        "label": "Wikipedia: Tungsten",
+        "url": "https://en.wikipedia.org/wiki/Tungsten"
+      }
+    },
+    {
+      "id": "c095",
+      "prompt": "Which mineral is harder?",
+      "options": ["Quartz", "Topaz"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Topaz is 8 on the Mohs scale; quartz is 7.",
+      "source": {
+        "label": "Wikipedia: Mohs scale of mineral hardness",
+        "url": "https://en.wikipedia.org/wiki/Mohs_scale_of_mineral_hardness"
+      }
+    },
+    {
+      "id": "c096",
+      "prompt": "Which mineral is harder?",
+      "options": ["Apatite", "Fluorite"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Apatite is 5 on the Mohs scale; fluorite is 4.",
+      "source": {
+        "label": "Wikipedia: Mohs scale of mineral hardness",
+        "url": "https://en.wikipedia.org/wiki/Mohs_scale_of_mineral_hardness"
+      }
+    },
+    {
+      "id": "c097",
+      "prompt": "Which planet is denser?",
+      "options": ["Mercury", "Earth"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Earth averages 5.513 g/cm³; Mercury 5.427 g/cm³.",
+      "source": {
+        "label": "Wikipedia: Earth",
+        "url": "https://en.wikipedia.org/wiki/Earth"
+      }
+    },
+    {
+      "id": "c098",
+      "prompt": "Which planet rotates once more slowly?",
+      "options": ["Venus", "Mercury"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Venus takes about 243 Earth days to rotate; Mercury about 58.6 days.",
+      "source": {
+        "label": "Wikipedia: Venus",
+        "url": "https://en.wikipedia.org/wiki/Venus"
+      }
+    },
+    {
+      "id": "c099",
+      "prompt": "Which is larger in diameter?",
+      "options": ["Mercury", "Ganymede"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Ganymede is about 5,270 km across; Mercury about 4,880 km.",
+      "source": {
+        "label": "Wikipedia: Ganymede (moon)",
+        "url": "https://en.wikipedia.org/wiki/Ganymede_(moon)"
+      }
+    },
+    {
+      "id": "c100",
+      "prompt": "Which has the greater atomic mass?",
+      "options": ["Tellurium", "Iodine"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Tellurium is 127.60; iodine is 126.90.",
+      "source": {
+        "label": "Wikipedia: Tellurium",
+        "url": "https://en.wikipedia.org/wiki/Tellurium"
+      }
+    },
+    {
+      "id": "c101",
+      "prompt": "Which has the higher atomic number?",
+      "options": ["Platinum", "Gold"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Platinum is element 78; gold is element 79.",
+      "source": {
+        "label": "Wikipedia: Gold",
+        "url": "https://en.wikipedia.org/wiki/Gold"
+      }
+    },
+    {
+      "id": "c102",
+      "prompt": "Which has the higher atomic number?",
+      "options": ["Tin", "Silver"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Silver is element 47; tin is element 50.",
+      "source": {
+        "label": "Wikipedia: Tin",
+        "url": "https://en.wikipedia.org/wiki/Tin"
+      }
+    },
+    {
+      "id": "c103",
+      "prompt": "Which has more chromosomes?",
+      "options": ["Human", "Chimpanzee"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Humans have 46 chromosomes; chimpanzees have 48.",
+      "source": {
+        "label": "Wikipedia: Chromosome",
+        "url": "https://en.wikipedia.org/wiki/Chromosome"
+      }
+    },
+    {
+      "id": "c104",
+      "prompt": "Which has the higher boiling point?",
+      "options": ["Oxygen", "Nitrogen"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Nitrogen boils at about −195.8 °C; oxygen at about −183 °C.",
+      "source": {
+        "label": "Wikipedia: Oxygen",
+        "url": "https://en.wikipedia.org/wiki/Oxygen"
+      }
+    },
+    {
+      "id": "c105",
+      "prompt": "Which is longer?",
+      "options": ["A light-year", "A parsec"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "A parsec is about 3.26 light-years.",
+      "source": {
+        "label": "Wikipedia: Parsec",
+        "url": "https://en.wikipedia.org/wiki/Parsec"
+      }
+    },
+    {
+      "id": "c106",
+      "prompt": "Which makes up more of dry air?",
+      "options": ["Argon", "Carbon dioxide"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Argon is about 0.934% of dry air by volume; carbon dioxide about 0.04%.",
+      "source": {
+        "label": "Wikipedia: Atmosphere of Earth",
+        "url": "https://en.wikipedia.org/wiki/Atmosphere_of_Earth"
+      }
+    },
+    {
+      "id": "c107",
+      "prompt": "Which is more abundant in Earth's crust?",
+      "options": ["Iron", "Aluminium"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Aluminium makes up about 8.2% of the crust by mass; iron about 5.6%.",
+      "source": {
+        "label": "Wikipedia: Abundance of elements in Earth's crust",
+        "url": "https://en.wikipedia.org/wiki/Abundance_of_elements_in_Earth%27s_crust"
+      }
+    },
+    {
+      "id": "c108",
+      "prompt": "Which makes up more of human body mass?",
+      "options": ["Carbon", "Hydrogen"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Carbon is about 18.5% of body mass; hydrogen about 9.5%.",
+      "source": {
+        "label": "Wikipedia: Composition of the human body",
+        "url": "https://en.wikipedia.org/wiki/Composition_of_the_human_body"
+      }
+    },
+    {
+      "id": "c109",
+      "prompt": "Which is longer?",
+      "options": ["Earth's polar radius", "Earth's equatorial radius"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "The equatorial radius is 6,378 km; the polar radius is 6,357 km.",
+      "source": {
+        "label": "Wikipedia: Earth",
+        "url": "https://en.wikipedia.org/wiki/Earth"
+      }
+    },
+    {
+      "id": "c110",
+      "prompt": "Which melts at the higher temperature?",
+      "options": ["Gold", "Silver"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Gold melts at 1,064 °C; silver at 962 °C.",
+      "source": {
+        "label": "Wikipedia: Gold",
+        "url": "https://en.wikipedia.org/wiki/Gold"
+      }
+    },
+    {
+      "id": "c111",
+      "prompt": "Which is more abundant in Earth's crust?",
+      "options": ["Carbon", "Titanium"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Titanium makes up about 0.57% of the crust by mass; carbon about 0.02%.",
+      "source": {
+        "label": "Wikipedia: Abundance of elements in Earth's crust",
+        "url": "https://en.wikipedia.org/wiki/Abundance_of_elements_in_Earth%27s_crust"
+      }
+    },
+    {
+      "id": "c112",
+      "prompt": "Which has more chromosomes?",
+      "options": ["Horse", "Cow"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Cows have 60 chromosomes; horses have 64.",
+      "source": {
+        "label": "Wikipedia: Chromosome",
+        "url": "https://en.wikipedia.org/wiki/Chromosome"
+      }
     }
   ]
 }
