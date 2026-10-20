@@ -2304,6 +2304,246 @@
         "label": "Wikipedia: Titan (moon)",
         "url": "https://en.wikipedia.org/wiki/Titan_(moon)"
       }
+    },
+    {
+      "id": "c193",
+      "prompt": "Which country is larger by area?",
+      "options": ["Italy", "Finland"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Finland covers about 338,145 km²; Italy about 302,068 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
+    },
+    {
+      "id": "c194",
+      "prompt": "Which country is larger by area?",
+      "options": ["Japan", "Germany"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Japan covers about 377,915 km²; Germany about 357,581 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
+    },
+    {
+      "id": "c195",
+      "prompt": "Which country is larger by area?",
+      "options": ["United Kingdom", "New Zealand"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "New Zealand covers about 268,838 km²; the United Kingdom about 244,376 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
+    },
+    {
+      "id": "c196",
+      "prompt": "Which country is larger by area?",
+      "options": ["Spain", "Sweden"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Spain covers about 505,370 km²; Sweden about 450,295 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
+    },
+    {
+      "id": "c197",
+      "prompt": "Which country is larger by area?",
+      "options": ["Iceland", "Cuba"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Cuba covers about 109,884 km²; Iceland about 103,000 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
+    },
+    {
+      "id": "c198",
+      "prompt": "Which river is longer?",
+      "options": ["Indus", "Ganges"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "The Indus is about 3,180 km long; the Ganges about 2,700 km at most.",
+      "source": {
+        "label": "Wikipedia: List of rivers by length",
+        "url": "https://en.wikipedia.org/wiki/List_of_rivers_by_length"
+      }
+    },
+    {
+      "id": "c199",
+      "prompt": "Which river is longer?",
+      "options": ["Tigris", "Euphrates"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "The Euphrates system is about 3,600 km long; the Tigris about 1,950 km.",
+      "source": {
+        "label": "Wikipedia: List of rivers by length",
+        "url": "https://en.wikipedia.org/wiki/List_of_rivers_by_length"
+      }
+    },
+    {
+      "id": "c200",
+      "prompt": "Which island is larger?",
+      "options": ["Ireland", "Hokkaido"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Ireland covers about 83,700 km²; Hokkaido about 77,700 km².",
+      "source": {
+        "label": "Wikipedia: List of islands by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_islands_by_area"
+      }
+    },
+    {
+      "id": "c201",
+      "prompt": "Which island is larger?",
+      "options": ["Sardinia", "Sicily"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Sicily covers about 25,500 km²; Sardinia about 23,800 km².",
+      "source": {
+        "label": "Wikipedia: List of islands by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_islands_by_area"
+      }
+    },
+    {
+      "id": "c202",
+      "prompt": "Which island is larger?",
+      "options": ["Cyprus", "Corsica"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Cyprus covers about 9,280 km²; Corsica about 8,730 km².",
+      "source": {
+        "label": "Wikipedia: List of islands by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_islands_by_area"
+      }
+    },
+    {
+      "id": "c203",
+      "prompt": "Which waterfall is taller?",
+      "options": ["Niagara Falls", "Victoria Falls"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Victoria Falls drops about 108 m; Niagara about 51–57 m.",
+      "source": {
+        "label": "Wikipedia: Victoria Falls",
+        "url": "https://en.wikipedia.org/wiki/Victoria_Falls"
+      }
+    },
+    {
+      "id": "c204",
+      "prompt": "Which is lower?",
+      "options": ["Lake Assal", "Death Valley"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Lake Assal lies 155 m below sea level; Death Valley's floor is 86 m below.",
+      "source": {
+        "label": "Wikipedia: Lake Assal (Djibouti)",
+        "url": "https://en.wikipedia.org/wiki/Lake_Assal_(Djibouti)"
+      }
+    },
+    {
+      "id": "c205",
+      "prompt": "Which is farther east?",
+      "options": ["Bangkok", "Singapore"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Singapore lies at about 103.83°E, Bangkok at about 100.49°E.",
+      "source": {
+        "label": "Wikipedia: Singapore",
+        "url": "https://en.wikipedia.org/wiki/Singapore"
+      }
+    },
+    {
+      "id": "c206",
+      "prompt": "Which is farther west?",
+      "options": ["Miami", "Panama City"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Miami lies at about 80.19°W, Panama City at about 79.53°W.",
+      "source": {
+        "label": "Wikipedia: Miami",
+        "url": "https://en.wikipedia.org/wiki/Miami"
+      }
+    },
+    {
+      "id": "c207",
+      "prompt": "Which is farther north?",
+      "options": ["Moscow", "Edinburgh"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Edinburgh lies at about 55.95°N, Moscow at about 55.76°N.",
+      "source": {
+        "label": "Wikipedia: Edinburgh",
+        "url": "https://en.wikipedia.org/wiki/Edinburgh"
+      }
+    },
+    {
+      "id": "c208",
+      "prompt": "Which is farther south?",
+      "options": ["Johannesburg", "Rio de Janeiro"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Johannesburg lies at about 26.20°S, Rio de Janeiro at about 22.91°S.",
+      "source": {
+        "label": "Wikipedia: Johannesburg",
+        "url": "https://en.wikipedia.org/wiki/Johannesburg"
+      }
+    },
+    {
+      "id": "c209",
+      "prompt": "Which is farther north?",
+      "options": ["Beijing", "Madrid"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Madrid lies at about 40.42°N, Beijing at about 39.91°N.",
+      "source": {
+        "label": "Wikipedia: Madrid",
+        "url": "https://en.wikipedia.org/wiki/Madrid"
+      }
+    },
+    {
+      "id": "c210",
+      "prompt": "Which is farther east?",
+      "options": ["New York", "Lima"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "New York lies at about 74.01°W, Lima at about 77.04°W.",
+      "source": {
+        "label": "Wikipedia: New York City",
+        "url": "https://en.wikipedia.org/wiki/New_York_City"
+      }
+    },
+    {
+      "id": "c211",
+      "prompt": "Which is farther south?",
+      "options": ["Singapore", "Quito"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Quito lies at about 0.22°S; Singapore at about 1.28°N.",
+      "source": {
+        "label": "Wikipedia: Quito",
+        "url": "https://en.wikipedia.org/wiki/Quito"
+      }
+    },
+    {
+      "id": "c212",
+      "prompt": "Which is farther north?",
+      "options": ["Athens", "Seoul"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Athens lies at about 37.98°N, Seoul at about 37.56°N.",
+      "source": {
+        "label": "Wikipedia: Athens",
+        "url": "https://en.wikipedia.org/wiki/Athens"
+      }
     }
   ]
 }
