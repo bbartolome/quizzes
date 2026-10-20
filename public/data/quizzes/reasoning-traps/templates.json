@@ -83,7 +83,12 @@
     "slots": {
       "sampleSize": ["ten", "a dozen", "twenty"],
       "group": ["startups", "authors", "athletes", "restaurants"],
-      "habit": ["waking up at 5am", "skipping college", "working 80-hour weeks", "bootstrapping with no investors"]
+      "habit": [
+        "waking up at 5am",
+        "skipping college",
+        "working 80-hour weeks",
+        "bootstrapping with no investors"
+      ]
     },
     "correctAnswers": ["Survivorship bias"],
     "distractors": ["Hasty generalization", "Confirmation bias", "No trap — sound reasoning"],
@@ -106,9 +111,19 @@
     "id": "t-confirmation-bias-01",
     "pattern": "Convinced that {belief}, {person} notices every instance that supports it, but dismisses or forgets the many times {counterEvidence} happened.",
     "slots": {
-      "belief": ["their coworker is incompetent", "this political party is corrupt", "their horoscope is accurate", "this diet works"],
+      "belief": [
+        "their coworker is incompetent",
+        "this political party is corrupt",
+        "their horoscope is accurate",
+        "this diet works"
+      ],
       "person": ["she", "he", "the manager", "the fan"],
-      "counterEvidence": ["the opposite", "it didn't hold up", "contradicting results showed up", "evidence pointed the other way"]
+      "counterEvidence": [
+        "the opposite",
+        "it didn't hold up",
+        "contradicting results showed up",
+        "evidence pointed the other way"
+      ]
     },
     "correctAnswers": ["Confirmation bias"],
     "distractors": ["Overconfidence", "Hasty generalization", "No trap — sound reasoning"],

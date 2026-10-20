@@ -4,10 +4,7 @@
     {
       "id": "c001",
       "prompt": "Which is farther north?",
-      "options": [
-        "Rome",
-        "New York"
-      ],
+      "options": ["Rome", "New York"],
       "correct": 0,
       "topic": "geography",
       "fact": "Rome lies at about 41.9°N, New York at about 40.7°N.",
@@ -19,10 +16,7 @@
     {
       "id": "c002",
       "prompt": "Which lake is larger by area?",
-      "options": [
-        "Lake Victoria",
-        "Lake Superior"
-      ],
+      "options": ["Lake Victoria", "Lake Superior"],
       "correct": 1,
       "topic": "geography",
       "fact": "Superior covers about 82,100 km², Victoria about 59,900 km².",
@@ -34,10 +28,7 @@
     {
       "id": "c003",
       "prompt": "Which came first?",
-      "options": [
-        "Gutenberg's press",
-        "Fall of Constantinople"
-      ],
+      "options": ["Gutenberg's press", "Fall of Constantinople"],
       "correct": 0,
       "topic": "history",
       "fact": "Gutenberg's press dates to around 1440; Constantinople fell in 1453.",
@@ -49,10 +40,7 @@
     {
       "id": "c004",
       "prompt": "Which canal opened first?",
-      "options": [
-        "Panama Canal",
-        "Suez Canal"
-      ],
+      "options": ["Panama Canal", "Suez Canal"],
       "correct": 1,
       "topic": "history",
       "fact": "Suez opened in 1869, Panama in 1914.",
@@ -64,10 +52,7 @@
     {
       "id": "c005",
       "prompt": "Which has more bones?",
-      "options": [
-        "A human hand",
-        "A human foot"
-      ],
+      "options": ["A human hand", "A human foot"],
       "correct": 0,
       "topic": "science",
       "fact": "A hand with its wrist has 27 bones; a foot has 26.",
@@ -79,10 +64,7 @@
     {
       "id": "c006",
       "prompt": "Which metal is denser?",
-      "options": [
-        "Lead",
-        "Gold"
-      ],
+      "options": ["Lead", "Gold"],
       "correct": 1,
       "topic": "science",
       "fact": "Gold is about 19.3 g/cm³, lead about 11.3 g/cm³.",
@@ -94,10 +76,7 @@
     {
       "id": "c007",
       "prompt": "Which has more legs?",
-      "options": [
-        "A spider",
-        "A lobster"
-      ],
+      "options": ["A spider", "A lobster"],
       "correct": 1,
       "topic": "nature",
       "fact": "Lobsters are decapods with ten legs; spiders have eight.",
@@ -109,10 +88,7 @@
     {
       "id": "c008",
       "prompt": "Which has more adult teeth?",
-      "options": [
-        "A dog",
-        "A human"
-      ],
+      "options": ["A dog", "A human"],
       "correct": 0,
       "topic": "nature",
       "fact": "Adult dogs have 42 teeth; adult humans have 32.",
@@ -124,10 +100,7 @@
     {
       "id": "c009",
       "prompt": "Which was written first?",
-      "options": [
-        "Hamlet",
-        "Don Quixote"
-      ],
+      "options": ["Hamlet", "Don Quixote"],
       "correct": 0,
       "topic": "culture",
       "fact": "Hamlet dates to about 1599–1601; Don Quixote Part One was published in 1605.",
@@ -139,10 +112,7 @@
     {
       "id": "c010",
       "prompt": "Which premiered first?",
-      "options": [
-        "Beethoven's Ninth",
-        "The Barber of Seville"
-      ],
+      "options": ["Beethoven's Ninth", "The Barber of Seville"],
       "correct": 1,
       "topic": "culture",
       "fact": "Rossini's opera premiered in 1816; Beethoven's Ninth in 1824.",
@@ -154,10 +124,7 @@
     {
       "id": "c011",
       "prompt": "Which is larger?",
-      "options": [
-        "10³",
-        "2¹⁰"
-      ],
+      "options": ["10³", "2¹⁰"],
       "correct": 1,
       "topic": "numbers",
       "fact": "2¹⁰ = 1,024; 10³ = 1,000.",
@@ -169,10 +136,7 @@
     {
       "id": "c012",
       "prompt": "Which is larger?",
-      "options": [
-        "7 × 8 × 9",
-        "23²"
-      ],
+      "options": ["7 × 8 × 9", "23²"],
       "correct": 1,
       "topic": "numbers",
       "fact": "23² = 529; 7 × 8 × 9 = 504.",
