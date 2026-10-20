@@ -4224,6 +4224,246 @@
         "label": "Wikipedia: Quinoa",
         "url": "https://en.wikipedia.org/wiki/Quinoa"
       }
+    },
+    {
+      "id": "c353",
+      "prompt": "Which has more players per team on court?",
+      "options": ["Volleyball", "Handball"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "A handball team has seven players on court; a volleyball team has six.",
+      "source": {
+        "label": "Wikipedia: Handball",
+        "url": "https://en.wikipedia.org/wiki/Handball"
+      }
+    },
+    {
+      "id": "c354",
+      "prompt": "Which has more players per side?",
+      "options": ["Cricket", "Baseball"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "A cricket side has eleven players; a baseball side has nine.",
+      "source": {
+        "label": "Wikipedia: Cricket",
+        "url": "https://en.wikipedia.org/wiki/Cricket"
+      }
+    },
+    {
+      "id": "c355",
+      "prompt": "Which court is longer?",
+      "options": ["Volleyball court", "FIBA basketball court"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "A FIBA basketball court is 28 m long; a volleyball court is 18 m long.",
+      "source": {
+        "label": "Wikipedia: Basketball court",
+        "url": "https://en.wikipedia.org/wiki/Basketball_court"
+      }
+    },
+    {
+      "id": "c356",
+      "prompt": "Which ball is heavier?",
+      "options": ["Cricket ball", "Baseball"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "A men's cricket ball weighs about 156–163 g; a baseball 142–149 g.",
+      "source": {
+        "label": "Wikipedia: Baseball (ball)",
+        "url": "https://en.wikipedia.org/wiki/Baseball_(ball)"
+      }
+    },
+    {
+      "id": "c357",
+      "prompt": "Which word comes from Hindi?",
+      "options": ["Soap", "Shampoo"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Shampoo comes from Hindi chāmpo; soap was borrowed from early Germanic.",
+      "source": {
+        "label": "Wikipedia: Shampoo",
+        "url": "https://en.wikipedia.org/wiki/Shampoo"
+      }
+    },
+    {
+      "id": "c358",
+      "prompt": "Which is a woodwind?",
+      "options": ["Saxophone", "Trumpet"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The saxophone is a single-reed woodwind, though made of brass; the trumpet is a brass instrument.",
+      "source": {
+        "label": "Wikipedia: Saxophone",
+        "url": "https://en.wikipedia.org/wiki/Saxophone"
+      }
+    },
+    {
+      "id": "c359",
+      "prompt": "Which movement came first?",
+      "options": ["Surrealism", "Dada"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Dada began in Zürich in 1916; Surrealism was established in 1924.",
+      "source": {
+        "label": "Wikipedia: Dada",
+        "url": "https://en.wikipedia.org/wiki/Dada"
+      }
+    },
+    {
+      "id": "c360",
+      "prompt": "Which movement came first?",
+      "options": ["Impressionism", "Cubism"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Impressionism debuted in 1874; Cubism burgeoned from 1907.",
+      "source": {
+        "label": "Wikipedia: Impressionism",
+        "url": "https://en.wikipedia.org/wiki/Impressionism"
+      }
+    },
+    {
+      "id": "c361",
+      "prompt": "Which board has more spaces?",
+      "options": ["Monopoly", "Snakes and ladders"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "A common snakes-and-ladders board has 100 squares; Monopoly has 40 spaces.",
+      "source": {
+        "label": "Wikipedia: Snakes and ladders",
+        "url": "https://en.wikipedia.org/wiki/Snakes_and_ladders"
+      }
+    },
+    {
+      "id": "c362",
+      "prompt": "Which was begun first?",
+      "options": ["Angkor Wat", "Notre-Dame de Paris"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Angkor Wat was begun in the early 12th century; Notre-Dame's cornerstone was laid in 1163.",
+      "source": {
+        "label": "Wikipedia: Angkor Wat",
+        "url": "https://en.wikipedia.org/wiki/Angkor_Wat"
+      }
+    },
+    {
+      "id": "c363",
+      "prompt": "Which is older?",
+      "options": ["Hagia Sophia", "The Pantheon"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The present Pantheon dates to about AD 126; the current Hagia Sophia to 537.",
+      "source": {
+        "label": "Wikipedia: Pantheon, Rome",
+        "url": "https://en.wikipedia.org/wiki/Pantheon,_Rome"
+      }
+    },
+    {
+      "id": "c364",
+      "prompt": "Which was published first?",
+      "options": ["Robinson Crusoe", "Gulliver's Travels"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Robinson Crusoe appeared in 1719; Gulliver's Travels in 1726.",
+      "source": {
+        "label": "Wikipedia: Robinson Crusoe",
+        "url": "https://en.wikipedia.org/wiki/Robinson_Crusoe"
+      }
+    },
+    {
+      "id": "c365",
+      "prompt": "Which was written first?",
+      "options": ["The Canterbury Tales", "The Tale of Genji"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The Tale of Genji dates to the early 11th century; The Canterbury Tales to 1387–1400.",
+      "source": {
+        "label": "Wikipedia: The Tale of Genji",
+        "url": "https://en.wikipedia.org/wiki/The_Tale_of_Genji"
+      }
+    },
+    {
+      "id": "c366",
+      "prompt": "Which was published first?",
+      "options": ["Heart of Darkness", "The Great Gatsby"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Heart of Darkness was serialised in 1899 (book, 1902); The Great Gatsby appeared in 1925.",
+      "source": {
+        "label": "Wikipedia: Heart of Darkness",
+        "url": "https://en.wikipedia.org/wiki/Heart_of_Darkness"
+      }
+    },
+    {
+      "id": "c367",
+      "prompt": "Which was published first?",
+      "options": ["Frankenstein", "Candide"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Candide appeared in 1759; Frankenstein in 1818.",
+      "source": {
+        "label": "Wikipedia: Candide",
+        "url": "https://en.wikipedia.org/wiki/Candide"
+      }
+    },
+    {
+      "id": "c368",
+      "prompt": "Which opera premiered first?",
+      "options": ["La traviata", "Carmen"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "La traviata premiered in 1853; Carmen in 1875.",
+      "source": {
+        "label": "Wikipedia: La traviata",
+        "url": "https://en.wikipedia.org/wiki/La_traviata"
+      }
+    },
+    {
+      "id": "c369",
+      "prompt": "Which came first?",
+      "options": ["Court moves to Versailles", "Taj Mahal construction begins"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Taj Mahal construction began in 1632; the French court moved to Versailles in 1682.",
+      "source": {
+        "label": "Wikipedia: Taj Mahal",
+        "url": "https://en.wikipedia.org/wiki/Taj_Mahal"
+      }
+    },
+    {
+      "id": "c370",
+      "prompt": "Which has more pieces per side?",
+      "options": ["International draughts", "English draughts"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "International draughts has 20 pieces per side; English draughts has 12.",
+      "source": {
+        "label": "Wikipedia: Draughts",
+        "url": "https://en.wikipedia.org/wiki/Draughts"
+      }
+    },
+    {
+      "id": "c371",
+      "prompt": "Which has more players per side?",
+      "options": ["Cricket", "Rugby union"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "A rugby union side fields 15 players; a cricket side fields eleven.",
+      "source": {
+        "label": "Wikipedia: Rugby union",
+        "url": "https://en.wikipedia.org/wiki/Rugby_union"
+      }
+    },
+    {
+      "id": "c372",
+      "prompt": "Which was painted first?",
+      "options": ["Vermeer's Pearl Earring", "The Starry Night"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Vermeer painted Girl with a Pearl Earring around 1665; Van Gogh painted The Starry Night in 1889.",
+      "source": {
+        "label": "Wikipedia: Girl with a Pearl Earring",
+        "url": "https://en.wikipedia.org/wiki/Girl_with_a_Pearl_Earring"
+      }
     }
   ]
 }
