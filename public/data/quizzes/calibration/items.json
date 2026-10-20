@@ -2784,6 +2784,246 @@
         "label": "Wikipedia: Giant panda",
         "url": "https://en.wikipedia.org/wiki/Giant_panda"
       }
+    },
+    {
+      "id": "c233",
+      "prompt": "Which was published first?",
+      "options": ["Brave New World", "Nineteen Eighty-Four"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Brave New World appeared in 1932; Nineteen Eighty-Four in 1949.",
+      "source": {
+        "label": "Wikipedia: Brave New World",
+        "url": "https://en.wikipedia.org/wiki/Brave_New_World"
+      }
+    },
+    {
+      "id": "c234",
+      "prompt": "Which was published first?",
+      "options": ["Treasure Island", "Alice in Wonderland"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Alice's Adventures in Wonderland appeared in 1865; Treasure Island in book form in 1883.",
+      "source": {
+        "label": "Wikipedia: Alice's Adventures in Wonderland",
+        "url": "https://en.wikipedia.org/wiki/Alice%27s_Adventures_in_Wonderland"
+      }
+    },
+    {
+      "id": "c235",
+      "prompt": "Which was published first?",
+      "options": ["War and Peace", "Anna Karenina"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "War and Peace appeared in book form in 1869; Anna Karenina in 1878.",
+      "source": {
+        "label": "Wikipedia: War and Peace",
+        "url": "https://en.wikipedia.org/wiki/War_and_Peace"
+      }
+    },
+    {
+      "id": "c236",
+      "prompt": "Which was published first?",
+      "options": ["One Hundred Years of Solitude", "Things Fall Apart"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Things Fall Apart appeared in 1958; One Hundred Years of Solitude in 1967.",
+      "source": {
+        "label": "Wikipedia: Things Fall Apart",
+        "url": "https://en.wikipedia.org/wiki/Things_Fall_Apart"
+      }
+    },
+    {
+      "id": "c237",
+      "prompt": "Which film came first?",
+      "options": ["Rashomon", "Seven Samurai"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Rashomon was released in 1950; Seven Samurai in 1954.",
+      "source": {
+        "label": "Wikipedia: Rashomon",
+        "url": "https://en.wikipedia.org/wiki/Rashomon"
+      }
+    },
+    {
+      "id": "c238",
+      "prompt": "Which film came first?",
+      "options": ["Bicycle Thieves", "Casablanca"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Casablanca premiered in 1942; Bicycle Thieves was released in 1948.",
+      "source": {
+        "label": "Wikipedia: Casablanca (film)",
+        "url": "https://en.wikipedia.org/wiki/Casablanca_(film)"
+      }
+    },
+    {
+      "id": "c239",
+      "prompt": "Which Olympics came first?",
+      "options": ["Tokyo", "Mexico City"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The Tokyo Games were held in 1964; the Mexico City Games in 1968.",
+      "source": {
+        "label": "Wikipedia: 1964 Summer Olympics",
+        "url": "https://en.wikipedia.org/wiki/1964_Summer_Olympics"
+      }
+    },
+    {
+      "id": "c240",
+      "prompt": "Which game is older?",
+      "options": ["Chess", "Go"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Go was invented in China more than 2,500 years ago; chess emerged in 7th-century India.",
+      "source": {
+        "label": "Wikipedia: Go (game)",
+        "url": "https://en.wikipedia.org/wiki/Go_(game)"
+      }
+    },
+    {
+      "id": "c241",
+      "prompt": "Which alphabet is older?",
+      "options": ["Greek", "Latin"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The Greek alphabet dates to about 800 BC; the Latin alphabet to about 700 BC.",
+      "source": {
+        "label": "Wikipedia: Greek alphabet",
+        "url": "https://en.wikipedia.org/wiki/Greek_alphabet"
+      }
+    },
+    {
+      "id": "c242",
+      "prompt": "Which script is older?",
+      "options": ["Hangul", "Cyrillic"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Cyrillic was developed in the 9th century; Hangul was created in 1443.",
+      "source": {
+        "label": "Wikipedia: Cyrillic script",
+        "url": "https://en.wikipedia.org/wiki/Cyrillic_script"
+      }
+    },
+    {
+      "id": "c243",
+      "prompt": "Which was invented first?",
+      "options": ["Rubik's Cube", "Tetris"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The Rubik's Cube was invented in 1974; Tetris in 1984.",
+      "source": {
+        "label": "Wikipedia: Rubik's Cube",
+        "url": "https://en.wikipedia.org/wiki/Rubik%27s_Cube"
+      }
+    },
+    {
+      "id": "c244",
+      "prompt": "Which band formed first?",
+      "options": ["The Rolling Stones", "The Beatles"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The Beatles formed in 1960; the Rolling Stones in 1962.",
+      "source": {
+        "label": "Wikipedia: The Beatles",
+        "url": "https://en.wikipedia.org/wiki/The_Beatles"
+      }
+    },
+    {
+      "id": "c245",
+      "prompt": "Which album came first?",
+      "options": ["The Dark Side of the Moon", "Thriller"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The Dark Side of the Moon was released in 1973; Thriller in 1982.",
+      "source": {
+        "label": "Wikipedia: The Dark Side of the Moon",
+        "url": "https://en.wikipedia.org/wiki/The_Dark_Side_of_the_Moon"
+      }
+    },
+    {
+      "id": "c246",
+      "prompt": "Which prize began first?",
+      "options": ["Pulitzer Prize", "Nobel Prize"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The Nobel Prizes were first awarded in 1901; the Pulitzer Prizes in 1917.",
+      "source": {
+        "label": "Wikipedia: Nobel Prize",
+        "url": "https://en.wikipedia.org/wiki/Nobel_Prize"
+      }
+    },
+    {
+      "id": "c247",
+      "prompt": "Which ceremony began first?",
+      "options": ["The Oscars", "The Grammys"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The first Academy Awards were held in 1929; the first Grammys in 1959.",
+      "source": {
+        "label": "Wikipedia: Academy Awards",
+        "url": "https://en.wikipedia.org/wiki/Academy_Awards"
+      }
+    },
+    {
+      "id": "c248",
+      "prompt": "Which was published first?",
+      "options": ["Dracula", "A Study in Scarlet"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "A Study in Scarlet appeared in 1887; Dracula in 1897.",
+      "source": {
+        "label": "Wikipedia: A Study in Scarlet",
+        "url": "https://en.wikipedia.org/wiki/A_Study_in_Scarlet"
+      }
+    },
+    {
+      "id": "c249",
+      "prompt": "Which opera premiered first?",
+      "options": ["Don Giovanni", "The Magic Flute"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Don Giovanni premiered in 1787; The Magic Flute in 1791.",
+      "source": {
+        "label": "Wikipedia: Don Giovanni",
+        "url": "https://en.wikipedia.org/wiki/Don_Giovanni"
+      }
+    },
+    {
+      "id": "c250",
+      "prompt": "Which ballet premiered first?",
+      "options": ["The Nutcracker", "Swan Lake"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Swan Lake premiered in 1877; The Nutcracker in 1892.",
+      "source": {
+        "label": "Wikipedia: Swan Lake",
+        "url": "https://en.wikipedia.org/wiki/Swan_Lake"
+      }
+    },
+    {
+      "id": "c251",
+      "prompt": "Which was painted first?",
+      "options": ["The Last Supper", "Mona Lisa"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Leonardo worked on The Last Supper about 1495–1498; he began the Mona Lisa around 1503.",
+      "source": {
+        "label": "Wikipedia: The Last Supper (Leonardo da Vinci)",
+        "url": "https://en.wikipedia.org/wiki/The_Last_Supper_(Leonardo_da_Vinci)"
+      }
+    },
+    {
+      "id": "c252",
+      "prompt": "Which film came first?",
+      "options": ["Star Wars", "Jaws"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Jaws was released on 20 June 1975; Star Wars on 25 May 1977.",
+      "source": {
+        "label": "Wikipedia: Jaws (film)",
+        "url": "https://en.wikipedia.org/wiki/Jaws_(film)"
+      }
     }
   ]
 }
