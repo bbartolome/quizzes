@@ -5,14 +5,19 @@ import { Observable, map } from 'rxjs';
 import { QuizManifestEntry } from '../../core/models/quiz.models';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
+import { CalibrationHistoryService } from '../calibration/calibration-history.service';
+import { calibrationCardStats } from '../calibration/calibration-card';
+import { formatOf } from '../calibration/calibration-format';
 
 export interface QuizCard {
   entry: QuizManifestEntry;
+  kind: 'traps' | 'calibration';
   streak: number;
   roundsPlayed: number;
   correct: number;
   attempted: number;
   accuracy: number | null;
+  skillScore: number | null;
 }
 
 export interface CollectionSummary {
@@ -29,6 +34,7 @@ export interface CollectionSummary {
 export class LibraryPage {
   private readonly quizData: QuizDataService = inject(QuizDataService);
   private readonly stats: StatsService = inject(StatsService);
+  private readonly calibration: CalibrationHistoryService = inject(CalibrationHistoryService);
 
   protected readonly cards$: Observable<QuizCard[]> = this.quizData.loadManifest().pipe(
     map((manifest) =>
@@ -87,6 +93,19 @@ export class LibraryPage {
   }
 
   private toCard(entry: QuizManifestEntry): QuizCard {
+    if (entry.kind === 'calibration') {
+      const c = calibrationCardStats(this.calibration.getSummary(entry.id), formatOf(entry));
+      return {
+        entry,
+        kind: 'calibration',
+        streak: 0,
+        roundsPlayed: c.roundsPlayed,
+        correct: 0,
+        attempted: 0,
+        accuracy: null,
+        skillScore: c.skillScore,
+      };
+    }
     const s = this.stats.getStats(entry.id);
     let correct = 0;
     let attempted = 0;
@@ -96,11 +115,13 @@ export class LibraryPage {
     }
     return {
       entry,
+      kind: 'traps',
       streak: s.streak,
       roundsPlayed: s.roundsPlayed,
       correct,
       attempted,
       accuracy: attempted > 0 ? correct / attempted : null,
+      skillScore: null,
     };
   }
 
