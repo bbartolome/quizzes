@@ -1,0 +1,148 @@
+<svg
+  role="img"
+  [attr.aria-label]="ariaLabel()"
+  [attr.viewBox]="'0 0 ' + box.width + ' ' + box.height"
+  class="w-full"
+>
+  <polygon [attr.points]="geometry().overRegion" fill="#fecaca" />
+  <polygon [attr.points]="geometry().underRegion" fill="#dbeafe" />
+  <text
+    [attr.x]="box.width / 2"
+    [attr.y]="16"
+    [attr.text-anchor]="'middle'"
+    [attr.font-size]="11"
+    class="fill-red-700"
+    >Overconfident</text
+  >
+  <text
+    [attr.x]="box.width / 2"
+    [attr.y]="box.height / 2 - 24"
+    [attr.text-anchor]="'middle'"
+    [attr.font-size]="11"
+    class="fill-blue-700"
+    >Underconfident</text
+  >
+
+  <line
+    [attr.x1]="geometry().diagonal.x1"
+    [attr.y1]="geometry().diagonal.y1"
+    [attr.x2]="geometry().diagonal.x2"
+    [attr.y2]="geometry().diagonal.y2"
+    [attr.stroke]="'#9ca3af'"
+    [attr.stroke-width]="1"
+  />
+  <line
+    [attr.x1]="geometry().chanceLine.x1"
+    [attr.y1]="geometry().chanceLine.y1"
+    [attr.x2]="geometry().chanceLine.x2"
+    [attr.y2]="geometry().chanceLine.y2"
+    [attr.stroke]="'#94a3b8'"
+    [attr.stroke-width]="1"
+    stroke-dasharray="6 4"
+  />
+
+  @for (t of geometry().yTicks; track t.value) {
+    <text
+      [attr.x]="4"
+      [attr.y]="t.y + 3"
+      [attr.font-size]="10"
+      class="fill-gray-500"
+      >{{ t.value }}%</text
+    >
+  }
+  @for (t of geometry().xTicks; track t.stop) {
+    <text
+      [attr.x]="t.x"
+      [attr.y]="box.height - 20"
+      [attr.text-anchor]="'middle'"
+      [attr.font-size]="11"
+      class="fill-gray-600"
+      >{{ t.stop }}</text
+    >
+    <text
+      data-n
+      [attr.x]="t.x"
+      [attr.y]="box.height - 6"
+      [attr.text-anchor]="'middle'"
+      [attr.font-size]="9"
+      class="fill-gray-400"
+      >{{ t.n }}</text
+    >
+  }
+
+  @for (b of geometry().bars; track $index) {
+    <line
+      [attr.x1]="b.x1"
+      [attr.y1]="b.y1"
+      [attr.x2]="b.x2"
+      [attr.y2]="b.y2"
+      [attr.stroke]="'#6b7280'"
+      [attr.stroke-width]="3"
+    />
+  }
+  @for (s of geometry().segments; track $index) {
+    <line
+      [attr.x1]="s.x1"
+      [attr.y1]="s.y1"
+      [attr.x2]="s.x2"
+      [attr.y2]="s.y2"
+      [attr.stroke]="'#1f2937'"
+      [attr.stroke-width]="2"
+    />
+  }
+
+  @for (p of geometry().points; track $index) {
+    <circle
+      data-point
+      [attr.cx]="p.x"
+      [attr.cy]="p.y"
+      r="4"
+      [attr.fill]="'#1f2937'"
+    />
+  }
+  @for (f of geometry().flagRings; track $index) {
+    <circle
+      [attr.cx]="f.x"
+      [attr.cy]="f.y"
+      r="8"
+      fill="none"
+      [attr.stroke]="'#dc2626'"
+      [attr.stroke-width]="2"
+    />
+  }
+
+  @if (overlayPath()) {
+    <polyline
+      data-overlay-line
+      [attr.points]="overlayPath()"
+      fill="none"
+      [attr.stroke]="'#059669'"
+      [attr.stroke-width]="2"
+      stroke-dasharray="4 3"
+    />
+  }
+  @for (p of geometry().overlayPoints; track $index) {
+    <circle
+      data-overlay-point
+      [attr.cx]="p.x"
+      [attr.cy]="p.y"
+      r="4"
+      fill="white"
+      [attr.stroke]="'#059669'"
+      [attr.stroke-width]="2"
+    />
+  }
+</svg>
+
+@if (firstRound()) {
+  <p class="text-sm text-gray-600">
+    One round is too few answers to say much. The chart becomes your lifetime
+    curve as you add rounds.
+  </p>
+}
+
+<button type="button" (click)="toggleTable()">Show as table</button>
+
+@if (showTable()) {
+  <app-chart-table [buckets]="buckets()" [overlay]="overlay()" />
+}
