@@ -2064,6 +2064,246 @@
         "label": "Wikipedia: Franz Joseph I of Austria",
         "url": "https://en.wikipedia.org/wiki/Franz_Joseph_I_of_Austria"
       }
+    },
+    {
+      "id": "c173",
+      "prompt": "Which conducts electricity better?",
+      "options": ["Silver", "Copper"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Silver has the highest electrical conductivity of all metals, greater even than copper.",
+      "source": {
+        "label": "Wikipedia: Silver",
+        "url": "https://en.wikipedia.org/wiki/Silver"
+      }
+    },
+    {
+      "id": "c174",
+      "prompt": "Which melts at the higher temperature?",
+      "options": ["Iron", "Titanium"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Titanium melts at 1,668 °C; iron at 1,538 °C.",
+      "source": {
+        "label": "Wikipedia: Titanium",
+        "url": "https://en.wikipedia.org/wiki/Titanium"
+      }
+    },
+    {
+      "id": "c175",
+      "prompt": "Which has the lower boiling point?",
+      "options": ["Helium", "Hydrogen"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Helium boils at about −268.9 °C, the lowest of any element; hydrogen at about −252.9 °C.",
+      "source": {
+        "label": "Wikipedia: Helium",
+        "url": "https://en.wikipedia.org/wiki/Helium"
+      }
+    },
+    {
+      "id": "c176",
+      "prompt": "Which is more abundant in seawater by mass?",
+      "options": ["Sodium", "Chloride"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Seawater holds about 19.4 g/kg of chloride and 10.8 g/kg of sodium.",
+      "source": {
+        "label": "Wikipedia: Seawater",
+        "url": "https://en.wikipedia.org/wiki/Seawater"
+      }
+    },
+    {
+      "id": "c177",
+      "prompt": "Which element is liquid at room temperature?",
+      "options": ["Bromine", "Iodine"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Bromine is liquid at standard conditions; iodine is a solid that melts at about 114 °C.",
+      "source": {
+        "label": "Wikipedia: Bromine",
+        "url": "https://en.wikipedia.org/wiki/Bromine"
+      }
+    },
+    {
+      "id": "c178",
+      "prompt": "Which metal is denser?",
+      "options": ["Potassium", "Sodium"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Sodium is about 0.969 g/cm³; potassium about 0.859 g/cm³.",
+      "source": {
+        "label": "Wikipedia: Sodium",
+        "url": "https://en.wikipedia.org/wiki/Sodium"
+      }
+    },
+    {
+      "id": "c179",
+      "prompt": "Which is hotter?",
+      "options": ["A lightning bolt", "The Sun's surface"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Air around lightning heats to about 30,000 °C; the Sun's photosphere is about 5,777 K (≈5,500 °C).",
+      "source": {
+        "label": "Wikipedia: Lightning",
+        "url": "https://en.wikipedia.org/wiki/Lightning"
+      }
+    },
+    {
+      "id": "c180",
+      "prompt": "Which is longer?",
+      "options": ["Statute mile", "Nautical mile"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "A nautical mile is exactly 1,852 m; the international mile is 1,609.344 m.",
+      "source": {
+        "label": "Wikipedia: Nautical mile",
+        "url": "https://en.wikipedia.org/wiki/Nautical_mile"
+      }
+    },
+    {
+      "id": "c181",
+      "prompt": "Which is heavier?",
+      "options": ["A troy ounce", "An ordinary ounce"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "A troy ounce is about 31.10 g; an avoirdupois ounce about 28.35 g.",
+      "source": {
+        "label": "Wikipedia: Troy ounce",
+        "url": "https://en.wikipedia.org/wiki/Troy_ounce"
+      }
+    },
+    {
+      "id": "c182",
+      "prompt": "Which is larger?",
+      "options": ["US gallon", "Imperial gallon"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "An imperial gallon is 4.546 L; a US gallon is 3.785 L.",
+      "source": {
+        "label": "Wikipedia: Gallon",
+        "url": "https://en.wikipedia.org/wiki/Gallon"
+      }
+    },
+    {
+      "id": "c183",
+      "prompt": "Which planet is hotter?",
+      "options": ["Venus", "Mercury"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Venus averages 464 °C at the surface and is the hottest planet; Mercury is second hottest.",
+      "source": {
+        "label": "Wikipedia: Venus",
+        "url": "https://en.wikipedia.org/wiki/Venus"
+      }
+    },
+    {
+      "id": "c184",
+      "prompt": "Which Earth layer is thicker?",
+      "options": ["Outer core", "Mantle"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "The mantle is about 2,890 km thick; the outer core about 2,260 km.",
+      "source": {
+        "label": "Wikipedia: Internal structure of Earth",
+        "url": "https://en.wikipedia.org/wiki/Internal_structure_of_Earth"
+      }
+    },
+    {
+      "id": "c185",
+      "prompt": "Which is an igneous rock?",
+      "options": ["Granite", "Marble"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Granite is an intrusive igneous rock; marble is metamorphic.",
+      "source": {
+        "label": "Wikipedia: Granite",
+        "url": "https://en.wikipedia.org/wiki/Granite"
+      }
+    },
+    {
+      "id": "c186",
+      "prompt": "Which is a sedimentary rock?",
+      "options": ["Slate", "Limestone"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Limestone is a carbonate sedimentary rock; slate is metamorphic.",
+      "source": {
+        "label": "Wikipedia: Limestone",
+        "url": "https://en.wikipedia.org/wiki/Limestone"
+      }
+    },
+    {
+      "id": "c187",
+      "prompt": "Which star looks brighter from Earth?",
+      "options": ["Sirius", "Canopus"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Sirius has an apparent magnitude of −1.46; Canopus, the second brightest, −0.74.",
+      "source": {
+        "label": "Wikipedia: Sirius",
+        "url": "https://en.wikipedia.org/wiki/Sirius"
+      }
+    },
+    {
+      "id": "c188",
+      "prompt": "Which is larger?",
+      "options": ["An acre", "A hectare"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "One hectare is about 2.47 acres.",
+      "source": {
+        "label": "Wikipedia: Hectare",
+        "url": "https://en.wikipedia.org/wiki/Hectare"
+      }
+    },
+    {
+      "id": "c189",
+      "prompt": "Which planet has the shorter day?",
+      "options": ["Jupiter", "Saturn"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Jupiter rotates in about 9.9 hours; Saturn in about 10.6 hours.",
+      "source": {
+        "label": "Wikipedia: Jupiter",
+        "url": "https://en.wikipedia.org/wiki/Jupiter"
+      }
+    },
+    {
+      "id": "c190",
+      "prompt": "Which moon is larger?",
+      "options": ["Callisto", "Titan"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Titan is about 5,150 km across; Callisto is 4,821 km.",
+      "source": {
+        "label": "Wikipedia: Titan (moon)",
+        "url": "https://en.wikipedia.org/wiki/Titan_(moon)"
+      }
+    },
+    {
+      "id": "c191",
+      "prompt": "Which is denser?",
+      "options": ["Water", "Saturn"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Saturn's mean density is about 0.69 g/cm³, less than water's 1.0 g/cm³.",
+      "source": {
+        "label": "Wikipedia: Saturn",
+        "url": "https://en.wikipedia.org/wiki/Saturn"
+      }
+    },
+    {
+      "id": "c192",
+      "prompt": "Which moon is larger?",
+      "options": ["Titan", "Ganymede"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Ganymede is 5,268 km across; Titan is about 5,150 km.",
+      "source": {
+        "label": "Wikipedia: Titan (moon)",
+        "url": "https://en.wikipedia.org/wiki/Titan_(moon)"
+      }
     }
   ]
 }
