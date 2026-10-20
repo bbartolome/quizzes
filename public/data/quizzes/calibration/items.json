@@ -144,6 +144,246 @@
         "label": "Wikipedia: Square number",
         "url": "https://en.wikipedia.org/wiki/Square_number"
       }
+    },
+    {
+      "id": "c013",
+      "prompt": "Which is larger?",
+      "options": ["11²", "5!"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "11² = 121; 5! = 120.",
+      "source": {
+        "label": "Wikipedia: Factorial",
+        "url": "https://en.wikipedia.org/wiki/Factorial"
+      }
+    },
+    {
+      "id": "c014",
+      "prompt": "Which is larger?",
+      "options": ["2¹⁹", "9!"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "2¹⁹ = 524,288; 9! = 362,880.",
+      "source": {
+        "label": "Wikipedia: Factorial",
+        "url": "https://en.wikipedia.org/wiki/Factorial"
+      }
+    },
+    {
+      "id": "c015",
+      "prompt": "Which is larger?",
+      "options": ["A googol", "70!"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "70! ≈ 1.198 × 10¹⁰⁰; a googol is 10¹⁰⁰.",
+      "source": {
+        "label": "Wikipedia: Googol",
+        "url": "https://en.wikipedia.org/wiki/Googol"
+      }
+    },
+    {
+      "id": "c016",
+      "prompt": "Which is larger?",
+      "options": ["22/7", "3.14159"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "22/7 ≈ 3.142857, which is above 3.14159 (π ≈ 3.141593).",
+      "source": {
+        "label": "Wikipedia: Approximations of π",
+        "url": "https://en.wikipedia.org/wiki/Approximations_of_%CF%80"
+      }
+    },
+    {
+      "id": "c017",
+      "prompt": "Which is larger?",
+      "options": ["π to the e", "e to the π"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "e^π ≈ 23.1407; π^e ≈ 22.4592.",
+      "source": {
+        "label": "Wikipedia: Gelfond's constant",
+        "url": "https://en.wikipedia.org/wiki/Gelfond%27s_constant"
+      }
+    },
+    {
+      "id": "c018",
+      "prompt": "Which is larger?",
+      "options": ["25²", "15th Fibonacci number"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The 15th Fibonacci number is 610; 25² = 625.",
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "c019",
+      "prompt": "Which is larger?",
+      "options": ["100", "25th prime number"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The 25th prime is 97, which is below 100.",
+      "source": {
+        "label": "Wikipedia: List of prime numbers",
+        "url": "https://en.wikipedia.org/wiki/List_of_prime_numbers"
+      }
+    },
+    {
+      "id": "c020",
+      "prompt": "Which is larger?",
+      "options": ["15²", "13 × 17"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "13 × 17 = 221 = 15² − 2²; 15² = 225.",
+      "source": {
+        "label": "Wikipedia: Difference of two squares",
+        "url": "https://en.wikipedia.org/wiki/Difference_of_two_squares"
+      }
+    },
+    {
+      "id": "c021",
+      "prompt": "Which is larger?",
+      "options": ["72²", "Sum of 1 to 100"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "72² = 5,184; 1 + 2 + … + 100 = 5,050.",
+      "source": {
+        "label": "Wikipedia: Carl Friedrich Gauss",
+        "url": "https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss"
+      }
+    },
+    {
+      "id": "c022",
+      "prompt": "Which is larger?",
+      "options": ["2¹⁶", "Seconds in a day"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "A day is 86,400 seconds; 2¹⁶ = 65,536.",
+      "source": {
+        "label": "Wikipedia: Day",
+        "url": "https://en.wikipedia.org/wiki/Day"
+      }
+    },
+    {
+      "id": "c023",
+      "prompt": "Which is larger?",
+      "options": ["1/7", "0.143"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "1/7 = 0.142857… which is below 0.143.",
+      "source": {
+        "label": "Wikipedia: 142857",
+        "url": "https://en.wikipedia.org/wiki/142857"
+      }
+    },
+    {
+      "id": "c024",
+      "prompt": "Which is larger?",
+      "options": ["2¹⁶", "6⁶"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "6⁶ = 46,656; 2¹⁶ = 65,536.",
+      "source": {
+        "label": "Wikipedia: Power of two",
+        "url": "https://en.wikipedia.org/wiki/Power_of_two"
+      }
+    },
+    {
+      "id": "c025",
+      "prompt": "Which is larger?",
+      "options": ["4th perfect number", "90²"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The 4th perfect number is 8,128; 90² = 8,100.",
+      "source": {
+        "label": "Wikipedia: Perfect number",
+        "url": "https://en.wikipedia.org/wiki/Perfect_number"
+      }
+    },
+    {
+      "id": "c026",
+      "prompt": "Which is larger?",
+      "options": ["200²", "8!"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "8! = 40,320; 200² = 40,000.",
+      "source": {
+        "label": "Wikipedia: Factorial",
+        "url": "https://en.wikipedia.org/wiki/Factorial"
+      }
+    },
+    {
+      "id": "c027",
+      "prompt": "Which is larger?",
+      "options": ["1,729", "12³"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "1,729 = 12³ + 1³, and 12³ = 1,728.",
+      "source": {
+        "label": "Wikipedia: 1729 (number)",
+        "url": "https://en.wikipedia.org/wiki/1729_(number)"
+      }
+    },
+    {
+      "id": "c028",
+      "prompt": "Which is larger?",
+      "options": ["2⁴⁰", "One trillion"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "2⁴⁰ = 1,099,511,627,776; a trillion is 10¹².",
+      "source": {
+        "label": "Wikipedia: Power of two",
+        "url": "https://en.wikipedia.org/wiki/Power_of_two"
+      }
+    },
+    {
+      "id": "c029",
+      "prompt": "Which is larger?",
+      "options": ["2²¹", "10!"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "10! = 3,628,800; 2²¹ = 2,097,152.",
+      "source": {
+        "label": "Wikipedia: Factorial",
+        "url": "https://en.wikipedia.org/wiki/Factorial"
+      }
+    },
+    {
+      "id": "c030",
+      "prompt": "Which is larger?",
+      "options": ["10 choose 5", "16²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "C(10,5) = 252; 16² = 256.",
+      "source": {
+        "label": "Wikipedia: Central binomial coefficient",
+        "url": "https://en.wikipedia.org/wiki/Central_binomial_coefficient"
+      }
+    },
+    {
+      "id": "c031",
+      "prompt": "Which is larger?",
+      "options": ["7!", "71²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "7! = 5,040; 71² = 5,041.",
+      "source": {
+        "label": "Wikipedia: Factorial",
+        "url": "https://en.wikipedia.org/wiki/Factorial"
+      }
+    },
+    {
+      "id": "c032",
+      "prompt": "Which is larger?",
+      "options": ["3⁸", "20th Fibonacci number"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "3⁸ = 6,561; the 20th Fibonacci number is 6,765.",
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
     }
   ]
 }
