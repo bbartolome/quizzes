@@ -22,9 +22,7 @@ export class GlossaryPage {
   readonly selectedId = signal<string>('');
 
   readonly filtered = computed(() => filterEntries(this.kb(), this.query()));
-  readonly selected = computed(() =>
-    this.kb().find((entry) => entry.id === this.selectedId()),
-  );
+  readonly selected = computed(() => this.kb().find((entry) => entry.id === this.selectedId()));
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('id') ?? '';

@@ -7,8 +7,7 @@ export function filterEntries(kb: KnowledgeBaseEntry[], query: string): Knowledg
   }
   return kb.filter(
     (entry) =>
-      entry.name.toLowerCase().includes(q) ||
-      entry.shortDefinition.toLowerCase().includes(q),
+      entry.name.toLowerCase().includes(q) || entry.shortDefinition.toLowerCase().includes(q),
   );
 }
 

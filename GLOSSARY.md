@@ -53,3 +53,25 @@ _Avoid_: Bias, calibration error
 **Confident answer**:
 An answer given at one of the top two confidence stops: 90 or 100% on a calibration item, 75 or 100% on a four-way item. Any other answer is hedged. The item review sorts a round's answers into confident misses, hedged misses, underplayed hits (hedged but right) and confident hits.
 _Avoid_: Sure answer, high-confidence answer
+
+### Flash cards
+
+**Flash card quiz**:
+A scored, multiple-choice quiz that drills one family of concepts, either biases or fallacies, in both directions: from a definition or example to the term, and from the term to its definition.
+_Avoid_: Flip cards, deck
+
+**Knowledge base**:
+The shared set of concept entries (biases and fallacies) that Reasoning Traps and the flash card quizzes all draw on.
+_Avoid_: Glossary (names the Reasoning Traps page)
+
+**Spotting tip**:
+A concept's own advice on how to recognise it, read without comparing it to any other concept.
+_Avoid_: Distinguishing tip (it mixed spotting tips and pair tips)
+
+**Confused pair**:
+Two concepts, in either order, that learners often mistake for each other. A pair can join a bias and a fallacy.
+_Avoid_: Commonly confused with, confusion
+
+**Pair tip**:
+The single contrast text for a confused pair. It names both concepts and the feature that tells them apart, and belongs to the pair, not to either concept.
+_Avoid_: Distinguishing tip, contrast tip

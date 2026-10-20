@@ -41,7 +41,10 @@ describe('GlossaryPage', () => {
   };
   const kb: KnowledgeBaseEntry[] = [strawman, slipperySlope];
 
-  let quizData: { loadManifest: ReturnType<typeof vi.fn>; loadQuizBundle: ReturnType<typeof vi.fn> };
+  let quizData: {
+    loadManifest: ReturnType<typeof vi.fn>;
+    loadQuizBundle: ReturnType<typeof vi.fn>;
+  };
 
   function configure(): void {
     TestBed.configureTestingModule({
@@ -135,7 +138,7 @@ describe('GlossaryPage', () => {
     expect(detail.textContent).toContain('Example of strawman.');
   });
 
-  it('renders one pair per commonlyConfusedWith entry, showing its name and the selected entry\'s tip', async () => {
+  it("renders one pair per commonlyConfusedWith entry, showing its name and the selected entry's tip", async () => {
     configure();
     const fixture = TestBed.createComponent(GlossaryPage);
     fixture.detectChanges();
@@ -163,9 +166,7 @@ describe('GlossaryPage', () => {
     await fixture.whenStable();
 
     const quizPairLink = fixture.nativeElement.querySelector('[data-testid="quiz-pair"]');
-    expect(quizPairLink.getAttribute('href')).toBe(
-      '/quiz/rt/round?traits=strawman,slippery-slope',
-    );
+    expect(quizPairLink.getAttribute('href')).toBe('/quiz/rt/round?traits=strawman,slippery-slope');
   });
 
   it('renders a back-home link pointing at the current quiz', async () => {

@@ -17,19 +17,28 @@ function makeKbEntry(overrides: Partial<KnowledgeBaseEntry> & { id: string }): K
 
 describe('filterEntries', () => {
   it('returns all entries, in order, when the query is empty', () => {
-    const kb = [makeKbEntry({ id: 'a', name: 'Straw Man' }), makeKbEntry({ id: 'b', name: 'Ad Hominem' })];
+    const kb = [
+      makeKbEntry({ id: 'a', name: 'Straw Man' }),
+      makeKbEntry({ id: 'b', name: 'Ad Hominem' }),
+    ];
 
     expect(filterEntries(kb, '')).toEqual(kb);
   });
 
   it('returns all entries when the query is only whitespace', () => {
-    const kb = [makeKbEntry({ id: 'a', name: 'Straw Man' }), makeKbEntry({ id: 'b', name: 'Ad Hominem' })];
+    const kb = [
+      makeKbEntry({ id: 'a', name: 'Straw Man' }),
+      makeKbEntry({ id: 'b', name: 'Ad Hominem' }),
+    ];
 
     expect(filterEntries(kb, '   ')).toEqual(kb);
   });
 
   it('matches a case-insensitive substring of name', () => {
-    const kb = [makeKbEntry({ id: 'a', name: 'Straw Man' }), makeKbEntry({ id: 'b', name: 'Ad Hominem' })];
+    const kb = [
+      makeKbEntry({ id: 'a', name: 'Straw Man' }),
+      makeKbEntry({ id: 'b', name: 'Ad Hominem' }),
+    ];
 
     const result = filterEntries(kb, 'straw');
 
@@ -93,7 +102,11 @@ describe('confusedWith', () => {
 
   it('skips ids that are not found in the kb', () => {
     const b = makeKbEntry({ id: 'b', name: 'Slippery Slope' });
-    const entry = makeKbEntry({ id: 'a', name: 'Straw Man', commonlyConfusedWith: ['missing', 'b'] });
+    const entry = makeKbEntry({
+      id: 'a',
+      name: 'Straw Man',
+      commonlyConfusedWith: ['missing', 'b'],
+    });
     const kb = [entry, b];
 
     expect(confusedWith(entry, kb)).toEqual([b]);
