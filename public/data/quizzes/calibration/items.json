@@ -864,6 +864,246 @@
         "label": "Wikipedia: Fibonacci sequence",
         "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
       }
+    },
+    {
+      "id": "c073",
+      "prompt": "Which came first?",
+      "options": ["Magna Carta", "Mongol sack of Baghdad"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Magna Carta was sealed in 1215; the Mongols besieged and sacked Baghdad in 1258.",
+      "source": {
+        "label": "Wikipedia: Magna Carta",
+        "url": "https://en.wikipedia.org/wiki/Magna_Carta"
+      }
+    },
+    {
+      "id": "c074",
+      "prompt": "Which came first?",
+      "options": ["Ming dynasty founded", "Founding of Tenochtitlan"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Tenochtitlan was founded in 1325; the Ming dynasty was founded in 1368.",
+      "source": {
+        "label": "Wikipedia: Tenochtitlan",
+        "url": "https://en.wikipedia.org/wiki/Tenochtitlan"
+      }
+    },
+    {
+      "id": "c075",
+      "prompt": "Which came first?",
+      "options": ["Mansa Musa's hajj", "Battle of Crécy"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Mansa Musa made his pilgrimage to Mecca in 1324; Crécy was fought in 1346.",
+      "source": {
+        "label": "Wikipedia: Mansa Musa",
+        "url": "https://en.wikipedia.org/wiki/Mansa_Musa"
+      }
+    },
+    {
+      "id": "c076",
+      "prompt": "Which came first?",
+      "options": ["Meiji Restoration", "Canadian Confederation"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Canada's Confederation took effect on 1 July 1867; the Meiji Restoration was declared on 3 January 1868.",
+      "source": {
+        "label": "Wikipedia: Canadian Confederation",
+        "url": "https://en.wikipedia.org/wiki/Canadian_Confederation"
+      }
+    },
+    {
+      "id": "c077",
+      "prompt": "Which came first?",
+      "options": ["Battle of Waterloo", "Battle of Boyacá"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Waterloo was fought on 18 June 1815; Boyacá on 7 August 1819.",
+      "source": {
+        "label": "Wikipedia: Battle of Waterloo",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Waterloo"
+      }
+    },
+    {
+      "id": "c078",
+      "prompt": "Which began first?",
+      "options": ["Russo-Japanese War", "Boxer Rebellion"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Boxer Rebellion began in 1899; the Russo-Japanese War in 1904.",
+      "source": {
+        "label": "Wikipedia: Boxer Rebellion",
+        "url": "https://en.wikipedia.org/wiki/Boxer_Rebellion"
+      }
+    },
+    {
+      "id": "c079",
+      "prompt": "Which began first?",
+      "options": ["Crimean War", "Indian Rebellion of 1857"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Crimean War began in October 1853; the Indian Rebellion in May 1857.",
+      "source": {
+        "label": "Wikipedia: Crimean War",
+        "url": "https://en.wikipedia.org/wiki/Crimean_War"
+      }
+    },
+    {
+      "id": "c080",
+      "prompt": "Which came first?",
+      "options": ["People's Republic proclaimed", "Indian independence"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "India became independent on 15 August 1947; Mao proclaimed the People's Republic of China on 1 October 1949.",
+      "source": {
+        "label": "Wikipedia: Independence Day (India)",
+        "url": "https://en.wikipedia.org/wiki/Independence_Day_(India)"
+      }
+    },
+    {
+      "id": "c081",
+      "prompt": "Which came first?",
+      "options": ["Ghana's independence", "Cuban Revolution's triumph"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Ghana became independent on 6 March 1957; Batista fled Cuba on 31 December 1958.",
+      "source": {
+        "label": "Wikipedia: Cuban Revolution",
+        "url": "https://en.wikipedia.org/wiki/Cuban_Revolution"
+      }
+    },
+    {
+      "id": "c082",
+      "prompt": "Which came first?",
+      "options": ["Genghis Khan proclaimed", "Crusaders sack Constantinople"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Fourth Crusade took Constantinople in April 1204; Temüjin took the title Genghis Khan in 1206.",
+      "source": {
+        "label": "Wikipedia: Fourth Crusade",
+        "url": "https://en.wikipedia.org/wiki/Fourth_Crusade"
+      }
+    },
+    {
+      "id": "c083",
+      "prompt": "Which came first?",
+      "options": ["Alexander the Great's death", "Qin unifies China"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Alexander died in 323 BC; Qin unified China in 221 BC.",
+      "source": {
+        "label": "Wikipedia: Alexander the Great",
+        "url": "https://en.wikipedia.org/wiki/Alexander_the_Great"
+      }
+    },
+    {
+      "id": "c084",
+      "prompt": "Which came first?",
+      "options": ["Cleopatra's death", "Caesar's assassination"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Caesar was assassinated on 15 March 44 BC; Cleopatra died in August 30 BC.",
+      "source": {
+        "label": "Wikipedia: Cleopatra",
+        "url": "https://en.wikipedia.org/wiki/Cleopatra"
+      }
+    },
+    {
+      "id": "c085",
+      "prompt": "Who was born first?",
+      "options": ["Confucius", "Socrates"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Confucius was born around 551 BC; Socrates around 470 BC.",
+      "source": {
+        "label": "Wikipedia: Confucius",
+        "url": "https://en.wikipedia.org/wiki/Confucius"
+      }
+    },
+    {
+      "id": "c086",
+      "prompt": "Which was founded first?",
+      "options": ["Harvard", "University of Santo Tomas"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Santo Tomas was founded in 1611; Harvard in 1636.",
+      "source": {
+        "label": "Wikipedia: University of Santo Tomas",
+        "url": "https://en.wikipedia.org/wiki/University_of_Santo_Tomas"
+      }
+    },
+    {
+      "id": "c087",
+      "prompt": "Which came first?",
+      "options": ["Chernobyl disaster", "Fall of Berlin Wall"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Chernobyl happened on 26 April 1986; the Berlin Wall opened on 9 November 1989.",
+      "source": {
+        "label": "Wikipedia: Chernobyl disaster",
+        "url": "https://en.wikipedia.org/wiki/Chernobyl_disaster"
+      }
+    },
+    {
+      "id": "c088",
+      "prompt": "Which began first?",
+      "options": ["Irish Great Famine", "First Opium War"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The First Opium War began in September 1839; the Great Famine in Ireland in 1845.",
+      "source": {
+        "label": "Wikipedia: First Opium War",
+        "url": "https://en.wikipedia.org/wiki/First_Opium_War"
+      }
+    },
+    {
+      "id": "c089",
+      "prompt": "Which began first?",
+      "options": ["French Revolution", "Haitian Revolution"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The French Revolution began in May 1789; the Haitian Revolution in August 1791.",
+      "source": {
+        "label": "Wikipedia: Haitian Revolution",
+        "url": "https://en.wikipedia.org/wiki/Haitian_Revolution"
+      }
+    },
+    {
+      "id": "c090",
+      "prompt": "Which began first?",
+      "options": ["Black Death in Europe", "Hundred Years' War"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Hundred Years' War began in 1337; the Black Death reached Europe in 1347.",
+      "source": {
+        "label": "Wikipedia: Hundred Years' War",
+        "url": "https://en.wikipedia.org/wiki/Hundred_Years%27_War"
+      }
+    },
+    {
+      "id": "c091",
+      "prompt": "Which came first?",
+      "options": ["Treaty of Tordesillas", "Magellan sets sail"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The treaty was signed on 7 June 1494; Magellan's fleet left Spain on 20 September 1519.",
+      "source": {
+        "label": "Wikipedia: Treaty of Tordesillas",
+        "url": "https://en.wikipedia.org/wiki/Treaty_of_Tordesillas"
+      }
+    },
+    {
+      "id": "c092",
+      "prompt": "Which came first?",
+      "options": ["Charlemagne crowned emperor", "Hijrah"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Hijrah took place in 622; Charlemagne was crowned emperor on 25 December 800.",
+      "source": {
+        "label": "Wikipedia: Hijrah",
+        "url": "https://en.wikipedia.org/wiki/Hijrah"
+      }
     }
   ]
 }
