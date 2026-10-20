@@ -1584,6 +1584,246 @@
         "label": "Wikipedia: Koala",
         "url": "https://en.wikipedia.org/wiki/Koala"
       }
+    },
+    {
+      "id": "c133",
+      "prompt": "Which has more players per side?",
+      "options": ["Rugby league", "Rugby union"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Rugby union fields 15 players per side; rugby league fields 13.",
+      "source": {
+        "label": "Wikipedia: Rugby league",
+        "url": "https://en.wikipedia.org/wiki/Rugby_league"
+      }
+    },
+    {
+      "id": "c134",
+      "prompt": "Which has more players per side on the field?",
+      "options": ["Australian rules football", "Gaelic football"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Australian rules teams field 18 players; Gaelic football teams field 15.",
+      "source": {
+        "label": "Wikipedia: Australian rules football",
+        "url": "https://en.wikipedia.org/wiki/Australian_rules_football"
+      }
+    },
+    {
+      "id": "c135",
+      "prompt": "Which has more players on court per team?",
+      "options": ["Basketball", "Netball"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "A netball team has seven players on court; a basketball team has five.",
+      "source": {
+        "label": "Wikipedia: Netball",
+        "url": "https://en.wikipedia.org/wiki/Netball"
+      }
+    },
+    {
+      "id": "c136",
+      "prompt": "Which alphabet has more letters?",
+      "options": ["Russian", "Greek"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The modern Russian alphabet has 33 letters; the modern Greek alphabet has 24.",
+      "source": {
+        "label": "Wikipedia: Russian alphabet",
+        "url": "https://en.wikipedia.org/wiki/Russian_alphabet"
+      }
+    },
+    {
+      "id": "c137",
+      "prompt": "Which alphabet has more letters?",
+      "options": ["Georgian", "Armenian"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The modern Armenian alphabet has 39 letters (38 in its traditional form); modern Georgian has 33.",
+      "source": {
+        "label": "Wikipedia: Armenian alphabet",
+        "url": "https://en.wikipedia.org/wiki/Armenian_alphabet"
+      }
+    },
+    {
+      "id": "c138",
+      "prompt": "Which board has more squares?",
+      "options": ["A shogi board", "A chessboard"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "A shogi board is 9 × 9 = 81 squares; a chessboard is 8 × 8 = 64.",
+      "source": {
+        "label": "Wikipedia: Shogi",
+        "url": "https://en.wikipedia.org/wiki/Shogi"
+      }
+    },
+    {
+      "id": "c139",
+      "prompt": "Which game set has more tiles?",
+      "options": ["English Scrabble", "Mahjong"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "A typical mahjong set has 144 tiles; an English-language Scrabble set has 100.",
+      "source": {
+        "label": "Wikipedia: Mahjong",
+        "url": "https://en.wikipedia.org/wiki/Mahjong"
+      }
+    },
+    {
+      "id": "c140",
+      "prompt": "Which film came first?",
+      "options": ["Battleship Potemkin", "Metropolis"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Battleship Potemkin premiered in December 1925; Metropolis in January 1927.",
+      "source": {
+        "label": "Wikipedia: Battleship Potemkin",
+        "url": "https://en.wikipedia.org/wiki/Battleship_Potemkin"
+      }
+    },
+    {
+      "id": "c141",
+      "prompt": "Which novel was published first?",
+      "options": ["Les Misérables", "Moby-Dick"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Moby-Dick appeared in 1851; Les Misérables in 1862.",
+      "source": {
+        "label": "Wikipedia: Moby-Dick",
+        "url": "https://en.wikipedia.org/wiki/Moby-Dick"
+      }
+    },
+    {
+      "id": "c142",
+      "prompt": "Which was written first?",
+      "options": ["The Divine Comedy", "The Canterbury Tales"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The Divine Comedy was written c. 1308–1321; The Canterbury Tales 1387–1400.",
+      "source": {
+        "label": "Wikipedia: Divine Comedy",
+        "url": "https://en.wikipedia.org/wiki/Divine_Comedy"
+      }
+    },
+    {
+      "id": "c143",
+      "prompt": "Who was born first?",
+      "options": ["Tolstoy", "Dostoevsky"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Dostoevsky was born in 1821; Tolstoy in 1828.",
+      "source": {
+        "label": "Wikipedia: Fyodor Dostoevsky",
+        "url": "https://en.wikipedia.org/wiki/Fyodor_Dostoevsky"
+      }
+    },
+    {
+      "id": "c144",
+      "prompt": "Who was born first?",
+      "options": ["Vivaldi", "Bach"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Vivaldi was born in 1678; Bach in 1685.",
+      "source": {
+        "label": "Wikipedia: Antonio Vivaldi",
+        "url": "https://en.wikipedia.org/wiki/Antonio_Vivaldi"
+      }
+    },
+    {
+      "id": "c145",
+      "prompt": "Who was born first?",
+      "options": ["Liszt", "Chopin"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Chopin was born in 1810; Liszt in 1811.",
+      "source": {
+        "label": "Wikipedia: Frédéric Chopin",
+        "url": "https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin"
+      }
+    },
+    {
+      "id": "c146",
+      "prompt": "Which was painted first?",
+      "options": ["The Starry Night", "The Scream"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Van Gogh painted The Starry Night in 1889; Munch painted the first version of The Scream in 1893.",
+      "source": {
+        "label": "Wikipedia: The Starry Night",
+        "url": "https://en.wikipedia.org/wiki/The_Starry_Night"
+      }
+    },
+    {
+      "id": "c147",
+      "prompt": "Which was painted first?",
+      "options": ["Girl with a Pearl Earring", "The Night Watch"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Rembrandt completed The Night Watch in 1642; Vermeer painted Girl with a Pearl Earring around 1665.",
+      "source": {
+        "label": "Wikipedia: The Night Watch",
+        "url": "https://en.wikipedia.org/wiki/The_Night_Watch"
+      }
+    },
+    {
+      "id": "c148",
+      "prompt": "Which began first?",
+      "options": ["Wimbledon", "Tour de France"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Wimbledon was first held in 1877; the Tour de France in 1903.",
+      "source": {
+        "label": "Wikipedia: The Championships, Wimbledon",
+        "url": "https://en.wikipedia.org/wiki/The_Championships,_Wimbledon"
+      }
+    },
+    {
+      "id": "c149",
+      "prompt": "Which began first?",
+      "options": ["Rugby World Cup", "Cricket World Cup"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The first Cricket World Cup was in 1975; the first Rugby World Cup in 1987.",
+      "source": {
+        "label": "Wikipedia: Cricket World Cup",
+        "url": "https://en.wikipedia.org/wiki/Cricket_World_Cup"
+      }
+    },
+    {
+      "id": "c150",
+      "prompt": "Which opened first?",
+      "options": ["Statue of Liberty", "Eiffel Tower"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The Statue of Liberty was dedicated in October 1886; the Eiffel Tower opened in May 1889.",
+      "source": {
+        "label": "Wikipedia: Statue of Liberty",
+        "url": "https://en.wikipedia.org/wiki/Statue_of_Liberty"
+      }
+    },
+    {
+      "id": "c151",
+      "prompt": "Which instrument is older?",
+      "options": ["Piano", "Violin"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The violin appeared in 16th-century Italy; the piano was invented around 1700.",
+      "source": {
+        "label": "Wikipedia: Violin",
+        "url": "https://en.wikipedia.org/wiki/Violin"
+      }
+    },
+    {
+      "id": "c152",
+      "prompt": "Who was born first?",
+      "options": ["Cervantes", "Shakespeare"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Cervantes was born around 1547; Shakespeare was baptised in 1564.",
+      "source": {
+        "label": "Wikipedia: Miguel de Cervantes",
+        "url": "https://en.wikipedia.org/wiki/Miguel_de_Cervantes"
+      }
     }
   ]
 }
