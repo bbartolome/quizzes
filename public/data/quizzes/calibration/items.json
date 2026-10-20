@@ -652,7 +652,7 @@
     {
       "id": "c055",
       "prompt": "Which is larger?",
-      "options": ["2²¹", "5-card poker hands"],
+      "options": ["5-card poker hands", "2²¹"],
       "correct": 0,
       "topic": "numbers",
       "fact": "There are 2,598,960 five-card hands from 52 cards; 2²¹ = 2,097,152.",
@@ -3136,7 +3136,7 @@
     {
       "id": "c262",
       "prompt": "Which is larger?",
-      "options": ["48²", "Product of first five primes"],
+      "options": ["48²", "5th primorial"],
       "correct": 1,
       "topic": "numbers",
       "fact": "2 × 3 × 5 × 7 × 11 = 2,310; 48² = 2,304.",
