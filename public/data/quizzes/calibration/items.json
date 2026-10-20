@@ -3744,6 +3744,246 @@
         "label": "Wikipedia: Alpha Centauri",
         "url": "https://en.wikipedia.org/wiki/Alpha_Centauri"
       }
+    },
+    {
+      "id": "c313",
+      "prompt": "Which sea is deeper?",
+      "options": ["Caspian Sea", "Black Sea"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "The Black Sea reaches 2,212 m; the Caspian Sea about 1,025 m.",
+      "source": {
+        "label": "Wikipedia: Black Sea",
+        "url": "https://en.wikipedia.org/wiki/Black_Sea"
+      }
+    },
+    {
+      "id": "c314",
+      "prompt": "Which sea is deeper?",
+      "options": ["Mediterranean Sea", "Red Sea"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "The Mediterranean reaches 5,109 m; the Red Sea 2,730 m.",
+      "source": {
+        "label": "Wikipedia: Mediterranean Sea",
+        "url": "https://en.wikipedia.org/wiki/Mediterranean_Sea"
+      }
+    },
+    {
+      "id": "c315",
+      "prompt": "Which desert is larger?",
+      "options": ["Gobi Desert", "Arabian Desert"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "The Arabian Desert covers roughly 1.9–2.3 million km²; the Gobi about 1.3 million km².",
+      "source": {
+        "label": "Wikipedia: Arabian Desert",
+        "url": "https://en.wikipedia.org/wiki/Arabian_Desert"
+      }
+    },
+    {
+      "id": "c316",
+      "prompt": "Which lake is deeper?",
+      "options": ["Crater Lake", "Lake Titicaca"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Crater Lake is 594 m deep; Lake Titicaca about 281 m.",
+      "source": {
+        "label": "Wikipedia: Crater Lake",
+        "url": "https://en.wikipedia.org/wiki/Crater_Lake"
+      }
+    },
+    {
+      "id": "c317",
+      "prompt": "Which lake is deeper?",
+      "options": ["Lake Malawi", "Lake Tanganyika"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Tanganyika is about 1,470 m deep; Malawi is 706 m.",
+      "source": {
+        "label": "Wikipedia: Lake Malawi",
+        "url": "https://en.wikipedia.org/wiki/Lake_Malawi"
+      }
+    },
+    {
+      "id": "c318",
+      "prompt": "Which city is higher above sea level?",
+      "options": ["Mexico City", "Kathmandu"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Mexico City sits at 2,240 m; Kathmandu at about 1,324–1,400 m.",
+      "source": {
+        "label": "Wikipedia: Mexico City",
+        "url": "https://en.wikipedia.org/wiki/Mexico_City"
+      }
+    },
+    {
+      "id": "c319",
+      "prompt": "Which city is higher above sea level?",
+      "options": ["Quito", "La Paz"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "La Paz sits at about 3,650 m; Quito at about 2,850 m.",
+      "source": {
+        "label": "Wikipedia: La Paz",
+        "url": "https://en.wikipedia.org/wiki/La_Paz"
+      }
+    },
+    {
+      "id": "c320",
+      "prompt": "Which continent is larger?",
+      "options": ["Antarctica", "Europe"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Antarctica covers about 14.2 million km²; Europe about 10.0 million.",
+      "source": {
+        "label": "Wikipedia: Continent",
+        "url": "https://en.wikipedia.org/wiki/Continent"
+      }
+    },
+    {
+      "id": "c321",
+      "prompt": "Which continent is larger?",
+      "options": ["Antarctica", "South America"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "South America covers about 17.8 million km²; Antarctica about 14.2 million.",
+      "source": {
+        "label": "Wikipedia: Continent",
+        "url": "https://en.wikipedia.org/wiki/Continent"
+      }
+    },
+    {
+      "id": "c322",
+      "prompt": "Which border is longer?",
+      "options": ["Argentina–Chile", "China–Mongolia"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "The Argentina–Chile border is over 5,300 km; China–Mongolia is about 4,630 km.",
+      "source": {
+        "label": "Wikipedia: Borders of Argentina",
+        "url": "https://en.wikipedia.org/wiki/Borders_of_Argentina"
+      }
+    },
+    {
+      "id": "c323",
+      "prompt": "Which lake is larger by area?",
+      "options": ["Great Slave Lake", "Great Bear Lake"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Great Bear Lake covers about 31,153 km²; Great Slave Lake about 27,200 km².",
+      "source": {
+        "label": "Wikipedia: Great Bear Lake",
+        "url": "https://en.wikipedia.org/wiki/Great_Bear_Lake"
+      }
+    },
+    {
+      "id": "c324",
+      "prompt": "Which lake holds more water?",
+      "options": ["Lake Baikal", "Lake Superior"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Baikal holds about 23,600 km³; Superior about 12,100 km³.",
+      "source": {
+        "label": "Wikipedia: Lake Baikal",
+        "url": "https://en.wikipedia.org/wiki/Lake_Baikal"
+      }
+    },
+    {
+      "id": "c325",
+      "prompt": "Which is farther south?",
+      "options": ["Wellington", "Hobart"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Hobart lies at about 42.88°S, Wellington at about 41.29°S.",
+      "source": {
+        "label": "Wikipedia: Hobart",
+        "url": "https://en.wikipedia.org/wiki/Hobart"
+      }
+    },
+    {
+      "id": "c326",
+      "prompt": "Which is farther north?",
+      "options": ["Vladivostok", "Rome"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Vladivostok lies at about 43.12°N, Rome at about 41.89°N.",
+      "source": {
+        "label": "Wikipedia: Vladivostok",
+        "url": "https://en.wikipedia.org/wiki/Vladivostok"
+      }
+    },
+    {
+      "id": "c327",
+      "prompt": "Which is farther east?",
+      "options": ["Oslo", "Rome"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Rome lies at about 12.48°E, Oslo at about 10.74°E.",
+      "source": {
+        "label": "Wikipedia: Rome",
+        "url": "https://en.wikipedia.org/wiki/Rome"
+      }
+    },
+    {
+      "id": "c328",
+      "prompt": "Which island is larger?",
+      "options": ["Luzon", "Iceland"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Luzon covers about 104,800 km²; Iceland about 100,300 km².",
+      "source": {
+        "label": "Wikipedia: List of islands by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_islands_by_area"
+      }
+    },
+    {
+      "id": "c329",
+      "prompt": "Which river is longer?",
+      "options": ["Indus", "Brahmaputra"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "The Brahmaputra is about 3,970 km long; the Indus about 3,180 km.",
+      "source": {
+        "label": "Wikipedia: List of rivers by length",
+        "url": "https://en.wikipedia.org/wiki/List_of_rivers_by_length"
+      }
+    },
+    {
+      "id": "c330",
+      "prompt": "Which tunnel is longer?",
+      "options": ["Gotthard Base Tunnel", "Seikan Tunnel"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "The Gotthard Base Tunnel is 57.1 km long; the Seikan Tunnel 53.85 km.",
+      "source": {
+        "label": "Wikipedia: Gotthard Base Tunnel",
+        "url": "https://en.wikipedia.org/wiki/Gotthard_Base_Tunnel"
+      }
+    },
+    {
+      "id": "c331",
+      "prompt": "Which canal is longer?",
+      "options": ["Panama Canal", "Kiel Canal"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "The Kiel Canal is about 98 km long; the Panama Canal about 82 km.",
+      "source": {
+        "label": "Wikipedia: Kiel Canal",
+        "url": "https://en.wikipedia.org/wiki/Kiel_Canal"
+      }
+    },
+    {
+      "id": "c332",
+      "prompt": "Which is longer?",
+      "options": ["Great Wall of China", "Trans-Siberian Railway"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "All Great Wall sections total about 21,196 km; the Trans-Siberian Railway is 9,289 km.",
+      "source": {
+        "label": "Wikipedia: Great Wall of China",
+        "url": "https://en.wikipedia.org/wiki/Great_Wall_of_China"
+      }
     }
   ]
 }
