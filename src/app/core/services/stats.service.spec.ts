@@ -411,5 +411,28 @@ describe('StatsService', () => {
       expect(globalThis.localStorage.getItem('stats:quiz-b')).toBeNull();
       expect(globalThis.localStorage.getItem('unrelated-key')).toBe('keep-me');
     });
+
+    it('clears calibration history keys along with Traps keys', () => {
+      const service = new StatsService();
+
+      service.recordResult('quiz-a', makeResult('strawman', true));
+      globalThis.localStorage.setItem('stats:calibration:calibration', '{}');
+      globalThis.localStorage.setItem(
+        'stats:calibration:calibration-advanced',
+        '{}',
+      );
+      globalThis.localStorage.setItem('unrelated-key', 'keep-me');
+
+      service.resetAll();
+
+      expect(globalThis.localStorage.getItem('stats:quiz-a')).toBeNull();
+      expect(
+        globalThis.localStorage.getItem('stats:calibration:calibration'),
+      ).toBeNull();
+      expect(
+        globalThis.localStorage.getItem('stats:calibration:calibration-advanced'),
+      ).toBeNull();
+      expect(globalThis.localStorage.getItem('unrelated-key')).toBe('keep-me');
+    });
   });
 });
