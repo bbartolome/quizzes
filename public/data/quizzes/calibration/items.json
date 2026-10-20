@@ -2544,6 +2544,246 @@
         "label": "Wikipedia: Athens",
         "url": "https://en.wikipedia.org/wiki/Athens"
       }
+    },
+    {
+      "id": "c213",
+      "prompt": "Which runs faster?",
+      "options": ["Lion", "Pronghorn"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Pronghorns reach about 88.5 km/h in short bursts; lions peak around 74 km/h (typically 48–59).",
+      "source": {
+        "label": "Wikipedia: Pronghorn",
+        "url": "https://en.wikipedia.org/wiki/Pronghorn"
+      }
+    },
+    {
+      "id": "c214",
+      "prompt": "Which is a rodent?",
+      "options": ["Guinea pig", "Rabbit"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Guinea pigs are rodents; rabbits are lagomorphs.",
+      "source": {
+        "label": "Wikipedia: Guinea pig",
+        "url": "https://en.wikipedia.org/wiki/Guinea_pig"
+      }
+    },
+    {
+      "id": "c215",
+      "prompt": "Which is a rodent?",
+      "options": ["Hedgehog", "Porcupine"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Porcupines are rodents; hedgehogs belong to the order Eulipotyphla.",
+      "source": {
+        "label": "Wikipedia: Porcupine",
+        "url": "https://en.wikipedia.org/wiki/Porcupine"
+      }
+    },
+    {
+      "id": "c216",
+      "prompt": "Which is a crustacean?",
+      "options": ["Barnacle", "Limpet"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Barnacles are crustaceans; limpets are aquatic snails (molluscs).",
+      "source": {
+        "label": "Wikipedia: Barnacle",
+        "url": "https://en.wikipedia.org/wiki/Barnacle"
+      }
+    },
+    {
+      "id": "c217",
+      "prompt": "Which is an insect?",
+      "options": ["Centipede", "Silverfish"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Silverfish are wingless insects; centipedes are myriapods.",
+      "source": {
+        "label": "Wikipedia: Silverfish",
+        "url": "https://en.wikipedia.org/wiki/Silverfish"
+      }
+    },
+    {
+      "id": "c218",
+      "prompt": "Which has the heavier brain?",
+      "options": ["Sperm whale", "African elephant"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "A sperm whale's brain averages about 7.1 kg; an elephant's weighs 4.5–5.5 kg.",
+      "source": {
+        "label": "Wikipedia: Sperm whale",
+        "url": "https://en.wikipedia.org/wiki/Sperm_whale"
+      }
+    },
+    {
+      "id": "c219",
+      "prompt": "Which has the shorter pregnancy?",
+      "options": ["House mouse", "Virginia opossum"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Opossum gestation lasts 11–13 days; a mouse's lasts 19–21 days.",
+      "source": {
+        "label": "Wikipedia: Virginia opossum",
+        "url": "https://en.wikipedia.org/wiki/Virginia_opossum"
+      }
+    },
+    {
+      "id": "c220",
+      "prompt": "Which grows longer?",
+      "options": ["Basking shark", "Great white shark"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Basking sharks average about 7.9 m; great whites mature at about 3.4–4.9 m.",
+      "source": {
+        "label": "Wikipedia: Basking shark",
+        "url": "https://en.wikipedia.org/wiki/Basking_shark"
+      }
+    },
+    {
+      "id": "c221",
+      "prompt": "Which penguin is larger?",
+      "options": ["King penguin", "Emperor penguin"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The emperor is the largest penguin; the king is the second largest.",
+      "source": {
+        "label": "Wikipedia: King penguin",
+        "url": "https://en.wikipedia.org/wiki/King_penguin"
+      }
+    },
+    {
+      "id": "c222",
+      "prompt": "Which is a conifer?",
+      "options": ["Yew", "Ginkgo"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Yews are conifers; ginkgo has its own division, Ginkgophyta.",
+      "source": {
+        "label": "Wikipedia: Taxus baccata",
+        "url": "https://en.wikipedia.org/wiki/Taxus_baccata"
+      }
+    },
+    {
+      "id": "c223",
+      "prompt": "Which is a true moss?",
+      "options": ["Spanish moss", "Sphagnum"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Sphagnum is a genus of mosses; Spanish moss is a bromeliad flowering plant.",
+      "source": {
+        "label": "Wikipedia: Sphagnum",
+        "url": "https://en.wikipedia.org/wiki/Sphagnum"
+      }
+    },
+    {
+      "id": "c224",
+      "prompt": "Which is a true lily?",
+      "options": ["Tiger lily", "Water lily"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Tiger lilies belong to the genus Lilium; water lilies are in the unrelated order Nymphaeales.",
+      "source": {
+        "label": "Wikipedia: Lilium lancifolium",
+        "url": "https://en.wikipedia.org/wiki/Lilium_lancifolium"
+      }
+    },
+    {
+      "id": "c225",
+      "prompt": "Which is a legume?",
+      "options": ["Almond", "Peanut"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Peanuts are legumes; almonds are drupes in the rose family.",
+      "source": {
+        "label": "Wikipedia: Peanut",
+        "url": "https://en.wikipedia.org/wiki/Peanut"
+      }
+    },
+    {
+      "id": "c226",
+      "prompt": "Which is a true botanical nut?",
+      "options": ["Hazelnut", "Almond"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Hazelnuts are true nuts; the almond is a drupe, not a true nut.",
+      "source": {
+        "label": "Wikipedia: Nut (fruit)",
+        "url": "https://en.wikipedia.org/wiki/Nut_(fruit)"
+      }
+    },
+    {
+      "id": "c227",
+      "prompt": "Which is a flower bud?",
+      "options": ["Cinnamon", "Clove"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Cloves are flower buds; cinnamon is inner bark.",
+      "source": {
+        "label": "Wikipedia: Clove",
+        "url": "https://en.wikipedia.org/wiki/Clove"
+      }
+    },
+    {
+      "id": "c228",
+      "prompt": "Which loses its needles in autumn?",
+      "options": ["Larch", "Spruce"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Larches are deciduous conifers; spruces are evergreen.",
+      "source": {
+        "label": "Wikipedia: Larch",
+        "url": "https://en.wikipedia.org/wiki/Larch"
+      }
+    },
+    {
+      "id": "c229",
+      "prompt": "Which is more closely related to cats?",
+      "options": ["Dogs", "Hyenas"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Hyenas belong to Feliformia, the cat-like carnivorans; dogs are canids.",
+      "source": {
+        "label": "Wikipedia: Hyena",
+        "url": "https://en.wikipedia.org/wiki/Hyena"
+      }
+    },
+    {
+      "id": "c230",
+      "prompt": "Which is humans' closest living relative?",
+      "options": ["Chimpanzee", "Gorilla"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Chimpanzees and bonobos are humans' closest living relatives.",
+      "source": {
+        "label": "Wikipedia: Chimpanzee",
+        "url": "https://en.wikipedia.org/wiki/Chimpanzee"
+      }
+    },
+    {
+      "id": "c231",
+      "prompt": "Which is a rodent?",
+      "options": ["Otter", "Beaver"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Beavers are rodents; otters are mustelids, related to weasels.",
+      "source": {
+        "label": "Wikipedia: Beaver",
+        "url": "https://en.wikipedia.org/wiki/Beaver"
+      }
+    },
+    {
+      "id": "c232",
+      "prompt": "Which is a bear?",
+      "options": ["Giant panda", "Red panda"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The giant panda is a true bear (Ursidae); the red panda has its own family, Ailuridae.",
+      "source": {
+        "label": "Wikipedia: Giant panda",
+        "url": "https://en.wikipedia.org/wiki/Giant_panda"
+      }
     }
   ]
 }
