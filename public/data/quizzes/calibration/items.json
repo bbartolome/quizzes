@@ -384,6 +384,246 @@
         "label": "Wikipedia: Fibonacci sequence",
         "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
       }
+    },
+    {
+      "id": "c033",
+      "prompt": "Which river is longer?",
+      "options": ["Niger", "Volga"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "The Niger is about 4,200 km long; the Volga about 3,645 km.",
+      "source": {
+        "label": "Wikipedia: List of rivers by length",
+        "url": "https://en.wikipedia.org/wiki/List_of_rivers_by_length"
+      }
+    },
+    {
+      "id": "c034",
+      "prompt": "Which mountain is higher?",
+      "options": ["Kangchenjunga", "K2"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "K2 is 8,611 m; Kangchenjunga is 8,586 m.",
+      "source": {
+        "label": "Wikipedia: Eight-thousander",
+        "url": "https://en.wikipedia.org/wiki/Eight-thousander"
+      }
+    },
+    {
+      "id": "c035",
+      "prompt": "Which country is larger by area?",
+      "options": ["Argentina", "Kazakhstan"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Argentina covers about 2,780,400 km²; Kazakhstan about 2,724,910 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
+    },
+    {
+      "id": "c036",
+      "prompt": "Which lake is deeper?",
+      "options": ["Lake Tanganyika", "Lake Baikal"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Baikal has a maximum depth of 1,642 m; Tanganyika about 1,470 m.",
+      "source": {
+        "label": "Wikipedia: Lake Baikal",
+        "url": "https://en.wikipedia.org/wiki/Lake_Baikal"
+      }
+    },
+    {
+      "id": "c037",
+      "prompt": "Which is farther west?",
+      "options": ["Lisbon", "Dublin"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Lisbon lies at about 9.15°W, Dublin at about 6.26°W.",
+      "source": {
+        "label": "Wikipedia: Lisbon",
+        "url": "https://en.wikipedia.org/wiki/Lisbon"
+      }
+    },
+    {
+      "id": "c038",
+      "prompt": "Which is farther south?",
+      "options": ["Auckland", "Melbourne"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Melbourne lies at about 37.81°S, Auckland at about 36.85°S.",
+      "source": {
+        "label": "Wikipedia: Melbourne",
+        "url": "https://en.wikipedia.org/wiki/Melbourne"
+      }
+    },
+    {
+      "id": "c039",
+      "prompt": "Which is farther north?",
+      "options": ["London", "Vancouver"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "London lies at about 51.51°N, Vancouver at about 49.26°N.",
+      "source": {
+        "label": "Wikipedia: London",
+        "url": "https://en.wikipedia.org/wiki/London"
+      }
+    },
+    {
+      "id": "c040",
+      "prompt": "Which island is larger?",
+      "options": ["Great Britain", "Honshu"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Honshu covers about 228,300 km²; Great Britain about 218,600 km².",
+      "source": {
+        "label": "Wikipedia: List of islands by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_islands_by_area"
+      }
+    },
+    {
+      "id": "c041",
+      "prompt": "Which capital is higher above sea level?",
+      "options": ["Bogotá", "Addis Ababa"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Bogotá averages about 2,640 m; Addis Ababa sits at 2,355 m.",
+      "source": {
+        "label": "Wikipedia: Bogotá",
+        "url": "https://en.wikipedia.org/wiki/Bogot%C3%A1"
+      }
+    },
+    {
+      "id": "c042",
+      "prompt": "Which lake is larger by area?",
+      "options": ["Lake Michigan", "Lake Huron"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Huron covers about 59,570 km²; Michigan about 57,757 km².",
+      "source": {
+        "label": "Wikipedia: Great Lakes",
+        "url": "https://en.wikipedia.org/wiki/Great_Lakes"
+      }
+    },
+    {
+      "id": "c043",
+      "prompt": "Which mountain is taller?",
+      "options": ["Kilimanjaro", "Mount Elbrus"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Kilimanjaro is about 5,895 m; Elbrus is 5,642 m.",
+      "source": {
+        "label": "Wikipedia: Seven Summits",
+        "url": "https://en.wikipedia.org/wiki/Seven_Summits"
+      }
+    },
+    {
+      "id": "c044",
+      "prompt": "Which country is larger by area?",
+      "options": ["Indonesia", "Mexico"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Mexico covers about 1,964,375 km²; Indonesia about 1,904,569 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
+    },
+    {
+      "id": "c045",
+      "prompt": "Which is farther south?",
+      "options": ["Buenos Aires", "Sydney"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Buenos Aires lies at about 34.60°S, Sydney at about 33.87°S.",
+      "source": {
+        "label": "Wikipedia: Buenos Aires",
+        "url": "https://en.wikipedia.org/wiki/Buenos_Aires"
+      }
+    },
+    {
+      "id": "c046",
+      "prompt": "Which mountain is higher?",
+      "options": ["Denali", "Aconcagua"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Aconcagua is about 6,961 m; Denali is about 6,194 m.",
+      "source": {
+        "label": "Wikipedia: Seven Summits",
+        "url": "https://en.wikipedia.org/wiki/Seven_Summits"
+      }
+    },
+    {
+      "id": "c047",
+      "prompt": "Which country is larger by area?",
+      "options": ["Iran", "Mongolia"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Iran covers about 1,648,195 km²; Mongolia about 1,564,116 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
+    },
+    {
+      "id": "c048",
+      "prompt": "Which is farther east?",
+      "options": ["Istanbul", "Cairo"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Cairo lies at about 31.24°E, Istanbul at about 28.96°E.",
+      "source": {
+        "label": "Wikipedia: Cairo",
+        "url": "https://en.wikipedia.org/wiki/Cairo"
+      }
+    },
+    {
+      "id": "c049",
+      "prompt": "Which island is larger?",
+      "options": ["Madagascar", "Baffin Island"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Madagascar covers about 592,500 km²; Baffin Island about 507,200 km².",
+      "source": {
+        "label": "Wikipedia: List of islands by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_islands_by_area"
+      }
+    },
+    {
+      "id": "c050",
+      "prompt": "Which is farther south?",
+      "options": ["Perth", "Cape Town"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Cape Town lies at about 33.93°S, Perth at about 32.0°S.",
+      "source": {
+        "label": "Wikipedia: Cape Town",
+        "url": "https://en.wikipedia.org/wiki/Cape_Town"
+      }
+    },
+    {
+      "id": "c051",
+      "prompt": "Which mountain is higher?",
+      "options": ["Lhotse", "Makalu"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Lhotse is 8,516 m; Makalu is 8,485 m.",
+      "source": {
+        "label": "Wikipedia: Eight-thousander",
+        "url": "https://en.wikipedia.org/wiki/Eight-thousander"
+      }
+    },
+    {
+      "id": "c052",
+      "prompt": "Which country is larger by area?",
+      "options": ["Colombia", "South Africa"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "South Africa covers about 1,219,090 km²; Colombia about 1,138,910 km².",
+      "source": {
+        "label": "Wikipedia: List of countries and dependencies by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area"
+      }
     }
   ]
 }
