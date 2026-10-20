@@ -36,7 +36,7 @@ _From [Calibration item schema and content guidelines](https://github.com/bbarto
 Each quiz has its own bank at `<dataPath>/items.json`. No item appears in both banks.
 
 ```jsonc
-{ "version": 1, "items": [ /* … */ ] }
+{ "version": 1, "items": [/* … */] }
 ```
 
 - The bank's `version` must equal its manifest entry's `version`. A build-time unit test checks this for every calibration entry.
@@ -49,10 +49,10 @@ Each quiz has its own bank at `<dataPath>/items.json`. No item appears in both b
   "id": "c001",
   "prompt": "Which is farther north?",
   "options": ["Rome", "New York"],
-  "correct": 0,                       // index into options
+  "correct": 0, // index into options
   "topic": "geography",
   "fact": "Rome lies at about 41.9°N, New York at about 40.7°N.",
-  "source": { "label": "Wikipedia: Rome", "url": "https://en.wikipedia.org/wiki/Rome" }
+  "source": { "label": "Wikipedia: Rome", "url": "https://en.wikipedia.org/wiki/Rome" },
 }
 ```
 
@@ -91,39 +91,39 @@ In a four-way bank, the four outcomes are roughly balanced (about 25% each).
 
 Two per topic, with correct sides mixed.
 
-| id | topic | prompt | options (correct in **bold**) | fact | source |
-|---|---|---|---|---|---|
-| c001 | geography | Which is farther north? | **Rome** / New York | Rome lies at about 41.9°N, New York at about 40.7°N. | [Wikipedia: Rome](https://en.wikipedia.org/wiki/Rome) |
-| c002 | geography | Which lake is larger by area? | Lake Victoria / **Lake Superior** | Superior covers about 82,100 km², Victoria about 59,900 km². | [Wikipedia: Lake Superior](https://en.wikipedia.org/wiki/Lake_Superior) |
-| c003 | history | Which came first? | **Gutenberg's press** / Fall of Constantinople | Gutenberg's press dates to around 1440; Constantinople fell in 1453. | [Wikipedia: Printing press](https://en.wikipedia.org/wiki/Printing_press) |
-| c004 | history | Which canal opened first? | Panama Canal / **Suez Canal** | Suez opened in 1869, Panama in 1914. | [Wikipedia: Suez Canal](https://en.wikipedia.org/wiki/Suez_Canal) |
-| c005 | science | Which has more bones? | **A human hand** / A human foot | A hand with its wrist has 27 bones; a foot has 26. | [Wikipedia: Hand](https://en.wikipedia.org/wiki/Hand) |
-| c006 | science | Which metal is denser? | Lead / **Gold** | Gold is about 19.3 g/cm³, lead about 11.3 g/cm³. | [Wikipedia: Gold](https://en.wikipedia.org/wiki/Gold) |
-| c007 | nature | Which has more legs? | A spider / **A lobster** | Lobsters are decapods with ten legs; spiders have eight. | [Wikipedia: Lobster](https://en.wikipedia.org/wiki/Lobster) |
-| c008 | nature | Which has more adult teeth? | **A dog** / A human | Adult dogs have 42 teeth; adult humans have 32. | [Wikipedia: Dog anatomy](https://en.wikipedia.org/wiki/Dog_anatomy) |
-| c009 | culture | Which was written first? | **Hamlet** / Don Quixote | Hamlet dates to about 1599–1601; Don Quixote Part One was published in 1605. | [Wikipedia: Hamlet](https://en.wikipedia.org/wiki/Hamlet) |
-| c010 | culture | Which premiered first? | Beethoven's Ninth / **The Barber of Seville** | Rossini's opera premiered in 1816; Beethoven's Ninth in 1824. | [Wikipedia: The Barber of Seville](https://en.wikipedia.org/wiki/The_Barber_of_Seville) |
-| c011 | numbers | Which is larger? | 10³ / **2¹⁰** | 2¹⁰ = 1,024; 10³ = 1,000. | [Wikipedia: Power of two](https://en.wikipedia.org/wiki/Power_of_two) |
-| c012 | numbers | Which is larger? | 7 × 8 × 9 / **23²** | 23² = 529; 7 × 8 × 9 = 504. | Arithmetic ([Wikipedia: Square number](https://en.wikipedia.org/wiki/Square_number)) |
+| id   | topic     | prompt                        | options (correct in **bold**)                  | fact                                                                         | source                                                                                  |
+| ---- | --------- | ----------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| c001 | geography | Which is farther north?       | **Rome** / New York                            | Rome lies at about 41.9°N, New York at about 40.7°N.                         | [Wikipedia: Rome](https://en.wikipedia.org/wiki/Rome)                                   |
+| c002 | geography | Which lake is larger by area? | Lake Victoria / **Lake Superior**              | Superior covers about 82,100 km², Victoria about 59,900 km².                 | [Wikipedia: Lake Superior](https://en.wikipedia.org/wiki/Lake_Superior)                 |
+| c003 | history   | Which came first?             | **Gutenberg's press** / Fall of Constantinople | Gutenberg's press dates to around 1440; Constantinople fell in 1453.         | [Wikipedia: Printing press](https://en.wikipedia.org/wiki/Printing_press)               |
+| c004 | history   | Which canal opened first?     | Panama Canal / **Suez Canal**                  | Suez opened in 1869, Panama in 1914.                                         | [Wikipedia: Suez Canal](https://en.wikipedia.org/wiki/Suez_Canal)                       |
+| c005 | science   | Which has more bones?         | **A human hand** / A human foot                | A hand with its wrist has 27 bones; a foot has 26.                           | [Wikipedia: Hand](https://en.wikipedia.org/wiki/Hand)                                   |
+| c006 | science   | Which metal is denser?        | Lead / **Gold**                                | Gold is about 19.3 g/cm³, lead about 11.3 g/cm³.                             | [Wikipedia: Gold](https://en.wikipedia.org/wiki/Gold)                                   |
+| c007 | nature    | Which has more legs?          | A spider / **A lobster**                       | Lobsters are decapods with ten legs; spiders have eight.                     | [Wikipedia: Lobster](https://en.wikipedia.org/wiki/Lobster)                             |
+| c008 | nature    | Which has more adult teeth?   | **A dog** / A human                            | Adult dogs have 42 teeth; adult humans have 32.                              | [Wikipedia: Dog anatomy](https://en.wikipedia.org/wiki/Dog_anatomy)                     |
+| c009 | culture   | Which was written first?      | **Hamlet** / Don Quixote                       | Hamlet dates to about 1599–1601; Don Quixote Part One was published in 1605. | [Wikipedia: Hamlet](https://en.wikipedia.org/wiki/Hamlet)                               |
+| c010 | culture   | Which premiered first?        | Beethoven's Ninth / **The Barber of Seville**  | Rossini's opera premiered in 1816; Beethoven's Ninth in 1824.                | [Wikipedia: The Barber of Seville](https://en.wikipedia.org/wiki/The_Barber_of_Seville) |
+| c011 | numbers   | Which is larger?              | 10³ / **2¹⁰**                                  | 2¹⁰ = 1,024; 10³ = 1,000.                                                    | [Wikipedia: Power of two](https://en.wikipedia.org/wiki/Power_of_two)                   |
+| c012 | numbers   | Which is larger?              | 7 × 8 × 9 / **23²**                            | 23² = 529; 7 × 8 × 9 = 504.                                                  | Arithmetic ([Wikipedia: Square number](https://en.wikipedia.org/wiki/Square_number))    |
 
 ### 3.7 Example items: Advanced (seed bank)
 
 Two per topic, three of each outcome.
 
-| id | topic | prompt | options | truth | key | facts | source |
-|---|---|---|---|---|---|---|---|
-| a001 | nature | Which of these is a mammal? | Platypus / Penguin | [T, F] | A | The platypus is an egg-laying mammal. · Penguins are birds. | [Wikipedia: Platypus](https://en.wikipedia.org/wiki/Platypus) |
-| a002 | geography | Which of these borders Brazil? | Chile / Ecuador | [F, F] | Neither | Chile and Ecuador are the only South American countries that don't border Brazil. (Same fact for both.) | [Wikipedia: Borders of Brazil](https://en.wikipedia.org/wiki/Borders_of_Brazil) |
-| a003 | numbers | Which of these is prime? | 91 / 97 | [F, T] | B | 91 = 7 × 13. · 97 is prime. | [Wikipedia: List of prime numbers](https://en.wikipedia.org/wiki/List_of_prime_numbers) |
-| a004 | science | Which of these planets has rings? | Neptune / Uranus | [T, T] | Both | Neptune has a faint ring system. · Uranus has 13 known rings. | [Wikipedia: Rings of Neptune](https://en.wikipedia.org/wiki/Rings_of_Neptune) |
-| a005 | history | Which of these people was born before 1900? | Albert Einstein / Frida Kahlo | [T, F] | A | Einstein was born in 1879. · Kahlo was born in 1907. | [Wikipedia: Albert Einstein](https://en.wikipedia.org/wiki/Albert_Einstein) |
-| a006 | science | Which of these is a noble gas? | Nitrogen / Argon | [F, T] | B | Nitrogen is in group 15. · Argon is a group 18 noble gas. | [Wikipedia: Noble gas](https://en.wikipedia.org/wiki/Noble_gas) |
-| a007 | geography | Which of these cities is a national capital? | Istanbul / Zurich | [F, F] | Neither | Turkey's capital is Ankara. · Switzerland's federal city is Bern. | [Wikipedia: Ankara](https://en.wikipedia.org/wiki/Ankara) |
-| a008 | culture | Which of these is a national language of Switzerland? | Romansh / Italian | [T, T] | Both | Switzerland's four national languages are German, French, Italian and Romansh. (Same fact for both.) | [Wikipedia: Languages of Switzerland](https://en.wikipedia.org/wiki/Languages_of_Switzerland) |
-| a009 | history | Which of these opened before 1900? | Eiffel Tower / Brooklyn Bridge | [T, T] | Both | The Eiffel Tower opened in 1889. · The Brooklyn Bridge opened in 1883. | [Wikipedia: Eiffel Tower](https://en.wikipedia.org/wiki/Eiffel_Tower) |
-| a010 | culture | Which of these was written by Leo Tolstoy? | War and Peace / Crime and Punishment | [T, F] | A | Tolstoy wrote War and Peace. · Dostoevsky wrote Crime and Punishment. | [Wikipedia: War and Peace](https://en.wikipedia.org/wiki/War_and_Peace) |
-| a011 | nature | Which of these is native to Australia? | Kiwi / Wombat | [F, T] | B | Kiwis are native to New Zealand. · Wombats are native to Australia. | [Wikipedia: Wombat](https://en.wikipedia.org/wiki/Wombat) |
-| a012 | numbers | Which of these is divisible by 7? | 143 / 187 | [F, F] | Neither | 143 = 11 × 13. · 187 = 11 × 17. | Arithmetic ([Wikipedia: Divisibility rule](https://en.wikipedia.org/wiki/Divisibility_rule)) |
+| id   | topic     | prompt                                                | options                              | truth  | key     | facts                                                                                                   | source                                                                                        |
+| ---- | --------- | ----------------------------------------------------- | ------------------------------------ | ------ | ------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| a001 | nature    | Which of these is a mammal?                           | Platypus / Penguin                   | [T, F] | A       | The platypus is an egg-laying mammal. · Penguins are birds.                                             | [Wikipedia: Platypus](https://en.wikipedia.org/wiki/Platypus)                                 |
+| a002 | geography | Which of these borders Brazil?                        | Chile / Ecuador                      | [F, F] | Neither | Chile and Ecuador are the only South American countries that don't border Brazil. (Same fact for both.) | [Wikipedia: Borders of Brazil](https://en.wikipedia.org/wiki/Borders_of_Brazil)               |
+| a003 | numbers   | Which of these is prime?                              | 91 / 97                              | [F, T] | B       | 91 = 7 × 13. · 97 is prime.                                                                             | [Wikipedia: List of prime numbers](https://en.wikipedia.org/wiki/List_of_prime_numbers)       |
+| a004 | science   | Which of these planets has rings?                     | Neptune / Uranus                     | [T, T] | Both    | Neptune has a faint ring system. · Uranus has 13 known rings.                                           | [Wikipedia: Rings of Neptune](https://en.wikipedia.org/wiki/Rings_of_Neptune)                 |
+| a005 | history   | Which of these people was born before 1900?           | Albert Einstein / Frida Kahlo        | [T, F] | A       | Einstein was born in 1879. · Kahlo was born in 1907.                                                    | [Wikipedia: Albert Einstein](https://en.wikipedia.org/wiki/Albert_Einstein)                   |
+| a006 | science   | Which of these is a noble gas?                        | Nitrogen / Argon                     | [F, T] | B       | Nitrogen is in group 15. · Argon is a group 18 noble gas.                                               | [Wikipedia: Noble gas](https://en.wikipedia.org/wiki/Noble_gas)                               |
+| a007 | geography | Which of these cities is a national capital?          | Istanbul / Zurich                    | [F, F] | Neither | Turkey's capital is Ankara. · Switzerland's federal city is Bern.                                       | [Wikipedia: Ankara](https://en.wikipedia.org/wiki/Ankara)                                     |
+| a008 | culture   | Which of these is a national language of Switzerland? | Romansh / Italian                    | [T, T] | Both    | Switzerland's four national languages are German, French, Italian and Romansh. (Same fact for both.)    | [Wikipedia: Languages of Switzerland](https://en.wikipedia.org/wiki/Languages_of_Switzerland) |
+| a009 | history   | Which of these opened before 1900?                    | Eiffel Tower / Brooklyn Bridge       | [T, T] | Both    | The Eiffel Tower opened in 1889. · The Brooklyn Bridge opened in 1883.                                  | [Wikipedia: Eiffel Tower](https://en.wikipedia.org/wiki/Eiffel_Tower)                         |
+| a010 | culture   | Which of these was written by Leo Tolstoy?            | War and Peace / Crime and Punishment | [T, F] | A       | Tolstoy wrote War and Peace. · Dostoevsky wrote Crime and Punishment.                                   | [Wikipedia: War and Peace](https://en.wikipedia.org/wiki/War_and_Peace)                       |
+| a011 | nature    | Which of these is native to Australia?                | Kiwi / Wombat                        | [F, T] | B       | Kiwis are native to New Zealand. · Wombats are native to Australia.                                     | [Wikipedia: Wombat](https://en.wikipedia.org/wiki/Wombat)                                     |
+| a012 | numbers   | Which of these is divisible by 7?                     | 143 / 187                            | [F, F] | Neither | 143 = 11 × 13. · 187 = 11 × 17.                                                                         | Arithmetic ([Wikipedia: Divisibility rule](https://en.wikipedia.org/wiki/Divisibility_rule))  |
 
 ## 4. Drawing a round
 
@@ -178,13 +178,13 @@ _From [How should calibration be scored and displayed?](https://github.com/bbart
 
 All of these are pure functions.
 
-| | standard (two-way) | Advanced (four-way) |
-|---|---|---|
-| confidence stops (= buckets) | 50, 60, 70, 80, 90, 100 | 0, 25, 50, 75, 100 |
-| chance rate | 50 | 25 |
-| guessing Brier | 0.25 | 0.1875 |
-| chart x-axis | 50–100 | 0–100 |
-| Confident answer | 90, 100 | 75, 100 |
+|                              | standard (two-way)      | Advanced (four-way) |
+| ---------------------------- | ----------------------- | ------------------- |
+| confidence stops (= buckets) | 50, 60, 70, 80, 90, 100 | 0, 25, 50, 75, 100  |
+| chance rate                  | 50                      | 25                  |
+| guessing Brier               | 0.25                    | 0.1875              |
+| chart x-axis                 | 50–100                  | 0–100               |
+| Confident answer             | 90, 100                 | 75, 100             |
 
 - **Correct**: two-way, `pick === correct`. Four-way, `pick` (`[bool, bool]` in bank order) equals `truth`.
 - **Brier per answer**, with c = confidence / 100: `(1 − c)²` if correct, `c²` if wrong. A set's Brier is the mean (0–1 scale).
@@ -208,14 +208,14 @@ An append-only list of submitted rounds:
 
 ```ts
 interface CalibrationRound {
-  submittedAt: string;          // ISO timestamp
-  bankVersion: number;          // the loaded bank's own version
+  submittedAt: string; // ISO timestamp
+  bankVersion: number; // the loaded bank's own version
   answers: CalibrationAnswer[];
 }
 interface CalibrationAnswer {
   itemId: string;
   pick: number | [boolean, boolean]; // two-way: option index in bank order; four-way: bank order
-  confidence: number;                // the stop value
+  confidence: number; // the stop value
   correct: boolean;
 }
 ```
@@ -319,17 +319,17 @@ No `ngsw-config.json` change. The existing `quiz-data` data group (`data/quizzes
 
 TDD-sized, in dependency order. Each is a red commit followed by the implementation commit. These are proposals; turning them into issues is a separate step.
 
-| # | Slice | Covers | Depends on |
-|---|---|---|---|
-| S1 | Manifest `kind`/`format` and library routing: model fields, `reasoning-traps` gets `kind: 'traps'`, two calibration entries, card links by kind, three placeholder routes, route spec updated | §2, §11 links | — |
-| S2 | Bank model and loading: types, `{version, items}` loader, seed banks with the §3.6 and §3.7 examples, build-time version test, bank-unavailable state with Retry | §3, §9 offline, §12 | S1 |
-| S3 | Scoring core (pure): correctness, Brier, Skill score, Overconfidence, buckets with Wilson, confident classification, flags, per-format constants | §6 | — |
-| S4 | Draw (pure): quotas, freshness, oldest-seen repeats, side flips, shuffle, `min(20, bank)` | §4 | S2 types |
-| S5 | History service: log, summary, pending round save/resume/discard, submit, seen set, migration (bank's own version, stale-cache rule) | §7 | S2, S3 |
-| S6 | Standard round page: shell (dots, back, change answers, Submit), bipolar scale, resume and draw on entry | §5.1, §5.2 | S4, S5 |
-| S7 | Advanced round page: two-step control in the shared shell | §5.3 | S6 |
-| S8 | Chart geometry core plus results chart with "Show as table" | §10.1, §10.2 | S3 |
-| S9 | Results page: chart with lifetime-before and round overlay, first-round state, Skill score card with help and disclosure, Confidence vs. accuracy card, four-group review with tags, refresh and redirect behaviour | §8, §7.5 | S5, S8 |
-| S10 | Calibration home: start/resume/start over, lifetime sparkline or prompt, lifetime stats, repeats note | §9, §10.3 | S5, S8 |
-| S11 | Library card stats: rounds played, lifetime Skill score, header totals, reset-all test | §11 | S1, S3, S5 |
-| S12 | Author the full banks: 480 standard (80 per topic) and 120 Advanced (20 per topic, balanced outcomes), following §3.3–§3.4, then bump the version. Content work rather than TDD; the S2 version test guards it | §3.5 | S2 |
+| #   | Slice                                                                                                                                                                                                               | Covers              | Depends on |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | ---------- |
+| S1  | Manifest `kind`/`format` and library routing: model fields, `reasoning-traps` gets `kind: 'traps'`, two calibration entries, card links by kind, three placeholder routes, route spec updated                       | §2, §11 links       | —          |
+| S2  | Bank model and loading: types, `{version, items}` loader, seed banks with the §3.6 and §3.7 examples, build-time version test, bank-unavailable state with Retry                                                    | §3, §9 offline, §12 | S1         |
+| S3  | Scoring core (pure): correctness, Brier, Skill score, Overconfidence, buckets with Wilson, confident classification, flags, per-format constants                                                                    | §6                  | —          |
+| S4  | Draw (pure): quotas, freshness, oldest-seen repeats, side flips, shuffle, `min(20, bank)`                                                                                                                           | §4                  | S2 types   |
+| S5  | History service: log, summary, pending round save/resume/discard, submit, seen set, migration (bank's own version, stale-cache rule)                                                                                | §7                  | S2, S3     |
+| S6  | Standard round page: shell (dots, back, change answers, Submit), bipolar scale, resume and draw on entry                                                                                                            | §5.1, §5.2          | S4, S5     |
+| S7  | Advanced round page: two-step control in the shared shell                                                                                                                                                           | §5.3                | S6         |
+| S8  | Chart geometry core plus results chart with "Show as table"                                                                                                                                                         | §10.1, §10.2        | S3         |
+| S9  | Results page: chart with lifetime-before and round overlay, first-round state, Skill score card with help and disclosure, Confidence vs. accuracy card, four-group review with tags, refresh and redirect behaviour | §8, §7.5            | S5, S8     |
+| S10 | Calibration home: start/resume/start over, lifetime sparkline or prompt, lifetime stats, repeats note                                                                                                               | §9, §10.3           | S5, S8     |
+| S11 | Library card stats: rounds played, lifetime Skill score, header totals, reset-all test                                                                                                                              | §11                 | S1, S3, S5 |
+| S12 | Author the full banks: 480 standard (80 per topic) and 120 Advanced (20 per topic, balanced outcomes), following §3.3–§3.4, then bump the version. Content work rather than TDD; the S2 version test guards it      | §3.5                | S2         |
