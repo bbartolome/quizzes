@@ -1824,6 +1824,246 @@
         "label": "Wikipedia: Miguel de Cervantes",
         "url": "https://en.wikipedia.org/wiki/Miguel_de_Cervantes"
       }
+    },
+    {
+      "id": "c153",
+      "prompt": "Who reigned longer?",
+      "options": ["Elizabeth II", "Louis XIV"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Louis XIV reigned 72 years and 110 days; Elizabeth II 70 years and 214 days.",
+      "source": {
+        "label": "Wikipedia: Louis XIV",
+        "url": "https://en.wikipedia.org/wiki/Louis_XIV"
+      }
+    },
+    {
+      "id": "c154",
+      "prompt": "Which war lasted longer?",
+      "options": ["Thirty Years' War", "Peloponnesian War"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Thirty Years' War ran 1618–1648; the Peloponnesian War 431–404 BC, about 27 years.",
+      "source": {
+        "label": "Wikipedia: Thirty Years' War",
+        "url": "https://en.wikipedia.org/wiki/Thirty_Years%27_War"
+      }
+    },
+    {
+      "id": "c155",
+      "prompt": "Who lived longer?",
+      "options": ["Leonardo da Vinci", "Michelangelo"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Michelangelo lived 88 years (1475–1564); Leonardo 67 (1452–1519).",
+      "source": {
+        "label": "Wikipedia: Michelangelo",
+        "url": "https://en.wikipedia.org/wiki/Michelangelo"
+      }
+    },
+    {
+      "id": "c156",
+      "prompt": "Which came first?",
+      "options": ["Luther's Ninety-five Theses", "Fall of Tenochtitlan"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Luther's Theses date to 1517; Tenochtitlan fell to the Spanish in 1521.",
+      "source": {
+        "label": "Wikipedia: Ninety-five Theses",
+        "url": "https://en.wikipedia.org/wiki/Ninety-five_Theses"
+      }
+    },
+    {
+      "id": "c157",
+      "prompt": "Which came first?",
+      "options": ["Hannibal crosses the Alps", "Qin unifies China"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Qin unified China in 221 BC; Hannibal crossed the Alps in 218 BC.",
+      "source": {
+        "label": "Wikipedia: Qin dynasty",
+        "url": "https://en.wikipedia.org/wiki/Qin_dynasty"
+      }
+    },
+    {
+      "id": "c158",
+      "prompt": "Which began first?",
+      "options": ["English Civil War", "Peace of Westphalia"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The English Civil War began in 1642; the Peace of Westphalia was signed in 1648.",
+      "source": {
+        "label": "Wikipedia: English Civil War",
+        "url": "https://en.wikipedia.org/wiki/English_Civil_War"
+      }
+    },
+    {
+      "id": "c159",
+      "prompt": "Which came first?",
+      "options": ["Napoleon becomes Emperor", "Louisiana Purchase"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Louisiana Purchase treaty was signed in April 1803; Napoleon became Emperor in 1804.",
+      "source": {
+        "label": "Wikipedia: Louisiana Purchase",
+        "url": "https://en.wikipedia.org/wiki/Louisiana_Purchase"
+      }
+    },
+    {
+      "id": "c160",
+      "prompt": "Which ended slavery first?",
+      "options": ["United States", "Brazil"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The US ratified the Thirteenth Amendment in December 1865; Brazil's Lei Áurea followed on 13 May 1888.",
+      "source": {
+        "label": "Wikipedia: Thirteenth Amendment to the United States Constitution",
+        "url": "https://en.wikipedia.org/wiki/Thirteenth_Amendment_to_the_United_States_Constitution"
+      }
+    },
+    {
+      "id": "c161",
+      "prompt": "Which came first?",
+      "options": ["Ottoman sultanate abolished", "October Revolution"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The October Revolution was in 1917; the Ottoman sultanate was abolished on 1 November 1922.",
+      "source": {
+        "label": "Wikipedia: October Revolution",
+        "url": "https://en.wikipedia.org/wiki/October_Revolution"
+      }
+    },
+    {
+      "id": "c162",
+      "prompt": "Which came first?",
+      "options": ["Partition of India", "Israel's declaration"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "India and Pakistan were created in August 1947; Israel declared independence in May 1948.",
+      "source": {
+        "label": "Wikipedia: Partition of India",
+        "url": "https://en.wikipedia.org/wiki/Partition_of_India"
+      }
+    },
+    {
+      "id": "c163",
+      "prompt": "Which was begun first?",
+      "options": ["Great Pyramid of Giza", "Stonehenge"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Stonehenge construction began about 3100 BC; the Great Pyramid was built around 2600 BC.",
+      "source": {
+        "label": "Wikipedia: Stonehenge",
+        "url": "https://en.wikipedia.org/wiki/Stonehenge"
+      }
+    },
+    {
+      "id": "c164",
+      "prompt": "Cleopatra lived closer in time to which?",
+      "options": ["The Moon landing", "The Great Pyramid's building"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Cleopatra died in 30 BC, about 2,000 years before the 1969 Moon landing and about 2,500 years after the Great Pyramid (c. 2600 BC).",
+      "source": {
+        "label": "Wikipedia: Cleopatra",
+        "url": "https://en.wikipedia.org/wiki/Cleopatra"
+      }
+    },
+    {
+      "id": "c165",
+      "prompt": "Which is older?",
+      "options": ["Tenochtitlan", "University of Oxford"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Teaching at Oxford dates to at least 1096; Tenochtitlan was founded in 1325.",
+      "source": {
+        "label": "Wikipedia: University of Oxford",
+        "url": "https://en.wikipedia.org/wiki/University_of_Oxford"
+      }
+    },
+    {
+      "id": "c166",
+      "prompt": "Which was completed first?",
+      "options": ["Hagia Sophia", "Dome of the Rock"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The current Hagia Sophia was inaugurated in 537; the Dome of the Rock was completed about 691–692.",
+      "source": {
+        "label": "Wikipedia: Hagia Sophia",
+        "url": "https://en.wikipedia.org/wiki/Hagia_Sophia"
+      }
+    },
+    {
+      "id": "c167",
+      "prompt": "Which came first?",
+      "options": ["Da Gama reaches India", "Columbus's landfall"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Columbus landed in the Americas on 12 October 1492; da Gama reached Kozhikode on 20 May 1498.",
+      "source": {
+        "label": "Wikipedia: Christopher Columbus",
+        "url": "https://en.wikipedia.org/wiki/Christopher_Columbus"
+      }
+    },
+    {
+      "id": "c168",
+      "prompt": "Which came first?",
+      "options": ["Wall Street Crash", "Gandhi's Salt March"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Wall Street Crash was in October 1929; the Salt March began in March 1930.",
+      "source": {
+        "label": "Wikipedia: Wall Street crash of 1929",
+        "url": "https://en.wikipedia.org/wiki/Wall_Street_crash_of_1929"
+      }
+    },
+    {
+      "id": "c169",
+      "prompt": "Which came first?",
+      "options": ["Cuban Missile Crisis", "Berlin Wall built"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Construction of the Berlin Wall began on 13 August 1961; the Cuban Missile Crisis was in October 1962.",
+      "source": {
+        "label": "Wikipedia: Berlin Wall",
+        "url": "https://en.wikipedia.org/wiki/Berlin_Wall"
+      }
+    },
+    {
+      "id": "c170",
+      "prompt": "Who lived longer?",
+      "options": ["Isaac Newton", "Galileo"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Newton lived to 84 (1642/43–1727); Galileo to 77 (1564–1642).",
+      "source": {
+        "label": "Wikipedia: Isaac Newton",
+        "url": "https://en.wikipedia.org/wiki/Isaac_Newton"
+      }
+    },
+    {
+      "id": "c171",
+      "prompt": "Which came first?",
+      "options": ["Edict of Nantes", "Spanish Armada"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Spanish Armada sailed in 1588; the Edict of Nantes was issued in 1598.",
+      "source": {
+        "label": "Wikipedia: Spanish Armada",
+        "url": "https://en.wikipedia.org/wiki/Spanish_Armada"
+      }
+    },
+    {
+      "id": "c172",
+      "prompt": "Who reigned longer?",
+      "options": ["Franz Joseph I", "Queen Victoria"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Franz Joseph reigned about 67 years and 355 days; Victoria 63 years and 216 days.",
+      "source": {
+        "label": "Wikipedia: Franz Joseph I of Austria",
+        "url": "https://en.wikipedia.org/wiki/Franz_Joseph_I_of_Austria"
+      }
     }
   ]
 }
