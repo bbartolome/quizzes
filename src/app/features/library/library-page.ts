@@ -1,10 +1,11 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, forkJoin, map, of, shareReplay, switchMap } from 'rxjs';
 import { QuizManifestEntry } from '../../core/models/quiz.models';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
+import { CalibrationBankService } from '../calibration/calibration-bank.service';
 import { CalibrationHistoryService } from '../calibration/calibration-history.service';
 import { calibrationCardStats } from '../calibration/calibration-card';
 import { formatOf } from '../calibration/calibration-format';
@@ -35,13 +36,28 @@ export class LibraryPage {
   private readonly quizData: QuizDataService = inject(QuizDataService);
   private readonly stats: StatsService = inject(StatsService);
   private readonly calibration: CalibrationHistoryService = inject(CalibrationHistoryService);
+  private readonly bankService: CalibrationBankService = inject(CalibrationBankService);
 
   protected readonly cards$: Observable<QuizCard[]> = this.quizData.loadManifest().pipe(
+    switchMap((manifest) => {
+      const loads = manifest.quizzes
+        .filter((e) => e.kind === 'calibration' && this.calibration.getHistory(e.id).bankVersion !== e.version)
+        .map((e) =>
+          this.bankService
+            .loadBank(e)
+            .pipe(
+              map((bank) => this.calibration.migrate(e.id, bank, e.version)),
+              catchError(() => of(null)),
+            ),
+        );
+      return (loads.length ? forkJoin(loads) : of([])).pipe(map(() => manifest));
+    }),
     map((manifest) =>
       [...manifest.quizzes]
         .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id))
         .map((entry) => this.toCard(entry)),
     ),
+    shareReplay(1),
   );
 
   protected readonly summary$: Observable<CollectionSummary> = this.cards$.pipe(
