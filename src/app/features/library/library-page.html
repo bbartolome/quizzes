@@ -49,18 +49,28 @@
                 <dt>Rounds played</dt>
                 <dd class="font-medium text-gray-900">{{ card.roundsPlayed }}</dd>
               </div>
-              <div class="flex justify-between">
-                <dt>Accuracy</dt>
-                <dd class="font-medium text-gray-900">
-                  @if (card.accuracy; as acc) {
-                    {{ formatPercent(acc) }}
-                  }
-                </dd>
-              </div>
-              <div class="flex justify-between">
-                <dt>Current streak</dt>
-                <dd class="font-medium text-gray-900">{{ card.streak }}</dd>
-              </div>
+              @if (card.kind === 'traps') {
+                <div class="flex justify-between">
+                  <dt>Accuracy</dt>
+                  <dd class="font-medium text-gray-900">
+                    @if (card.accuracy; as acc) {
+                      {{ formatPercent(acc) }}
+                    }
+                  </dd>
+                </div>
+                <div class="flex justify-between">
+                  <dt>Current streak</dt>
+                  <dd class="font-medium text-gray-900">{{ card.streak }}</dd>
+                </div>
+              }
+              @if (card.kind === 'calibration' && card.skillScore !== null) {
+                <div class="flex justify-between">
+                  <dt>Skill score</dt>
+                  <dd class="font-medium text-gray-900">
+                    Skill score {{ card.skillScore }}
+                  </dd>
+                </div>
+              }
             </dl>
           </a>
         }
