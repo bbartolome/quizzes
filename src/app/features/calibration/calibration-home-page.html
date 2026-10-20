@@ -1,0 +1,33 @@
+<div class="min-h-screen bg-gray-50 px-4 py-8">
+  <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow">
+    @if (loadError()) {
+      <app-bank-unavailable (retry)="load()" />
+    } @else if (ctx(); as c) {
+      <a routerLink="/" class="text-sm text-gray-500 hover:text-gray-700">← All quizzes</a>
+      <h1 class="mt-4 text-2xl font-bold text-gray-900">{{ c.entry.title }}</h1>
+      <p class="mt-1 text-gray-600">{{ c.entry.description }}</p>
+      @if (stats(); as s) {
+        <a [routerLink]="['/calibration', c.quizId, 'round']" class="primary button">
+          {{ s.hasPending ? 'Resume round' : 'Start round' }}
+        </a>
+        @if (s.hasPending) {
+          <button type="button" (click)="startOver()" class="text-sm text-red-600 hover:text-red-700">
+            Start over
+          </button>
+        }
+        @if (s.roundsPlayed > 0) {
+          <app-calibration-sparkline [format]="c.format" [buckets]="s.lifetimeBuckets" />
+          @if (s.lifetimeSkill !== null) {
+            <p>Skill score {{ s.lifetimeSkill }}</p>
+          }
+          <p>{{ s.roundsPlayed }} {{ s.roundsPlayed === 1 ? 'round' : 'rounds' }} played</p>
+        } @else {
+          <p>Play a round to start your calibration curve</p>
+        }
+        @if (s.showRepeats) {
+          <p class="text-sm text-gray-500">You've seen every item. Some will repeat.</p>
+        }
+      }
+    }
+  </div>
+</div>
