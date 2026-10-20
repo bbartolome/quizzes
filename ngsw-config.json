@@ -21,19 +21,14 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "files": [
-          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
-        ]
+        "files": ["/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"]
       }
     }
   ],
   "dataGroups": [
     {
       "name": "quiz-data",
-      "urls": [
-        "data/quizzes.json",
-        "data/quizzes/**/*.json"
-      ],
+      "urls": ["data/quizzes.json", "data/quizzes/**/*.json"],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 100,
