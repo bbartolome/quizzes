@@ -7,7 +7,10 @@ import { ScoreSide } from './score-side';
   template: `
     <h3>Confidence vs. accuracy</h3>
     <p class="text-lg font-semibold">{{ side().label }}</p>
-    <p>Average confidence {{ round(side().meanConfidence) }}% · {{ round(side().percentCorrect) }}% correct</p>
+    <p>
+      Average confidence {{ round(side().meanConfidence) }}% · {{ round(side().percentCorrect) }}%
+      correct
+    </p>
     @if (before(); as b) {
       <p class="text-sm">Before this round: {{ b.label }}</p>
     }

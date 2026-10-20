@@ -221,7 +221,10 @@ describe('shuffle', () => {
 
 describe('seenItemIds / unseenCount', () => {
   it('collects every itemId in the log', () => {
-    const log = [roundOf('2026-01-01T00:00:00.000Z', ['a', 'b']), roundOf('2026-01-02T00:00:00.000Z', ['b', 'c'])];
+    const log = [
+      roundOf('2026-01-01T00:00:00.000Z', ['a', 'b']),
+      roundOf('2026-01-02T00:00:00.000Z', ['b', 'c']),
+    ];
     expect(seenItemIds(log)).toEqual(new Set(['a', 'b', 'c']));
     expect(seenItemIds([])).toEqual(new Set());
   });

@@ -1,10 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  CalibrationAnswer,
-  CalibrationBank,
-  FourWayItem,
-  TwoWayItem,
-} from './calibration.models';
+import { CalibrationAnswer, CalibrationBank, FourWayItem, TwoWayItem } from './calibration.models';
 import { reviewRow, reviewSections } from './review-sections';
 
 const source = { label: 'Wikipedia', url: 'https://en.wikipedia.org/' };
@@ -106,11 +101,7 @@ describe('reviewSections', () => {
   });
 
   it('skips answers whose item is not in the bank', () => {
-    const sections = reviewSections(
-      bank,
-      [answer('gone', 0, 100, false), confidentHit],
-      'two-way',
-    );
+    const sections = reviewSections(bank, [answer('gone', 0, 100, false), confidentHit], 'two-way');
     expect(sections.map((s) => s.group)).toEqual(['confident-hit']);
     expect(sections[0].rows).toHaveLength(1);
   });

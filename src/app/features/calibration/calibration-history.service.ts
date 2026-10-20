@@ -143,11 +143,7 @@ export class CalibrationHistoryService {
    *   whose item was deleted, drop any round left empty, rebuild the summary
    *   and stamp the history with the bank's version.
    */
-  migrate(
-    quizId: string,
-    bank: CalibrationBank,
-    manifestVersion: number,
-  ): CalibrationHistory {
+  migrate(quizId: string, bank: CalibrationBank, manifestVersion: number): CalibrationHistory {
     const h = this.getHistory(quizId);
     if (bank.version < manifestVersion) {
       return h;

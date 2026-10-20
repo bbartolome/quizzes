@@ -1,5 +1,12 @@
 import { InjectionToken } from '@angular/core';
-import { CalibrationBank, CalibrationItem, CalibrationRound, DrawnItem, TOPICS, Topic } from './calibration.models';
+import {
+  CalibrationBank,
+  CalibrationItem,
+  CalibrationRound,
+  DrawnItem,
+  TOPICS,
+  Topic,
+} from './calibration.models';
 
 export type Rng = () => number;
 

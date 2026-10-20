@@ -17,7 +17,13 @@ export function seriesPoints(
 ): ChartPoint[] {
   return buckets
     .filter((b) => b.n > 0)
-    .map((b) => ({ stop: b.stop, x: xFor(b.stop, format, box) + dx, y: yFor(b.pct!, box), n: b.n, hits: b.hits }));
+    .map((b) => ({
+      stop: b.stop,
+      x: xFor(b.stop, format, box) + dx,
+      y: yFor(b.pct!, box),
+      n: b.n,
+      hits: b.hits,
+    }));
 }
 
 export function seriesBars(
@@ -27,7 +33,12 @@ export function seriesBars(
 ): Line[] {
   return buckets
     .filter((b) => b.n > 0)
-    .map((b) => ({ x1: xFor(b.stop, format, box), y1: yFor(b.hi!, box), x2: xFor(b.stop, format, box), y2: yFor(b.lo!, box) }));
+    .map((b) => ({
+      x1: xFor(b.stop, format, box),
+      y1: yFor(b.hi!, box),
+      x2: xFor(b.stop, format, box),
+      y2: yFor(b.lo!, box),
+    }));
 }
 
 export function seriesSegments(

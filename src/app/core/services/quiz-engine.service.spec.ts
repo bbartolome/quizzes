@@ -115,7 +115,7 @@ describe('QuizEngineService', () => {
       expect(weakTraitHits / draws).toBeGreaterThan(0.7);
     });
 
-    it('maps each question\'s tags to traitIds on the returned RoundQuestion as a copy', () => {
+    it("maps each question's tags to traitIds on the returned RoundQuestion as a copy", () => {
       const service = new QuizEngineService();
       const tags = ['strawman', 'anchoring'];
       const bank = {

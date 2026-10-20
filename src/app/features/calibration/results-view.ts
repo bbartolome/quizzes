@@ -1,8 +1,5 @@
 import { scoreSide, type ScoreSide } from './score-side';
-import {
-  reviewSections,
-  type ReviewSection,
-} from './review-sections';
+import { reviewSections, type ReviewSection } from './review-sections';
 import { bucketStats } from './scoring';
 import type {
   BucketStat,

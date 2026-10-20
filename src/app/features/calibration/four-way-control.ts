@@ -8,9 +8,11 @@ import type { FourWayChoice } from './calibration.models';
       @for (c of choices; track c.id) {
         <button
           type="button"
-          [class]="choice() === c.id
-            ? 'rounded-lg bg-indigo-600 text-white border-indigo-600'
-            : 'rounded-lg bg-white text-gray-700 border-gray-300 hover:bg-gray-50'"
+          [class]="
+            choice() === c.id
+              ? 'rounded-lg bg-indigo-600 text-white border-indigo-600'
+              : 'rounded-lg bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+          "
           [attr.aria-pressed]="choice() === c.id"
           (click)="pick(c.id)"
         >
@@ -23,9 +25,11 @@ import type { FourWayChoice } from './calibration.models';
         @for (v of stops; track v) {
           <button
             type="button"
-            [class]="v === confidence()
-              ? 'rounded-lg bg-indigo-600 text-white border-indigo-600'
-              : 'rounded-lg bg-white text-gray-700 border-gray-300 hover:bg-gray-50'"
+            [class]="
+              v === confidence()
+                ? 'rounded-lg bg-indigo-600 text-white border-indigo-600'
+                : 'rounded-lg bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            "
             [attr.aria-pressed]="v === confidence()"
             (click)="rate(v)"
           >

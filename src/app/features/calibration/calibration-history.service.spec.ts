@@ -71,10 +71,7 @@ function twoWayBank(version = 1): CalibrationBank {
   };
 }
 
-function pendingFor(
-  bankVersion: number,
-  picks: PendingRound['picks'],
-): PendingRound {
+function pendingFor(bankVersion: number, picks: PendingRound['picks']): PendingRound {
   return {
     bankVersion,
     items: Object.keys(picks).map((itemId) => ({ itemId, swapped: false })),
@@ -152,10 +149,7 @@ describe('CalibrationHistoryService', () => {
 
   describe('pending round', () => {
     it('stores the record under stats:calibration:<quizId>', () => {
-      service.savePending(
-        'quiz-a',
-        pendingFor(1, { t1: { pick: 0, confidence: 70 } }),
-      );
+      service.savePending('quiz-a', pendingFor(1, { t1: { pick: 0, confidence: 70 } }));
       expect(storage.getItem(KEY)).not.toBeNull();
       expect(storage.getItem('stats:calibration:quiz-b')).toBeNull();
     });
@@ -167,14 +161,8 @@ describe('CalibrationHistoryService', () => {
     });
 
     it('overwrites an earlier pick when the answer changes', () => {
-      service.savePending(
-        'quiz-a',
-        pendingFor(1, { t1: { pick: 0, confidence: 60 } }),
-      );
-      service.savePending(
-        'quiz-a',
-        pendingFor(1, { t1: { pick: 1, confidence: 90 } }),
-      );
+      service.savePending('quiz-a', pendingFor(1, { t1: { pick: 0, confidence: 60 } }));
+      service.savePending('quiz-a', pendingFor(1, { t1: { pick: 1, confidence: 90 } }));
       expect(service.getPending('quiz-a')?.picks['t1']).toEqual({
         pick: 1,
         confidence: 90,
@@ -182,10 +170,7 @@ describe('CalibrationHistoryService', () => {
     });
 
     it('does not change the summary or log', () => {
-      service.savePending(
-        'quiz-a',
-        pendingFor(1, { t1: { pick: 0, confidence: 60 } }),
-      );
+      service.savePending('quiz-a', pendingFor(1, { t1: { pick: 0, confidence: 60 } }));
       expect(service.getSummary('quiz-a')).toEqual({
         roundsPlayed: 0,
         brierSum: 0,
@@ -196,10 +181,7 @@ describe('CalibrationHistoryService', () => {
 
     it('discardPending clears the pending round only', () => {
       seedRound();
-      service.savePending(
-        'quiz-a',
-        pendingFor(1, { t3: { pick: 0, confidence: 60 } }),
-      );
+      service.savePending('quiz-a', pendingFor(1, { t3: { pick: 0, confidence: 60 } }));
       service.discardPending('quiz-a');
       expect(service.getPending('quiz-a')).toBeNull();
       expect(service.getSummary('quiz-a').roundsPlayed).toBe(1);
@@ -263,11 +245,7 @@ describe('CalibrationHistoryService', () => {
       // right at 80 → 0.04; wrong at 60 → 0.36
       expect(summary.brierSum).toBeCloseTo(0.4, 10);
 
-      service.submit(
-        'quiz-a',
-        twoWayBank(),
-        pendingFor(1, { t3: { pick: 0, confidence: 100 } }),
-      );
+      service.submit('quiz-a', twoWayBank(), pendingFor(1, { t3: { pick: 0, confidence: 100 } }));
       const next = service.getSummary('quiz-a');
       expect(next.roundsPlayed).toBe(2);
       expect(next.answerCount).toBe(3);
@@ -275,37 +253,22 @@ describe('CalibrationHistoryService', () => {
     });
 
     it('clears the pending round', () => {
-      service.savePending(
-        'quiz-a',
-        pendingFor(1, { t1: { pick: 0, confidence: 80 } }),
-      );
-      service.submit(
-        'quiz-a',
-        twoWayBank(),
-        pendingFor(1, { t1: { pick: 0, confidence: 80 } }),
-      );
+      service.savePending('quiz-a', pendingFor(1, { t1: { pick: 0, confidence: 80 } }));
+      service.submit('quiz-a', twoWayBank(), pendingFor(1, { t1: { pick: 0, confidence: 80 } }));
       expect(service.getPending('quiz-a')).toBeNull();
       expect(stored().pending).toBeNull();
     });
 
     it('throws when an item has no pick', () => {
       expect(() =>
-        service.submit(
-          'quiz-a',
-          twoWayBank(),
-          pendingFor(1, { t1: { confidence: 80 } }),
-        ),
+        service.submit('quiz-a', twoWayBank(), pendingFor(1, { t1: { confidence: 80 } })),
       ).toThrow();
       expect(service.getSummary('quiz-a').roundsPlayed).toBe(0);
     });
 
     it('throws when an item has no confidence', () => {
       expect(() =>
-        service.submit(
-          'quiz-a',
-          twoWayBank(),
-          pendingFor(1, { t1: { pick: 0 } }),
-        ),
+        service.submit('quiz-a', twoWayBank(), pendingFor(1, { t1: { pick: 0 } })),
       ).toThrow();
       expect(service.getHistory('quiz-a').log).toEqual([]);
     });
@@ -334,29 +297,14 @@ describe('CalibrationHistoryService', () => {
 
     it('allAnswers flattens every round in order', () => {
       seedRound();
-      service.submit(
-        'quiz-a',
-        twoWayBank(),
-        pendingFor(1, { t3: { pick: 0, confidence: 90 } }),
-      );
-      expect(service.allAnswers('quiz-a').map((a) => a.itemId)).toEqual([
-        't1',
-        't2',
-        't3',
-      ]);
+      service.submit('quiz-a', twoWayBank(), pendingFor(1, { t3: { pick: 0, confidence: 90 } }));
+      expect(service.allAnswers('quiz-a').map((a) => a.itemId)).toEqual(['t1', 't2', 't3']);
     });
 
     it('lifetimeBefore excludes the last round', () => {
       seedRound();
-      service.submit(
-        'quiz-a',
-        twoWayBank(),
-        pendingFor(1, { t3: { pick: 0, confidence: 90 } }),
-      );
-      expect(service.lifetimeBefore('quiz-a').map((a) => a.itemId)).toEqual([
-        't1',
-        't2',
-      ]);
+      service.submit('quiz-a', twoWayBank(), pendingFor(1, { t3: { pick: 0, confidence: 90 } }));
+      expect(service.lifetimeBefore('quiz-a').map((a) => a.itemId)).toEqual(['t1', 't2']);
     });
 
     it('lifetimeBefore is empty after a single round', () => {
@@ -373,10 +321,7 @@ describe('CalibrationHistoryService', () => {
   describe('Reset all progress', () => {
     it('StatsService.resetAll clears the calibration record', () => {
       seedRound();
-      service.savePending(
-        'quiz-a',
-        pendingFor(1, { t3: { pick: 0, confidence: 60 } }),
-      );
+      service.savePending('quiz-a', pendingFor(1, { t3: { pick: 0, confidence: 60 } }));
       expect(storage.getItem(KEY)).not.toBeNull();
 
       TestBed.inject(StatsService).resetAll();
@@ -409,10 +354,7 @@ describe('CalibrationHistoryService', () => {
         items: [twoWay('t1', 0), twoWay('t2', 0), twoWay('t3', 0)],
       };
       const result = service.migrate('quiz-a', bank, 2);
-      expect(result.log[0].answers.map((a) => a.correct)).toEqual([
-        true,
-        true,
-      ]);
+      expect(result.log[0].answers.map((a) => a.correct)).toEqual([true, true]);
       // right at 80 → 0.04; right at 60 → 0.16
       expect(result.summary.brierSum).toBeCloseTo(0.2, 10);
       expect(stored().log[0].answers[1].correct).toBe(true);
@@ -425,19 +367,12 @@ describe('CalibrationHistoryService', () => {
         items: [twoWay('t1', 1), twoWay('t2', 1)],
       };
       const result = service.migrate('quiz-a', bank, 2);
-      expect(result.log[0].answers.map((a) => a.correct)).toEqual([
-        false,
-        false,
-      ]);
+      expect(result.log[0].answers.map((a) => a.correct)).toEqual([false, false]);
     });
 
     it('drops answers for deleted items and rounds left empty', () => {
       seedRound();
-      service.submit(
-        'quiz-a',
-        twoWayBank(),
-        pendingFor(1, { t3: { pick: 0, confidence: 90 } }),
-      );
+      service.submit('quiz-a', twoWayBank(), pendingFor(1, { t3: { pick: 0, confidence: 90 } }));
       const bank: CalibrationBank = {
         version: 2,
         items: [twoWay('t1', 0)],
@@ -445,18 +380,12 @@ describe('CalibrationHistoryService', () => {
       const result = service.migrate('quiz-a', bank, 2);
       expect(result.log).toHaveLength(1);
       expect(result.log[0].answers.map((a) => a.itemId)).toEqual(['t1']);
-      expect(service.allAnswers('quiz-a').map((a) => a.itemId)).toEqual([
-        't1',
-      ]);
+      expect(service.allAnswers('quiz-a').map((a) => a.itemId)).toEqual(['t1']);
     });
 
     it('never lowers roundsPlayed', () => {
       seedRound();
-      service.submit(
-        'quiz-a',
-        twoWayBank(),
-        pendingFor(1, { t3: { pick: 0, confidence: 90 } }),
-      );
+      service.submit('quiz-a', twoWayBank(), pendingFor(1, { t3: { pick: 0, confidence: 90 } }));
       const bank: CalibrationBank = { version: 2, items: [twoWay('x', 0)] };
       const result = service.migrate('quiz-a', bank, 2);
       expect(result.log).toEqual([]);
@@ -490,10 +419,7 @@ describe('CalibrationHistoryService', () => {
 
     it('discards a pending round from another bank version', () => {
       seedRound();
-      service.savePending(
-        'quiz-a',
-        pendingFor(1, { t3: { pick: 0, confidence: 60 } }),
-      );
+      service.savePending('quiz-a', pendingFor(1, { t3: { pick: 0, confidence: 60 } }));
       const result = service.migrate('quiz-a', twoWayBank(2), 2);
       expect(result.pending).toBeNull();
       expect(service.getPending('quiz-a')).toBeNull();
@@ -501,10 +427,7 @@ describe('CalibrationHistoryService', () => {
 
     it('keeps a pending round that already matches the new bank version', () => {
       seedRound();
-      service.savePending(
-        'quiz-a',
-        pendingFor(2, { t3: { pick: 0, confidence: 60 } }),
-      );
+      service.savePending('quiz-a', pendingFor(2, { t3: { pick: 0, confidence: 60 } }));
       const result = service.migrate('quiz-a', twoWayBank(2), 2);
       expect(result.pending?.bankVersion).toBe(2);
     });
@@ -514,11 +437,7 @@ describe('CalibrationHistoryService', () => {
         version: 1,
         items: [fourWay('f1', [true, false])],
       };
-      service.submit(
-        'quiz-a',
-        v1,
-        pendingFor(1, { f1: { pick: [true, false], confidence: 75 } }),
-      );
+      service.submit('quiz-a', v1, pendingFor(1, { f1: { pick: [true, false], confidence: 75 } }));
       const v2: CalibrationBank = {
         version: 2,
         items: [fourWay('f1', [true, true])],
@@ -530,10 +449,7 @@ describe('CalibrationHistoryService', () => {
     describe('stale cache (bank version below manifest version)', () => {
       it('changes and persists nothing', () => {
         seedRound();
-        service.savePending(
-          'quiz-a',
-          pendingFor(1, { t3: { pick: 0, confidence: 60 } }),
-        );
+        service.savePending('quiz-a', pendingFor(1, { t3: { pick: 0, confidence: 60 } }));
         const before = storage.getItem(KEY);
 
         const bank: CalibrationBank = {

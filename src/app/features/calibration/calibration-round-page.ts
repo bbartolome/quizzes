@@ -7,7 +7,13 @@ import { CalibrationBankService } from './calibration-bank.service';
 import { CalibrationHistoryService } from './calibration-history.service';
 import { CalibrationContext, loadCalibrationContext } from './calibration-context';
 import { allItemsAnswered, isItemAnswered, resumeOrDraw, setPick } from './pending-round';
-import { fourWayBankPick, fourWayScreenChoice, screenOptions, twoWayBankPick, twoWayScreenSelection } from './round-sides';
+import {
+  fourWayBankPick,
+  fourWayScreenChoice,
+  screenOptions,
+  twoWayBankPick,
+  twoWayScreenSelection,
+} from './round-sides';
 import { CALIBRATION_RNG } from './draw';
 import { BipolarScale } from './bipolar-scale';
 import { BankUnavailable } from './bank-unavailable';
@@ -44,7 +50,9 @@ export class CalibrationRoundPage {
     this.route.paramMap
       .pipe(
         map((p) => p.get('id') ?? ''),
-        switchMap((id) => loadCalibrationContext(id, this.quizData, this.bankService, this.history)),
+        switchMap((id) =>
+          loadCalibrationContext(id, this.quizData, this.bankService, this.history),
+        ),
       )
       .subscribe({
         next: (c) => {
@@ -104,12 +112,19 @@ export class CalibrationRoundPage {
     if (!c) return {};
     const stored = this.pending()?.picks[c.drawn.itemId];
     if (stored && Array.isArray(stored.pick)) {
-      return { choice: fourWayScreenChoice(stored.pick, c.drawn.swapped), confidence: stored.confidence };
+      return {
+        choice: fourWayScreenChoice(stored.pick, c.drawn.swapped),
+        confidence: stored.confidence,
+      };
     }
     return {};
   });
 
-  private record(pick: number | [boolean, boolean], confidence: number | undefined, advance: boolean): void {
+  private record(
+    pick: number | [boolean, boolean],
+    confidence: number | undefined,
+    advance: boolean,
+  ): void {
     const ctx = this.ctx();
     const c = this.current();
     const old = this.pending();
@@ -129,7 +144,11 @@ export class CalibrationRoundPage {
 
   answerFourWay(a: { choice: FourWayChoice; confidence: number | null }): void {
     const swapped = this.current()!.drawn.swapped;
-    this.record(fourWayBankPick(a.choice, swapped), a.confidence ?? undefined, a.confidence !== null);
+    this.record(
+      fourWayBankPick(a.choice, swapped),
+      a.confidence ?? undefined,
+      a.confidence !== null,
+    );
   }
 
   goTo(i: number): void {

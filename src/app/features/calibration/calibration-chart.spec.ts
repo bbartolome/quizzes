@@ -12,7 +12,14 @@ function buckets(counts: Record<number, [number, number]>): BucketStat[] {
     const [n, hits] = counts[stop] ?? [0, 0];
     return n === 0
       ? { stop, n, hits, pct: null, lo: null, hi: null }
-      : { stop, n, hits, pct: (hits / n) * 100, lo: Math.max(0, (hits / n) * 100 - 20), hi: Math.min(100, (hits / n) * 100 + 20) };
+      : {
+          stop,
+          n,
+          hits,
+          pct: (hits / n) * 100,
+          lo: Math.max(0, (hits / n) * 100 - 20),
+          hi: Math.min(100, (hits / n) * 100 + 20),
+        };
   });
 }
 

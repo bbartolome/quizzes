@@ -1,11 +1,5 @@
 import type { BucketStat, CalibrationFormat } from './calibration.models';
-import {
-  DEFAULT_BOX,
-  type ChartBox,
-  type Line,
-  xTicks,
-  yTicks,
-} from './chart-scales';
+import { DEFAULT_BOX, type ChartBox, type Line, xTicks, yTicks } from './chart-scales';
 import { type ChartPoint, seriesBars, seriesPoints, seriesSegments } from './chart-series';
 import { chanceLine, diagonal, flagRings, regions } from './chart-regions';
 

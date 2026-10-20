@@ -6,11 +6,7 @@ import type {
 } from './calibration.models';
 import { drawRound, type Rng } from './draw';
 
-export function setPick(
-  pending: PendingRound,
-  itemId: string,
-  pick: PendingPick,
-): PendingRound {
+export function setPick(pending: PendingRound, itemId: string, pick: PendingPick): PendingRound {
   return {
     ...pending,
     picks: { ...pending.picks, [itemId]: pick },
@@ -24,8 +20,7 @@ export function isItemAnswered(pending: PendingRound, itemId: string): boolean {
 
 export function allItemsAnswered(pending: PendingRound): boolean {
   return (
-    pending.items.length > 0 &&
-    pending.items.every((item) => isItemAnswered(pending, item.itemId))
+    pending.items.length > 0 && pending.items.every((item) => isItemAnswered(pending, item.itemId))
   );
 }
 

@@ -27,11 +27,12 @@ const bank: CalibrationBank = {
   items: [item('s1'), item('s2'), item('s3'), item('s4')],
 };
 
-const answer = (
-  itemId: string,
-  confidence: number,
-  correct: boolean,
-): CalibrationAnswer => ({ itemId, pick: correct ? 1 : 0, confidence, correct });
+const answer = (itemId: string, confidence: number, correct: boolean): CalibrationAnswer => ({
+  itemId,
+  pick: correct ? 1 : 0,
+  confidence,
+  correct,
+});
 
 const roundAnswers = [
   answer('s1', 100, false),

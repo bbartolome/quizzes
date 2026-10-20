@@ -34,13 +34,13 @@ export class CalibrationHomePage {
     this.loadError.set(false);
     this.route.paramMap
       .pipe(
-        map(p => p.get('id') ?? ''),
-        switchMap(id =>
+        map((p) => p.get('id') ?? ''),
+        switchMap((id) =>
           loadCalibrationContext(id, this.quizData, this.bankService, this.history),
         ),
       )
       .subscribe({
-        next: c => {
+        next: (c) => {
           this.ctx.set(c);
           this.stats.set(homeStats(this.history.getHistory(c.quizId), c.bank, c.format));
         },

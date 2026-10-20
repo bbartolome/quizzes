@@ -30,9 +30,7 @@ class MemoryStorage implements Storage {
   }
 }
 
-function makeRoundQuestion(
-  overrides: Partial<RoundQuestion> & { id: string },
-): RoundQuestion {
+function makeRoundQuestion(overrides: Partial<RoundQuestion> & { id: string }): RoundQuestion {
   return {
     prompt: `Prompt for ${overrides.id}`,
     options: ['A', 'B', 'C', 'D'],
@@ -345,9 +343,7 @@ describe('StatsService', () => {
       service.recordResult('reasoning-traps', makeResult('strawman', true));
       service.recordResult('reasoning-traps', makeResult('retired-trait', true));
 
-      expect(() =>
-        service.migrateVersion('reasoning-traps', 2, ['strawman']),
-      ).not.toThrow();
+      expect(() => service.migrateVersion('reasoning-traps', 2, ['strawman'])).not.toThrow();
 
       const stats = service.getStats('reasoning-traps');
       expect(stats.perTrait['strawman']).toBeDefined();
@@ -373,9 +369,7 @@ describe('StatsService', () => {
     it('does not throw when migrating a quiz with no recorded history', () => {
       const service = new StatsService();
 
-      expect(() =>
-        service.migrateVersion('never-played', 3, ['strawman']),
-      ).not.toThrow();
+      expect(() => service.migrateVersion('never-played', 3, ['strawman'])).not.toThrow();
 
       expect(service.getStats('never-played').version).toBe(3);
     });
@@ -417,21 +411,14 @@ describe('StatsService', () => {
 
       service.recordResult('quiz-a', makeResult('strawman', true));
       globalThis.localStorage.setItem('stats:calibration:calibration', '{}');
-      globalThis.localStorage.setItem(
-        'stats:calibration:calibration-advanced',
-        '{}',
-      );
+      globalThis.localStorage.setItem('stats:calibration:calibration-advanced', '{}');
       globalThis.localStorage.setItem('unrelated-key', 'keep-me');
 
       service.resetAll();
 
       expect(globalThis.localStorage.getItem('stats:quiz-a')).toBeNull();
-      expect(
-        globalThis.localStorage.getItem('stats:calibration:calibration'),
-      ).toBeNull();
-      expect(
-        globalThis.localStorage.getItem('stats:calibration:calibration-advanced'),
-      ).toBeNull();
+      expect(globalThis.localStorage.getItem('stats:calibration:calibration')).toBeNull();
+      expect(globalThis.localStorage.getItem('stats:calibration:calibration-advanced')).toBeNull();
       expect(globalThis.localStorage.getItem('unrelated-key')).toBe('keep-me');
     });
   });

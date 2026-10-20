@@ -16,7 +16,9 @@ const bucket = (stop: number, n: number, hits: number): BucketStat => ({
 });
 
 const bucketsFor = (format: CalibrationFormat): BucketStat[] =>
-  FORMATS[format].stops.map((stop, i) => (i === 2 ? bucket(stop, 0, 0) : bucket(stop, 10, 5 + (i % 4))));
+  FORMATS[format].stops.map((stop, i) =>
+    i === 2 ? bucket(stop, 0, 0) : bucket(stop, 10, 5 + (i % 4)),
+  );
 
 describe('chartGeometry', () => {
   for (const format of ['two-way', 'four-way'] as const) {
@@ -54,7 +56,9 @@ describe('chartGeometry', () => {
         const overlay = FORMATS[format].stops.map((stop, i) => bucket(stop, 4, i % 5));
         const withOverlay = chartGeometry(format, buckets, overlay);
         expect(withOverlay.overlayPoints).toEqual(seriesPoints(format, overlay, DEFAULT_BOX, 4));
-        expect(withOverlay.overlaySegments).toEqual(seriesSegments(format, overlay, DEFAULT_BOX, 4));
+        expect(withOverlay.overlaySegments).toEqual(
+          seriesSegments(format, overlay, DEFAULT_BOX, 4),
+        );
         expect(withOverlay.points).toEqual(geometry.points);
       });
     });

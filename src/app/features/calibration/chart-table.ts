@@ -39,10 +39,7 @@ export class ChartTable {
         stop: `${b.stop}%`,
         n: b.n,
         pct: b.pct === null ? '—' : `${Math.round(b.pct)}%`,
-        range:
-          b.lo === null || b.hi === null
-            ? '—'
-            : `${Math.round(b.lo)}–${Math.round(b.hi)}%`,
+        range: b.lo === null || b.hi === null ? '—' : `${Math.round(b.lo)}–${Math.round(b.hi)}%`,
         round: o && o.n > 0 ? `${o.hits}/${o.n}` : '—',
       };
     }),

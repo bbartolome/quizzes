@@ -28,7 +28,10 @@ function pair(x: number, y: number): string {
   return `${x},${y}`;
 }
 
-export function regions(format: CalibrationFormat, box: ChartBox = DEFAULT_BOX): { overRegion: string; underRegion: string } {
+export function regions(
+  format: CalibrationFormat,
+  box: ChartBox = DEFAULT_BOX,
+): { overRegion: string; underRegion: string } {
   const [min] = FORMATS[format].axis;
   const L = xFor(min, format, box);
   const R = xFor(100, format, box);
@@ -40,10 +43,14 @@ export function regions(format: CalibrationFormat, box: ChartBox = DEFAULT_BOX):
   return { overRegion, underRegion };
 }
 
-export function flagRings(format: CalibrationFormat, points: ChartPoint[]): { x: number; y: number }[] {
+export function flagRings(
+  format: CalibrationFormat,
+  points: ChartPoint[],
+): { x: number; y: number }[] {
   const rings: { x: number; y: number }[] = [];
   for (const p of points) {
-    const flag = (p.stop === 100 && p.hits < p.n) || (format === 'four-way' && p.stop === 0 && p.n > 0);
+    const flag =
+      (p.stop === 100 && p.hits < p.n) || (format === 'four-way' && p.stop === 0 && p.n > 0);
     if (flag) rings.push({ x: p.x, y: p.y });
   }
   return rings;

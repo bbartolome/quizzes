@@ -32,8 +32,7 @@ export class StatsService {
         version: typeof parsed.version === 'number' ? parsed.version : 0,
         perTrait: parsed.perTrait && typeof parsed.perTrait === 'object' ? parsed.perTrait : {},
         streak: typeof parsed.streak === 'number' ? parsed.streak : 0,
-        roundsPlayed:
-          typeof parsed.roundsPlayed === 'number' ? parsed.roundsPlayed : 0,
+        roundsPlayed: typeof parsed.roundsPlayed === 'number' ? parsed.roundsPlayed : 0,
       };
     } catch {
       return this.zeroed(quizId);

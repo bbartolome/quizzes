@@ -12,9 +12,7 @@ const STOP_CONFIDENCES: readonly number[] = [100, 90, 80, 70, 60];
   standalone: true,
   template: `
     <div class="w-full">
-      <div
-        class="mb-1 flex items-center justify-between text-xs font-medium text-gray-500"
-      >
+      <div class="mb-1 flex items-center justify-between text-xs font-medium text-gray-500">
         <span>{{ options()[0] }}</span>
         <span>{{ options()[1] }}</span>
       </div>
@@ -44,13 +42,9 @@ export class BipolarScale {
   readonly answer = output<{ side: 0 | 1; confidence: number }>();
 
   readonly stops: readonly Stop[] = [
-    ...STOP_CONFIDENCES.map(
-      (confidence): Stop => ({ side: 0, confidence }),
-    ),
+    ...STOP_CONFIDENCES.map((confidence): Stop => ({ side: 0, confidence })),
     { side: 0, confidence: 50 },
-    ...[60, 70, 80, 90, 100].map(
-      (confidence): Stop => ({ side: 1, confidence }),
-    ),
+    ...[60, 70, 80, 90, 100].map((confidence): Stop => ({ side: 1, confidence })),
   ];
 
   label(stop: Stop): string {

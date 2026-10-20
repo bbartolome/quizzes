@@ -4,12 +4,8 @@ import { Component, output } from '@angular/core';
   selector: 'app-bank-unavailable',
   standalone: true,
   template: `
-    <div
-      class="rounded-lg border border-gray-200 bg-white p-8 shadow-sm"
-    >
-      <p class="text-gray-700">
-        Couldn't load this quiz. Check your connection and try again.
-      </p>
+    <div class="rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
+      <p class="text-gray-700">Couldn't load this quiz. Check your connection and try again.</p>
       <button
         type="button"
         (click)="retry.emit()"

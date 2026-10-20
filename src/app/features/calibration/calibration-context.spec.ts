@@ -23,8 +23,7 @@ function setup(entries: QuizManifestEntry[], bankResult: Observable<CalibrationB
   const quizData = { loadManifest: vi.fn(() => of({ quizzes: entries })) };
   const bankService = { loadBank: vi.fn(() => bankResult) };
   const history = { migrate: vi.fn() };
-  const run = (id: string) =>
-    loadCalibrationContext(id, quizData, bankService, history as never);
+  const run = (id: string) => loadCalibrationContext(id, quizData, bankService, history as never);
   return { quizData, bankService, history, run };
 }
 
@@ -80,7 +79,10 @@ describe('loadCalibrationContext', () => {
 
   it('propagates loadBank errors and does not migrate', () => {
     const boom = new Error('offline');
-    const { run, history } = setup([entry()], throwError(() => boom));
+    const { run, history } = setup(
+      [entry()],
+      throwError(() => boom),
+    );
     const { value, error } = readSync(run('cal-1'));
     expect(value).toBeUndefined();
     expect(error).toBe(boom);

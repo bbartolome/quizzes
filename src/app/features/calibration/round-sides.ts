@@ -11,13 +11,8 @@ const FOUR_WAY_BANK: Record<FourWayChoice, [boolean, boolean]> = {
  * Returns the options in on-screen order. When swapped the pair is reversed.
  * A new tuple is returned so the input is never mutated.
  */
-export function screenOptions(
-  options: [string, string],
-  swapped: boolean,
-): [string, string] {
-  return swapped
-    ? [options[1], options[0]]
-    : [options[0], options[1]];
+export function screenOptions(options: [string, string], swapped: boolean): [string, string] {
+  return swapped ? [options[1], options[0]] : [options[0], options[1]];
 }
 
 /**
@@ -48,10 +43,7 @@ export function twoWayScreenSelection(
  * Maps a four-way choice to its bank-order boolean pair. Swapping exchanges A
  * and B; Neither and Both are symmetric and leave the pair unchanged.
  */
-export function fourWayBankPick(
-  choice: FourWayChoice,
-  swapped: boolean,
-): [boolean, boolean] {
+export function fourWayBankPick(choice: FourWayChoice, swapped: boolean): [boolean, boolean] {
   const pair = FOUR_WAY_BANK[choice];
   return swapped ? [pair[1], pair[0]] : [pair[0], pair[1]];
 }
@@ -61,10 +53,7 @@ export function fourWayBankPick(
  * the on-screen four-way choice. Swapping exchanges A and B; Neither and Both
  * are unchanged by the swap.
  */
-export function fourWayScreenChoice(
-  pick: [boolean, boolean],
-  swapped: boolean,
-): FourWayChoice {
+export function fourWayScreenChoice(pick: [boolean, boolean], swapped: boolean): FourWayChoice {
   const pair = swapped ? [pick[1], pick[0]] : [pick[0], pick[1]];
   if (pair[0] === false && pair[1] === false) {
     return 'neither';

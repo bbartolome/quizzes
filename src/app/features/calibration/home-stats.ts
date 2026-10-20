@@ -26,11 +26,11 @@ export function homeStats(
   return {
     hasPending: history.pending !== null,
     roundsPlayed,
-    lifetimeSkill:
-      answerCount > 0 ? skillScore(brierSum / answerCount, format) : null,
-    lifetimeBuckets: bucketStats(log.flatMap((r) => r.answers), format),
-    showRepeats:
-      log.length > 0 &&
-      unseenCount(bank, log) < Math.min(ROUND_SIZE, bank.items.length),
+    lifetimeSkill: answerCount > 0 ? skillScore(brierSum / answerCount, format) : null,
+    lifetimeBuckets: bucketStats(
+      log.flatMap((r) => r.answers),
+      format,
+    ),
+    showRepeats: log.length > 0 && unseenCount(bank, log) < Math.min(ROUND_SIZE, bank.items.length),
   };
 }

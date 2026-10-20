@@ -12,8 +12,6 @@ export function calibrationCardStats(
   format: CalibrationFormat,
 ): { roundsPlayed: number; skillScore: number | null } {
   const score =
-    summary.answerCount === 0
-      ? null
-      : skillScore(summary.brierSum / summary.answerCount, format);
+    summary.answerCount === 0 ? null : skillScore(summary.brierSum / summary.answerCount, format);
   return { roundsPlayed: summary.roundsPlayed, skillScore: score };
 }

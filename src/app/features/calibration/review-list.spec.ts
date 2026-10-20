@@ -18,7 +18,13 @@ function row(overrides: Partial<ReviewRow> = {}): ReviewRow {
 }
 
 function section(overrides: Partial<ReviewSection> = {}): ReviewSection {
-  return { group: 'confident-miss', title: 'Confident misses', open: true, rows: [row()], ...overrides };
+  return {
+    group: 'confident-miss',
+    title: 'Confident misses',
+    open: true,
+    rows: [row()],
+    ...overrides,
+  };
 }
 
 describe('ReviewList', () => {
@@ -38,15 +44,25 @@ describe('ReviewList', () => {
   it('renders one details per section with "Title (n)" summary', () => {
     render([
       section({ rows: [row(), row({ itemId: 'i2' })] }),
-      section({ group: 'confident-hit', title: 'Confident hits', open: false, rows: [row({ itemId: 'i3', correctLabel: null })] }),
+      section({
+        group: 'confident-hit',
+        title: 'Confident hits',
+        open: false,
+        rows: [row({ itemId: 'i3', correctLabel: null })],
+      }),
     ]);
 
-    const summaries = Array.from(el().querySelectorAll('details > summary')).map((s) => s.textContent?.trim());
+    const summaries = Array.from(el().querySelectorAll('details > summary')).map((s) =>
+      s.textContent?.trim(),
+    );
     expect(summaries).toEqual(['Confident misses (2)', 'Confident hits (1)']);
   });
 
   it('opens each details according to section.open', () => {
-    render([section(), section({ group: 'underplayed-hit', title: 'Underplayed hits', open: false })]);
+    render([
+      section(),
+      section({ group: 'underplayed-hit', title: 'Underplayed hits', open: false }),
+    ]);
 
     const details = Array.from(el().querySelectorAll('details'));
     expect(details.map((d) => d.open)).toEqual([true, false]);
@@ -92,7 +108,11 @@ describe('ReviewList', () => {
   });
 
   it('renders the Miss at 100% and Below chance tags', () => {
-    render([section({ rows: [row({ flags: ['miss-at-100'] }), row({ itemId: 'i2', flags: ['below-chance'] })] })]);
+    render([
+      section({
+        rows: [row({ flags: ['miss-at-100'] }), row({ itemId: 'i2', flags: ['below-chance'] })],
+      }),
+    ]);
 
     const text = el().textContent ?? '';
     expect(text).toContain('Miss at 100%');

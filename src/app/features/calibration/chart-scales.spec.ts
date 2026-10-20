@@ -44,7 +44,14 @@ describe('yFor', () => {
 
 describe('xTicks', () => {
   it('keeps one tick per bucket, carrying n', () => {
-    const buckets = [bucket(50, 3), bucket(60, 0), bucket(70, 5), bucket(80, 0), bucket(90, 1), bucket(100, 2)];
+    const buckets = [
+      bucket(50, 3),
+      bucket(60, 0),
+      bucket(70, 5),
+      bucket(80, 0),
+      bucket(90, 1),
+      bucket(100, 2),
+    ];
     const ticks = xTicks('two-way', buckets);
     expect(ticks.map((t) => t.stop)).toEqual([50, 60, 70, 80, 90, 100]);
     expect(ticks.map((t) => t.n)).toEqual([3, 0, 5, 0, 1, 2]);

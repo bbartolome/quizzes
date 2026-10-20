@@ -45,7 +45,5 @@ export class CalibrationSparkline {
   readonly format = input.required<CalibrationFormat>();
   readonly buckets = input.required<BucketStat[]>();
 
-  readonly g = computed(() =>
-    chartGeometry(this.format(), this.buckets(), null, this.box),
-  );
+  readonly g = computed(() => chartGeometry(this.format(), this.buckets(), null, this.box));
 }

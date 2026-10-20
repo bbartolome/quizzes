@@ -111,7 +111,9 @@ describe('QuizDataService', () => {
         },
       ];
 
-      let result: { questions: Question[]; templates: Template[]; knowledgeBase: KnowledgeBaseEntry[] } | undefined;
+      let result:
+        | { questions: Question[]; templates: Template[]; knowledgeBase: KnowledgeBaseEntry[] }
+        | undefined;
       service.loadQuizBundle(entry).subscribe((value) => (result = value));
 
       const questionsReq = httpMock.expectOne(`${entry.dataPath}questions.json`);

@@ -161,7 +161,7 @@ describe('overconfidence', () => {
   it('is mean confidence minus percent correct, unrounded', () => {
     expect(overconfidence(answers(90, 8, 10))).toBeCloseTo(10, 10);
     expect(overconfidence(answers(70, 8, 10))).toBeCloseTo(-10, 10);
-    expect(overconfidence(answers(75, 7, 9))).toBeCloseTo(75 - (700 / 9), 10);
+    expect(overconfidence(answers(75, 7, 9))).toBeCloseTo(75 - 700 / 9, 10);
   });
 });
 
@@ -231,7 +231,10 @@ describe('bucketStats', () => {
   });
 
   it('returns one bucket per four-way stop, in order', () => {
-    const buckets = bucketStats([answer(0, false), answer(25, true), answer(25, false)], 'four-way');
+    const buckets = bucketStats(
+      [answer(0, false), answer(25, true), answer(25, false)],
+      'four-way',
+    );
     expect(buckets.map((b) => b.stop)).toEqual([0, 25, 50, 75, 100]);
     expect(buckets.map((b) => b.n)).toEqual([1, 2, 0, 0, 0]);
     expect(buckets[1].pct).toBe(50);

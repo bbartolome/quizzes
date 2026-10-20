@@ -122,7 +122,10 @@ describe('CalibrationRoundPage (two-way)', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  function buttonByLabel(fixture: ComponentFixture<CalibrationRoundPage>, label: string): HTMLButtonElement {
+  function buttonByLabel(
+    fixture: ComponentFixture<CalibrationRoundPage>,
+    label: string,
+  ): HTMLButtonElement {
     const button = root(fixture).querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
     if (!button) {
       throw new Error(`No button with aria-label "${label}"`);
@@ -130,9 +133,12 @@ describe('CalibrationRoundPage (two-way)', () => {
     return button;
   }
 
-  function buttonByText(fixture: ComponentFixture<CalibrationRoundPage>, pattern: RegExp): HTMLButtonElement {
-    const button = Array.from(root(fixture).querySelectorAll<HTMLButtonElement>('button')).find((b) =>
-      pattern.test(b.textContent ?? ''),
+  function buttonByText(
+    fixture: ComponentFixture<CalibrationRoundPage>,
+    pattern: RegExp,
+  ): HTMLButtonElement {
+    const button = Array.from(root(fixture).querySelectorAll<HTMLButtonElement>('button')).find(
+      (b) => pattern.test(b.textContent ?? ''),
     );
     if (!button) {
       throw new Error(`No button with text matching ${pattern}`);
@@ -140,7 +146,10 @@ describe('CalibrationRoundPage (two-way)', () => {
     return button;
   }
 
-  async function click(fixture: ComponentFixture<CalibrationRoundPage>, button: HTMLElement): Promise<void> {
+  async function click(
+    fixture: ComponentFixture<CalibrationRoundPage>,
+    button: HTMLElement,
+  ): Promise<void> {
     button.click();
     await settle(fixture);
   }
@@ -428,7 +437,10 @@ describe('CalibrationRoundPage (four-way)', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  function buttonByExactText(fixture: ComponentFixture<CalibrationRoundPage>, text: string): HTMLButtonElement {
+  function buttonByExactText(
+    fixture: ComponentFixture<CalibrationRoundPage>,
+    text: string,
+  ): HTMLButtonElement {
     const button = Array.from(root(fixture).querySelectorAll<HTMLButtonElement>('button')).find(
       (b) => (b.textContent ?? '').trim() === text,
     );
@@ -438,7 +450,10 @@ describe('CalibrationRoundPage (four-way)', () => {
     return button;
   }
 
-  function buttonByLabel(fixture: ComponentFixture<CalibrationRoundPage>, label: string): HTMLButtonElement {
+  function buttonByLabel(
+    fixture: ComponentFixture<CalibrationRoundPage>,
+    label: string,
+  ): HTMLButtonElement {
     const button = root(fixture).querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
     if (!button) {
       throw new Error(`No button with aria-label "${label}"`);
@@ -482,7 +497,10 @@ describe('CalibrationRoundPage (four-way)', () => {
     await tap(fixture, 'Neither');
     await tap(fixture, '50%');
 
-    expect(history.getPending(QUIZ_ID)!.picks['f1']).toEqual({ pick: [false, false], confidence: 50 });
+    expect(history.getPending(QUIZ_ID)!.picks['f1']).toEqual({
+      pick: [false, false],
+      confidence: 50,
+    });
     expect(root(fixture).textContent).toContain('Statement 2');
     expect(root(fixture).textContent).not.toContain('Statement 1');
   });

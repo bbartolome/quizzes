@@ -6,10 +6,7 @@ import {
   percentCorrect,
   skillScore,
 } from './scoring';
-import {
-  type CalibrationAnswer,
-  type CalibrationFormat,
-} from './calibration.models';
+import { type CalibrationAnswer, type CalibrationFormat } from './calibration.models';
 
 export interface ScoreSide {
   skill: number;

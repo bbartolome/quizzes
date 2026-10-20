@@ -3,7 +3,14 @@ import { seriesBars, seriesPoints, seriesSegments } from './chart-series';
 import { DEFAULT_BOX, xFor, yFor } from './chart-scales';
 import { BucketStat } from './calibration.models';
 
-const empty = (stop: number): BucketStat => ({ stop, n: 0, hits: 0, pct: null, lo: null, hi: null });
+const empty = (stop: number): BucketStat => ({
+  stop,
+  n: 0,
+  hits: 0,
+  pct: null,
+  lo: null,
+  hi: null,
+});
 const bucket = (stop: number, n: number, hits: number, lo: number, hi: number): BucketStat => ({
   stop,
   n,
@@ -62,9 +69,7 @@ describe('chart-series (two-way)', () => {
   });
 
   it('draws no segment across an empty middle bucket', () => {
-    const buckets = stops.map((s) =>
-      s === 60 || s === 80 ? bucket(s, 5, 4, 40, 95) : empty(s),
-    );
+    const buckets = stops.map((s) => (s === 60 || s === 80 ? bucket(s, 5, 4, 40, 95) : empty(s)));
     expect(seriesSegments('two-way', buckets, DEFAULT_BOX)).toEqual([]);
   });
 

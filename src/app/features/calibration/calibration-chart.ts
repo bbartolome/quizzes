@@ -18,9 +18,7 @@ export class CalibrationChart {
 
   readonly box = DEFAULT_BOX;
 
-  geometry = computed(() =>
-    chartGeometry(this.format(), this.buckets(), this.overlay()),
-  );
+  geometry = computed(() => chartGeometry(this.format(), this.buckets(), this.overlay()));
 
   showTable = signal(false);
 
@@ -36,10 +34,9 @@ export class CalibrationChart {
       )} answers`,
   );
 
-  overlayPath = computed(
-    () =>
-      this.geometry().overlayPoints
-        .map((p) => `${p.x},${p.y}`)
-        .join(' '),
+  overlayPath = computed(() =>
+    this.geometry()
+      .overlayPoints.map((p) => `${p.x},${p.y}`)
+      .join(' '),
   );
 }

@@ -113,13 +113,18 @@ describe('CalibrationHomePage', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  function buttonByText(fixture: ComponentFixture<CalibrationHomePage>, pattern: RegExp): HTMLButtonElement | undefined {
+  function buttonByText(
+    fixture: ComponentFixture<CalibrationHomePage>,
+    pattern: RegExp,
+  ): HTMLButtonElement | undefined {
     return Array.from(root(fixture).querySelectorAll<HTMLButtonElement>('button')).find((b) =>
       pattern.test(b.textContent ?? ''),
     );
   }
 
-  function roundLink(fixture: ComponentFixture<CalibrationHomePage>): HTMLAnchorElement | undefined {
+  function roundLink(
+    fixture: ComponentFixture<CalibrationHomePage>,
+  ): HTMLAnchorElement | undefined {
     return Array.from(root(fixture).querySelectorAll<HTMLAnchorElement>('a')).find((a) =>
       /(start|resume) round/i.test(a.textContent ?? ''),
     );
@@ -161,7 +166,11 @@ describe('CalibrationHomePage', () => {
   describe('with a pending round', () => {
     it('reads Resume round and offers Start over', async () => {
       configure();
-      history.savePending(QUIZ_ID, { bankVersion: 1, items: [{ itemId: 'i1', swapped: false }], picks: {} });
+      history.savePending(QUIZ_ID, {
+        bankVersion: 1,
+        items: [{ itemId: 'i1', swapped: false }],
+        picks: {},
+      });
       const fixture = await render();
 
       expect(roundLink(fixture)?.textContent).toContain('Resume round');
@@ -171,7 +180,11 @@ describe('CalibrationHomePage', () => {
 
     it('Start over discards the pending round and navigates to the round page', async () => {
       configure();
-      history.savePending(QUIZ_ID, { bankVersion: 1, items: [{ itemId: 'i1', swapped: false }], picks: {} });
+      history.savePending(QUIZ_ID, {
+        bankVersion: 1,
+        items: [{ itemId: 'i1', swapped: false }],
+        picks: {},
+      });
       const fixture = await render();
 
       buttonByText(fixture, /start over/i)!.click();
@@ -198,7 +211,7 @@ describe('CalibrationHomePage', () => {
       expect(text).toMatch(/1\s+round/i);
     });
 
-    it("notes that items will repeat once every item has been seen", async () => {
+    it('notes that items will repeat once every item has been seen', async () => {
       const fixture = await render();
 
       expect(root(fixture).textContent).toContain("You've seen every item. Some will repeat.");
@@ -206,9 +219,12 @@ describe('CalibrationHomePage', () => {
   });
 
   describe('when the bank cannot load', () => {
-    it("shows \"Couldn't load this quiz\" and Retry reloads", async () => {
+    it('shows "Couldn\'t load this quiz" and Retry reloads', async () => {
       bankService = {
-        loadBank: vi.fn().mockReturnValueOnce(throwError(() => new Error('offline'))).mockReturnValue(of(bank)),
+        loadBank: vi
+          .fn()
+          .mockReturnValueOnce(throwError(() => new Error('offline')))
+          .mockReturnValue(of(bank)),
       };
       configure();
       const fixture = await render();

@@ -18,7 +18,8 @@ const entries = manifest.quizzes.filter((q) => q.kind === 'calibration');
 function bankFor(entry: QuizManifestEntry): CalibrationBank {
   const key = entry.dataPath.endsWith('/') ? entry.dataPath : `${entry.dataPath}/`;
   const bank = banksByDataPath[key];
-  if (!bank) throw new Error(`No bank imported for ${entry.id} (${key}); add it to banksByDataPath`);
+  if (!bank)
+    throw new Error(`No bank imported for ${entry.id} (${key}); add it to banksByDataPath`);
   return bank;
 }
 
@@ -74,9 +75,7 @@ describe('calibration banks', () => {
 
       if (entry.format === 'four-way') {
         it('covers every outcome (Neither, A, B, Both) at least once', () => {
-          const seen = new Set(
-            bank.items.filter(isFourWayItem).map((i) => outcomeOf(i.truth)),
-          );
+          const seen = new Set(bank.items.filter(isFourWayItem).map((i) => outcomeOf(i.truth)));
           expect([...seen].sort()).toEqual(['a', 'b', 'both', 'neither']);
         });
       }

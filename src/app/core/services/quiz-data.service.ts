@@ -29,6 +29,8 @@ export class QuizDataService {
       questions: this.http.get<Question[]>(`${base}questions.json`),
       templates: this.http.get<Template[]>(`${base}templates.json`),
       knowledgeBase: this.http.get<KnowledgeBaseEntry[]>(`${base}knowledge-base.json`),
-    }).pipe(map(({ questions, templates, knowledgeBase }) => ({ questions, templates, knowledgeBase })));
+    }).pipe(
+      map(({ questions, templates, knowledgeBase }) => ({ questions, templates, knowledgeBase })),
+    );
   }
 }

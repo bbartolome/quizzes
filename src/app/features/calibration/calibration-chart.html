@@ -12,16 +12,18 @@
     [attr.text-anchor]="'middle'"
     [attr.font-size]="11"
     class="fill-red-700"
-    >Overconfident</text
   >
+    Overconfident
+  </text>
   <text
     [attr.x]="box.width / 2"
     [attr.y]="box.height / 2 - 24"
     [attr.text-anchor]="'middle'"
     [attr.font-size]="11"
     class="fill-blue-700"
-    >Underconfident</text
   >
+    Underconfident
+  </text>
 
   <line
     [attr.x1]="geometry().diagonal.x1"
@@ -42,13 +44,9 @@
   />
 
   @for (t of geometry().yTicks; track t.value) {
-    <text
-      [attr.x]="4"
-      [attr.y]="t.y + 3"
-      [attr.font-size]="10"
-      class="fill-gray-500"
-      >{{ t.value }}%</text
-    >
+    <text [attr.x]="4" [attr.y]="t.y + 3" [attr.font-size]="10" class="fill-gray-500">
+      {{ t.value }}%
+    </text>
   }
   @for (t of geometry().xTicks; track t.stop) {
     <text
@@ -57,8 +55,9 @@
       [attr.text-anchor]="'middle'"
       [attr.font-size]="11"
       class="fill-gray-600"
-      >{{ t.stop }}</text
     >
+      {{ t.stop }}
+    </text>
     <text
       data-n
       [attr.x]="t.x"
@@ -66,8 +65,9 @@
       [attr.text-anchor]="'middle'"
       [attr.font-size]="9"
       class="fill-gray-400"
-      >{{ t.n }}</text
     >
+      {{ t.n }}
+    </text>
   }
 
   @for (b of geometry().bars; track $index) {
@@ -92,13 +92,7 @@
   }
 
   @for (p of geometry().points; track $index) {
-    <circle
-      data-point
-      [attr.cx]="p.x"
-      [attr.cy]="p.y"
-      r="4"
-      [attr.fill]="'#1f2937'"
-    />
+    <circle data-point [attr.cx]="p.x" [attr.cy]="p.y" r="4" [attr.fill]="'#1f2937'" />
   }
   @for (f of geometry().flagRings; track $index) {
     <circle
@@ -136,8 +130,8 @@
 
 @if (firstRound()) {
   <p class="text-sm text-gray-600">
-    One round is too few answers to say much. The chart becomes your lifetime
-    curve as you add rounds.
+    One round is too few answers to say much. The chart becomes your lifetime curve as you add
+    rounds.
   </p>
 }
 
