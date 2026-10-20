@@ -1344,6 +1344,246 @@
         "label": "Wikipedia: Chromosome",
         "url": "https://en.wikipedia.org/wiki/Chromosome"
       }
+    },
+    {
+      "id": "c113",
+      "prompt": "Which has more adult teeth?",
+      "options": ["A pig", "A cat"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Adult pigs have 44 teeth; adult cats have 30.",
+      "source": {
+        "label": "Wikipedia: Pig",
+        "url": "https://en.wikipedia.org/wiki/Pig"
+      }
+    },
+    {
+      "id": "c114",
+      "prompt": "Which grows taller?",
+      "options": ["Giant sequoia", "Coast redwood"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Coast redwoods reach about 116 m; giant sequoias about 95 m.",
+      "source": {
+        "label": "Wikipedia: Sequoia sempervirens",
+        "url": "https://en.wikipedia.org/wiki/Sequoia_sempervirens"
+      }
+    },
+    {
+      "id": "c115",
+      "prompt": "Which is the hippo's closest living relative?",
+      "options": ["Whales", "Pigs"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The closest living relatives of hippos are the cetaceans (whales and dolphins).",
+      "source": {
+        "label": "Wikipedia: Hippopotamus",
+        "url": "https://en.wikipedia.org/wiki/Hippopotamus"
+      }
+    },
+    {
+      "id": "c116",
+      "prompt": "Which has the larger wingspan?",
+      "options": ["Andean condor", "Wandering albatross"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Wandering albatross wingspans reach up to 3.7 m; the Andean condor's maximum is 3.3 m.",
+      "source": {
+        "label": "Wikipedia: Wandering albatross",
+        "url": "https://en.wikipedia.org/wiki/Wandering_albatross"
+      }
+    },
+    {
+      "id": "c117",
+      "prompt": "Which is the larger rodent?",
+      "options": ["Capybara", "Beaver"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The capybara is the largest living rodent; beavers are the second largest.",
+      "source": {
+        "label": "Wikipedia: Capybara",
+        "url": "https://en.wikipedia.org/wiki/Capybara"
+      }
+    },
+    {
+      "id": "c118",
+      "prompt": "Which deer is larger?",
+      "options": ["Reindeer", "Moose"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The moose is the largest extant species of deer.",
+      "source": {
+        "label": "Wikipedia: Moose",
+        "url": "https://en.wikipedia.org/wiki/Moose"
+      }
+    },
+    {
+      "id": "c119",
+      "prompt": "Which snake grows longer?",
+      "options": ["Reticulated python", "Green anaconda"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The reticulated python is the world's longest snake; the green anaconda is slightly shorter but heavier.",
+      "source": {
+        "label": "Wikipedia: Reticulated python",
+        "url": "https://en.wikipedia.org/wiki/Reticulated_python"
+      }
+    },
+    {
+      "id": "c120",
+      "prompt": "Which has more limbs?",
+      "options": ["Octopus", "Squid"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Squid have eight arms and two tentacles; octopuses have eight arms.",
+      "source": {
+        "label": "Wikipedia: Squid",
+        "url": "https://en.wikipedia.org/wiki/Squid"
+      }
+    },
+    {
+      "id": "c121",
+      "prompt": "Which tree lives longer?",
+      "options": ["Bristlecone pine", "Coast redwood"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The oldest bristlecone pine is about 4,858 years old; the oldest coast redwoods about 2,200.",
+      "source": {
+        "label": "Wikipedia: Pinus longaeva",
+        "url": "https://en.wikipedia.org/wiki/Pinus_longaeva"
+      }
+    },
+    {
+      "id": "c122",
+      "prompt": "Which is botanically a berry?",
+      "options": ["Strawberry", "Banana"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Bananas are berries; strawberries are aggregate accessory fruits.",
+      "source": {
+        "label": "Wikipedia: Berry (botany)",
+        "url": "https://en.wikipedia.org/wiki/Berry_(botany)"
+      }
+    },
+    {
+      "id": "c123",
+      "prompt": "Which is botanically a berry?",
+      "options": ["Tomato", "Raspberry"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Tomatoes are berries; raspberries are aggregate fruits.",
+      "source": {
+        "label": "Wikipedia: Berry (botany)",
+        "url": "https://en.wikipedia.org/wiki/Berry_(botany)"
+      }
+    },
+    {
+      "id": "c124",
+      "prompt": "Which is a true grass?",
+      "options": ["Papyrus", "Bamboo"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Bamboo belongs to the grass family Poaceae; papyrus is a sedge (Cyperaceae).",
+      "source": {
+        "label": "Wikipedia: Bamboo",
+        "url": "https://en.wikipedia.org/wiki/Bamboo"
+      }
+    },
+    {
+      "id": "c125",
+      "prompt": "Which is a primate?",
+      "options": ["Tarsier", "Treeshrew"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Tarsiers are primates; treeshrews belong to their own order, Scandentia.",
+      "source": {
+        "label": "Wikipedia: Treeshrew",
+        "url": "https://en.wikipedia.org/wiki/Treeshrew"
+      }
+    },
+    {
+      "id": "c126",
+      "prompt": "Which has the longer gestation?",
+      "options": ["Blue whale", "African elephant"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Elephants gestate about 22 months; blue whales 10–12 months.",
+      "source": {
+        "label": "Wikipedia: African bush elephant",
+        "url": "https://en.wikipedia.org/wiki/African_bush_elephant"
+      }
+    },
+    {
+      "id": "c127",
+      "prompt": "Which lives longer?",
+      "options": ["Bowhead whale", "Blue whale"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Bowhead whales live over 200 years; blue whales about 80–90.",
+      "source": {
+        "label": "Wikipedia: Bowhead whale",
+        "url": "https://en.wikipedia.org/wiki/Bowhead_whale"
+      }
+    },
+    {
+      "id": "c128",
+      "prompt": "Which is heavier?",
+      "options": ["Walrus", "Southern elephant seal"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Southern elephant seal bulls weigh 3,000–3,700 kg; walrus males can top 2,000 kg.",
+      "source": {
+        "label": "Wikipedia: Southern elephant seal",
+        "url": "https://en.wikipedia.org/wiki/Southern_elephant_seal"
+      }
+    },
+    {
+      "id": "c129",
+      "prompt": "Which runs faster?",
+      "options": ["Ostrich", "Emu"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Ostriches run at up to 70 km/h; emus at 48 km/h.",
+      "source": {
+        "label": "Wikipedia: Ostrich",
+        "url": "https://en.wikipedia.org/wiki/Ostrich"
+      }
+    },
+    {
+      "id": "c130",
+      "prompt": "Which has the largest single flower?",
+      "options": ["Titan arum", "Rafflesia arnoldii"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Rafflesia arnoldii produces the largest individual flower; the titan arum's is a cluster of many flowers.",
+      "source": {
+        "label": "Wikipedia: Rafflesia arnoldii",
+        "url": "https://en.wikipedia.org/wiki/Rafflesia_arnoldii"
+      }
+    },
+    {
+      "id": "c131",
+      "prompt": "Which is the closer relative of birds?",
+      "options": ["Crocodiles", "Lizards"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Crocodilians are the closest living relatives of birds.",
+      "source": {
+        "label": "Wikipedia: Crocodilia",
+        "url": "https://en.wikipedia.org/wiki/Crocodilia"
+      }
+    },
+    {
+      "id": "c132",
+      "prompt": "Which sleeps longer each day?",
+      "options": ["Three-toed sloth", "Koala"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Koalas sleep up to 20 hours a day; wild sloths about 9.6 hours.",
+      "source": {
+        "label": "Wikipedia: Koala",
+        "url": "https://en.wikipedia.org/wiki/Koala"
+      }
     }
   ]
 }
