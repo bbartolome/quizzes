@@ -55,7 +55,7 @@
               "
               [attr.aria-pressed]="category() === opt ? 'true' : 'false'"
             >
-              {{ opt === 'both' ? 'Both' : (opt.charAt(0).toUpperCase() + opt.slice(1)) }}
+              {{ opt === 'both' ? 'Both' : opt.charAt(0).toUpperCase() + opt.slice(1) }}
             </button>
           }
         </div>

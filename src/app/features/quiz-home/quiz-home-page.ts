@@ -29,7 +29,11 @@ export class QuizHomePage implements OnInit, OnDestroy {
   protected category = signal<CategoryFilter>('both');
   protected traitsSelected = signal<string[]>([]);
 
-  protected readonly visibleTraits = computed(() => this.category() === 'both' ? this.traits() : this.traits().filter((t) => t.type === this.category()));
+  protected readonly visibleTraits = computed(() =>
+    this.category() === 'both'
+      ? this.traits()
+      : this.traits().filter((t) => t.type === this.category()),
+  );
 
   // --- Derived query params for navigation ---
   protected readonly roundParams = computed<Record<string, string>>(() => {

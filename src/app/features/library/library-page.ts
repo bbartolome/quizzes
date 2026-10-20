@@ -41,14 +41,15 @@ export class LibraryPage {
   protected readonly cards$: Observable<QuizCard[]> = this.quizData.loadManifest().pipe(
     switchMap((manifest) => {
       const loads = manifest.quizzes
-        .filter((e) => e.kind === 'calibration' && this.calibration.getHistory(e.id).bankVersion !== e.version)
+        .filter(
+          (e) =>
+            e.kind === 'calibration' && this.calibration.getHistory(e.id).bankVersion !== e.version,
+        )
         .map((e) =>
-          this.bankService
-            .loadBank(e)
-            .pipe(
-              map((bank) => this.calibration.migrate(e.id, bank, e.version)),
-              catchError(() => of(null)),
-            ),
+          this.bankService.loadBank(e).pipe(
+            map((bank) => this.calibration.migrate(e.id, bank, e.version)),
+            catchError(() => of(null)),
+          ),
         );
       return (loads.length ? forkJoin(loads) : of([])).pipe(map(() => manifest));
     }),

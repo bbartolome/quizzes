@@ -52,7 +52,10 @@ describe('QuizHomePage', () => {
   };
   const kb: KnowledgeBaseEntry[] = [strawMan, adHominem, anchoring];
 
-  let quizData: { loadManifest: ReturnType<typeof vi.fn>; loadQuizBundle: ReturnType<typeof vi.fn> };
+  let quizData: {
+    loadManifest: ReturnType<typeof vi.fn>;
+    loadQuizBundle: ReturnType<typeof vi.fn>;
+  };
   let stats: { getStats: ReturnType<typeof vi.fn> };
 
   function configure(): void {
@@ -82,7 +85,9 @@ describe('QuizHomePage', () => {
 
   function chipLabels(fixture: { nativeElement: HTMLElement }): string[] {
     return Array.from(
-      fixture.nativeElement.querySelectorAll<HTMLInputElement>('input[type="checkbox"][aria-label]'),
+      fixture.nativeElement.querySelectorAll<HTMLInputElement>(
+        'input[type="checkbox"][aria-label]',
+      ),
     ).map((el) => el.getAttribute('aria-label') ?? '');
   }
 
