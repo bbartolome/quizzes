@@ -5,11 +5,7 @@ import { of } from 'rxjs';
 import { StatsPage } from './stats-page';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
-import {
-  KnowledgeBaseEntry,
-  QuizManifestEntry,
-  QuizStats,
-} from '../../core/models/quiz.models';
+import { KnowledgeBaseEntry, QuizManifestEntry, QuizStats } from '../../core/models/quiz.models';
 import { overallAccuracy, traitRows } from './stats-rows';
 
 describe('StatsPage', () => {
@@ -66,7 +62,10 @@ describe('StatsPage', () => {
     roundsPlayed: 0,
   };
 
-  let quizData: { loadManifest: ReturnType<typeof vi.fn>; loadQuizBundle: ReturnType<typeof vi.fn> };
+  let quizData: {
+    loadManifest: ReturnType<typeof vi.fn>;
+    loadQuizBundle: ReturnType<typeof vi.fn>;
+  };
   let statsService: { getStats: ReturnType<typeof vi.fn>; resetQuiz: ReturnType<typeof vi.fn> };
 
   function configure(): void {

@@ -17,25 +17,19 @@
     <section aria-label="Quiz statistics" class="space-y-6">
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Rounds played
-          </p>
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Rounds played</p>
           <p data-testid="rounds-played" class="mt-1 text-2xl font-bold text-slate-900">
             {{ roundsPlayed() }}
           </p>
         </div>
         <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Current streak
-          </p>
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Current streak</p>
           <p data-testid="streak" class="mt-1 text-2xl font-bold text-slate-900">
             {{ streak() }}
           </p>
         </div>
         <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Overall accuracy
-          </p>
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Overall accuracy</p>
           <p data-testid="overall-accuracy" class="mt-1 text-2xl font-bold text-slate-900">
             {{ totalAccuracy() }}%
           </p>

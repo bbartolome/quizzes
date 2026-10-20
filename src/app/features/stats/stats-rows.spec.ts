@@ -12,7 +12,9 @@ function makeStats(perTrait: Record<string, PerTraitStats>): QuizStats {
   };
 }
 
-function makeKbEntry(overrides: Partial<KnowledgeBaseEntry> & { id: string; name: string }): KnowledgeBaseEntry {
+function makeKbEntry(
+  overrides: Partial<KnowledgeBaseEntry> & { id: string; name: string },
+): KnowledgeBaseEntry {
   return {
     type: 'fallacy',
     shortDefinition: 'short',
@@ -71,10 +73,7 @@ describe('traitRows', () => {
       high: { traitId: 'high', correct: 9, attempted: 10 },
       low: { traitId: 'low', correct: 1, attempted: 10 },
     });
-    const kb = [
-      makeKbEntry({ id: 'high', name: 'High' }),
-      makeKbEntry({ id: 'low', name: 'Low' }),
-    ];
+    const kb = [makeKbEntry({ id: 'high', name: 'High' }), makeKbEntry({ id: 'low', name: 'Low' })];
     const rows = traitRows(stats, kb);
     expect(rows.map((r) => r.id)).toEqual(['low', 'high']);
   });
@@ -84,10 +83,7 @@ describe('traitRows', () => {
       b: { traitId: 'b', correct: 1, attempted: 2 },
       a: { traitId: 'a', correct: 1, attempted: 2 },
     });
-    const kb = [
-      makeKbEntry({ id: 'b', name: 'Bravo' }),
-      makeKbEntry({ id: 'a', name: 'Alpha' }),
-    ];
+    const kb = [makeKbEntry({ id: 'b', name: 'Bravo' }), makeKbEntry({ id: 'a', name: 'Alpha' })];
     const rows = traitRows(stats, kb);
     expect(rows.map((r) => r.name)).toEqual(['Alpha', 'Bravo']);
   });
