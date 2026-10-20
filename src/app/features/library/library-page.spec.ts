@@ -4,6 +4,10 @@ import { of } from 'rxjs';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { QuizManifestEntry } from '../../core/models/quiz.models';
 import { QuizDataService } from '../../core/services/quiz-data.service';
+import { StatsService } from '../../core/services/stats.service';
+import { CalibrationBankService } from '../calibration/calibration-bank.service';
+import { CalibrationBank, PendingRound } from '../calibration/calibration.models';
+import { CalibrationHistoryService } from '../calibration/calibration-history.service';
 import { LibraryPage } from './library-page';
 
 class MemoryStorage implements Storage {
@@ -104,5 +108,165 @@ describe('LibraryPage', () => {
     const href = cardHref(fixture.nativeElement, calibrationEntry.title);
     expect(href).not.toBeNull();
     expect(href!.endsWith('/calibration/calibration')).toBe(true);
+  });
+});
+
+describe('LibraryPage calibration cards', () => {
+  const bank: CalibrationBank = {
+    version: 1,
+    items: [
+      {
+        id: 'a',
+        prompt: 'A or B?',
+        options: ['A', 'B'],
+        correct: 0,
+        topic: 'history',
+        fact: 'fact a',
+        source: { label: 's', url: 'https://example.com/a' },
+      },
+      {
+        id: 'b',
+        prompt: 'C or D?',
+        options: ['C', 'D'],
+        correct: 1,
+        topic: 'science',
+        fact: 'fact b',
+        source: { label: 's', url: 'https://example.com/b' },
+      },
+    ],
+  };
+  const loadBank = vi.fn((_entry: QuizManifestEntry) => of(bank));
+
+  const manifest = { quizzes: [trapsEntry, calibrationEntry] };
+
+  beforeEach(() => {
+    vi.stubGlobal('localStorage', new MemoryStorage());
+    manifest.quizzes = [trapsEntry, calibrationEntry];
+    loadBank.mockReset();
+    loadBank.mockReturnValue(of(bank));
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([]),
+        {
+          provide: QuizDataService,
+          useValue: { loadManifest: vi.fn(() => of(manifest)) },
+        },
+        { provide: CalibrationBankService, useValue: { loadBank } },
+      ],
+    });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  function playCalibrationRound(): void {
+    const history = TestBed.inject(CalibrationHistoryService);
+    const pending: PendingRound = {
+      bankVersion: 1,
+      items: [
+        { itemId: 'a', swapped: false },
+        { itemId: 'b', swapped: false },
+      ],
+      picks: { a: { pick: 0, confidence: 80 }, b: { pick: 1, confidence: 80 } },
+    };
+    history.savePending('calibration', pending);
+    history.submit('calibration', bank, pending);
+  }
+
+  function playTrapsRound(): void {
+    const stats = TestBed.inject(StatsService);
+    const result = (correct: boolean) =>
+      ({ question: { traitIds: ['t1'] }, selected: [], correct, missed: [], extra: [] }) as never;
+    stats.recordResult('reasoning-traps', result(true));
+    stats.recordResult('reasoning-traps', result(true));
+    stats.recordResult('reasoning-traps', result(true));
+    stats.recordResult('reasoning-traps', result(false));
+    stats.recordSessionEnd('reasoning-traps');
+  }
+
+  async function render(): Promise<HTMLElement> {
+    const fixture = TestBed.createComponent(LibraryPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    return fixture.nativeElement as HTMLElement;
+  }
+
+  function text(el: Element): string {
+    return (el.textContent ?? '').replace(/\s+/g, ' ').trim();
+  }
+
+  function cardText(root: HTMLElement): string {
+    return text(root.querySelector(`a[aria-label^="${calibrationEntry.title}"]`)!);
+  }
+
+  it('shows rounds played and Skill score N on the calibration card', async () => {
+    playCalibrationRound();
+    const root = await render();
+
+    expect(cardText(root)).toMatch(/Rounds played\s*1/);
+    expect(cardText(root)).toMatch(/Skill score:? 92/);
+  });
+
+  it('hides the Skill score before any round', async () => {
+    const root = await render();
+
+    expect(cardText(root)).not.toContain('Skill score');
+  });
+
+  it('has no Accuracy or Current streak rows on the calibration card', async () => {
+    playCalibrationRound();
+    const root = await render();
+
+    expect(cardText(root)).not.toContain('Accuracy');
+    expect(cardText(root)).not.toContain('Current streak');
+  });
+
+  it('adds calibration rounds to the header total', async () => {
+    playTrapsRound();
+    playCalibrationRound();
+    const root = await render();
+
+    expect(text(root.querySelector('header')!)).toContain('2 rounds played across all');
+  });
+
+  it('computes overall accuracy from Traps answers only', async () => {
+    playTrapsRound();
+    playCalibrationRound();
+    const root = await render();
+
+    expect(text(root.querySelector('header')!)).toContain('75% overall accuracy');
+  });
+
+  it('migrates a calibration history whose stored bankVersion differs from entry.version', async () => {
+    playCalibrationRound();
+    const key = 'stats:calibration:calibration';
+    const stored = JSON.parse(localStorage.getItem(key)!);
+    stored.bankVersion = 1;
+    localStorage.setItem(key, JSON.stringify(stored));
+
+    const bumped = { ...calibrationEntry, version: 2 };
+    manifest.quizzes = [trapsEntry, bumped];
+    loadBank.mockReturnValue(of({ ...bank, version: 2 }));
+
+    await render();
+
+    expect(loadBank).toHaveBeenCalledWith(bumped);
+    expect(JSON.parse(localStorage.getItem(key)!).bankVersion).toBe(2);
+  });
+
+  it('clears calibration history on Reset all progress', async () => {
+    playCalibrationRound();
+    vi.stubGlobal('confirm', () => true);
+    const root = await render();
+    expect(localStorage.getItem('stats:calibration:calibration')).not.toBeNull();
+
+    const reset = [...root.querySelectorAll('button')].find((b) =>
+      text(b).includes('Reset all progress'),
+    )!;
+    reset.click();
+
+    expect(localStorage.getItem('stats:calibration:calibration')).toBeNull();
   });
 });
