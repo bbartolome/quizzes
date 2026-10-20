@@ -1,6 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { FORMATS, type CalibrationFormat } from './calibration-format';
+import { FORMATS } from './calibration-format';
+import type { CalibrationFormat } from './calibration.models';
 import type { ScoreSide } from './score-side';
 
 @Component({
