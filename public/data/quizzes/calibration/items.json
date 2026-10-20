@@ -4464,6 +4464,222 @@
         "label": "Wikipedia: Girl with a Pearl Earring",
         "url": "https://en.wikipedia.org/wiki/Girl_with_a_Pearl_Earring"
       }
+    },
+    {
+      "id": "c373",
+      "prompt": "Which is larger?",
+      "options": ["10th Catalan number", "2¹⁴"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The tenth Catalan number is 16,796; 2¹⁴ = 16,384.",
+      "source": {
+        "label": "Wikipedia: Catalan number",
+        "url": "https://en.wikipedia.org/wiki/Catalan_number"
+      }
+    },
+    {
+      "id": "c374",
+      "prompt": "Which is larger?",
+      "options": ["7th Bell number", "30²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The seventh Bell number is 877; 30² = 900.",
+      "source": {
+        "label": "Wikipedia: Bell number",
+        "url": "https://en.wikipedia.org/wiki/Bell_number"
+      }
+    },
+    {
+      "id": "c375",
+      "prompt": "Which is larger?",
+      "options": ["11th Lucas number", "14²"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The eleventh Lucas number is 199; 14² = 196.",
+      "source": {
+        "label": "Wikipedia: Lucas number",
+        "url": "https://en.wikipedia.org/wiki/Lucas_number"
+      }
+    },
+    {
+      "id": "c376",
+      "prompt": "Which is larger?",
+      "options": ["31²", "16th Fibonacci number"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The 16th Fibonacci number is 987; 31² = 961.",
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "c377",
+      "prompt": "Which is larger?",
+      "options": ["51²", "18th Fibonacci number"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The 18th Fibonacci number is 2,584; 51² = 2,601.",
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "c378",
+      "prompt": "Which is larger?",
+      "options": ["9th Catalan number", "70²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The ninth Catalan number is 4,862; 70² = 4,900.",
+      "source": {
+        "label": "Wikipedia: Catalan number",
+        "url": "https://en.wikipedia.org/wiki/Catalan_number"
+      }
+    },
+    {
+      "id": "c379",
+      "prompt": "Which is larger?",
+      "options": ["8!", "2¹⁵"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "8! = 40,320; 2¹⁵ = 32,768.",
+      "source": {
+        "label": "Wikipedia: Factorial",
+        "url": "https://en.wikipedia.org/wiki/Factorial"
+      }
+    },
+    {
+      "id": "c380",
+      "prompt": "Which is larger?",
+      "options": ["15²", "50th prime number"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The 50th prime is 229; 15² = 225.",
+      "source": {
+        "label": "Wikipedia: List of prime numbers",
+        "url": "https://en.wikipedia.org/wiki/List_of_prime_numbers"
+      }
+    },
+    {
+      "id": "c381",
+      "prompt": "Which is larger?",
+      "options": ["2³³", "6th perfect number"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The sixth perfect number is 8,589,869,056; 2³³ = 8,589,934,592.",
+      "source": {
+        "label": "Wikipedia: Perfect number",
+        "url": "https://en.wikipedia.org/wiki/Perfect_number"
+      }
+    },
+    {
+      "id": "c382",
+      "prompt": "Which is larger?",
+      "options": ["7th perfect number", "2³⁷"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The seventh perfect number is 137,438,691,328; 2³⁷ = 137,438,953,472.",
+      "source": {
+        "label": "Wikipedia: Perfect number",
+        "url": "https://en.wikipedia.org/wiki/Perfect_number"
+      }
+    },
+    {
+      "id": "c383",
+      "prompt": "Which is larger?",
+      "options": ["6th Catalan number", "2⁷"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The sixth Catalan number is 132; 2⁷ = 128.",
+      "source": {
+        "label": "Wikipedia: Catalan number",
+        "url": "https://en.wikipedia.org/wiki/Catalan_number"
+      }
+    },
+    {
+      "id": "c384",
+      "prompt": "Which has more divisors?",
+      "options": ["128", "120"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "120 has 16 divisors; 128 has 8.",
+      "source": {
+        "label": "Wikipedia: Highly composite number",
+        "url": "https://en.wikipedia.org/wiki/Highly_composite_number"
+      }
+    },
+    {
+      "id": "c385",
+      "prompt": "Which is larger?",
+      "options": ["2²⁵", "Seconds in 365 days"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "2²⁵ = 33,554,432; 365 days is 31,536,000 seconds.",
+      "source": {
+        "label": "Wikipedia: Power of two",
+        "url": "https://en.wikipedia.org/wiki/Power_of_two"
+      }
+    },
+    {
+      "id": "c386",
+      "prompt": "Which is larger?",
+      "options": ["Minutes in a day", "38²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "A day has 1,440 minutes (86,400 seconds); 38² = 1,444.",
+      "source": {
+        "label": "Wikipedia: Day",
+        "url": "https://en.wikipedia.org/wiki/Day"
+      }
+    },
+    {
+      "id": "c387",
+      "prompt": "Which is larger?",
+      "options": ["14th Fibonacci number", "19²"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The 14th Fibonacci number is 377; 19² = 361.",
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "c388",
+      "prompt": "Which is larger?",
+      "options": ["9th Lucas number", "9²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The ninth Lucas number is 76; 9² = 81.",
+      "source": {
+        "label": "Wikipedia: Lucas number",
+        "url": "https://en.wikipedia.org/wiki/Lucas_number"
+      }
+    },
+    {
+      "id": "c389",
+      "prompt": "Which is larger?",
+      "options": ["6th Bell number", "14²"],
+      "correct": 0,
+      "topic": "numbers",
+      "fact": "The sixth Bell number is 203; 14² = 196.",
+      "source": {
+        "label": "Wikipedia: Bell number",
+        "url": "https://en.wikipedia.org/wiki/Bell_number"
+      }
+    },
+    {
+      "id": "c390",
+      "prompt": "Which is larger?",
+      "options": ["7th Catalan number", "21²"],
+      "correct": 1,
+      "topic": "numbers",
+      "fact": "The seventh Catalan number is 429; 21² = 441.",
+      "source": {
+        "label": "Wikipedia: Catalan number",
+        "url": "https://en.wikipedia.org/wiki/Catalan_number"
+      }
     }
   ]
 }
