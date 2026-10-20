@@ -3504,6 +3504,246 @@
         "label": "Wikipedia: Sack of Rome (410)",
         "url": "https://en.wikipedia.org/wiki/Sack_of_Rome_(410)"
       }
+    },
+    {
+      "id": "c293",
+      "prompt": "Which has the higher atomic number?",
+      "options": ["Mercury", "Gold"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Mercury is element 80; gold is element 79.",
+      "source": {
+        "label": "Wikipedia: Mercury (element)",
+        "url": "https://en.wikipedia.org/wiki/Mercury_(element)"
+      }
+    },
+    {
+      "id": "c294",
+      "prompt": "Which planet is wider?",
+      "options": ["Neptune", "Uranus"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Uranus has a mean diameter of about 50,700 km; Neptune about 49,200 km.",
+      "source": {
+        "label": "Wikipedia: Uranus",
+        "url": "https://en.wikipedia.org/wiki/Uranus"
+      }
+    },
+    {
+      "id": "c295",
+      "prompt": "Which planet is more massive?",
+      "options": ["Neptune", "Uranus"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Neptune is about 17.1 Earth masses; Uranus about 14.5.",
+      "source": {
+        "label": "Wikipedia: Neptune",
+        "url": "https://en.wikipedia.org/wiki/Neptune"
+      }
+    },
+    {
+      "id": "c296",
+      "prompt": "Which moon is larger?",
+      "options": ["Europa", "Io"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Io is about 3,640 km across; Europa about 3,120 km.",
+      "source": {
+        "label": "Wikipedia: Io (moon)",
+        "url": "https://en.wikipedia.org/wiki/Io_(moon)"
+      }
+    },
+    {
+      "id": "c297",
+      "prompt": "Which is larger?",
+      "options": ["Io", "Earth's Moon"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Io is about 3,640 km across; Earth's Moon is 3,474 km.",
+      "source": {
+        "label": "Wikipedia: Io (moon)",
+        "url": "https://en.wikipedia.org/wiki/Io_(moon)"
+      }
+    },
+    {
+      "id": "c298",
+      "prompt": "Which is larger?",
+      "options": ["Pluto", "Triton"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Triton is about 2,707 km across; Pluto about 2,377 km.",
+      "source": {
+        "label": "Wikipedia: Triton (moon)",
+        "url": "https://en.wikipedia.org/wiki/Triton_(moon)"
+      }
+    },
+    {
+      "id": "c299",
+      "prompt": "Which is more massive?",
+      "options": ["Eris", "Pluto"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Eris is about 27% more massive than Pluto, though slightly smaller across.",
+      "source": {
+        "label": "Wikipedia: Eris (dwarf planet)",
+        "url": "https://en.wikipedia.org/wiki/Eris_(dwarf_planet)"
+      }
+    },
+    {
+      "id": "c300",
+      "prompt": "Which is more electronegative?",
+      "options": ["Oxygen", "Fluorine"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Fluorine is 3.98 on the Pauling scale; oxygen is 3.44.",
+      "source": {
+        "label": "Wikipedia: Electronegativity",
+        "url": "https://en.wikipedia.org/wiki/Electronegativity"
+      }
+    },
+    {
+      "id": "c301",
+      "prompt": "Which is wider?",
+      "options": ["Mercury", "Callisto"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Mercury is about 4,879 km across; Callisto is 4,821 km.",
+      "source": {
+        "label": "Wikipedia: Callisto (moon)",
+        "url": "https://en.wikipedia.org/wiki/Callisto_(moon)"
+      }
+    },
+    {
+      "id": "c302",
+      "prompt": "Which is wider?",
+      "options": ["Mercury", "Titan"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Titan is about 5,150 km across; Mercury about 4,879 km.",
+      "source": {
+        "label": "Wikipedia: Titan (moon)",
+        "url": "https://en.wikipedia.org/wiki/Titan_(moon)"
+      }
+    },
+    {
+      "id": "c303",
+      "prompt": "Which is denser?",
+      "options": ["Diamond", "Quartz"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Diamond is about 3.5 g/cm³; quartz about 2.65 g/cm³.",
+      "source": {
+        "label": "Wikipedia: Diamond",
+        "url": "https://en.wikipedia.org/wiki/Diamond"
+      }
+    },
+    {
+      "id": "c304",
+      "prompt": "Which is faster?",
+      "options": ["The ISS's orbital speed", "Escape velocity from Earth"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Earth's escape velocity is 11.19 km/s; the ISS orbits at about 7.67 km/s.",
+      "source": {
+        "label": "Wikipedia: Escape velocity",
+        "url": "https://en.wikipedia.org/wiki/Escape_velocity"
+      }
+    },
+    {
+      "id": "c305",
+      "prompt": "Which is higher?",
+      "options": ["Venus's surface temperature", "Lead's melting point"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Venus averages 464 °C at the surface; lead melts at 327.5 °C.",
+      "source": {
+        "label": "Wikipedia: Lead",
+        "url": "https://en.wikipedia.org/wiki/Lead"
+      }
+    },
+    {
+      "id": "c306",
+      "prompt": "Which is longer?",
+      "options": ["A light-year", "10¹³ km"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "A light-year is about 9.46 × 10¹² km.",
+      "source": {
+        "label": "Wikipedia: Light-year",
+        "url": "https://en.wikipedia.org/wiki/Light-year"
+      }
+    },
+    {
+      "id": "c307",
+      "prompt": "Which is longer?",
+      "options": ["Solar day", "Sidereal day"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "A mean solar day is 24 hours; a sidereal day is 23 h 56 min 4 s.",
+      "source": {
+        "label": "Wikipedia: Sidereal time",
+        "url": "https://en.wikipedia.org/wiki/Sidereal_time"
+      }
+    },
+    {
+      "id": "c308",
+      "prompt": "Which melts at the higher temperature?",
+      "options": ["Gold", "Copper"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Copper melts at 1,085 °C; gold at 1,064 °C.",
+      "source": {
+        "label": "Wikipedia: Copper",
+        "url": "https://en.wikipedia.org/wiki/Copper"
+      }
+    },
+    {
+      "id": "c309",
+      "prompt": "Which has the lower boiling point?",
+      "options": ["Methanol", "Ethanol"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Methanol boils at 64.7 °C; ethanol at about 78.2 °C.",
+      "source": {
+        "label": "Wikipedia: Methanol",
+        "url": "https://en.wikipedia.org/wiki/Methanol"
+      }
+    },
+    {
+      "id": "c310",
+      "prompt": "Which is more abundant in the Milky Way by mass?",
+      "options": ["Carbon", "Oxygen"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Oxygen is about 1.04% of the Milky Way's mass; carbon about 0.46%.",
+      "source": {
+        "label": "Wikipedia: Abundance of the chemical elements",
+        "url": "https://en.wikipedia.org/wiki/Abundance_of_the_chemical_elements"
+      }
+    },
+    {
+      "id": "c311",
+      "prompt": "Which flew faster?",
+      "options": ["SR-71 Blackbird", "Concorde"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "The SR-71 reached Mach 3.4 in testing; Concorde's top speed was Mach 2.23.",
+      "source": {
+        "label": "Wikipedia: Lockheed SR-71 Blackbird",
+        "url": "https://en.wikipedia.org/wiki/Lockheed_SR-71_Blackbird"
+      }
+    },
+    {
+      "id": "c312",
+      "prompt": "Which is closer to the Sun?",
+      "options": ["Sirius", "Alpha Centauri"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Alpha Centauri AB is about 4.34 light-years away; Sirius about 8.6.",
+      "source": {
+        "label": "Wikipedia: Alpha Centauri",
+        "url": "https://en.wikipedia.org/wiki/Alpha_Centauri"
+      }
     }
   ]
 }
