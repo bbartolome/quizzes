@@ -2,7 +2,7 @@ import { Component, computed, input, signal } from '@angular/core';
 
 import { ChartTable } from './chart-table';
 import { chartGeometry, DEFAULT_BOX } from './chart-geometry';
-import type { BucketStat, CalibrationFormat } from './types';
+import type { BucketStat, CalibrationFormat } from './calibration.models';
 
 @Component({
   selector: 'app-calibration-chart',
