@@ -393,6 +393,249 @@
         "label": "Wikipedia: Power of two",
         "url": "https://en.wikipedia.org/wiki/Power_of_two"
       }
+    },
+    {
+      "id": "a031",
+      "prompt": "Which of these is a national capital?",
+      "options": ["Casablanca", "Rabat"],
+      "truth": [false, true],
+      "topic": "geography",
+      "facts": [
+        "Casablanca is Morocco's largest city but not its capital.",
+        "Rabat is the capital of Morocco."
+      ],
+      "source": {
+        "label": "Wikipedia: Rabat",
+        "url": "https://en.wikipedia.org/wiki/Rabat"
+      }
+    },
+    {
+      "id": "a032",
+      "prompt": "Which of these is a national capital?",
+      "options": ["Abuja", "Lagos"],
+      "truth": [true, false],
+      "topic": "geography",
+      "facts": [
+        "Abuja has been Nigeria's capital since 1991.",
+        "Lagos was Nigeria's capital until it was replaced by Abuja in 1991."
+      ],
+      "source": {
+        "label": "Wikipedia: Lagos",
+        "url": "https://en.wikipedia.org/wiki/Lagos"
+      }
+    },
+    {
+      "id": "a033",
+      "prompt": "Which of these is a national capital?",
+      "options": ["Almaty", "Astana"],
+      "truth": [false, true],
+      "topic": "geography",
+      "facts": [
+        "Almaty was Kazakhstan's capital until 1997 but no longer is.",
+        "Astana is the capital of Kazakhstan."
+      ],
+      "source": {
+        "label": "Wikipedia: List of national capitals",
+        "url": "https://en.wikipedia.org/wiki/List_of_national_capitals"
+      }
+    },
+    {
+      "id": "a034",
+      "prompt": "Which of these is a national capital?",
+      "options": ["Mumbai", "Karachi"],
+      "truth": [false, false],
+      "topic": "geography",
+      "facts": [
+        "Mumbai is the capital of Maharashtra state; India's capital is New Delhi.",
+        "Karachi is the capital of Sindh province; Pakistan's capital is Islamabad."
+      ],
+      "source": {
+        "label": "Wikipedia: Mumbai",
+        "url": "https://en.wikipedia.org/wiki/Mumbai"
+      }
+    },
+    {
+      "id": "a035",
+      "prompt": "Which of these is a national capital?",
+      "options": ["Dhaka", "Kathmandu"],
+      "truth": [true, true],
+      "topic": "geography",
+      "facts": ["Dhaka is the capital of Bangladesh.", "Kathmandu is the capital of Nepal."],
+      "source": {
+        "label": "Wikipedia: List of national capitals",
+        "url": "https://en.wikipedia.org/wiki/List_of_national_capitals"
+      }
+    },
+    {
+      "id": "a036",
+      "prompt": "Which of these countries is landlocked?",
+      "options": ["Rwanda", "Tanzania"],
+      "truth": [true, false],
+      "topic": "geography",
+      "facts": ["Rwanda has no sea coast.", "Tanzania has an Indian Ocean coast."],
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "a037",
+      "prompt": "Which of these countries is landlocked?",
+      "options": ["Zambia", "Kenya"],
+      "truth": [true, false],
+      "topic": "geography",
+      "facts": ["Zambia has no sea coast.", "Kenya has an Indian Ocean coast."],
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "a038",
+      "prompt": "Which of these countries is landlocked?",
+      "options": ["Belgium", "Hungary"],
+      "truth": [false, true],
+      "topic": "geography",
+      "facts": ["Belgium has a North Sea coast.", "Hungary has no sea coast."],
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "a039",
+      "prompt": "Which of these countries is landlocked?",
+      "options": ["Kenya", "Ghana"],
+      "truth": [false, false],
+      "topic": "geography",
+      "facts": ["Kenya has an Indian Ocean coast.", "Ghana has a coast on the Gulf of Guinea."],
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "a040",
+      "prompt": "Which of these is an island country?",
+      "options": ["Philippines", "Vietnam"],
+      "truth": [true, false],
+      "topic": "geography",
+      "facts": [
+        "The Philippines is an archipelago.",
+        "Vietnam lies on the Southeast Asian mainland."
+      ],
+      "source": {
+        "label": "Wikipedia: List of island countries",
+        "url": "https://en.wikipedia.org/wiki/List_of_island_countries"
+      }
+    },
+    {
+      "id": "a041",
+      "prompt": "Which of these is an island country?",
+      "options": ["Sri Lanka", "Maldives"],
+      "truth": [true, true],
+      "topic": "geography",
+      "facts": [
+        "Sri Lanka is one main island plus smaller islands.",
+        "The Maldives is an archipelago."
+      ],
+      "source": {
+        "label": "Wikipedia: List of island countries",
+        "url": "https://en.wikipedia.org/wiki/List_of_island_countries"
+      }
+    },
+    {
+      "id": "a042",
+      "prompt": "Which of these is an island country?",
+      "options": ["Iceland", "Norway"],
+      "truth": [true, false],
+      "topic": "geography",
+      "facts": ["Iceland is one main island.", "Norway lies on the Scandinavian mainland."],
+      "source": {
+        "label": "Wikipedia: List of island countries",
+        "url": "https://en.wikipedia.org/wiki/List_of_island_countries"
+      }
+    },
+    {
+      "id": "a043",
+      "prompt": "Which of these cities is south of the equator?",
+      "options": ["Kampala", "Quito"],
+      "truth": [false, true],
+      "topic": "geography",
+      "facts": ["Kampala lies at about 0.31°N.", "Quito lies at about 0.22°S."],
+      "source": {
+        "label": "Wikipedia: Quito",
+        "url": "https://en.wikipedia.org/wiki/Quito"
+      }
+    },
+    {
+      "id": "a044",
+      "prompt": "Which of these cities is south of the equator?",
+      "options": ["Singapore", "Kampala"],
+      "truth": [false, false],
+      "topic": "geography",
+      "facts": ["Singapore lies at about 1.28°N.", "Kampala lies at about 0.31°N."],
+      "source": {
+        "label": "Wikipedia: Kampala",
+        "url": "https://en.wikipedia.org/wiki/Kampala"
+      }
+    },
+    {
+      "id": "a045",
+      "prompt": "Which of these cities is south of the equator?",
+      "options": ["Lima", "Jakarta"],
+      "truth": [true, true],
+      "topic": "geography",
+      "facts": ["Lima lies at about 12.06°S.", "Jakarta lies at about 6.18°S."],
+      "source": {
+        "label": "Wikipedia: Lima",
+        "url": "https://en.wikipedia.org/wiki/Lima"
+      }
+    },
+    {
+      "id": "a046",
+      "prompt": "Which of these borders Germany?",
+      "options": ["Hungary", "Austria"],
+      "truth": [false, true],
+      "topic": "geography",
+      "facts": [
+        "Germany has nine neighbours, and Hungary is not one.",
+        "Austria borders Germany to the south."
+      ],
+      "source": {
+        "label": "Wikipedia: Geography of Germany",
+        "url": "https://en.wikipedia.org/wiki/Geography_of_Germany"
+      }
+    },
+    {
+      "id": "a047",
+      "prompt": "Which of these borders Kazakhstan?",
+      "options": ["Iran", "Mongolia"],
+      "truth": [false, false],
+      "topic": "geography",
+      "facts": [
+        "Kazakhstan's five neighbours are Russia, China, Kyrgyzstan, Uzbekistan and Turkmenistan, not Iran.",
+        "Mongolia is not among Kazakhstan's five neighbours."
+      ],
+      "source": {
+        "label": "Wikipedia: Kazakhstan",
+        "url": "https://en.wikipedia.org/wiki/Kazakhstan"
+      }
+    },
+    {
+      "id": "a048",
+      "prompt": "Which of these borders Brazil?",
+      "options": ["Bolivia", "Argentina"],
+      "truth": [true, true],
+      "topic": "geography",
+      "facts": [
+        "Bolivia shares Brazil's longest land border, 3,423 km.",
+        "Brazil and Argentina share a 1,261 km border."
+      ],
+      "source": {
+        "label": "Wikipedia: Borders of Brazil",
+        "url": "https://en.wikipedia.org/wiki/Borders_of_Brazil"
+      }
     }
   ]
 }
