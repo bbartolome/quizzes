@@ -4896,6 +4896,222 @@
         "label": "Wikipedia: Song dynasty",
         "url": "https://en.wikipedia.org/wiki/Song_dynasty"
       }
+    },
+    {
+      "id": "c409",
+      "prompt": "Which is the largest gland in the human body?",
+      "options": ["Liver", "Pancreas"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "The liver is the largest gland in the human body; the pancreas is much smaller.",
+      "source": {
+        "label": "Wikipedia: Liver",
+        "url": "https://en.wikipedia.org/wiki/Liver"
+      }
+    },
+    {
+      "id": "c410",
+      "prompt": "Which is the smallest bone?",
+      "options": ["Incus", "Stapes"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "The stapes is the smallest and lightest bone in the human body.",
+      "source": {
+        "label": "Wikipedia: Stapes",
+        "url": "https://en.wikipedia.org/wiki/Stapes"
+      }
+    },
+    {
+      "id": "c411",
+      "prompt": "Which alloy contains zinc?",
+      "options": ["Brass", "Bronze"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Brass is copper and zinc; bronze is copper and, usually, tin.",
+      "source": {
+        "label": "Wikipedia: Brass",
+        "url": "https://en.wikipedia.org/wiki/Brass"
+      }
+    },
+    {
+      "id": "c412",
+      "prompt": "Which is an SI base unit?",
+      "options": ["Volt", "Ampere"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "The ampere is one of the seven SI base units; the volt is derived.",
+      "source": {
+        "label": "Wikipedia: SI base unit",
+        "url": "https://en.wikipedia.org/wiki/SI_base_unit"
+      }
+    },
+    {
+      "id": "c413",
+      "prompt": "Which is a unit of energy?",
+      "options": ["Kilowatt-hour", "Horsepower"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "A kilowatt-hour is 3.6 MJ of energy; horsepower is a unit of power.",
+      "source": {
+        "label": "Wikipedia: Kilowatt-hour",
+        "url": "https://en.wikipedia.org/wiki/Kilowatt-hour"
+      }
+    },
+    {
+      "id": "c414",
+      "prompt": "Which force is weaker?",
+      "options": ["Weak nuclear force", "Gravity"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Gravity is the weakest of the four fundamental interactions, far below the weak force.",
+      "source": {
+        "label": "Wikipedia: Fundamental interaction",
+        "url": "https://en.wikipedia.org/wiki/Fundamental_interaction"
+      }
+    },
+    {
+      "id": "c415",
+      "prompt": "Which Earth layer is liquid?",
+      "options": ["Outer core", "Mantle"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "The outer core is liquid; the mantle is predominantly solid.",
+      "source": {
+        "label": "Wikipedia: Earth's outer core",
+        "url": "https://en.wikipedia.org/wiki/Earth%27s_outer_core"
+      }
+    },
+    {
+      "id": "c416",
+      "prompt": "Which is a variety of corundum?",
+      "options": ["Emerald", "Ruby"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Ruby is a variety of corundum; emerald is a variety of beryl.",
+      "source": {
+        "label": "Wikipedia: Ruby",
+        "url": "https://en.wikipedia.org/wiki/Ruby"
+      }
+    },
+    {
+      "id": "c417",
+      "prompt": "Which is greater?",
+      "options": ["Jupiter's mass", "All other planets combined"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Jupiter's mass is nearly 2.5 times that of all the other planets combined.",
+      "source": {
+        "label": "Wikipedia: Jupiter",
+        "url": "https://en.wikipedia.org/wiki/Jupiter"
+      }
+    },
+    {
+      "id": "c418",
+      "prompt": "Which can look brighter?",
+      "options": ["Sirius", "Jupiter"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Jupiter reaches magnitude −2.94 at opposition; Sirius is −1.46.",
+      "source": {
+        "label": "Wikipedia: Jupiter",
+        "url": "https://en.wikipedia.org/wiki/Jupiter"
+      }
+    },
+    {
+      "id": "c419",
+      "prompt": "Which is made in the skin by sunlight?",
+      "options": ["Vitamin D", "Vitamin C"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Skin synthesises vitamin D from UVB light; vitamin C comes from the diet.",
+      "source": {
+        "label": "Wikipedia: Vitamin D",
+        "url": "https://en.wikipedia.org/wiki/Vitamin_D"
+      }
+    },
+    {
+      "id": "c420",
+      "prompt": "Which has more energy per gram?",
+      "options": ["Carbohydrate", "Fat"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Fat provides about 9 kcal per gram; carbohydrate about 4.",
+      "source": {
+        "label": "Wikipedia: Food energy",
+        "url": "https://en.wikipedia.org/wiki/Food_energy"
+      }
+    },
+    {
+      "id": "c421",
+      "prompt": "Which has more energy per gram?",
+      "options": ["Alcohol", "Protein"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Ethanol provides about 7 kcal per gram; protein about 4.",
+      "source": {
+        "label": "Wikipedia: Food energy",
+        "url": "https://en.wikipedia.org/wiki/Food_energy"
+      }
+    },
+    {
+      "id": "c422",
+      "prompt": "Which is a vector quantity?",
+      "options": ["Speed", "Velocity"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Velocity has magnitude and direction; speed is its scalar magnitude.",
+      "source": {
+        "label": "Wikipedia: Velocity",
+        "url": "https://en.wikipedia.org/wiki/Velocity"
+      }
+    },
+    {
+      "id": "c423",
+      "prompt": "Which planet spins backwards?",
+      "options": ["Venus", "Mercury"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "Venus rotates retrograde, taking about 243 days.",
+      "source": {
+        "label": "Wikipedia: Venus",
+        "url": "https://en.wikipedia.org/wiki/Venus"
+      }
+    },
+    {
+      "id": "c424",
+      "prompt": "Which is warmer?",
+      "options": ["25 °C", "300 K"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "300 K is 26.85 °C, since 0 °C = 273.15 K.",
+      "source": {
+        "label": "Wikipedia: Kelvin",
+        "url": "https://en.wikipedia.org/wiki/Kelvin"
+      }
+    },
+    {
+      "id": "c425",
+      "prompt": "Which is larger?",
+      "options": ["One atmosphere", "One bar"],
+      "correct": 0,
+      "topic": "science",
+      "fact": "One standard atmosphere is 101,325 Pa; one bar is 100,000 Pa.",
+      "source": {
+        "label": "Wikipedia: Standard atmosphere (unit)",
+        "url": "https://en.wikipedia.org/wiki/Standard_atmosphere_(unit)"
+      }
+    },
+    {
+      "id": "c426",
+      "prompt": "Which melts at the lower temperature?",
+      "options": ["Sodium", "Gallium"],
+      "correct": 1,
+      "topic": "science",
+      "fact": "Gallium melts at 29.76 °C; sodium at 97.79 °C.",
+      "source": {
+        "label": "Wikipedia: Gallium",
+        "url": "https://en.wikipedia.org/wiki/Gallium"
+      }
     }
   ]
 }
