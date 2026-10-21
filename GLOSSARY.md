@@ -76,6 +76,10 @@ _Avoid_: Commonly confused with, confusion
 The single contrast text for a confused pair. It names both concepts and the feature that tells them apart, and belongs to the pair, not to either concept.
 _Avoid_: Distinguishing tip, contrast tip
 
+**Lure**:
+A wrong option on a flash card, offered because it is easy to mistake for the right answer. Lures come first from the target's confused pairs, and can come from either deck.
+_Avoid_: Distractor (in player-facing text), wrong answer
+
 **Draw weight**:
 How likely a concept is to be chosen as the next card's target in a flash card quiz, relative to the others in its deck. Weaker concepts weigh more, but a mastered concept never drops below the baseline, so it keeps appearing.
 _Avoid_: Weak spots (names the Reasoning Traps round mode), priority
