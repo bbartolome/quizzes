@@ -5328,6 +5328,222 @@
         "label": "Wikipedia: Mango",
         "url": "https://en.wikipedia.org/wiki/Mango"
       }
+    },
+    {
+      "id": "c445",
+      "prompt": "Which word comes from Arabic?",
+      "options": ["Algebra", "Calculus"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Algebra comes from Arabic al-jabr; calculus is Latin for \"pebble\".",
+      "source": {
+        "label": "Wikipedia: Algebra",
+        "url": "https://en.wikipedia.org/wiki/Algebra"
+      }
+    },
+    {
+      "id": "c446",
+      "prompt": "Which word comes from Nahuatl?",
+      "options": ["Banana", "Avocado"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Avocado derives from Nahuatl āhuacatl; banana is thought to be West African.",
+      "source": {
+        "label": "Wikipedia: Avocado",
+        "url": "https://en.wikipedia.org/wiki/Avocado"
+      }
+    },
+    {
+      "id": "c447",
+      "prompt": "Which word comes from Malay?",
+      "options": ["Orangutan", "Gorilla"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Orangutan comes from Malay orang hutan, \"forest person\"; gorilla from Greek.",
+      "source": {
+        "label": "Wikipedia: Orangutan",
+        "url": "https://en.wikipedia.org/wiki/Orangutan"
+      }
+    },
+    {
+      "id": "c448",
+      "prompt": "Which word comes from Dutch?",
+      "options": ["Biscuit", "Cookie"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Cookie derives from Dutch koekje; biscuit from Old French and Latin \"twice cooked\".",
+      "source": {
+        "label": "Wikipedia: Cookie",
+        "url": "https://en.wikipedia.org/wiki/Cookie"
+      }
+    },
+    {
+      "id": "c449",
+      "prompt": "Which is the festival of lights?",
+      "options": ["Diwali", "Holi"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Diwali is the Hindu festival of lights, in October–November; Holi is the spring festival of colours.",
+      "source": {
+        "label": "Wikipedia: Diwali",
+        "url": "https://en.wikipedia.org/wiki/Diwali"
+      }
+    },
+    {
+      "id": "c450",
+      "prompt": "Which Nobel Prize was not in Nobel's will?",
+      "options": ["Peace", "Economics"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The economics prize was established by Sweden's central bank in 1968; Peace is one of the original five.",
+      "source": {
+        "label": "Wikipedia: Nobel Memorial Prize in Economic Sciences",
+        "url": "https://en.wikipedia.org/wiki/Nobel_Memorial_Prize_in_Economic_Sciences"
+      }
+    },
+    {
+      "id": "c451",
+      "prompt": "Which was invented first?",
+      "options": ["Clarinet", "Saxophone"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The clarinet dates to around 1700; the saxophone was patented in 1846.",
+      "source": {
+        "label": "Wikipedia: Clarinet",
+        "url": "https://en.wikipedia.org/wiki/Clarinet"
+      }
+    },
+    {
+      "id": "c452",
+      "prompt": "Which was invented first?",
+      "options": ["Volleyball", "Basketball"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Basketball was invented in 1891; volleyball in 1895.",
+      "source": {
+        "label": "Wikipedia: Basketball",
+        "url": "https://en.wikipedia.org/wiki/Basketball"
+      }
+    },
+    {
+      "id": "c453",
+      "prompt": "Which dance originated in Brazil?",
+      "options": ["Samba", "Tango"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Samba grew from Afro-Brazilian communities in Bahia; tango originated along the Río de la Plata.",
+      "source": {
+        "label": "Wikipedia: Samba",
+        "url": "https://en.wikipedia.org/wiki/Samba"
+      }
+    },
+    {
+      "id": "c454",
+      "prompt": "Which script is an abjad?",
+      "options": ["Devanagari", "Arabic"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Arabic script is an abjad; Devanagari is an abugida.",
+      "source": {
+        "label": "Wikipedia: Abjad",
+        "url": "https://en.wikipedia.org/wiki/Abjad"
+      }
+    },
+    {
+      "id": "c455",
+      "prompt": "Which game originated in India?",
+      "options": ["Chess", "Go"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Chess emerged from chaturanga in India; Go was invented in China.",
+      "source": {
+        "label": "Wikipedia: Chess",
+        "url": "https://en.wikipedia.org/wiki/Chess"
+      }
+    },
+    {
+      "id": "c456",
+      "prompt": "Where did our numerals originate?",
+      "options": ["Arabia", "India"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "The Hindu–Arabic numeral system was invented by Indian mathematicians between the 1st and 4th centuries.",
+      "source": {
+        "label": "Wikipedia: Hindu–Arabic numeral system",
+        "url": "https://en.wikipedia.org/wiki/Hindu%E2%80%93Arabic_numeral_system"
+      }
+    },
+    {
+      "id": "c457",
+      "prompt": "Which instrument is older?",
+      "options": ["Harpsichord", "Piano"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "The harpsichord dates from the late 14th century; the piano from around 1700.",
+      "source": {
+        "label": "Wikipedia: Harpsichord",
+        "url": "https://en.wikipedia.org/wiki/Harpsichord"
+      }
+    },
+    {
+      "id": "c458",
+      "prompt": "Which crop is native to the Americas?",
+      "options": ["Eggplant", "Chili pepper"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Chili peppers originated in Central or South America; eggplant was domesticated in South and East Asia.",
+      "source": {
+        "label": "Wikipedia: Chili pepper",
+        "url": "https://en.wikipedia.org/wiki/Chili_pepper"
+      }
+    },
+    {
+      "id": "c459",
+      "prompt": "Which crop is native to the Americas?",
+      "options": ["Tomato", "Soybean"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Tomatoes originated in western South America; soybeans are native to East Asia.",
+      "source": {
+        "label": "Wikipedia: Tomato",
+        "url": "https://en.wikipedia.org/wiki/Tomato"
+      }
+    },
+    {
+      "id": "c460",
+      "prompt": "Which crop originated in the Americas?",
+      "options": ["Tea", "Peanut"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Peanuts are native to South America; tea originated in southwestern China and neighbouring areas.",
+      "source": {
+        "label": "Wikipedia: Peanut",
+        "url": "https://en.wikipedia.org/wiki/Peanut"
+      }
+    },
+    {
+      "id": "c461",
+      "prompt": "Which movement came first?",
+      "options": ["Cubism", "Dada"],
+      "correct": 0,
+      "topic": "culture",
+      "fact": "Cubism burgeoned from 1907; Dada began in Zürich in 1916.",
+      "source": {
+        "label": "Wikipedia: Cubism",
+        "url": "https://en.wikipedia.org/wiki/Cubism"
+      }
+    },
+    {
+      "id": "c462",
+      "prompt": "Which came first?",
+      "options": ["Tango originates", "Saxophone patented"],
+      "correct": 1,
+      "topic": "culture",
+      "fact": "Sax patented the saxophone in 1846; tango originated in the 1880s.",
+      "source": {
+        "label": "Wikipedia: Adolphe Sax",
+        "url": "https://en.wikipedia.org/wiki/Adolphe_Sax"
+      }
     }
   ]
 }
