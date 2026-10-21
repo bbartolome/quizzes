@@ -1116,6 +1116,249 @@
         "label": "Wikipedia: Io (moon)",
         "url": "https://en.wikipedia.org/wiki/Io_(moon)"
       }
+    },
+    {
+      "id": "a085",
+      "prompt": "Which of these is an insect?",
+      "options": ["Centipede", "Silverfish"],
+      "truth": [false, true],
+      "topic": "nature",
+      "facts": ["Centipedes are myriapods.", "Silverfish are wingless insects."],
+      "source": {
+        "label": "Wikipedia: Silverfish",
+        "url": "https://en.wikipedia.org/wiki/Silverfish"
+      }
+    },
+    {
+      "id": "a086",
+      "prompt": "Which of these is a mollusc?",
+      "options": ["Nautilus", "Abalone"],
+      "truth": [true, true],
+      "topic": "nature",
+      "facts": [
+        "The nautilus is a cephalopod mollusc.",
+        "Abalone are sea snails, a type of mollusc."
+      ],
+      "source": {
+        "label": "Wikipedia: Nautilus",
+        "url": "https://en.wikipedia.org/wiki/Nautilus"
+      }
+    },
+    {
+      "id": "a087",
+      "prompt": "Which of these is a mollusc?",
+      "options": ["Barnacle", "Limpet"],
+      "truth": [false, true],
+      "topic": "nature",
+      "facts": ["Barnacles are crustaceans.", "Limpets are aquatic snails."],
+      "source": {
+        "label": "Wikipedia: Limpet",
+        "url": "https://en.wikipedia.org/wiki/Limpet"
+      }
+    },
+    {
+      "id": "a088",
+      "prompt": "Which of these is a marsupial?",
+      "options": ["Numbat", "Aardvark"],
+      "truth": [true, false],
+      "topic": "nature",
+      "facts": [
+        "The numbat is an insectivorous marsupial.",
+        "The aardvark is a placental mammal in the order Tubulidentata."
+      ],
+      "source": {
+        "label": "Wikipedia: Numbat",
+        "url": "https://en.wikipedia.org/wiki/Numbat"
+      }
+    },
+    {
+      "id": "a089",
+      "prompt": "Which of these is an amphibian?",
+      "options": ["Axolotl", "Caecilian"],
+      "truth": [true, true],
+      "topic": "nature",
+      "facts": [
+        "The axolotl is a salamander, an amphibian.",
+        "Caecilians are limbless amphibians."
+      ],
+      "source": {
+        "label": "Wikipedia: Caecilian",
+        "url": "https://en.wikipedia.org/wiki/Caecilian"
+      }
+    },
+    {
+      "id": "a090",
+      "prompt": "Which of these is a primate?",
+      "options": ["Orangutan", "Gibbon"],
+      "truth": [true, true],
+      "topic": "nature",
+      "facts": [
+        "Orangutans are great apes, which are primates.",
+        "Gibbons are lesser apes, which are primates."
+      ],
+      "source": {
+        "label": "Wikipedia: Orangutan",
+        "url": "https://en.wikipedia.org/wiki/Orangutan"
+      }
+    },
+    {
+      "id": "a091",
+      "prompt": "Which of these is botanically a berry?",
+      "options": ["Banana", "Tomato"],
+      "truth": [true, true],
+      "topic": "nature",
+      "facts": ["Bananas are botanical berries.", "Tomatoes are botanical berries."],
+      "source": {
+        "label": "Wikipedia: Berry (botany)",
+        "url": "https://en.wikipedia.org/wiki/Berry_(botany)"
+      }
+    },
+    {
+      "id": "a092",
+      "prompt": "Which of these is a rodent?",
+      "options": ["Otter", "Beaver"],
+      "truth": [false, true],
+      "topic": "nature",
+      "facts": [
+        "Otters are mustelids, related to weasels.",
+        "Beavers are the second-largest living rodents."
+      ],
+      "source": {
+        "label": "Wikipedia: Beaver",
+        "url": "https://en.wikipedia.org/wiki/Beaver"
+      }
+    },
+    {
+      "id": "a093",
+      "prompt": "Which of these is a reptile?",
+      "options": ["Tuatara", "Slow worm"],
+      "truth": [true, true],
+      "topic": "nature",
+      "facts": [
+        "The tuatara is a reptile of the order Rhynchocephalia.",
+        "The slow worm is a legless lizard."
+      ],
+      "source": {
+        "label": "Wikipedia: Tuatara",
+        "url": "https://en.wikipedia.org/wiki/Tuatara"
+      }
+    },
+    {
+      "id": "a094",
+      "prompt": "Which of these is a legume?",
+      "options": ["Almond", "Lentil"],
+      "truth": [false, true],
+      "topic": "nature",
+      "facts": ["Almonds are drupes in the rose family.", "Lentils are legumes."],
+      "source": {
+        "label": "Wikipedia: Lentil",
+        "url": "https://en.wikipedia.org/wiki/Lentil"
+      }
+    },
+    {
+      "id": "a095",
+      "prompt": "Which of these is an insect?",
+      "options": ["Centipede", "Millipede"],
+      "truth": [false, false],
+      "topic": "nature",
+      "facts": ["Centipedes are myriapods.", "Millipedes are myriapods."],
+      "source": {
+        "label": "Wikipedia: Centipede",
+        "url": "https://en.wikipedia.org/wiki/Centipede"
+      }
+    },
+    {
+      "id": "a096",
+      "prompt": "Which of these is a primate?",
+      "options": ["Treeshrew", "Mongoose"],
+      "truth": [false, false],
+      "topic": "nature",
+      "facts": ["Treeshrews are in their own order, Scandentia.", "Mongooses are carnivorans."],
+      "source": {
+        "label": "Wikipedia: Treeshrew",
+        "url": "https://en.wikipedia.org/wiki/Treeshrew"
+      }
+    },
+    {
+      "id": "a097",
+      "prompt": "Which of these is a rodent?",
+      "options": ["Rabbit", "Hedgehog"],
+      "truth": [false, false],
+      "topic": "nature",
+      "facts": [
+        "Rabbits are lagomorphs, not rodents.",
+        "Hedgehogs belong to the order Eulipotyphla."
+      ],
+      "source": {
+        "label": "Wikipedia: Rabbit",
+        "url": "https://en.wikipedia.org/wiki/Rabbit"
+      }
+    },
+    {
+      "id": "a098",
+      "prompt": "Which of these is an amphibian?",
+      "options": ["Newt", "Skink"],
+      "truth": [true, false],
+      "topic": "nature",
+      "facts": [
+        "Newts are salamanders, a group of amphibians.",
+        "Skinks are lizards, which are reptiles."
+      ],
+      "source": {
+        "label": "Wikipedia: Newt",
+        "url": "https://en.wikipedia.org/wiki/Newt"
+      }
+    },
+    {
+      "id": "a099",
+      "prompt": "Which of these is a conifer?",
+      "options": ["Yew", "Ginkgo"],
+      "truth": [true, false],
+      "topic": "nature",
+      "facts": ["Yews are coniferous trees.", "Ginkgo has its own division, Ginkgophyta."],
+      "source": {
+        "label": "Wikipedia: Taxus baccata",
+        "url": "https://en.wikipedia.org/wiki/Taxus_baccata"
+      }
+    },
+    {
+      "id": "a100",
+      "prompt": "Which of these is a crustacean?",
+      "options": ["Woodlouse", "Millipede"],
+      "truth": [true, false],
+      "topic": "nature",
+      "facts": ["Woodlice are crustaceans, not insects.", "Millipedes are myriapods."],
+      "source": {
+        "label": "Wikipedia: Woodlouse",
+        "url": "https://en.wikipedia.org/wiki/Woodlouse"
+      }
+    },
+    {
+      "id": "a101",
+      "prompt": "Which of these is botanically a berry?",
+      "options": ["Strawberry", "Raspberry"],
+      "truth": [false, false],
+      "topic": "nature",
+      "facts": [
+        "Strawberries are aggregate accessory fruits.",
+        "Raspberries are aggregate fruits."
+      ],
+      "source": {
+        "label": "Wikipedia: Berry (botany)",
+        "url": "https://en.wikipedia.org/wiki/Berry_(botany)"
+      }
+    },
+    {
+      "id": "a102",
+      "prompt": "Which of these is a reptile?",
+      "options": ["Axolotl", "Newt"],
+      "truth": [false, false],
+      "topic": "nature",
+      "facts": ["The axolotl is an amphibian.", "Newts are amphibians (salamanders)."],
+      "source": {
+        "label": "Wikipedia: Axolotl",
+        "url": "https://en.wikipedia.org/wiki/Axolotl"
+      }
     }
   ]
 }
