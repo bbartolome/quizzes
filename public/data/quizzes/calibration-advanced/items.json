@@ -640,25 +640,25 @@
     {
       "id": "a049",
       "prompt": "Which of these happened before 1500?",
-      "options": ["Battle of Lepanto", "Spanish Armada"],
+      "options": ["Battle of Lepanto", "Jamestown founded"],
       "truth": [false, false],
       "topic": "history",
-      "facts": ["The Battle of Lepanto was fought in 1571.", "The Spanish Armada sailed in 1588."],
+      "facts": ["The Battle of Lepanto was fought in 1571.", "Jamestown was founded in 1607."],
       "source": {
-        "label": "Wikipedia: Spanish Armada",
-        "url": "https://en.wikipedia.org/wiki/Spanish_Armada"
+        "label": "Wikipedia: Battle of Lepanto",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Lepanto"
       }
     },
     {
       "id": "a050",
       "prompt": "Which of these happened after 1950?",
-      "options": ["Marshall Plan", "NATO founded"],
+      "options": ["NATO founded", "Indian independence"],
       "truth": [false, false],
       "topic": "history",
-      "facts": ["The Marshall Plan was enacted in April 1948.", "NATO was founded in April 1949."],
+      "facts": ["NATO was founded in April 1949.", "India became independent in 1947."],
       "source": {
-        "label": "Wikipedia: Marshall Plan",
-        "url": "https://en.wikipedia.org/wiki/Marshall_Plan"
+        "label": "Wikipedia: NATO",
+        "url": "https://en.wikipedia.org/wiki/NATO"
       }
     },
     {
@@ -928,10 +928,10 @@
     {
       "id": "a071",
       "prompt": "Which of these moons is larger than Earth's Moon?",
-      "options": ["Titan", "Callisto"],
+      "options": ["Ganymede", "Callisto"],
       "truth": [true, true],
       "topic": "science",
-      "facts": ["Titan is about 5,150 km across.", "Callisto is 4,821 km across."],
+      "facts": ["Ganymede is about 5,268 km across.", "Callisto is 4,821 km across."],
       "source": {
         "label": "Wikipedia: Callisto (moon)",
         "url": "https://en.wikipedia.org/wiki/Callisto_(moon)"
