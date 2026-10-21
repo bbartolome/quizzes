@@ -610,12 +610,12 @@
     {
       "id": "a047",
       "prompt": "Which of these borders Kazakhstan?",
-      "options": ["Iran", "Mongolia"],
+      "options": ["Iran", "Afghanistan"],
       "truth": [false, false],
       "topic": "geography",
       "facts": [
-        "Kazakhstan's five neighbours are Russia, China, Kyrgyzstan, Uzbekistan and Turkmenistan, not Iran.",
-        "Mongolia is not among Kazakhstan's five neighbours."
+        "Iran is not among Kazakhstan's five neighbours.",
+        "Afghanistan is not among Kazakhstan's five neighbours."
       ],
       "source": {
         "label": "Wikipedia: Kazakhstan",
@@ -640,42 +640,36 @@
     {
       "id": "a049",
       "prompt": "Which of these happened before 1500?",
-      "options": ["Magellan sets sail", "Battle of Panipat"],
+      "options": ["Battle of Lepanto", "Spanish Armada"],
       "truth": [false, false],
       "topic": "history",
-      "facts": [
-        "Magellan's fleet left Spain in 1519.",
-        "The First Battle of Panipat was fought in 1526."
-      ],
+      "facts": ["The Battle of Lepanto was fought in 1571.", "The Spanish Armada sailed in 1588."],
       "source": {
-        "label": "Wikipedia: First Battle of Panipat",
-        "url": "https://en.wikipedia.org/wiki/First_Battle_of_Panipat"
+        "label": "Wikipedia: Spanish Armada",
+        "url": "https://en.wikipedia.org/wiki/Spanish_Armada"
       }
     },
     {
       "id": "a050",
       "prompt": "Which of these happened after 1950?",
-      "options": ["Indian independence", "People's Republic proclaimed"],
+      "options": ["Marshall Plan", "NATO founded"],
       "truth": [false, false],
       "topic": "history",
-      "facts": [
-        "India became independent in 1947.",
-        "The People's Republic of China was proclaimed in 1949."
-      ],
+      "facts": ["The Marshall Plan was enacted in April 1948.", "NATO was founded in April 1949."],
       "source": {
-        "label": "Wikipedia: Independence Day (India)",
-        "url": "https://en.wikipedia.org/wiki/Independence_Day_(India)"
+        "label": "Wikipedia: Marshall Plan",
+        "url": "https://en.wikipedia.org/wiki/Marshall_Plan"
       }
     },
     {
       "id": "a051",
       "prompt": "Which of these happened in the 1700s?",
-      "options": ["Louisiana Purchase", "Napoleon becomes Emperor"],
+      "options": ["Louisiana Purchase", "Battle of Waterloo"],
       "truth": [false, false],
       "topic": "history",
       "facts": [
         "The Louisiana Purchase treaty was signed in 1803.",
-        "Napoleon became Emperor of the French in 1804."
+        "The Battle of Waterloo was fought in 1815."
       ],
       "source": {
         "label": "Wikipedia: Louisiana Purchase",
@@ -697,16 +691,13 @@
     {
       "id": "a053",
       "prompt": "Which of these was founded before 1600?",
-      "options": ["Harvard", "University of Santo Tomas"],
+      "options": ["Jamestown founded", "Harvard founded"],
       "truth": [false, false],
       "topic": "history",
-      "facts": [
-        "Harvard was founded in 1636.",
-        "The University of Santo Tomas was founded in 1611."
-      ],
+      "facts": ["Jamestown was founded in 1607.", "Harvard was founded in 1636."],
       "source": {
-        "label": "Wikipedia: University of Santo Tomas",
-        "url": "https://en.wikipedia.org/wiki/University_of_Santo_Tomas"
+        "label": "Wikipedia: Jamestown, Virginia",
+        "url": "https://en.wikipedia.org/wiki/Jamestown,_Virginia"
       }
     },
     {
@@ -910,12 +901,12 @@
     {
       "id": "a069",
       "prompt": "Which of these is liquid at room temperature?",
-      "options": ["Mercury", "Lead"],
+      "options": ["Mercury", "Sodium"],
       "truth": [true, false],
       "topic": "science",
       "facts": [
         "Mercury is one of only two elements liquid at standard conditions.",
-        "Lead melts at 327.5 °C."
+        "Sodium is a solid that melts at about 98 °C."
       ],
       "source": {
         "label": "Wikipedia: Bromine",
@@ -937,13 +928,13 @@
     {
       "id": "a071",
       "prompt": "Which of these moons is larger than Earth's Moon?",
-      "options": ["Titan", "Ganymede"],
+      "options": ["Titan", "Callisto"],
       "truth": [true, true],
       "topic": "science",
-      "facts": ["Titan is about 5,150 km across.", "Ganymede is about 5,268 km across."],
+      "facts": ["Titan is about 5,150 km across.", "Callisto is 4,821 km across."],
       "source": {
-        "label": "Wikipedia: Titan (moon)",
-        "url": "https://en.wikipedia.org/wiki/Titan_(moon)"
+        "label": "Wikipedia: Callisto (moon)",
+        "url": "https://en.wikipedia.org/wiki/Callisto_(moon)"
       }
     },
     {
@@ -964,10 +955,10 @@
     {
       "id": "a073",
       "prompt": "Which of these elements has an atomic number above 80?",
-      "options": ["Lead", "Gold"],
+      "options": ["Lead", "Tin"],
       "truth": [true, false],
       "topic": "science",
-      "facts": ["Lead is element 82.", "Gold is element 79."],
+      "facts": ["Lead is element 82.", "Tin is element 50."],
       "source": {
         "label": "Wikipedia: Lead",
         "url": "https://en.wikipedia.org/wiki/Lead"
@@ -1105,12 +1096,12 @@
     {
       "id": "a084",
       "prompt": "Which of these moons is larger than Earth's Moon?",
-      "options": ["Io", "Europa"],
+      "options": ["Io", "Triton"],
       "truth": [true, false],
       "topic": "science",
       "facts": [
         "Io is about 3,640 km across, larger than the Moon's 3,474 km.",
-        "Europa is about 3,120 km across."
+        "Triton is about 2,707 km across."
       ],
       "source": {
         "label": "Wikipedia: Io (moon)",
@@ -1120,10 +1111,10 @@
     {
       "id": "a085",
       "prompt": "Which of these is an insect?",
-      "options": ["Centipede", "Silverfish"],
+      "options": ["Woodlouse", "Silverfish"],
       "truth": [false, true],
       "topic": "nature",
-      "facts": ["Centipedes are myriapods.", "Silverfish are wingless insects."],
+      "facts": ["Woodlice are crustaceans, not insects.", "Silverfish are wingless insects."],
       "source": {
         "label": "Wikipedia: Silverfish",
         "url": "https://en.wikipedia.org/wiki/Silverfish"
@@ -1132,12 +1123,12 @@
     {
       "id": "a086",
       "prompt": "Which of these is a mollusc?",
-      "options": ["Nautilus", "Abalone"],
+      "options": ["Nautilus", "Limpet"],
       "truth": [true, true],
       "topic": "nature",
       "facts": [
         "The nautilus is a cephalopod mollusc.",
-        "Abalone are sea snails, a type of mollusc."
+        "Limpets are aquatic snails, a type of mollusc."
       ],
       "source": {
         "label": "Wikipedia: Nautilus",
@@ -1147,25 +1138,22 @@
     {
       "id": "a087",
       "prompt": "Which of these is a mollusc?",
-      "options": ["Barnacle", "Limpet"],
+      "options": ["Sea cucumber", "Abalone"],
       "truth": [false, true],
       "topic": "nature",
-      "facts": ["Barnacles are crustaceans.", "Limpets are aquatic snails."],
+      "facts": ["Sea cucumbers are echinoderms.", "Abalone are sea snails, a type of mollusc."],
       "source": {
-        "label": "Wikipedia: Limpet",
-        "url": "https://en.wikipedia.org/wiki/Limpet"
+        "label": "Wikipedia: Abalone",
+        "url": "https://en.wikipedia.org/wiki/Abalone"
       }
     },
     {
       "id": "a088",
       "prompt": "Which of these is a marsupial?",
-      "options": ["Numbat", "Aardvark"],
+      "options": ["Numbat", "Echidna"],
       "truth": [true, false],
       "topic": "nature",
-      "facts": [
-        "The numbat is an insectivorous marsupial.",
-        "The aardvark is a placental mammal in the order Tubulidentata."
-      ],
+      "facts": ["The numbat is an insectivorous marsupial.", "Echidnas are egg-laying monotremes."],
       "source": {
         "label": "Wikipedia: Numbat",
         "url": "https://en.wikipedia.org/wiki/Numbat"
@@ -1189,16 +1177,16 @@
     {
       "id": "a090",
       "prompt": "Which of these is a primate?",
-      "options": ["Orangutan", "Gibbon"],
+      "options": ["Aye-aye", "Tarsier"],
       "truth": [true, true],
       "topic": "nature",
       "facts": [
-        "Orangutans are great apes, which are primates.",
-        "Gibbons are lesser apes, which are primates."
+        "The aye-aye is a lemur, a strepsirrhine primate.",
+        "Tarsiers are haplorhine primates."
       ],
       "source": {
-        "label": "Wikipedia: Orangutan",
-        "url": "https://en.wikipedia.org/wiki/Orangutan"
+        "label": "Wikipedia: Aye-aye",
+        "url": "https://en.wikipedia.org/wiki/Aye-aye"
       }
     },
     {
@@ -1216,16 +1204,16 @@
     {
       "id": "a092",
       "prompt": "Which of these is a rodent?",
-      "options": ["Otter", "Beaver"],
+      "options": ["Otter", "Porcupine"],
       "truth": [false, true],
       "topic": "nature",
       "facts": [
         "Otters are mustelids, related to weasels.",
-        "Beavers are the second-largest living rodents."
+        "Porcupines are large rodents with quills."
       ],
       "source": {
-        "label": "Wikipedia: Beaver",
-        "url": "https://en.wikipedia.org/wiki/Beaver"
+        "label": "Wikipedia: Porcupine",
+        "url": "https://en.wikipedia.org/wiki/Porcupine"
       }
     },
     {
@@ -1258,10 +1246,10 @@
     {
       "id": "a095",
       "prompt": "Which of these is an insect?",
-      "options": ["Centipede", "Millipede"],
+      "options": ["Centipede", "Jellyfish"],
       "truth": [false, false],
       "topic": "nature",
-      "facts": ["Centipedes are myriapods.", "Millipedes are myriapods."],
+      "facts": ["Centipedes are myriapods.", "Jellyfish belong to the phylum Cnidaria."],
       "source": {
         "label": "Wikipedia: Centipede",
         "url": "https://en.wikipedia.org/wiki/Centipede"
@@ -1297,40 +1285,40 @@
     {
       "id": "a098",
       "prompt": "Which of these is an amphibian?",
-      "options": ["Newt", "Skink"],
+      "options": ["Caecilian", "Skink"],
       "truth": [true, false],
       "topic": "nature",
-      "facts": [
-        "Newts are salamanders, a group of amphibians.",
-        "Skinks are lizards, which are reptiles."
-      ],
+      "facts": ["Caecilians are limbless amphibians.", "Skinks are lizards, which are reptiles."],
       "source": {
-        "label": "Wikipedia: Newt",
-        "url": "https://en.wikipedia.org/wiki/Newt"
+        "label": "Wikipedia: Caecilian",
+        "url": "https://en.wikipedia.org/wiki/Caecilian"
       }
     },
     {
       "id": "a099",
       "prompt": "Which of these is a conifer?",
-      "options": ["Yew", "Ginkgo"],
+      "options": ["Larch", "Ginkgo"],
       "truth": [true, false],
       "topic": "nature",
-      "facts": ["Yews are coniferous trees.", "Ginkgo has its own division, Ginkgophyta."],
+      "facts": ["Larches are deciduous conifers.", "Ginkgo has its own division, Ginkgophyta."],
       "source": {
-        "label": "Wikipedia: Taxus baccata",
-        "url": "https://en.wikipedia.org/wiki/Taxus_baccata"
+        "label": "Wikipedia: Larch",
+        "url": "https://en.wikipedia.org/wiki/Larch"
       }
     },
     {
       "id": "a100",
       "prompt": "Which of these is a crustacean?",
-      "options": ["Woodlouse", "Millipede"],
+      "options": ["Barnacle", "Millipede"],
       "truth": [true, false],
       "topic": "nature",
-      "facts": ["Woodlice are crustaceans, not insects.", "Millipedes are myriapods."],
+      "facts": [
+        "Barnacles are crustaceans related to crabs and lobsters.",
+        "Millipedes are myriapods."
+      ],
       "source": {
-        "label": "Wikipedia: Woodlouse",
-        "url": "https://en.wikipedia.org/wiki/Woodlouse"
+        "label": "Wikipedia: Barnacle",
+        "url": "https://en.wikipedia.org/wiki/Barnacle"
       }
     },
     {
