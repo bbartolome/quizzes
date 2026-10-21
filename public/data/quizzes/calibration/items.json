@@ -5067,14 +5067,14 @@
     },
     {
       "id": "c423",
-      "prompt": "Which planet spins backwards?",
-      "options": ["Venus", "Mercury"],
+      "prompt": "Which melts at the higher temperature?",
+      "options": ["Lead", "Sodium"],
       "correct": 0,
       "topic": "science",
-      "fact": "Venus rotates retrograde, taking about 243 days.",
+      "fact": "Lead melts at 327.5 °C; sodium at 97.8 °C.",
       "source": {
-        "label": "Wikipedia: Venus",
-        "url": "https://en.wikipedia.org/wiki/Venus"
+        "label": "Wikipedia: Lead",
+        "url": "https://en.wikipedia.org/wiki/Lead"
       }
     },
     {
@@ -5451,14 +5451,14 @@
     },
     {
       "id": "c455",
-      "prompt": "Which game originated in India?",
-      "options": ["Chess", "Go"],
+      "prompt": "Which is longer?",
+      "options": ["Cricket pitch", "Baseball pitching distance"],
       "correct": 0,
       "topic": "culture",
-      "fact": "Chess emerged from chaturanga in India; Go was invented in China.",
+      "fact": "A cricket pitch is 22 yards (20.12 m) long; a baseball pitcher stands 60 feet 6 inches (18.44 m) from home plate.",
       "source": {
-        "label": "Wikipedia: Chess",
-        "url": "https://en.wikipedia.org/wiki/Chess"
+        "label": "Wikipedia: Cricket pitch",
+        "url": "https://en.wikipedia.org/wiki/Cricket_pitch"
       }
     },
     {
