@@ -17,7 +17,7 @@
       "description": "Pick an answer and say how sure you are. See how well your confidence matches your accuracy.",
       "icon": "icons/calibration.svg",
       "accent": "#b45309",
-      "version": 1,
+      "version": 2,
       "dataPath": "data/quizzes/calibration/",
       "order": 2,
       "kind": "calibration",
