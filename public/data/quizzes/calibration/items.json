@@ -5544,6 +5544,222 @@
         "label": "Wikipedia: Adolphe Sax",
         "url": "https://en.wikipedia.org/wiki/Adolphe_Sax"
       }
+    },
+    {
+      "id": "c463",
+      "prompt": "Which mountain is higher?",
+      "options": ["Mount Fuji", "Mount Kinabalu"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Kinabalu is 4,095 m; Fuji is 3,776 m.",
+      "source": {
+        "label": "Wikipedia: Mount Kinabalu",
+        "url": "https://en.wikipedia.org/wiki/Mount_Kinabalu"
+      }
+    },
+    {
+      "id": "c464",
+      "prompt": "Which mountain is higher?",
+      "options": ["Mont Blanc", "Matterhorn"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Mont Blanc is about 4,807 m; the Matterhorn 4,478 m.",
+      "source": {
+        "label": "Wikipedia: Mont Blanc",
+        "url": "https://en.wikipedia.org/wiki/Mont_Blanc"
+      }
+    },
+    {
+      "id": "c465",
+      "prompt": "Which lake is deeper?",
+      "options": ["Lake Michigan", "Lake Superior"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Superior is 406 m deep; Michigan 281 m.",
+      "source": {
+        "label": "Wikipedia: Lake Superior",
+        "url": "https://en.wikipedia.org/wiki/Lake_Superior"
+      }
+    },
+    {
+      "id": "c466",
+      "prompt": "Which country has the longer coastline?",
+      "options": ["Philippines", "Japan"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "The Philippines has about 36,300 km of coastline (CIA); Japan about 29,800 km.",
+      "source": {
+        "label": "Wikipedia: List of countries by length of coastline",
+        "url": "https://en.wikipedia.org/wiki/List_of_countries_by_length_of_coastline"
+      }
+    },
+    {
+      "id": "c467",
+      "prompt": "Which does the Prime Meridian cross?",
+      "options": ["Nigeria", "Ghana"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "The reference meridian passes through Ghana, not Nigeria.",
+      "source": {
+        "label": "Wikipedia: Prime meridian",
+        "url": "https://en.wikipedia.org/wiki/Prime_meridian"
+      }
+    },
+    {
+      "id": "c468",
+      "prompt": "Which does the Prime Meridian cross?",
+      "options": ["Spain", "Italy"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "The reference meridian passes through Spain, not Italy.",
+      "source": {
+        "label": "Wikipedia: Prime meridian",
+        "url": "https://en.wikipedia.org/wiki/Prime_meridian"
+      }
+    },
+    {
+      "id": "c469",
+      "prompt": "Which does the equator cross?",
+      "options": ["Tanzania", "Kenya"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "The equator crosses Kenya but not Tanzania.",
+      "source": {
+        "label": "Wikipedia: Equator",
+        "url": "https://en.wikipedia.org/wiki/Equator"
+      }
+    },
+    {
+      "id": "c470",
+      "prompt": "Which does the equator cross?",
+      "options": ["Uganda", "Rwanda"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "The equator crosses Uganda but not Rwanda.",
+      "source": {
+        "label": "Wikipedia: Equator",
+        "url": "https://en.wikipedia.org/wiki/Equator"
+      }
+    },
+    {
+      "id": "c471",
+      "prompt": "Which does the equator cross?",
+      "options": ["Cameroon", "Gabon"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "The equator crosses Gabon but not Cameroon.",
+      "source": {
+        "label": "Wikipedia: Equator",
+        "url": "https://en.wikipedia.org/wiki/Equator"
+      }
+    },
+    {
+      "id": "c472",
+      "prompt": "Which is landlocked?",
+      "options": ["Bolivia", "Peru"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Bolivia is landlocked; Peru has a Pacific coast.",
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "c473",
+      "prompt": "Which is landlocked?",
+      "options": ["Uruguay", "Paraguay"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Paraguay is landlocked; Uruguay has an Atlantic coast.",
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "c474",
+      "prompt": "Which is landlocked?",
+      "options": ["Ethiopia", "Eritrea"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Ethiopia became landlocked when Eritrea gained independence.",
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "c475",
+      "prompt": "Which is landlocked?",
+      "options": ["Slovenia", "Austria"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Austria is landlocked; Slovenia has a short Adriatic coast.",
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "c476",
+      "prompt": "Which is landlocked?",
+      "options": ["Mongolia", "Vietnam"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Mongolia is landlocked; Vietnam has a long coast on the South China Sea.",
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "c477",
+      "prompt": "Which is landlocked?",
+      "options": ["Croatia", "Hungary"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Hungary is landlocked; Croatia has an Adriatic coast.",
+      "source": {
+        "label": "Wikipedia: Landlocked country",
+        "url": "https://en.wikipedia.org/wiki/Landlocked_country"
+      }
+    },
+    {
+      "id": "c478",
+      "prompt": "Which island is larger?",
+      "options": ["Borneo", "Madagascar"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Borneo covers about 723,200 km²; Madagascar about 592,500 km².",
+      "source": {
+        "label": "Wikipedia: List of islands by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_islands_by_area"
+      }
+    },
+    {
+      "id": "c479",
+      "prompt": "Which is farther west?",
+      "options": ["Dakar", "Reykjavik"],
+      "correct": 1,
+      "topic": "geography",
+      "fact": "Reykjavik lies at about 21.94°W, Dakar at about 17.45°W.",
+      "source": {
+        "label": "Wikipedia: Dakar",
+        "url": "https://en.wikipedia.org/wiki/Dakar"
+      }
+    },
+    {
+      "id": "c480",
+      "prompt": "Which lake is deeper?",
+      "options": ["Crater Lake", "Lake Superior"],
+      "correct": 0,
+      "topic": "geography",
+      "fact": "Crater Lake is 594 m deep; Lake Superior, the largest Great Lake, is 406 m.",
+      "source": {
+        "label": "Wikipedia: Crater Lake",
+        "url": "https://en.wikipedia.org/wiki/Crater_Lake"
+      }
     }
   ]
 }
