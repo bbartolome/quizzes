@@ -5112,6 +5112,222 @@
         "label": "Wikipedia: Gallium",
         "url": "https://en.wikipedia.org/wiki/Gallium"
       }
+    },
+    {
+      "id": "c427",
+      "prompt": "Which crocodile is larger?",
+      "options": ["Nile crocodile", "Saltwater crocodile"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The saltwater crocodile is the largest living reptile; the Nile crocodile is generally second.",
+      "source": {
+        "label": "Wikipedia: Nile crocodile",
+        "url": "https://en.wikipedia.org/wiki/Nile_crocodile"
+      }
+    },
+    {
+      "id": "c428",
+      "prompt": "Which belongs to the genus Panthera?",
+      "options": ["Jaguar", "Cougar"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The jaguar is a Panthera big cat; the cougar belongs to the genus Puma and cannot roar.",
+      "source": {
+        "label": "Wikipedia: Cougar",
+        "url": "https://en.wikipedia.org/wiki/Cougar"
+      }
+    },
+    {
+      "id": "c429",
+      "prompt": "Which has no external ear flaps?",
+      "options": ["Sea lion", "Harbour seal"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "True seals such as the harbour seal lack ear flaps; sea lions have them.",
+      "source": {
+        "label": "Wikipedia: Sea lion",
+        "url": "https://en.wikipedia.org/wiki/Sea_lion"
+      }
+    },
+    {
+      "id": "c430",
+      "prompt": "Which is a primate?",
+      "options": ["Aye-aye", "Mongoose"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The aye-aye is a lemur; the mongoose is a carnivoran.",
+      "source": {
+        "label": "Wikipedia: Aye-aye",
+        "url": "https://en.wikipedia.org/wiki/Aye-aye"
+      }
+    },
+    {
+      "id": "c431",
+      "prompt": "Which is a cactus?",
+      "options": ["Agave", "Saguaro"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "The saguaro is a cactus; agaves are succulents in the asparagus family.",
+      "source": {
+        "label": "Wikipedia: Agave",
+        "url": "https://en.wikipedia.org/wiki/Agave"
+      }
+    },
+    {
+      "id": "c432",
+      "prompt": "Which is in the daisy family?",
+      "options": ["Sunflower", "Rose"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "The sunflower is in the daisy family (Asteraceae); roses are in Rosaceae.",
+      "source": {
+        "label": "Wikipedia: Sunflower",
+        "url": "https://en.wikipedia.org/wiki/Sunflower"
+      }
+    },
+    {
+      "id": "c433",
+      "prompt": "Which is a parasitic plant?",
+      "options": ["Ivy", "Mistletoe"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Mistletoes are hemiparasites that draw water and nutrients from host trees; ivy simply climbs.",
+      "source": {
+        "label": "Wikipedia: Mistletoe",
+        "url": "https://en.wikipedia.org/wiki/Mistletoe"
+      }
+    },
+    {
+      "id": "c434",
+      "prompt": "Which is a great ape?",
+      "options": ["Orangutan", "Gibbon"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Orangutans are great apes (Hominidae); gibbons are lesser apes.",
+      "source": {
+        "label": "Wikipedia: Orangutan",
+        "url": "https://en.wikipedia.org/wiki/Orangutan"
+      }
+    },
+    {
+      "id": "c435",
+      "prompt": "Which fish can change from male to female?",
+      "options": ["Seahorse", "Clownfish"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Clownfish are sequential hermaphrodites; a male can become the group's female.",
+      "source": {
+        "label": "Wikipedia: Clownfish",
+        "url": "https://en.wikipedia.org/wiki/Clownfish"
+      }
+    },
+    {
+      "id": "c436",
+      "prompt": "Which tree provides cork?",
+      "options": ["Cork oak", "Eucalyptus"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Cork is stripped from the bark of the cork oak.",
+      "source": {
+        "label": "Wikipedia: Quercus suber",
+        "url": "https://en.wikipedia.org/wiki/Quercus_suber"
+      }
+    },
+    {
+      "id": "c437",
+      "prompt": "Which tree bark yields quinine?",
+      "options": ["Mahogany", "Cinchona"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Quinine was first isolated in 1820 from the bark of a cinchona tree.",
+      "source": {
+        "label": "Wikipedia: Quinine",
+        "url": "https://en.wikipedia.org/wiki/Quinine"
+      }
+    },
+    {
+      "id": "c438",
+      "prompt": "Which tree bark gave us aspirin's precursor?",
+      "options": ["Willow", "Maple"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Aspirin traces back to salicin, found in the bark of willow trees.",
+      "source": {
+        "label": "Wikipedia: Aspirin",
+        "url": "https://en.wikipedia.org/wiki/Aspirin"
+      }
+    },
+    {
+      "id": "c439",
+      "prompt": "Which has a cartilaginous skeleton?",
+      "options": ["Seahorse", "Skate"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Skates are cartilaginous fish; seahorses are bony fish.",
+      "source": {
+        "label": "Wikipedia: Skate (fish)",
+        "url": "https://en.wikipedia.org/wiki/Skate_(fish)"
+      }
+    },
+    {
+      "id": "c440",
+      "prompt": "Which plant family gives us vanilla?",
+      "options": ["Orchids", "Palms"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Vanilla is derived from orchids of the genus Vanilla.",
+      "source": {
+        "label": "Wikipedia: Vanilla",
+        "url": "https://en.wikipedia.org/wiki/Vanilla"
+      }
+    },
+    {
+      "id": "c441",
+      "prompt": "Which spice comes from a crocus?",
+      "options": ["Turmeric", "Saffron"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Saffron is the dried stigma of Crocus sativus.",
+      "source": {
+        "label": "Wikipedia: Saffron",
+        "url": "https://en.wikipedia.org/wiki/Saffron"
+      }
+    },
+    {
+      "id": "c442",
+      "prompt": "Which spirit is made from agave?",
+      "options": ["Tequila", "Rum"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Tequila is made from blue agave; rum from sugarcane molasses or juice.",
+      "source": {
+        "label": "Wikipedia: Tequila",
+        "url": "https://en.wikipedia.org/wiki/Tequila"
+      }
+    },
+    {
+      "id": "c443",
+      "prompt": "Which is more closely related to elephants?",
+      "options": ["Walrus", "Manatee"],
+      "correct": 1,
+      "topic": "nature",
+      "fact": "Manatees (Sirenia) are among the elephants' closest living relatives; walruses are carnivorans.",
+      "source": {
+        "label": "Wikipedia: Manatee",
+        "url": "https://en.wikipedia.org/wiki/Manatee"
+      }
+    },
+    {
+      "id": "c444",
+      "prompt": "Which can cross-react with poison ivy allergy?",
+      "options": ["Mango", "Peach"],
+      "correct": 0,
+      "topic": "nature",
+      "fact": "Mango allergens can cross-react with urushiol, the allergen in poison ivy.",
+      "source": {
+        "label": "Wikipedia: Mango",
+        "url": "https://en.wikipedia.org/wiki/Mango"
+      }
     }
   ]
 }
