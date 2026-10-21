@@ -879,6 +879,243 @@
         "label": "Wikipedia: Suez Canal",
         "url": "https://en.wikipedia.org/wiki/Suez_Canal"
       }
+    },
+    {
+      "id": "a067",
+      "prompt": "Which of these is an SI base unit?",
+      "options": ["Kelvin", "Mole"],
+      "truth": [true, true],
+      "topic": "science",
+      "facts": [
+        "The kelvin is the SI base unit of temperature.",
+        "The mole is the SI base unit of amount of substance."
+      ],
+      "source": {
+        "label": "Wikipedia: SI base unit",
+        "url": "https://en.wikipedia.org/wiki/SI_base_unit"
+      }
+    },
+    {
+      "id": "a068",
+      "prompt": "Which of these is an igneous rock?",
+      "options": ["Limestone", "Sandstone"],
+      "truth": [false, false],
+      "topic": "science",
+      "facts": ["Limestone is a sedimentary rock.", "Sandstone is a clastic sedimentary rock."],
+      "source": {
+        "label": "Wikipedia: Sandstone",
+        "url": "https://en.wikipedia.org/wiki/Sandstone"
+      }
+    },
+    {
+      "id": "a069",
+      "prompt": "Which of these is liquid at room temperature?",
+      "options": ["Mercury", "Lead"],
+      "truth": [true, false],
+      "topic": "science",
+      "facts": [
+        "Mercury is one of only two elements liquid at standard conditions.",
+        "Lead melts at 327.5 °C."
+      ],
+      "source": {
+        "label": "Wikipedia: Bromine",
+        "url": "https://en.wikipedia.org/wiki/Bromine"
+      }
+    },
+    {
+      "id": "a070",
+      "prompt": "Which of these is an SI base unit?",
+      "options": ["Kilogram", "Newton"],
+      "truth": [true, false],
+      "topic": "science",
+      "facts": ["The kilogram is the SI base unit of mass.", "The newton is a derived unit."],
+      "source": {
+        "label": "Wikipedia: SI base unit",
+        "url": "https://en.wikipedia.org/wiki/SI_base_unit"
+      }
+    },
+    {
+      "id": "a071",
+      "prompt": "Which of these moons is larger than Earth's Moon?",
+      "options": ["Titan", "Ganymede"],
+      "truth": [true, true],
+      "topic": "science",
+      "facts": ["Titan is about 5,150 km across.", "Ganymede is about 5,268 km across."],
+      "source": {
+        "label": "Wikipedia: Titan (moon)",
+        "url": "https://en.wikipedia.org/wiki/Titan_(moon)"
+      }
+    },
+    {
+      "id": "a072",
+      "prompt": "Which of these is an SI base unit?",
+      "options": ["Joule", "Candela"],
+      "truth": [false, true],
+      "topic": "science",
+      "facts": [
+        "The joule is a derived unit of energy.",
+        "The candela is the SI base unit of luminous intensity."
+      ],
+      "source": {
+        "label": "Wikipedia: SI base unit",
+        "url": "https://en.wikipedia.org/wiki/SI_base_unit"
+      }
+    },
+    {
+      "id": "a073",
+      "prompt": "Which of these elements has an atomic number above 80?",
+      "options": ["Lead", "Gold"],
+      "truth": [true, false],
+      "topic": "science",
+      "facts": ["Lead is element 82.", "Gold is element 79."],
+      "source": {
+        "label": "Wikipedia: Lead",
+        "url": "https://en.wikipedia.org/wiki/Lead"
+      }
+    },
+    {
+      "id": "a074",
+      "prompt": "Which of these is an igneous rock?",
+      "options": ["Marble", "Obsidian"],
+      "truth": [false, true],
+      "topic": "science",
+      "facts": ["Marble is a metamorphic rock.", "Obsidian is an igneous rock, a volcanic glass."],
+      "source": {
+        "label": "Wikipedia: Obsidian",
+        "url": "https://en.wikipedia.org/wiki/Obsidian"
+      }
+    },
+    {
+      "id": "a075",
+      "prompt": "Which of these is an igneous rock?",
+      "options": ["Basalt", "Slate"],
+      "truth": [true, false],
+      "topic": "science",
+      "facts": ["Basalt is an extrusive igneous rock.", "Slate is a metamorphic rock."],
+      "source": {
+        "label": "Wikipedia: Basalt",
+        "url": "https://en.wikipedia.org/wiki/Basalt"
+      }
+    },
+    {
+      "id": "a076",
+      "prompt": "Which of these moons orbits Jupiter?",
+      "options": ["Titan", "Io"],
+      "truth": [false, true],
+      "topic": "science",
+      "facts": ["Titan orbits Saturn.", "Io is one of Jupiter's Galilean moons."],
+      "source": {
+        "label": "Wikipedia: Io (moon)",
+        "url": "https://en.wikipedia.org/wiki/Io_(moon)"
+      }
+    },
+    {
+      "id": "a077",
+      "prompt": "Which of these is liquid at room temperature?",
+      "options": ["Mercury", "Bromine"],
+      "truth": [true, true],
+      "topic": "science",
+      "facts": [
+        "Mercury is liquid at standard conditions.",
+        "Bromine is liquid at standard conditions."
+      ],
+      "source": {
+        "label": "Wikipedia: Bromine",
+        "url": "https://en.wikipedia.org/wiki/Bromine"
+      }
+    },
+    {
+      "id": "a078",
+      "prompt": "Which of these is liquid at room temperature?",
+      "options": ["Iodine", "Sulfur"],
+      "truth": [false, false],
+      "topic": "science",
+      "facts": [
+        "Iodine is a solid, melting at about 114 °C.",
+        "Sulfur is a solid, melting at about 115 °C."
+      ],
+      "source": {
+        "label": "Wikipedia: Iodine",
+        "url": "https://en.wikipedia.org/wiki/Iodine"
+      }
+    },
+    {
+      "id": "a079",
+      "prompt": "Which of these moons orbits Jupiter?",
+      "options": ["Triton", "Titan"],
+      "truth": [false, false],
+      "topic": "science",
+      "facts": ["Triton orbits Neptune.", "Titan orbits Saturn."],
+      "source": {
+        "label": "Wikipedia: Triton (moon)",
+        "url": "https://en.wikipedia.org/wiki/Triton_(moon)"
+      }
+    },
+    {
+      "id": "a080",
+      "prompt": "Which of these is an SI base unit?",
+      "options": ["Volt", "Watt"],
+      "truth": [false, false],
+      "topic": "science",
+      "facts": ["The volt is a derived unit.", "The watt is a derived unit."],
+      "source": {
+        "label": "Wikipedia: SI base unit",
+        "url": "https://en.wikipedia.org/wiki/SI_base_unit"
+      }
+    },
+    {
+      "id": "a081",
+      "prompt": "Which of these is a terrestrial planet?",
+      "options": ["Neptune", "Mars"],
+      "truth": [false, true],
+      "topic": "science",
+      "facts": ["Neptune is an ice giant with no solid surface.", "Mars is a terrestrial planet."],
+      "source": {
+        "label": "Wikipedia: Mars",
+        "url": "https://en.wikipedia.org/wiki/Mars"
+      }
+    },
+    {
+      "id": "a082",
+      "prompt": "Which of these is a noble gas?",
+      "options": ["Chlorine", "Xenon"],
+      "truth": [false, true],
+      "topic": "science",
+      "facts": ["Chlorine is a halogen in group 17.", "Xenon is a noble gas."],
+      "source": {
+        "label": "Wikipedia: Xenon",
+        "url": "https://en.wikipedia.org/wiki/Xenon"
+      }
+    },
+    {
+      "id": "a083",
+      "prompt": "Which of these planets rotates retrograde (backwards)?",
+      "options": ["Venus", "Uranus"],
+      "truth": [true, true],
+      "topic": "science",
+      "facts": [
+        "Venus rotates retrograde, once every 243 days.",
+        "Uranus rotates retrograde, once every 17 hours 14 minutes."
+      ],
+      "source": {
+        "label": "Wikipedia: Uranus",
+        "url": "https://en.wikipedia.org/wiki/Uranus"
+      }
+    },
+    {
+      "id": "a084",
+      "prompt": "Which of these moons is larger than Earth's Moon?",
+      "options": ["Io", "Europa"],
+      "truth": [true, false],
+      "topic": "science",
+      "facts": [
+        "Io is about 3,640 km across, larger than the Moon's 3,474 km.",
+        "Europa is about 3,120 km across."
+      ],
+      "source": {
+        "label": "Wikipedia: Io (moon)",
+        "url": "https://en.wikipedia.org/wiki/Io_(moon)"
+      }
     }
   ]
 }
