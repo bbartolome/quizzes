@@ -150,6 +150,249 @@
         "label": "Wikipedia: Divisibility rule",
         "url": "https://en.wikipedia.org/wiki/Divisibility_rule"
       }
+    },
+    {
+      "id": "a013",
+      "prompt": "Which of these is prime?",
+      "options": ["87", "89"],
+      "truth": [false, true],
+      "topic": "numbers",
+      "facts": ["87 = 3 × 29.", "89 has no divisors other than 1 and itself."],
+      "source": {
+        "label": "Wikipedia: List of prime numbers",
+        "url": "https://en.wikipedia.org/wiki/List_of_prime_numbers"
+      }
+    },
+    {
+      "id": "a014",
+      "prompt": "Which of these is prime?",
+      "options": ["119", "133"],
+      "truth": [false, false],
+      "topic": "numbers",
+      "facts": ["119 = 7 × 17.", "133 = 7 × 19."],
+      "source": {
+        "label": "Wikipedia: List of prime numbers",
+        "url": "https://en.wikipedia.org/wiki/List_of_prime_numbers"
+      }
+    },
+    {
+      "id": "a015",
+      "prompt": "Which of these is prime?",
+      "options": ["101", "103"],
+      "truth": [true, true],
+      "topic": "numbers",
+      "facts": ["101 is prime.", "103 is prime."],
+      "source": {
+        "label": "Wikipedia: List of prime numbers",
+        "url": "https://en.wikipedia.org/wiki/List_of_prime_numbers"
+      }
+    },
+    {
+      "id": "a016",
+      "prompt": "Which of these is prime?",
+      "options": ["109", "111"],
+      "truth": [true, false],
+      "topic": "numbers",
+      "facts": ["109 is prime.", "111 = 3 × 37."],
+      "source": {
+        "label": "Wikipedia: List of prime numbers",
+        "url": "https://en.wikipedia.org/wiki/List_of_prime_numbers"
+      }
+    },
+    {
+      "id": "a017",
+      "prompt": "Which of these is a Fibonacci number?",
+      "options": ["144", "145"],
+      "truth": [true, false],
+      "topic": "numbers",
+      "facts": [
+        "144 is the 12th Fibonacci number.",
+        "The Fibonacci sequence goes 144, 233, so 145 is not in it."
+      ],
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "a018",
+      "prompt": "Which of these is a Fibonacci number?",
+      "options": ["100", "200"],
+      "truth": [false, false],
+      "topic": "numbers",
+      "facts": [
+        "The sequence goes 89, 144, skipping 100.",
+        "The sequence goes 144, 233, skipping 200."
+      ],
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "a019",
+      "prompt": "Which of these is a Fibonacci number?",
+      "options": ["150", "610"],
+      "truth": [false, true],
+      "topic": "numbers",
+      "facts": [
+        "150 falls between 144 and 233, so it is not Fibonacci.",
+        "610 is the 15th Fibonacci number."
+      ],
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "a020",
+      "prompt": "Which of these is a Fibonacci number?",
+      "options": ["233", "377"],
+      "truth": [true, true],
+      "topic": "numbers",
+      "facts": ["233 is the 13th Fibonacci number.", "377 is the 14th Fibonacci number."],
+      "source": {
+        "label": "Wikipedia: Fibonacci sequence",
+        "url": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+      }
+    },
+    {
+      "id": "a021",
+      "prompt": "Which of these is a triangular number?",
+      "options": ["66", "70"],
+      "truth": [true, false],
+      "topic": "numbers",
+      "facts": [
+        "66 is the 11th triangular number (1 + 2 + … + 11).",
+        "The triangular numbers go 66, 78, so 70 is not one."
+      ],
+      "source": {
+        "label": "Wikipedia: Triangular number",
+        "url": "https://en.wikipedia.org/wiki/Triangular_number"
+      }
+    },
+    {
+      "id": "a022",
+      "prompt": "Which of these is a triangular number?",
+      "options": ["100", "120"],
+      "truth": [false, true],
+      "topic": "numbers",
+      "facts": [
+        "The triangular numbers go 91, 105, skipping 100.",
+        "120 is the 15th triangular number."
+      ],
+      "source": {
+        "label": "Wikipedia: Triangular number",
+        "url": "https://en.wikipedia.org/wiki/Triangular_number"
+      }
+    },
+    {
+      "id": "a023",
+      "prompt": "Which of these is a triangular number?",
+      "options": ["91", "105"],
+      "truth": [true, true],
+      "topic": "numbers",
+      "facts": ["91 is the 13th triangular number.", "105 is the 14th triangular number."],
+      "source": {
+        "label": "Wikipedia: Triangular number",
+        "url": "https://en.wikipedia.org/wiki/Triangular_number"
+      }
+    },
+    {
+      "id": "a024",
+      "prompt": "Which of these is a perfect cube?",
+      "options": ["500", "700"],
+      "truth": [false, false],
+      "topic": "numbers",
+      "facts": [
+        "The nearest cubes are 343 and 512, so 500 is not a cube.",
+        "The nearest cubes are 512 and 729, so 700 is not a cube."
+      ],
+      "source": {
+        "label": "Wikipedia: Cube (algebra)",
+        "url": "https://en.wikipedia.org/wiki/Cube_(algebra)"
+      }
+    },
+    {
+      "id": "a025",
+      "prompt": "Which of these is a perfect cube?",
+      "options": ["300", "343"],
+      "truth": [false, true],
+      "topic": "numbers",
+      "facts": ["300 lies between 216 (6³) and 343 (7³).", "343 = 7³."],
+      "source": {
+        "label": "Wikipedia: Cube (algebra)",
+        "url": "https://en.wikipedia.org/wiki/Cube_(algebra)"
+      }
+    },
+    {
+      "id": "a026",
+      "prompt": "Which of these is a perfect square?",
+      "options": ["225", "256"],
+      "truth": [true, true],
+      "topic": "numbers",
+      "facts": ["225 = 15².", "256 = 16²."],
+      "source": {
+        "label": "Wikipedia: Square number",
+        "url": "https://en.wikipedia.org/wiki/Square_number"
+      }
+    },
+    {
+      "id": "a027",
+      "prompt": "Which of these is a perfect square?",
+      "options": ["200", "250"],
+      "truth": [false, false],
+      "topic": "numbers",
+      "facts": [
+        "200 lies between 196 (14²) and 225 (15²).",
+        "250 lies between 225 (15²) and 256 (16²)."
+      ],
+      "source": {
+        "label": "Wikipedia: Square number",
+        "url": "https://en.wikipedia.org/wiki/Square_number"
+      }
+    },
+    {
+      "id": "a028",
+      "prompt": "Which of these is a perfect number?",
+      "options": ["28", "30"],
+      "truth": [true, false],
+      "topic": "numbers",
+      "facts": [
+        "28 = 1 + 2 + 4 + 7 + 14, the sum of its proper divisors.",
+        "30's proper divisors sum to 42, not 30."
+      ],
+      "source": {
+        "label": "Wikipedia: Perfect number",
+        "url": "https://en.wikipedia.org/wiki/Perfect_number"
+      }
+    },
+    {
+      "id": "a029",
+      "prompt": "Which of these is a perfect number?",
+      "options": ["496", "8,128"],
+      "truth": [true, true],
+      "topic": "numbers",
+      "facts": ["496 is the third perfect number.", "8,128 is the fourth perfect number."],
+      "source": {
+        "label": "Wikipedia: Perfect number",
+        "url": "https://en.wikipedia.org/wiki/Perfect_number"
+      }
+    },
+    {
+      "id": "a030",
+      "prompt": "Which of these is a power of two?",
+      "options": ["520", "1,000"],
+      "truth": [false, false],
+      "topic": "numbers",
+      "facts": [
+        "The nearest powers of two are 512 and 1,024.",
+        "The nearest powers of two are 512 and 1,024."
+      ],
+      "source": {
+        "label": "Wikipedia: Power of two",
+        "url": "https://en.wikipedia.org/wiki/Power_of_two"
+      }
     }
   ]
 }
