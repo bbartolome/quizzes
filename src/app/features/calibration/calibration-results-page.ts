@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { CalibrationBankService } from './calibration-bank.service';
@@ -16,7 +16,14 @@ import { BankUnavailable } from './bank-unavailable';
   selector: 'app-calibration-results-page',
   standalone: true,
   templateUrl: './calibration-results-page.html',
-  imports: [CalibrationChart, SkillScoreCard, ConfidenceCard, ReviewList, BankUnavailable],
+  imports: [
+    CalibrationChart,
+    SkillScoreCard,
+    ConfidenceCard,
+    ReviewList,
+    BankUnavailable,
+    RouterLink,
+  ],
 })
 export class CalibrationResultsPage {
   private readonly route = inject(ActivatedRoute);

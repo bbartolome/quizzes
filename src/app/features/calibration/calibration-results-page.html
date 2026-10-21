@@ -1,9 +1,11 @@
-<div class="min-h-screen bg-gray-50">
-  <main class="mx-auto max-w-3xl space-y-8 px-4 py-10">
+<div class="min-h-screen bg-gray-50 px-4 py-8 sm:px-8">
+  <main class="mx-auto max-w-4xl space-y-6">
     @if (loadError()) {
       <app-bank-unavailable (retry)="load()" />
     } @else if (view(); as v) {
-      <h1 class="text-2xl font-semibold">{{ ctx()!.entry.title }}: results</h1>
+      <h1 class="text-3xl font-semibold tracking-tight text-gray-900">
+        {{ ctx()!.entry.title }}: results
+      </h1>
 
       <app-calibration-chart
         [format]="v.format"
@@ -23,11 +25,15 @@
       </div>
 
       <section class="space-y-4">
-        <h2 class="text-xl font-semibold">Item review</h2>
+        <h2 class="text-xl font-semibold text-gray-900">Item review</h2>
         <app-review-list [sections]="v.sections" />
       </section>
 
-      <a href="#/calibration/{{ ctx()!.quizId }}">Back to quiz</a>
+      <a
+        [routerLink]="['/calibration', ctx()!.quizId]"
+        class="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:underline"
+        >Back to quiz</a
+      >
     }
   </main>
 </div>

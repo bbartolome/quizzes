@@ -1,36 +1,54 @@
-<div class="min-h-screen bg-gray-50 px-4 py-8">
-  <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow">
+<div class="min-h-screen bg-gray-50 px-4 py-8 sm:px-8">
+  <div class="mx-auto max-w-4xl space-y-6">
     @if (loadError()) {
       <app-bank-unavailable (retry)="load()" />
     } @else if (ctx(); as c) {
-      <a routerLink="/" class="text-sm text-gray-500 hover:text-gray-700">← All quizzes</a>
-      <h1 class="mt-4 text-2xl font-bold text-gray-900">{{ c.entry.title }}</h1>
-      <p class="mt-1 text-gray-600">{{ c.entry.description }}</p>
+      <a
+        routerLink="/"
+        class="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:underline"
+      >
+        &larr; All quizzes
+      </a>
+      <header class="space-y-2">
+        <h1 class="text-3xl font-semibold tracking-tight text-gray-900">{{ c.entry.title }}</h1>
+        <p class="text-sm text-gray-700">{{ c.entry.description }}</p>
+      </header>
       @if (stats(); as s) {
-        <a [routerLink]="['/calibration', c.quizId, 'round']" class="primary button">
-          {{ s.hasPending ? 'Resume round' : 'Start round' }}
-        </a>
-        @if (s.hasPending) {
-          <button
-            type="button"
-            (click)="startOver()"
-            class="text-sm text-red-600 hover:text-red-700"
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <a
+            [routerLink]="['/calibration', c.quizId, 'round']"
+            class="inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+            [style.backgroundColor]="c.entry.accent"
           >
-            Start over
-          </button>
-        }
-        @if (s.roundsPlayed > 0) {
-          <app-calibration-sparkline [format]="c.format" [buckets]="s.lifetimeBuckets" />
-          @if (s.lifetimeSkill !== null) {
-            <p>Skill score {{ s.lifetimeSkill }}</p>
+            {{ s.hasPending ? 'Resume round' : 'Start round' }}
+          </a>
+          @if (s.hasPending) {
+            <button
+              type="button"
+              (click)="startOver()"
+              class="text-sm font-medium text-red-600 hover:text-red-700"
+            >
+              Start over
+            </button>
           }
-          <p>{{ s.roundsPlayed }} {{ s.roundsPlayed === 1 ? 'round' : 'rounds' }} played</p>
-        } @else {
-          <p>Play a round to start your calibration curve</p>
-        }
-        @if (s.showRepeats) {
-          <p class="text-sm text-gray-500">You've seen every item. Some will repeat.</p>
-        }
+        </div>
+
+        <section class="space-y-4 rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
+          @if (s.roundsPlayed > 0) {
+            <app-calibration-sparkline [format]="c.format" [buckets]="s.lifetimeBuckets" />
+            @if (s.lifetimeSkill !== null) {
+              <p class="text-sm font-medium text-gray-900">Skill score {{ s.lifetimeSkill }}</p>
+            }
+            <p class="text-sm text-gray-700">
+              {{ s.roundsPlayed }} {{ s.roundsPlayed === 1 ? 'round' : 'rounds' }} played
+            </p>
+          } @else {
+            <p class="text-sm text-gray-700">Play a round to start your calibration curve</p>
+          }
+          @if (s.showRepeats) {
+            <p class="text-sm text-gray-500">You've seen every item. Some will repeat.</p>
+          }
+        </section>
       }
     }
   </div>

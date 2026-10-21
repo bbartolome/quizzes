@@ -4,62 +4,67 @@
   @let e = entry();
   @let p = pending();
   @if (e !== null && p !== null && bank() !== null) {
-    <div class="mx-auto w-full max-w-xl px-4 pb-16 pt-8">
-      <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">{{ e.format }}</p>
-      <h1 class="mt-1 text-2xl font-bold text-gray-900">{{ e.title }}</h1>
+    <div class="min-h-screen bg-gray-50 px-4 py-8 sm:px-8">
+      <div class="mx-auto max-w-2xl space-y-6">
+        <header class="space-y-2">
+          <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">{{ e.format }}</p>
+          <h1 class="text-3xl font-semibold tracking-tight text-gray-900">{{ e.title }}</h1>
+        </header>
 
-      <div class="mt-4 flex items-center justify-center gap-2">
-        @for (drawn of p.items; track drawn.itemId; let i = $index) {
-          <button
-            type="button"
-            [attr.aria-label]="'Item ' + (i + 1)"
-            [attr.aria-current]="i === index() ? 'true' : null"
-            [class.bg-blue-600]="i === index()"
-            [class.bg-green-500]="i !== index() && isAnswered(i)"
-            [class.bg-gray-300]="i !== index() && !isAnswered(i)"
-            class="h-2.5 w-2.5 rounded-full border border-gray-400 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-            (click)="goTo(i)"
-          ></button>
-        }
-      </div>
-
-      @let cur = current();
-      @if (cur !== null) {
-        <p class="mt-6 text-lg font-medium text-gray-900">{{ cur.item.prompt }}</p>
-        <div class="mt-4">
-          @if (!isFourWay()) {
-            <app-bipolar-scale
-              [options]="onScreenOptions()!"
-              [selected]="selectedTwoWay()"
-              (answer)="answerTwoWay($event)"
-            />
-          } @else {
-            <app-four-way-control
-              [options]="onScreenOptions()"
-              [selected]="selectedFourWay()"
-              (change)="answerFourWay($event)"
-            />
+        <div class="mt-4 flex items-center justify-center gap-2">
+          @for (drawn of p.items; track drawn.itemId; let i = $index) {
+            <button
+              type="button"
+              [attr.aria-label]="'Item ' + (i + 1)"
+              [attr.aria-current]="i === index() ? 'true' : null"
+              [class.bg-blue-600]="i === index()"
+              [class.bg-green-500]="i !== index() && isAnswered(i)"
+              [class.bg-gray-300]="i !== index() && !isAnswered(i)"
+              class="h-2.5 w-2.5 rounded-full border border-gray-400 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              (click)="goTo(i)"
+            ></button>
           }
         </div>
-      }
 
-      <div class="mt-8 flex items-center justify-between gap-3">
-        <button
-          type="button"
-          [disabled]="index() <= 0"
-          class="rounded-lg border border-gray-400 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
-          (click)="back()"
-        >
-          Back
-        </button>
-        <button
-          type="button"
-          [disabled]="!allAnswered()"
-          class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
-          (click)="submit()"
-        >
-          Submit round
-        </button>
+        @let cur = current();
+        @if (cur !== null) {
+          <p class="mt-6 text-lg font-medium text-gray-900">{{ cur.item.prompt }}</p>
+          <div class="mt-4">
+            @if (!isFourWay()) {
+              <app-bipolar-scale
+                [options]="onScreenOptions()!"
+                [selected]="selectedTwoWay()"
+                (answer)="answerTwoWay($event)"
+              />
+            } @else {
+              <app-four-way-control
+                [options]="onScreenOptions()"
+                [selected]="selectedFourWay()"
+                (change)="answerFourWay($event)"
+              />
+            }
+          </div>
+        }
+
+        <div class="mt-8 flex items-center justify-between gap-3">
+          <button
+            type="button"
+            [disabled]="index() <= 0"
+            class="inline-flex items-center rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+            (click)="back()"
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            [disabled]="!allAnswered()"
+            class="inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+            [style.backgroundColor]="e.accent"
+            (click)="submit()"
+          >
+            Submit round
+          </button>
+        </div>
       </div>
     </div>
   }
