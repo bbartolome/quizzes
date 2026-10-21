@@ -636,6 +636,249 @@
         "label": "Wikipedia: Borders of Brazil",
         "url": "https://en.wikipedia.org/wiki/Borders_of_Brazil"
       }
+    },
+    {
+      "id": "a049",
+      "prompt": "Which of these happened before 1500?",
+      "options": ["Magellan sets sail", "Battle of Panipat"],
+      "truth": [false, false],
+      "topic": "history",
+      "facts": [
+        "Magellan's fleet left Spain in 1519.",
+        "The First Battle of Panipat was fought in 1526."
+      ],
+      "source": {
+        "label": "Wikipedia: First Battle of Panipat",
+        "url": "https://en.wikipedia.org/wiki/First_Battle_of_Panipat"
+      }
+    },
+    {
+      "id": "a050",
+      "prompt": "Which of these happened after 1950?",
+      "options": ["Indian independence", "People's Republic proclaimed"],
+      "truth": [false, false],
+      "topic": "history",
+      "facts": [
+        "India became independent in 1947.",
+        "The People's Republic of China was proclaimed in 1949."
+      ],
+      "source": {
+        "label": "Wikipedia: Independence Day (India)",
+        "url": "https://en.wikipedia.org/wiki/Independence_Day_(India)"
+      }
+    },
+    {
+      "id": "a051",
+      "prompt": "Which of these happened in the 1700s?",
+      "options": ["Louisiana Purchase", "Napoleon becomes Emperor"],
+      "truth": [false, false],
+      "topic": "history",
+      "facts": [
+        "The Louisiana Purchase treaty was signed in 1803.",
+        "Napoleon became Emperor of the French in 1804."
+      ],
+      "source": {
+        "label": "Wikipedia: Louisiana Purchase",
+        "url": "https://en.wikipedia.org/wiki/Louisiana_Purchase"
+      }
+    },
+    {
+      "id": "a052",
+      "prompt": "Which of these happened before 1000?",
+      "options": ["First Crusade", "Battle of Hastings"],
+      "truth": [false, false],
+      "topic": "history",
+      "facts": ["The First Crusade began in 1096.", "The Battle of Hastings was fought in 1066."],
+      "source": {
+        "label": "Wikipedia: First Crusade",
+        "url": "https://en.wikipedia.org/wiki/First_Crusade"
+      }
+    },
+    {
+      "id": "a053",
+      "prompt": "Which of these was founded before 1600?",
+      "options": ["Harvard", "University of Santo Tomas"],
+      "truth": [false, false],
+      "topic": "history",
+      "facts": [
+        "Harvard was founded in 1636.",
+        "The University of Santo Tomas was founded in 1611."
+      ],
+      "source": {
+        "label": "Wikipedia: University of Santo Tomas",
+        "url": "https://en.wikipedia.org/wiki/University_of_Santo_Tomas"
+      }
+    },
+    {
+      "id": "a054",
+      "prompt": "Which of these happened before 1800?",
+      "options": ["French Revolution", "Battle of Waterloo"],
+      "truth": [true, false],
+      "topic": "history",
+      "facts": [
+        "The French Revolution began in 1789.",
+        "The Battle of Waterloo was fought in 1815."
+      ],
+      "source": {
+        "label": "Wikipedia: French Revolution",
+        "url": "https://en.wikipedia.org/wiki/French_Revolution"
+      }
+    },
+    {
+      "id": "a055",
+      "prompt": "Which of these happened in the 20th century?",
+      "options": ["Chernobyl disaster", "Meiji Restoration"],
+      "truth": [true, false],
+      "topic": "history",
+      "facts": ["The Chernobyl disaster occurred in 1986.", "The Meiji Restoration began in 1868."],
+      "source": {
+        "label": "Wikipedia: Chernobyl disaster",
+        "url": "https://en.wikipedia.org/wiki/Chernobyl_disaster"
+      }
+    },
+    {
+      "id": "a056",
+      "prompt": "Which of these happened before 1000?",
+      "options": ["Charlemagne crowned emperor", "First Crusade"],
+      "truth": [true, false],
+      "topic": "history",
+      "facts": [
+        "Charlemagne was crowned on Christmas Day 800.",
+        "The First Crusade began in 1096."
+      ],
+      "source": {
+        "label": "Wikipedia: Charlemagne",
+        "url": "https://en.wikipedia.org/wiki/Charlemagne"
+      }
+    },
+    {
+      "id": "a057",
+      "prompt": "Which of these happened before 1500?",
+      "options": ["Mansa Musa's hajj", "Battle of Lepanto"],
+      "truth": [true, false],
+      "topic": "history",
+      "facts": [
+        "Mansa Musa made his pilgrimage to Mecca in 1324.",
+        "The Battle of Lepanto was fought in 1571."
+      ],
+      "source": {
+        "label": "Wikipedia: Mansa Musa",
+        "url": "https://en.wikipedia.org/wiki/Mansa_Musa"
+      }
+    },
+    {
+      "id": "a058",
+      "prompt": "Which of these happened in the 20th century?",
+      "options": ["Crimean War", "Wright brothers' flight"],
+      "truth": [false, true],
+      "topic": "history",
+      "facts": ["The Crimean War began in 1853.", "The Wright brothers' first flight was in 1903."],
+      "source": {
+        "label": "Wikipedia: Wright brothers",
+        "url": "https://en.wikipedia.org/wiki/Wright_brothers"
+      }
+    },
+    {
+      "id": "a059",
+      "prompt": "Which of these happened before 1600?",
+      "options": ["Harvard founded", "Spanish Armada"],
+      "truth": [false, true],
+      "topic": "history",
+      "facts": ["Harvard was founded in 1636.", "The Spanish Armada sailed in 1588."],
+      "source": {
+        "label": "Wikipedia: Spanish Armada",
+        "url": "https://en.wikipedia.org/wiki/Spanish_Armada"
+      }
+    },
+    {
+      "id": "a060",
+      "prompt": "Which of these happened BC?",
+      "options": ["Edict of Milan", "Qin unifies China"],
+      "truth": [false, true],
+      "topic": "history",
+      "facts": ["The Edict of Milan dates to AD 313.", "Qin unified China in 221 BC."],
+      "source": {
+        "label": "Wikipedia: Qin dynasty",
+        "url": "https://en.wikipedia.org/wiki/Qin_dynasty"
+      }
+    },
+    {
+      "id": "a061",
+      "prompt": "Which of these happened after 1800?",
+      "options": ["Battle of Lepanto", "Meiji Restoration"],
+      "truth": [false, true],
+      "topic": "history",
+      "facts": [
+        "The Battle of Lepanto was fought in 1571.",
+        "The Meiji Restoration began in 1868."
+      ],
+      "source": {
+        "label": "Wikipedia: Meiji Restoration",
+        "url": "https://en.wikipedia.org/wiki/Meiji_Restoration"
+      }
+    },
+    {
+      "id": "a062",
+      "prompt": "Which of these happened before 1500?",
+      "options": ["Magna Carta", "Battle of Crécy"],
+      "truth": [true, true],
+      "topic": "history",
+      "facts": ["Magna Carta was sealed in 1215.", "The Battle of Crécy was fought in 1346."],
+      "source": {
+        "label": "Wikipedia: Magna Carta",
+        "url": "https://en.wikipedia.org/wiki/Magna_Carta"
+      }
+    },
+    {
+      "id": "a063",
+      "prompt": "Which of these happened in the 20th century?",
+      "options": ["Chernobyl disaster", "Berlin Wall built"],
+      "truth": [true, true],
+      "topic": "history",
+      "facts": [
+        "The Chernobyl disaster occurred in 1986.",
+        "Construction of the Berlin Wall began in 1961."
+      ],
+      "source": {
+        "label": "Wikipedia: Berlin Wall",
+        "url": "https://en.wikipedia.org/wiki/Berlin_Wall"
+      }
+    },
+    {
+      "id": "a064",
+      "prompt": "Which of these happened BC?",
+      "options": ["Caesar's assassination", "Trial of Socrates"],
+      "truth": [true, true],
+      "topic": "history",
+      "facts": ["Julius Caesar was assassinated in 44 BC.", "Socrates was tried in 399 BC."],
+      "source": {
+        "label": "Wikipedia: Trial of Socrates",
+        "url": "https://en.wikipedia.org/wiki/Trial_of_Socrates"
+      }
+    },
+    {
+      "id": "a065",
+      "prompt": "Which of these happened before 1700?",
+      "options": ["Jamestown founded", "English Civil War"],
+      "truth": [true, true],
+      "topic": "history",
+      "facts": ["Jamestown was founded in 1607.", "The English Civil War began in 1642."],
+      "source": {
+        "label": "Wikipedia: English Civil War",
+        "url": "https://en.wikipedia.org/wiki/English_Civil_War"
+      }
+    },
+    {
+      "id": "a066",
+      "prompt": "Which of these happened in the 19th century?",
+      "options": ["Taiping Rebellion", "Suez Canal opens"],
+      "truth": [true, true],
+      "topic": "history",
+      "facts": ["The Taiping Rebellion began in 1850.", "The Suez Canal opened in 1869."],
+      "source": {
+        "label": "Wikipedia: Suez Canal",
+        "url": "https://en.wikipedia.org/wiki/Suez_Canal"
+      }
     }
   ]
 }
