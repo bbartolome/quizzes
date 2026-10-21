@@ -1347,6 +1347,243 @@
         "label": "Wikipedia: Axolotl",
         "url": "https://en.wikipedia.org/wiki/Axolotl"
       }
+    },
+    {
+      "id": "a103",
+      "prompt": "Which of these alphabets has 33 letters?",
+      "options": ["Greek", "Georgian"],
+      "truth": [false, true],
+      "topic": "culture",
+      "facts": [
+        "The modern Greek alphabet has 24 letters.",
+        "The modern Georgian alphabet has 33 letters."
+      ],
+      "source": {
+        "label": "Wikipedia: Georgian scripts",
+        "url": "https://en.wikipedia.org/wiki/Georgian_scripts"
+      }
+    },
+    {
+      "id": "a104",
+      "prompt": "Which of these books was published before 1800?",
+      "options": ["Moby-Dick", "Gulliver's Travels"],
+      "truth": [false, true],
+      "topic": "culture",
+      "facts": ["Moby-Dick was published in 1851.", "Gulliver's Travels was published in 1726."],
+      "source": {
+        "label": "Wikipedia: Gulliver's Travels",
+        "url": "https://en.wikipedia.org/wiki/Gulliver%27s_Travels"
+      }
+    },
+    {
+      "id": "a105",
+      "prompt": "Which of these words comes from Hindi?",
+      "options": ["Shampoo", "Cookie"],
+      "truth": [true, false],
+      "topic": "culture",
+      "facts": ["Shampoo comes from Hindi chāmpo.", "Cookie comes from Dutch koekje."],
+      "source": {
+        "label": "Wikipedia: Shampoo",
+        "url": "https://en.wikipedia.org/wiki/Shampoo"
+      }
+    },
+    {
+      "id": "a106",
+      "prompt": "Which of these sports has seven players per side?",
+      "options": ["Basketball", "Cricket"],
+      "truth": [false, false],
+      "topic": "culture",
+      "facts": [
+        "A basketball team has five players on court.",
+        "A cricket side has eleven players."
+      ],
+      "source": {
+        "label": "Wikipedia: Cricket",
+        "url": "https://en.wikipedia.org/wiki/Cricket"
+      }
+    },
+    {
+      "id": "a107",
+      "prompt": "Which of these words comes from Arabic?",
+      "options": ["Algebra", "Coffee"],
+      "truth": [true, true],
+      "topic": "culture",
+      "facts": [
+        "Algebra comes from Arabic al-jabr.",
+        "Coffee comes from Arabic qahwah, via Ottoman Turkish and Dutch."
+      ],
+      "source": {
+        "label": "Wikipedia: Coffee",
+        "url": "https://en.wikipedia.org/wiki/Coffee"
+      }
+    },
+    {
+      "id": "a108",
+      "prompt": "Which of these was composed by Mozart?",
+      "options": ["Don Giovanni", "Swan Lake"],
+      "truth": [true, false],
+      "topic": "culture",
+      "facts": [
+        "Mozart's Don Giovanni premiered in 1787.",
+        "Swan Lake was composed by Tchaikovsky."
+      ],
+      "source": {
+        "label": "Wikipedia: Don Giovanni",
+        "url": "https://en.wikipedia.org/wiki/Don_Giovanni"
+      }
+    },
+    {
+      "id": "a109",
+      "prompt": "Which of these books was published in the 19th century?",
+      "options": ["Moby-Dick", "Frankenstein"],
+      "truth": [true, true],
+      "topic": "culture",
+      "facts": ["Moby-Dick was published in 1851.", "Frankenstein was published in 1818."],
+      "source": {
+        "label": "Wikipedia: Moby-Dick",
+        "url": "https://en.wikipedia.org/wiki/Moby-Dick"
+      }
+    },
+    {
+      "id": "a110",
+      "prompt": "Which of these is a brass instrument?",
+      "options": ["Trumpet", "Clarinet"],
+      "truth": [true, false],
+      "topic": "culture",
+      "facts": ["The trumpet is a brass instrument.", "The clarinet is a woodwind instrument."],
+      "source": {
+        "label": "Wikipedia: Trumpet",
+        "url": "https://en.wikipedia.org/wiki/Trumpet"
+      }
+    },
+    {
+      "id": "a111",
+      "prompt": "Which of these was composed by Mozart?",
+      "options": ["Carmen", "The Nutcracker"],
+      "truth": [false, false],
+      "topic": "culture",
+      "facts": ["Carmen was composed by Bizet.", "The Nutcracker was composed by Tchaikovsky."],
+      "source": {
+        "label": "Wikipedia: Carmen",
+        "url": "https://en.wikipedia.org/wiki/Carmen"
+      }
+    },
+    {
+      "id": "a112",
+      "prompt": "Which of these was invented in the 20th century?",
+      "options": ["Tetris", "Monopoly"],
+      "truth": [true, true],
+      "topic": "culture",
+      "facts": [
+        "Tetris was created in the mid-1980s.",
+        "Parker Brothers first published Monopoly in 1935."
+      ],
+      "source": {
+        "label": "Wikipedia: Monopoly (game)",
+        "url": "https://en.wikipedia.org/wiki/Monopoly_(game)"
+      }
+    },
+    {
+      "id": "a113",
+      "prompt": "Which of these books was published before 1800?",
+      "options": ["Treasure Island", "Dracula"],
+      "truth": [false, false],
+      "topic": "culture",
+      "facts": ["Treasure Island appeared in book form in 1883.", "Dracula was published in 1897."],
+      "source": {
+        "label": "Wikipedia: Treasure Island",
+        "url": "https://en.wikipedia.org/wiki/Treasure_Island"
+      }
+    },
+    {
+      "id": "a114",
+      "prompt": "Which of these was composed by Tchaikovsky?",
+      "options": ["La traviata", "Swan Lake"],
+      "truth": [false, true],
+      "topic": "culture",
+      "facts": ["La traviata was composed by Verdi.", "Swan Lake premiered in Moscow in 1877."],
+      "source": {
+        "label": "Wikipedia: Swan Lake",
+        "url": "https://en.wikipedia.org/wiki/Swan_Lake"
+      }
+    },
+    {
+      "id": "a115",
+      "prompt": "Which of these sports has eleven players per side?",
+      "options": ["Netball", "Cricket"],
+      "truth": [false, true],
+      "topic": "culture",
+      "facts": ["A netball team has seven players on court.", "A cricket side has eleven players."],
+      "source": {
+        "label": "Wikipedia: Cricket",
+        "url": "https://en.wikipedia.org/wiki/Cricket"
+      }
+    },
+    {
+      "id": "a116",
+      "prompt": "Which of these was painted by Leonardo da Vinci?",
+      "options": ["The Starry Night", "The Last Supper"],
+      "truth": [false, true],
+      "topic": "culture",
+      "facts": [
+        "The Starry Night was painted by Van Gogh in 1889.",
+        "Leonardo worked on The Last Supper from about 1495 to 1498."
+      ],
+      "source": {
+        "label": "Wikipedia: The Last Supper (Leonardo da Vinci)",
+        "url": "https://en.wikipedia.org/wiki/The_Last_Supper_(Leonardo_da_Vinci)"
+      }
+    },
+    {
+      "id": "a117",
+      "prompt": "Which of these sports has 15 players per side?",
+      "options": ["Gaelic football", "Rugby league"],
+      "truth": [true, false],
+      "topic": "culture",
+      "facts": ["A Gaelic football team fields 15 players.", "A rugby league side has 13 players."],
+      "source": {
+        "label": "Wikipedia: Gaelic football",
+        "url": "https://en.wikipedia.org/wiki/Gaelic_football"
+      }
+    },
+    {
+      "id": "a118",
+      "prompt": "Which of these premiered in the 19th century?",
+      "options": ["Swan Lake", "Carmen"],
+      "truth": [true, true],
+      "topic": "culture",
+      "facts": ["Swan Lake premiered in 1877.", "Carmen premiered in 1875."],
+      "source": {
+        "label": "Wikipedia: Swan Lake",
+        "url": "https://en.wikipedia.org/wiki/Swan_Lake"
+      }
+    },
+    {
+      "id": "a119",
+      "prompt": "Which of these books was published before 1800?",
+      "options": ["Candide", "Moby-Dick"],
+      "truth": [true, false],
+      "topic": "culture",
+      "facts": ["Candide was published in 1759.", "Moby-Dick was published in 1851."],
+      "source": {
+        "label": "Wikipedia: Candide",
+        "url": "https://en.wikipedia.org/wiki/Candide"
+      }
+    },
+    {
+      "id": "a120",
+      "prompt": "Which of these alphabets has 33 letters?",
+      "options": ["Greek", "Armenian"],
+      "truth": [false, false],
+      "topic": "culture",
+      "facts": [
+        "The modern Greek alphabet has 24 letters.",
+        "The modern Armenian alphabet has 39 letters."
+      ],
+      "source": {
+        "label": "Wikipedia: Armenian alphabet",
+        "url": "https://en.wikipedia.org/wiki/Armenian_alphabet"
+      }
     }
   ]
 }
