@@ -4680,6 +4680,222 @@
         "label": "Wikipedia: Catalan number",
         "url": "https://en.wikipedia.org/wiki/Catalan_number"
       }
+    },
+    {
+      "id": "c391",
+      "prompt": "Who was born first?",
+      "options": ["Augustus", "Cleopatra"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Cleopatra was born in 69 BC; Augustus in 63 BC.",
+      "source": {
+        "label": "Wikipedia: Cleopatra",
+        "url": "https://en.wikipedia.org/wiki/Cleopatra"
+      }
+    },
+    {
+      "id": "c392",
+      "prompt": "Who was born first?",
+      "options": ["Gandhi", "Churchill"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Gandhi was born in 1869; Churchill in 1874.",
+      "source": {
+        "label": "Wikipedia: Mahatma Gandhi",
+        "url": "https://en.wikipedia.org/wiki/Mahatma_Gandhi"
+      }
+    },
+    {
+      "id": "c393",
+      "prompt": "Who was born first?",
+      "options": ["Albert Einstein", "Marie Curie"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Marie Curie was born in 1867; Einstein in 1879.",
+      "source": {
+        "label": "Wikipedia: Marie Curie",
+        "url": "https://en.wikipedia.org/wiki/Marie_Curie"
+      }
+    },
+    {
+      "id": "c394",
+      "prompt": "Which came first?",
+      "options": ["Alexander's death", "Ashoka's reign begins"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Alexander died in 323 BC; Ashoka's reign began around 268 BC.",
+      "source": {
+        "label": "Wikipedia: Ashoka",
+        "url": "https://en.wikipedia.org/wiki/Ashoka"
+      }
+    },
+    {
+      "id": "c395",
+      "prompt": "Which gained independence first?",
+      "options": ["Brazil", "Mexico"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Mexico won independence in September 1821; Brazil declared it in September 1822.",
+      "source": {
+        "label": "Wikipedia: Independence of Brazil",
+        "url": "https://en.wikipedia.org/wiki/Independence_of_Brazil"
+      }
+    },
+    {
+      "id": "c396",
+      "prompt": "Which was unified first?",
+      "options": ["Italy", "Germany"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Kingdom of Italy was proclaimed in 1861; the German Empire in 1871.",
+      "source": {
+        "label": "Wikipedia: Kingdom of Italy (1861–1946)",
+        "url": "https://en.wikipedia.org/wiki/Kingdom_of_Italy_(1861%E2%80%931946)"
+      }
+    },
+    {
+      "id": "c397",
+      "prompt": "Which gained independence first?",
+      "options": ["Ghana", "Morocco"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Morocco's independence declaration was signed in March 1956; Ghana became independent in March 1957.",
+      "source": {
+        "label": "Wikipedia: Moroccan independence",
+        "url": "https://en.wikipedia.org/wiki/Moroccan_independence"
+      }
+    },
+    {
+      "id": "c398",
+      "prompt": "Which dynasty began first?",
+      "options": ["Tang", "Song"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Tang dynasty began in 618; the Song dynasty in 960.",
+      "source": {
+        "label": "Wikipedia: Tang dynasty",
+        "url": "https://en.wikipedia.org/wiki/Tang_dynasty"
+      }
+    },
+    {
+      "id": "c399",
+      "prompt": "Which was founded first?",
+      "options": ["Mughal Empire", "Ottoman Empire"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Ottoman Empire was founded around 1299; the Mughal Empire in 1526.",
+      "source": {
+        "label": "Wikipedia: Ottoman Empire",
+        "url": "https://en.wikipedia.org/wiki/Ottoman_Empire"
+      }
+    },
+    {
+      "id": "c400",
+      "prompt": "Which caliphate came first?",
+      "options": ["Umayyad", "Abbasid"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Umayyad Caliphate ruled 661–750; the Abbasids rose to power in 750.",
+      "source": {
+        "label": "Wikipedia: Umayyad Caliphate",
+        "url": "https://en.wikipedia.org/wiki/Umayyad_Caliphate"
+      }
+    },
+    {
+      "id": "c401",
+      "prompt": "Which dynasty began first?",
+      "options": ["Han", "Qin"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Qin unified China in 221 BC; the Han dynasty was founded in 202 BC.",
+      "source": {
+        "label": "Wikipedia: Han dynasty",
+        "url": "https://en.wikipedia.org/wiki/Han_dynasty"
+      }
+    },
+    {
+      "id": "c402",
+      "prompt": "Which came first?",
+      "options": ["First Crusade", "Magna Carta"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The First Crusade ran 1096–1099; Magna Carta was sealed in 1215.",
+      "source": {
+        "label": "Wikipedia: First Crusade",
+        "url": "https://en.wikipedia.org/wiki/First_Crusade"
+      }
+    },
+    {
+      "id": "c403",
+      "prompt": "Which came first?",
+      "options": ["Columbus's landfall", "Zheng He's first voyage"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Zheng He's first voyage left in 1405; Columbus landed in the Americas in 1492.",
+      "source": {
+        "label": "Wikipedia: Zheng He",
+        "url": "https://en.wikipedia.org/wiki/Zheng_He"
+      }
+    },
+    {
+      "id": "c404",
+      "prompt": "Who was born first?",
+      "options": ["Dante", "Petrarch"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "Dante was born around 1265; Petrarch in 1304.",
+      "source": {
+        "label": "Wikipedia: Dante Alighieri",
+        "url": "https://en.wikipedia.org/wiki/Dante_Alighieri"
+      }
+    },
+    {
+      "id": "c405",
+      "prompt": "Who ruled earlier?",
+      "options": ["Tutankhamun", "Hammurabi"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "Hammurabi ruled around 1792–1750 BC; Tutankhamun around 1332–1323 BC.",
+      "source": {
+        "label": "Wikipedia: Hammurabi",
+        "url": "https://en.wikipedia.org/wiki/Hammurabi"
+      }
+    },
+    {
+      "id": "c406",
+      "prompt": "Which was founded first?",
+      "options": ["Ottoman Empire", "Ming dynasty"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Ottoman Empire was founded around 1299; the Ming dynasty in 1368.",
+      "source": {
+        "label": "Wikipedia: Ottoman Empire",
+        "url": "https://en.wikipedia.org/wiki/Ottoman_Empire"
+      }
+    },
+    {
+      "id": "c407",
+      "prompt": "Which came first?",
+      "options": ["The Hijrah", "Tang dynasty begins"],
+      "correct": 1,
+      "topic": "history",
+      "fact": "The Tang dynasty began in 618; the Hijrah took place in 622.",
+      "source": {
+        "label": "Wikipedia: Tang dynasty",
+        "url": "https://en.wikipedia.org/wiki/Tang_dynasty"
+      }
+    },
+    {
+      "id": "c408",
+      "prompt": "Which came first?",
+      "options": ["Song dynasty begins", "Battle of Hastings"],
+      "correct": 0,
+      "topic": "history",
+      "fact": "The Song dynasty began in 960; the Battle of Hastings was in 1066.",
+      "source": {
+        "label": "Wikipedia: Song dynasty",
+        "url": "https://en.wikipedia.org/wiki/Song_dynasty"
+      }
     }
   ]
 }
