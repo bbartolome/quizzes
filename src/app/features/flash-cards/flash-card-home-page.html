@@ -1,0 +1,61 @@
+@if (title()) {
+  <div class="mx-auto w-full max-w-2xl space-y-8 p-4 sm:p-6">
+    <header class="space-y-2">
+      <h1 class="text-2xl font-bold text-slate-800">{{ title() }}</h1>
+      <p class="text-slate-700">{{ description() }}</p>
+    </header>
+
+    <section class="flex flex-wrap items-center gap-4">
+      <a
+        data-testid="start-round"
+        routerLink="round"
+        class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
+      >
+        Start round
+      </a>
+      <a
+        data-testid="stats-link"
+        routerLink="stats"
+        class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+      >
+        Stats
+      </a>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-base font-semibold text-slate-800">Progress</h2>
+      <ul class="space-y-1 text-slate-700">
+        <li>
+          Rounds played:
+          <span data-testid="rounds-played">{{ progress().roundsPlayed ?? '—' }}</span>
+        </li>
+        <li>
+          Accuracy:
+          <span data-testid="accuracy">{{ progress().accuracy ?? '—' }}</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-base font-semibold text-slate-800">Deck</h2>
+      <ul class="space-y-2">
+        @for (concept of deck(); track concept.id) {
+          <li data-testid="deck-item" class="rounded-md border border-slate-200 bg-white p-3">
+            <p class="font-medium text-slate-800">{{ concept.name }}</p>
+            <p class="text-sm text-slate-600">{{ concept.shortDefinition }}</p>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <footer>
+      <a
+        data-testid="back"
+        routerLink="/"
+        class="text-sm font-medium text-indigo-700 hover:underline"
+      >
+        Back to library
+      </a>
+    </footer>
+  </div>
+}
