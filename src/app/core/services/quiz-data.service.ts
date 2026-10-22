@@ -27,6 +27,10 @@ export class QuizDataService {
     return this.http.get<QuizManifest>('data/quizzes.json');
   }
 
+  loadKnowledgeBase(): Observable<KnowledgeBase> {
+    return this.http.get<KnowledgeBase>(KNOWLEDGE_BASE_PATH);
+  }
+
   loadQuizBundle(entry: QuizManifestEntry): Observable<QuizBundle> {
     const dataPath = requireDataPath(entry);
     const base = dataPath.endsWith('/') ? dataPath : `${dataPath}/`;
