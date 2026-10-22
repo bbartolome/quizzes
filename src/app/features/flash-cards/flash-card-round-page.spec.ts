@@ -70,11 +70,12 @@ function setup(routeId: string, conceptType: Concept['type'], knowledgeBase: Kno
   const http = TestBed.inject(HttpTestingController);
   const stats = TestBed.inject(StatsService);
   const migrateVersion = vi.spyOn(stats, 'migrateVersion');
+  const getStats = vi.spyOn(stats, 'getStats');
   const fixture = TestBed.createComponent(FlashCardRoundPage);
   fixture.detectChanges();
   http.expectOne('data/quizzes.json').flush(manifest);
   http.expectOne('data/concepts/knowledge-base.json').flush(knowledgeBase);
-  return { component: fixture.componentInstance, migrateVersion };
+  return { component: fixture.componentInstance, migrateVersion, getStats };
 }
 
 describe('FlashCardRoundPage', () => {
@@ -111,6 +112,38 @@ describe('FlashCardRoundPage', () => {
       const { component } = setup('fallacies', 'fallacy', biasOnly);
 
       expect(component.deck()).toEqual([]);
+    });
+  });
+
+  describe('round start (S6.2)', () => {
+    beforeEach(() => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    });
+
+    it('the first card target is a deck concept', () => {
+      const { component } = setup('biases', 'bias');
+
+      const deckIds = component.deck().map((c) => c.id);
+      expect(component.cards()).toHaveLength(1);
+      expect(deckIds).toContain(component.cards()[0].target.id);
+    });
+
+    it('the first card is built with four options and the target among them', () => {
+      const { component } = setup('biases', 'bias');
+
+      const first = component.cards()[0];
+      expect(first.card.options).toHaveLength(4);
+      expect(first.card.optionConcepts.map((c) => c.id)).toContain(first.target.id);
+      expect(first.picked).toBeNull();
+      expect(first.checked).toBe(false);
+    });
+
+    it('base weights are read once at round start from both stats keys', () => {
+      const { getStats } = setup('biases', 'bias');
+
+      expect(getStats).toHaveBeenCalledWith('reasoning-traps');
+      expect(getStats).toHaveBeenCalledWith('biases');
+      expect(getStats).toHaveBeenCalledTimes(2);
     });
   });
 });
