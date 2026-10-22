@@ -203,17 +203,19 @@ describe('FlashCardRoundPage', () => {
       expect(component.score()).toEqual({ correct: 1, checked: 1 });
     });
 
-    it('a checked card cannot be checked again or re-picked', () => {
+    it('a checked card is not changed by later picks', () => {
       const { component } = setup('biases', 'bias', fourConcepts);
       const first = component.cards()[0];
 
       component.selectOption(indexOf(first, true));
       component.checkAnswer();
+      const lockedFeedback = component.cards()[0].feedback;
       component.selectOption(indexOf(first, false));
       component.checkAnswer();
 
-      expect(component.cards()).toHaveLength(2);
       expect(component.cards()[0].picked).toBe(indexOf(first, true));
+      expect(component.cards()[0].checked).toBe(true);
+      expect(component.cards()[0].feedback).toBe(lockedFeedback);
     });
 
     it('the next target is never the target just checked (deck of two)', () => {

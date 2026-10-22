@@ -12,6 +12,7 @@ import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { FlashCard, buildCard } from './card-builder';
 import { baseWeights, drawTarget } from './draw-weights';
+import { Feedback, buildFeedback } from './feedback';
 
 /** One card in the feed. `picked` is the option index chosen, or null. */
 export interface RoundCard {
@@ -19,6 +20,7 @@ export interface RoundCard {
   card: FlashCard;
   picked: number | null;
   checked: boolean;
+  feedback?: Feedback;
 }
 
 @Component({
@@ -75,6 +77,36 @@ export class FlashCardRoundPage implements OnInit {
         this.appendCard();
       });
     });
+  }
+
+  /** Records the option picked on the newest card. Ignored once that card is checked. */
+  selectOption(index: number): void {
+    const last = this.cards().at(-1);
+    if (!last || last.checked) {
+      return;
+    }
+    this.cards.update((current) =>
+      current.map((c, i) => (i === current.length - 1 ? { ...c, picked: index } : c)),
+    );
+  }
+
+  /** Locks the newest card, shows its feedback and appends the next card. Does nothing without a pick. */
+  checkAnswer(): void {
+    const last = this.cards().at(-1);
+    if (!last || last.checked || last.picked === null) {
+      return;
+    }
+    const pickedConcept = last.card.optionConcepts[last.picked];
+    const feedback = buildFeedback(
+      last.target,
+      pickedConcept.id === last.target.id ? null : pickedConcept,
+      last.card.optionConcepts,
+      this.kb,
+    );
+    this.cards.update((current) =>
+      current.map((c, i) => (i === current.length - 1 ? { ...c, checked: true, feedback } : c)),
+    );
+    this.appendCard();
   }
 
   private appendCard(): void {
