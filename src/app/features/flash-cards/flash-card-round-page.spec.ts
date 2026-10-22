@@ -519,4 +519,66 @@ describe('FlashCardRoundPage', () => {
       }
     });
   });
+
+  describe('check answer button (S6.8)', () => {
+    const fourConcepts: KnowledgeBase = {
+      concepts: [B1, B2, F1, concept('f2', 'fallacy')],
+      pairs: [],
+    };
+
+    beforeEach(() => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    });
+
+    function checkButton(fixture: { nativeElement: HTMLElement }): HTMLButtonElement | null {
+      return fixture.nativeElement.querySelector('[data-testid="check-answer"]');
+    }
+
+    function clickOption(
+      fixture: { nativeElement: HTMLElement; detectChanges: () => void },
+      index: number,
+    ) {
+      const radios = fixture.nativeElement.querySelectorAll(
+        'fieldset:last-of-type input[type="radio"]',
+      );
+      (radios[index] as HTMLInputElement).click();
+      fixture.detectChanges();
+    }
+
+    it('with no option selected, Check answer is disabled', () => {
+      const { fixture } = setup('biases', 'bias', fourConcepts);
+
+      expect(checkButton(fixture)?.disabled).toBe(true);
+    });
+
+    it('with an option selected, Check answer is enabled', () => {
+      const { fixture } = setup('biases', 'bias', fourConcepts);
+
+      clickOption(fixture, 0);
+
+      expect(checkButton(fixture)?.disabled).toBe(false);
+    });
+
+    it('after the card is locked, Check answer is disabled until the next option is picked', () => {
+      const { fixture } = setup('biases', 'bias', fourConcepts);
+
+      clickOption(fixture, 0);
+      checkButton(fixture)!.click();
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelectorAll('fieldset')).toHaveLength(2);
+      expect(checkButton(fixture)?.disabled).toBe(true);
+    });
+
+    it('clicking an enabled Check answer checks the card and appends the next one', () => {
+      const { component, fixture } = setup('biases', 'bias', fourConcepts);
+
+      clickOption(fixture, 1);
+      checkButton(fixture)!.click();
+      fixture.detectChanges();
+
+      expect(component.cards()[0].checked).toBe(true);
+      expect(component.cards()).toHaveLength(2);
+    });
+  });
 });
