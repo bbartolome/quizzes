@@ -38,7 +38,7 @@
 
       <section aria-labelledby="performance-heading" class="space-y-4">
         <h2 id="performance-heading" class="text-base font-semibold text-slate-800">
-          Performance by trait
+          {{ isFlashCards ? 'Performance by concept' : 'Performance by trait' }}
         </h2>
 
         @for (row of rows(); track row.id) {
@@ -63,7 +63,7 @@
       </section>
     </section>
 
-    @if (hasRows()) {
+    @if (hasRows() && !isFlashCards) {
       <a
         data-testid="focus-round"
         [routerLink]="['/quiz', id, 'round']"

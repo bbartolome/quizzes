@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { EMPTY, switchMap } from 'rxjs';
+import { EMPTY, map, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { Concept, QuizStats } from '../../core/models/quiz.models';
@@ -14,6 +14,8 @@ import { overallAccuracy, traitRows, type TraitRow } from './stats-rows';
  * Data is loaded via the shared "page pattern":
  *   loadManifest() -> entry for this quiz id -> loadQuizBundle(entry)
  * from which the knowledge base (for trait names) and the quiz title are taken.
+ * On the flash card routes (route data `conceptType`) the knowledge base comes
+ * from loadKnowledgeBase() instead, since those entries have no dataPath.
  *
  * The template lives in `stats-page.html` (a separate step) and consumes the
  * public members below: `id`, `quizTitle`, `stats`, `kb`, `rows`,
@@ -31,6 +33,12 @@ export class StatsPage implements OnInit {
 
   /** Quiz id taken from the route (e.g. "rt" for /quiz/rt/stats). */
   readonly id = this.route.snapshot.paramMap.get('id') ?? '';
+
+  /** Concept type from route data; set only on the flash card routes. */
+  readonly conceptType = this.route.snapshot.data?.['conceptType'] as Concept['type'] | undefined;
+
+  /** True on the flash card stats routes (biases/fallacies), false for Reasoning Traps. */
+  readonly isFlashCards = this.conceptType !== undefined;
 
   /** Title of the quiz, taken from the manifest entry for this id. */
   readonly quizTitle = signal('');
@@ -58,6 +66,7 @@ export class StatsPage implements OnInit {
   /**
    * Page pattern: manifest -> entry for the current quiz id -> that entry's
    * bundle. Populates `quizTitle` (from the entry) and `kb` (from the bundle).
+   * For flash card routes the knowledge base is loaded from the fixed path.
    */
   private loadQuizBundle(): void {
     this.quizData
@@ -68,13 +77,18 @@ export class StatsPage implements OnInit {
           if (entry) {
             this.quizTitle.set(entry.title);
           }
-          return entry ? this.quizData.loadQuizBundle(entry) : EMPTY;
+          if (!entry) {
+            return EMPTY;
+          }
+          return this.isFlashCards
+            ? this.quizData.loadKnowledgeBase()
+            : this.quizData.loadQuizBundle(entry).pipe(map((bundle) => bundle.knowledgeBase));
         }),
       )
       .subscribe({
-        next: (bundle) => {
-          if (bundle?.knowledgeBase) {
-            this.kb.set(bundle.knowledgeBase.concepts);
+        next: (knowledgeBase) => {
+          if (knowledgeBase) {
+            this.kb.set(knowledgeBase.concepts);
           }
         },
         error: () => {

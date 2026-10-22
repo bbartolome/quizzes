@@ -22,6 +22,7 @@ export const routes: Routes = [
   { path: 'biases/:id', component: FlashCardHomePage, data: { conceptType: 'bias' } },
   { path: 'biases/:id/round', component: FlashCardRoundPage, data: { conceptType: 'bias' } },
   { path: 'biases/:id/report', component: FlashCardReportPage, data: { conceptType: 'bias' } },
+  { path: 'biases/:id/stats', component: StatsPage, data: { conceptType: 'bias' } },
   { path: 'fallacies/:id', component: FlashCardHomePage, data: { conceptType: 'fallacy' } },
   { path: 'fallacies/:id/round', component: FlashCardRoundPage, data: { conceptType: 'fallacy' } },
   {
@@ -29,6 +30,7 @@ export const routes: Routes = [
     component: FlashCardReportPage,
     data: { conceptType: 'fallacy' },
   },
+  { path: 'fallacies/:id/stats', component: StatsPage, data: { conceptType: 'fallacy' } },
   { path: 'calibration/:id', component: CalibrationHomePage },
   { path: 'calibration/:id/round', component: CalibrationRoundPage },
   { path: 'calibration/:id/results', component: CalibrationResultsPage },
