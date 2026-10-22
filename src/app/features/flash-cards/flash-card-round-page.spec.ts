@@ -150,4 +150,91 @@ describe('FlashCardRoundPage', () => {
       expect(getStats).toHaveBeenCalledWith('biases');
     });
   });
+
+  describe('check answer (S6.3)', () => {
+    const fourConcepts: KnowledgeBase = {
+      concepts: [B1, B2, F1, concept('f2', 'fallacy')],
+      pairs: [],
+    };
+
+    beforeEach(() => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    });
+
+    /** Index of an option that is the target, or of one that is not. */
+    function indexOf(
+      card: { target: Concept; card: { optionConcepts: Concept[] } },
+      right: boolean,
+    ) {
+      return card.card.optionConcepts.findIndex((c) => (c.id === card.target.id) === right);
+    }
+
+    it('with no option picked, checkAnswer does nothing', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+
+      component.checkAnswer();
+
+      expect(component.cards()).toHaveLength(1);
+      expect(component.cards()[0].checked).toBe(false);
+      expect(component.cards()[0].feedback).toBeUndefined();
+    });
+
+    it('after a wrong pick, checkAnswer locks the card, shows feedback and appends one card', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, false));
+      component.checkAnswer();
+
+      expect(component.cards()).toHaveLength(2);
+      expect(component.cards()[0].checked).toBe(true);
+      expect(component.cards()[0].feedback?.verdict).toBe('Incorrect');
+      expect(component.score()).toEqual({ correct: 0, checked: 1 });
+    });
+
+    it('after the target is picked, the score counts it as correct', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, true));
+      component.checkAnswer();
+
+      expect(component.cards()[0].feedback?.verdict).toBe('Correct');
+      expect(component.score()).toEqual({ correct: 1, checked: 1 });
+    });
+
+    it('a checked card cannot be checked again or re-picked', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, true));
+      component.checkAnswer();
+      component.selectOption(indexOf(first, false));
+      component.checkAnswer();
+
+      expect(component.cards()).toHaveLength(2);
+      expect(component.cards()[0].picked).toBe(indexOf(first, true));
+    });
+
+    it('the next target is never the target just checked (deck of two)', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, true));
+      component.checkAnswer();
+
+      expect(component.cards()[1].target.id).not.toBe(first.target.id);
+    });
+
+    it('base weights are not recomputed after a card is checked', () => {
+      const { component, getStats } = setup('biases', 'bias', fourConcepts);
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, true));
+      component.checkAnswer();
+
+      const traitsReads = getStats.mock.calls.filter(([key]) => key === 'reasoning-traps');
+      expect(traitsReads).toHaveLength(1);
+    });
+  });
 });
