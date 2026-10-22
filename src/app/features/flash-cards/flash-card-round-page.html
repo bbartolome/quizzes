@@ -90,4 +90,21 @@
       </fieldset>
     }
   </div>
+
+  <footer
+    data-testid="footer"
+    class="sticky bottom-0 -mx-4 flex items-center justify-between border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6"
+  >
+    <p class="text-sm font-medium text-slate-700">
+      {{ score().correct }} of {{ score().checked }} correct
+    </p>
+    <button
+      type="button"
+      data-testid="end-quiz"
+      class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+      (click)="endQuiz()"
+    >
+      End quiz
+    </button>
+  </footer>
 </div>
