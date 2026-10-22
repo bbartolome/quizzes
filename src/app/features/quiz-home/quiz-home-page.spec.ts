@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { QuizHomePage } from './quiz-home-page';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
-import { KnowledgeBaseEntry, QuizManifestEntry } from '../../core/models/quiz.models';
+import { Concept, QuizManifestEntry } from '../../core/models/quiz.models';
 
 describe('QuizHomePage', () => {
   const entry: QuizManifestEntry = {
@@ -20,37 +20,34 @@ describe('QuizHomePage', () => {
     kind: 'traps',
   };
 
-  const strawMan: KnowledgeBaseEntry = {
+  const strawMan: Concept = {
     id: 'kb1',
     name: 'Straw man',
     type: 'fallacy',
     shortDefinition: 'short',
     longExplanation: 'long',
     example: 'example',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
   };
-  const adHominem: KnowledgeBaseEntry = {
+  const adHominem: Concept = {
     id: 'kb2',
     name: 'Ad hominem',
     type: 'fallacy',
     shortDefinition: 'short',
     longExplanation: 'long',
     example: 'example',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
   };
-  const anchoring: KnowledgeBaseEntry = {
+  const anchoring: Concept = {
     id: 'kb3',
     name: 'Anchoring',
     type: 'bias',
     shortDefinition: 'short',
     longExplanation: 'long',
     example: 'example',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
   };
-  const kb: KnowledgeBaseEntry[] = [strawMan, adHominem, anchoring];
+  const kb: Concept[] = [strawMan, adHominem, anchoring];
 
   let quizData: {
     loadManifest: ReturnType<typeof vi.fn>;
@@ -76,7 +73,9 @@ describe('QuizHomePage', () => {
   beforeEach(() => {
     quizData = {
       loadManifest: vi.fn(() => of({ quizzes: [entry] })),
-      loadQuizBundle: vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb })),
+      loadQuizBundle: vi.fn(() =>
+        of({ questions: [], templates: [], knowledgeBase: { concepts: kb, pairs: [] } }),
+      ),
     };
     stats = {
       getStats: vi.fn(() => ({ perTrait: {} })),

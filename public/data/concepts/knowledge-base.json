@@ -1,0 +1,166 @@
+{
+  "concepts": [
+    {
+      "id": "hasty-generalization",
+      "name": "Hasty generalization",
+      "type": "fallacy",
+      "shortDefinition": "Drawing a broad conclusion from a sample that's too small or unrepresentative.",
+      "longExplanation": "Hasty generalization happens when someone extrapolates a general rule from only a few observations, without checking whether those observations are typical. The smaller and less representative the sample, the weaker the conclusion — but the conclusion is often stated with full confidence anyway.",
+      "example": "I met two rude people from that city, so everyone there must be rude.",
+      "spottingTip": "Hasty generalization is about sample size — too few data points generating a sweeping rule."
+    },
+    {
+      "id": "survivorship-bias",
+      "name": "Survivorship bias",
+      "type": "bias",
+      "shortDefinition": "Drawing conclusions only from the successes that are visible, while the failures went unseen.",
+      "longExplanation": "Survivorship bias occurs when the data set only contains the entities that 'survived' some selection process, making outcomes look more achievable or safe than they really are, because the failures were silently filtered out of view.",
+      "example": "Studying only successful startups to learn 'what works' ignores the failed startups that did the same things.",
+      "spottingTip": "Survivorship bias is about a biased, incomplete sample (the failures are literally missing from view)."
+    },
+    {
+      "id": "base-rate-neglect",
+      "name": "Base-rate neglect",
+      "type": "bias",
+      "shortDefinition": "Ignoring the general prevalence of something in favor of specific, vivid details.",
+      "longExplanation": "Base-rate neglect means failing to weigh how common or rare something is overall before judging a specific case, instead relying on anecdotal or descriptive details that feel compelling but are statistically uninformative.",
+      "example": "A disease test is 99% accurate, so a positive result must mean the person has the disease — ignoring that the disease itself is extremely rare.",
+      "spottingTip": "Base-rate neglect involves known population-level statistics being discounted."
+    },
+    {
+      "id": "availability-heuristic",
+      "name": "Availability heuristic",
+      "type": "bias",
+      "shortDefinition": "Judging likelihood by how easily examples come to mind, rather than actual frequency.",
+      "longExplanation": "The availability heuristic leads people to overestimate the probability of events that are easy to recall, often because they're vivid, recent, or emotionally charged — like plane crashes after a widely reported crash — rather than basing probability on real statistics.",
+      "example": "After seeing news coverage of a shark attack, someone believes shark attacks are common, even though they're statistically rare.",
+      "spottingTip": "Availability heuristic is about ease of recall driving a probability judgment."
+    },
+    {
+      "id": "anchoring",
+      "name": "Anchoring",
+      "type": "bias",
+      "shortDefinition": "Relying too heavily on an initial number or reference point when making estimates.",
+      "longExplanation": "Anchoring occurs when an initial piece of information — even an arbitrary one — skews subsequent judgments or numerical estimates, because people adjust insufficiently away from the starting point.",
+      "example": "A shirt originally priced at $200 and now 'on sale' for $80 feels like a bargain, even if $80 is still overpriced.",
+      "spottingTip": "Anchoring is about a single reference number distorting a later estimate."
+    },
+    {
+      "id": "sunk-cost-fallacy",
+      "name": "Sunk cost fallacy",
+      "type": "fallacy",
+      "shortDefinition": "Continuing an endeavor because of previously invested resources, rather than future value.",
+      "longExplanation": "The sunk cost fallacy is the tendency to keep investing time, money, or effort into something because of what's already been spent, even when continuing no longer makes rational sense going forward. Past costs are irrecoverable and shouldn't factor into future decisions.",
+      "example": "I've already spent $50 on this movie ticket, so I'll sit through the whole terrible film instead of leaving.",
+      "spottingTip": "Look for language referencing money, time, or effort 'already spent' being used to justify continuing, regardless of future prospects."
+    },
+    {
+      "id": "hindsight-bias",
+      "name": "Hindsight bias",
+      "type": "bias",
+      "shortDefinition": "Believing, after an event, that it was predictable all along.",
+      "longExplanation": "Hindsight bias is the tendency to see past events as having been more predictable than they actually were at the time, often summarized as the 'I knew it all along' effect.",
+      "example": "After a team loses a championship, fans say 'I knew they'd lose' even though they confidently predicted a win beforehand.",
+      "spottingTip": "Hindsight bias specifically involves rewriting one's own past certainty after learning the outcome."
+    },
+    {
+      "id": "overconfidence",
+      "name": "Overconfidence",
+      "type": "bias",
+      "shortDefinition": "Having greater confidence in one's judgments or abilities than is objectively justified.",
+      "longExplanation": "Overconfidence bias leads people to overestimate the accuracy of their own beliefs, predictions, or skills, often leading to underestimating risks or variability in outcomes.",
+      "example": "A trader is certain their stock pick can't lose, despite having no special information others lack.",
+      "spottingTip": "Overconfidence is about an inflated sense of certainty in one's own judgment, not about the evidence used to reach that judgment."
+    },
+    {
+      "id": "confirmation-bias",
+      "name": "Confirmation bias",
+      "type": "bias",
+      "shortDefinition": "Favoring information that confirms existing beliefs while dismissing contradicting evidence.",
+      "longExplanation": "Confirmation bias is the tendency to search for, interpret, and recall information in a way that confirms one's preexisting beliefs, while giving disproportionately less consideration to alternative possibilities.",
+      "example": "Someone who believes a coworker is incompetent notices every mistake they make but overlooks their successes.",
+      "spottingTip": "Confirmation bias specifically involves selective attention to evidence that supports a belief the person already holds."
+    },
+    {
+      "id": "straw-man",
+      "name": "Straw man",
+      "type": "fallacy",
+      "shortDefinition": "Misrepresenting someone's argument to make it easier to attack.",
+      "longExplanation": "The straw man fallacy involves distorting, exaggerating, or oversimplifying an opponent's position into a weaker version, then refuting that weaker version instead of the argument actually made.",
+      "example": "Person A: 'We should have some regulations on fishing.' Person B: 'So you want to ban all fishing and destroy the industry?'",
+      "spottingTip": "Straw man misrepresents what the other person actually said, substituting an exaggerated or distorted version to attack."
+    },
+    {
+      "id": "ad-hominem",
+      "name": "Ad hominem",
+      "type": "fallacy",
+      "shortDefinition": "Attacking the person making an argument instead of addressing the argument itself.",
+      "longExplanation": "An ad hominem fallacy dismisses or discredits a claim by attacking the character, motive, or other attribute of the person making it, rather than engaging with the substance of what they said.",
+      "example": "You can't trust her opinion on the budget — she's not even good with her own finances.",
+      "spottingTip": "Ad hominem specifically targets the arguer's character or credibility rather than the logic or evidence of their argument."
+    },
+    {
+      "id": "false-dilemma",
+      "name": "False dilemma",
+      "type": "fallacy",
+      "shortDefinition": "Presenting only two options when more exist.",
+      "longExplanation": "A false dilemma (or false dichotomy) frames a situation as having only two possible options or outcomes, when in reality a range of alternatives exists, pressuring the listener toward one of the two presented choices.",
+      "example": "Either we cut the entire budget or the company goes bankrupt — there's no other option.",
+      "spottingTip": "False dilemma falsely narrows the field of options to two extremes, without necessarily misrepresenting anyone's stated position."
+    },
+    {
+      "id": "slippery-slope",
+      "name": "Slippery slope",
+      "type": "fallacy",
+      "shortDefinition": "Arguing that a small first step will inevitably lead to a chain of extreme consequences.",
+      "longExplanation": "The slippery slope fallacy asserts that a relatively minor action will set off an inevitable chain reaction culminating in a drastic, usually negative, outcome, without establishing that each step actually follows from the last.",
+      "example": "If we let students retake this one quiz, soon they'll expect to retake every test, and eventually no one will study at all.",
+      "spottingTip": "Slippery slope specifically involves a chain of escalating hypothetical consequences following from one small initial step."
+    },
+    {
+      "id": "circular-reasoning",
+      "name": "Circular reasoning",
+      "type": "fallacy",
+      "shortDefinition": "Using the conclusion of an argument as one of its premises.",
+      "longExplanation": "Circular reasoning occurs when the argument's conclusion is restated as a premise, so the argument assumes the very thing it's trying to prove, producing no actual new support for the claim.",
+      "example": "This law is just because it's the law, and the law is always just.",
+      "spottingTip": "Circular reasoning specifically involves the conclusion reappearing, often reworded, as a supporting premise."
+    },
+    {
+      "id": "appeal-to-authority",
+      "name": "Appeal to authority",
+      "type": "fallacy",
+      "shortDefinition": "Claiming something is true because an authority figure says so, regardless of evidence.",
+      "longExplanation": "An appeal to authority fallacy treats a claim as true or credible simply because someone with perceived authority or status asserts it, even when that authority isn't relevant to the topic or the evidence is otherwise lacking.",
+      "example": "This diet must be healthy — a famous actor recommended it.",
+      "spottingTip": "Appeal to authority specifically substitutes a person's status or fame for actual evidence or relevant expertise."
+    },
+    {
+      "id": "correlation-vs-causation",
+      "name": "Correlation vs. causation",
+      "type": "fallacy",
+      "shortDefinition": "Assuming that because two things are correlated, one must cause the other.",
+      "longExplanation": "This fallacy treats a statistical association between two variables as proof of a causal relationship, ignoring the possibility of coincidence, reverse causation, or a shared underlying cause.",
+      "example": "Ice cream sales and drowning deaths both rise in summer, so ice cream sales must cause drownings.",
+      "spottingTip": "This trap specifically involves two variables that move together being assumed to have a direct cause-and-effect relationship, without ruling out a common cause or coincidence."
+    }
+  ],
+  "pairs": [
+    {
+      "concepts": ["survivorship-bias", "base-rate-neglect"],
+      "tip": "Survivorship bias is about a biased, incomplete sample (the failures are literally missing from view). Base-rate neglect is about ignoring a known background frequency even when it's available. Ask: is data missing (survivorship) or just being ignored (base rate)?"
+    },
+    {
+      "concepts": ["anchoring", "hasty-generalization"],
+      "tip": "Anchoring is about a single reference number distorting a later estimate. Hasty generalization is about a small sample producing a broad categorical claim. If the trap involves a number pulling another number, it's anchoring; if it involves few examples producing a rule about a group, it's hasty generalization."
+    },
+    {
+      "concepts": ["straw-man", "false-dilemma"],
+      "tip": "Straw man misrepresents what the other person actually said, substituting an exaggerated or distorted version to attack. False dilemma doesn't necessarily misquote anyone — it just falsely limits the options under discussion to two extremes. Ask: is someone's argument being twisted (straw man), or are the available choices being artificially narrowed (false dilemma)?"
+    },
+    {
+      "concepts": ["availability-heuristic", "base-rate-neglect"],
+      "tip": "Availability heuristic is about ease of recall driving a probability judgment. It differs from base-rate neglect in that the person isn't necessarily ignoring known statistics — they're substituting 'how memorable is this' for 'how likely is this.'"
+    }
+  ]
+}

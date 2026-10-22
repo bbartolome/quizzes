@@ -2,7 +2,7 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EMPTY, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
-import { KnowledgeBaseEntry, ScoredQuestionResult } from '../../core/models/quiz.models';
+import { KnowledgeBase, ScoredQuestionResult } from '../../core/models/quiz.models';
 import {
   STATUS_LABELS,
   findConfusionTips,
@@ -46,7 +46,7 @@ export class ReportPage implements OnInit {
   readonly results = signal<ScoredQuestionResult[]>([]);
 
   /** Loaded knowledge base entries (empty until the page pattern resolves). */
-  readonly kb = signal<KnowledgeBaseEntry[]>([]);
+  readonly kb = signal<KnowledgeBase>({ concepts: [], pairs: [] });
 
   /** Whether there is anything to report (drives the empty-state view). */
   readonly hasResults = computed(() => this.results().length > 0);
@@ -97,7 +97,7 @@ export class ReportPage implements OnInit {
         error: () => {
           // Leave the knowledge base empty; the template renders whatever it
           // can with the results and skips tips when kb is empty.
-          this.kb.set([]);
+          this.kb.set({ concepts: [], pairs: [] });
         },
       });
   }

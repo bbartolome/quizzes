@@ -59,7 +59,9 @@
                   class="border-t border-indigo-100 bg-indigo-50 px-4 py-3 text-sm text-indigo-900"
                 >
                   <p>{{ info.shortDefinition }}</p>
-                  <p class="mt-1 text-indigo-700">Tip: {{ info.distinguishingTip }}</p>
+                  @if (info.spottingTip) {
+                    <p class="mt-1 text-indigo-700">Tip: {{ info.spottingTip }}</p>
+                  }
                 </div>
               }
             }

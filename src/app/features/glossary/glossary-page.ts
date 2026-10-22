@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { QuizDataService } from '../../core/services/quiz-data.service';
-import { KnowledgeBaseEntry } from '../../core/models/quiz.models';
-import { filterEntries } from './glossary-search';
+import { Concept, KnowledgeBase } from '../../core/models/quiz.models';
+import { confusedWith, filterEntries, pairTip } from './glossary-search';
 
 @Component({
   selector: 'app-glossary-page',
@@ -17,12 +17,14 @@ export class GlossaryPage {
 
   readonly id = signal<string>('');
   readonly quizTitle = signal<string>('');
-  readonly kb = signal<KnowledgeBaseEntry[]>([]);
+  readonly kb = signal<KnowledgeBase>({ concepts: [], pairs: [] });
   readonly query = signal<string>('');
   readonly selectedId = signal<string>('');
 
-  readonly filtered = computed(() => filterEntries(this.kb(), this.query()));
-  readonly selected = computed(() => this.kb().find((entry) => entry.id === this.selectedId()));
+  readonly filtered = computed(() => filterEntries(this.kb().concepts, this.query()));
+  readonly selected = computed(() =>
+    this.kb().concepts.find((entry) => entry.id === this.selectedId()),
+  );
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
@@ -48,7 +50,11 @@ export class GlossaryPage {
     this.query.set(value);
   }
 
-  confusedOthers(sel: KnowledgeBaseEntry): KnowledgeBaseEntry[] {
-    return this.kb().filter((candidate) => sel.commonlyConfusedWith.includes(candidate.id));
+  confusedOthers(sel: Concept): Concept[] {
+    return confusedWith(sel, this.kb());
+  }
+
+  pairTip(sel: Concept, other: Concept): string | undefined {
+    return pairTip(sel.id, other.id, this.kb());
   }
 }

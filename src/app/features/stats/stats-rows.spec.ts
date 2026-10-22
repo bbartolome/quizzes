@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { traitRows, overallAccuracy } from './stats-rows';
-import { QuizStats, KnowledgeBaseEntry, PerTraitStats } from '../../core/models/quiz.models';
+import { QuizStats, Concept, PerTraitStats } from '../../core/models/quiz.models';
 
 function makeStats(perTrait: Record<string, PerTraitStats>): QuizStats {
   return {
@@ -12,16 +12,13 @@ function makeStats(perTrait: Record<string, PerTraitStats>): QuizStats {
   };
 }
 
-function makeKbEntry(
-  overrides: Partial<KnowledgeBaseEntry> & { id: string; name: string },
-): KnowledgeBaseEntry {
+function makeKbEntry(overrides: Partial<Concept> & { id: string; name: string }): Concept {
   return {
     type: 'fallacy',
     shortDefinition: 'short',
     longExplanation: 'long',
     example: 'example',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
     ...overrides,
   };
 }

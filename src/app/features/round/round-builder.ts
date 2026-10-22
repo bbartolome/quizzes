@@ -1,9 +1,4 @@
-import {
-  Template,
-  KnowledgeBaseEntry,
-  Question,
-  RoundQuestion,
-} from '../../core/models/quiz.models';
+import { Template, Concept, Question, RoundQuestion } from '../../core/models/quiz.models';
 import type { QuestionBank, SelectRoundOptions } from '../../core/services/quiz-engine.service';
 
 export interface RoundFilters {
@@ -49,7 +44,7 @@ export function weakTraitWeights(weakIds: string[]): Record<string, number> {
 
 export function pickTemplate(
   templates: Template[],
-  kb: KnowledgeBaseEntry[],
+  kb: Concept[],
   f: RoundFilters,
   rng: () => number = Math.random,
 ): Template | undefined {
@@ -86,7 +81,7 @@ export function shuffle<T>(items: readonly T[], rng: () => number = Math.random)
   return arr;
 }
 
-export function traitIdsForAnswers(correctAnswers: string[], kb: KnowledgeBaseEntry[]): string[] {
+export function traitIdsForAnswers(correctAnswers: string[], kb: Concept[]): string[] {
   const nameToId = new Map<string, string>();
   for (const entry of kb) {
     nameToId.set(entry.name.toLowerCase(), entry.id);
@@ -110,7 +105,7 @@ export const TEMPLATE_PROBABILITY = 0.25;
 export interface NextQuestionDeps {
   questions: Question[];
   templates: Template[];
-  kb: KnowledgeBaseEntry[];
+  kb: Concept[];
   filters: RoundFilters;
   usedIds: ReadonlySet<string>;
   weights?: Record<string, number>;
@@ -153,6 +148,6 @@ export function nextQuestion(d: NextQuestionDeps): RoundQuestion | undefined {
   return fixed;
 }
 
-export function kbByName(kb: KnowledgeBaseEntry[]): Map<string, KnowledgeBaseEntry> {
+export function kbByName(kb: Concept[]): Map<string, Concept> {
   return new Map(kb.map((e) => [e.name.toLowerCase(), e]));
 }

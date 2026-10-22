@@ -1,7 +1,8 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  KnowledgeBaseEntry,
+  Concept,
+  KnowledgeBase,
   QuizManifestEntry,
   RoundQuestion,
   ScoredQuestionResult,
@@ -45,7 +46,7 @@ export class RoundPage implements OnInit {
   private serial = 0;
 
   readonly quizTitle = signal('');
-  readonly kb = signal<KnowledgeBaseEntry[]>([]);
+  readonly kb = signal<KnowledgeBase>({ concepts: [], pairs: [] });
   readonly entries = signal<RoundEntry[]>([]);
   readonly exhausted = signal(false);
   readonly openInfo = signal<string | null>(null);
@@ -58,7 +59,7 @@ export class RoundPage implements OnInit {
     };
   });
 
-  private readonly kbIndex = computed(() => kbByName(this.kb()));
+  private readonly kbIndex = computed(() => kbByName(this.kb().concepts));
 
   readonly canCheck = computed(() => {
     const entries = this.entries();
@@ -93,7 +94,7 @@ export class RoundPage implements OnInit {
         this.stats.migrateVersion(
           id,
           entry.version,
-          bundle.knowledgeBase.map((k: KnowledgeBaseEntry) => k.id),
+          bundle.knowledgeBase.concepts.map((k: Concept) => k.id),
         );
 
         this.appendNext();
@@ -105,7 +106,7 @@ export class RoundPage implements OnInit {
     const question = nextQuestion({
       questions: this.bundle.questions,
       templates: this.bundle.templates,
-      kb: this.kb(),
+      kb: this.kb().concepts,
       filters: this.filters,
       usedIds: this.usedIds,
       weights: this.weights,
@@ -127,7 +128,7 @@ export class RoundPage implements OnInit {
     }
   }
 
-  infoFor(option: string): KnowledgeBaseEntry | undefined {
+  infoFor(option: string): Concept | undefined {
     return this.kbIndex().get(option.toLowerCase());
   }
 

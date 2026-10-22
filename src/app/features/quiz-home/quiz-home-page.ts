@@ -3,7 +3,7 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { map, takeUntil, Subject } from 'rxjs';
 import { QuizBundle, QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
-import { KnowledgeBaseEntry, QuizManifestEntry } from '../../core/models/quiz.models';
+import { Concept, QuizManifestEntry } from '../../core/models/quiz.models';
 
 export type CategoryFilter = 'fallacy' | 'bias' | 'both';
 
@@ -22,7 +22,7 @@ export class QuizHomePage implements OnInit, OnDestroy {
   // --- Data-driven state ---
   protected readonly id = signal<string>('');
   protected readonly entry = signal<QuizManifestEntry | null>(null);
-  protected readonly traits = signal<KnowledgeBaseEntry[]>([]);
+  protected readonly traits = signal<Concept[]>([]);
   protected readonly hasStats = signal(false);
 
   // --- In-memory filter state ---
@@ -107,7 +107,7 @@ export class QuizHomePage implements OnInit, OnDestroy {
             .loadQuizBundle(entry)
             .pipe(takeUntil(this.destroyed))
             .subscribe((bundle: QuizBundle) => {
-              this.traits.set(bundle.knowledgeBase);
+              this.traits.set(bundle.knowledgeBase.concepts);
             });
         }
         const s = this.stats.getStats(quizId);

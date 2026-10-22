@@ -8,7 +8,7 @@ import { StatsService } from '../../core/services/stats.service';
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { TemplateGeneratorService } from '../../core/services/template-generator.service';
 import {
-  KnowledgeBaseEntry,
+  Concept,
   QuizManifestEntry,
   RoundQuestion,
   ScoredQuestionResult,
@@ -27,7 +27,7 @@ describe('RoundPage', () => {
     kind: 'traps',
   };
 
-  const kb: KnowledgeBaseEntry[] = [
+  const kb: Concept[] = [
     {
       id: 'kb1',
       name: 'Straw Man',
@@ -35,8 +35,7 @@ describe('RoundPage', () => {
       shortDefinition: 'short',
       longExplanation: 'long',
       example: 'example',
-      commonlyConfusedWith: [],
-      distinguishingTip: 'tip',
+      spottingTip: 'tip',
     },
   ];
 
@@ -71,7 +70,9 @@ describe('RoundPage', () => {
   let templateGenerator: { render: ReturnType<typeof vi.fn> };
 
   function configure(): void {
-    quizData.loadQuizBundle = vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb }));
+    quizData.loadQuizBundle = vi.fn(() =>
+      of({ questions: [], templates: [], knowledgeBase: { concepts: kb, pairs: [] } }),
+    );
 
     TestBed.configureTestingModule({
       imports: [RoundPage],
@@ -106,7 +107,9 @@ describe('RoundPage', () => {
   beforeEach(() => {
     quizData = {
       loadManifest: vi.fn(() => of({ quizzes: [entry] })),
-      loadQuizBundle: vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb })),
+      loadQuizBundle: vi.fn(() =>
+        of({ questions: [], templates: [], knowledgeBase: { concepts: kb, pairs: [] } }),
+      ),
     };
     stats = {
       migrateVersion: vi.fn(),
@@ -338,7 +341,7 @@ describe('RoundPage', () => {
       const panel = fixture.nativeElement.querySelector('[data-testid="option-definition"]');
       expect(panel).toBeTruthy();
       expect(panel.textContent).toContain(kb[0].shortDefinition);
-      expect(panel.textContent).toContain(kb[0].distinguishingTip);
+      expect(panel.textContent).toContain(kb[0].spottingTip);
       expect(infoButtons(fixture)[0].getAttribute('aria-expanded')).toBe('true');
     });
 

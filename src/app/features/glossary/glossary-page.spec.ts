@@ -4,7 +4,7 @@ import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/route
 import { of } from 'rxjs';
 import { GlossaryPage } from './glossary-page';
 import { QuizDataService } from '../../core/services/quiz-data.service';
-import { KnowledgeBaseEntry, QuizManifestEntry } from '../../core/models/quiz.models';
+import { ConfusedPair, Concept, QuizManifestEntry } from '../../core/models/quiz.models';
 
 describe('GlossaryPage', () => {
   const entry: QuizManifestEntry = {
@@ -19,27 +19,28 @@ describe('GlossaryPage', () => {
     kind: 'traps',
   };
 
-  const strawman: KnowledgeBaseEntry = {
+  const strawman: Concept = {
     id: 'strawman',
     name: 'Strawman',
     type: 'fallacy',
     shortDefinition: 'Misrepresents an argument.',
     longExplanation: 'Long explanation of strawman.',
     example: 'Example of strawman.',
-    commonlyConfusedWith: ['slippery-slope'],
-    distinguishingTip: 'Strawman misrepresents the argument.',
+    spottingTip: 'Strawman misrepresents the argument.',
   };
-  const slipperySlope: KnowledgeBaseEntry = {
+  const slipperySlope: Concept = {
     id: 'slippery-slope',
     name: 'Slippery Slope',
     type: 'fallacy',
     shortDefinition: 'Chains unlikely consequences.',
     longExplanation: 'Long explanation of slippery slope.',
     example: 'Example of slippery slope.',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
   };
-  const kb: KnowledgeBaseEntry[] = [strawman, slipperySlope];
+  const kb: Concept[] = [strawman, slipperySlope];
+  const pairs: ConfusedPair[] = [
+    { concepts: ['strawman', 'slippery-slope'], tip: 'Strawman misrepresents the argument.' },
+  ];
 
   let quizData: {
     loadManifest: ReturnType<typeof vi.fn>;
@@ -68,7 +69,9 @@ describe('GlossaryPage', () => {
   beforeEach(() => {
     quizData = {
       loadManifest: vi.fn(() => of({ quizzes: [entry] })),
-      loadQuizBundle: vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb })),
+      loadQuizBundle: vi.fn(() =>
+        of({ questions: [], templates: [], knowledgeBase: { concepts: kb, pairs } }),
+      ),
     };
   });
 
@@ -81,7 +84,7 @@ describe('GlossaryPage', () => {
     expect(quizData.loadManifest).toHaveBeenCalled();
     expect(quizData.loadQuizBundle).toHaveBeenCalledWith(entry);
     expect(fixture.componentInstance.quizTitle()).toBe('Logic Quiz');
-    expect(fixture.componentInstance.kb()).toEqual(kb);
+    expect(fixture.componentInstance.kb()).toEqual({ concepts: kb, pairs });
   });
 
   it('renders one trap button per filtered entry, unfiltered by default', async () => {
@@ -138,7 +141,7 @@ describe('GlossaryPage', () => {
     expect(detail.textContent).toContain('Example of strawman.');
   });
 
-  it("renders one pair per commonlyConfusedWith entry, showing its name and the selected entry's tip", async () => {
+  it('renders one pair per confused partner, showing its name and the pair tip', async () => {
     configure();
     const fixture = TestBed.createComponent(GlossaryPage);
     fixture.detectChanges();

@@ -1,16 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { filterEntries, confusedWith } from './glossary-search';
-import { KnowledgeBaseEntry } from '../../core/models/quiz.models';
+import { filterEntries, confusedWith, pairTip } from './glossary-search';
+import { Concept, KnowledgeBase } from '../../core/models/quiz.models';
 
-function makeKbEntry(overrides: Partial<KnowledgeBaseEntry> & { id: string }): KnowledgeBaseEntry {
+function makeKbEntry(overrides: Partial<Concept> & { id: string }): Concept {
   return {
     name: overrides.id,
     type: 'fallacy',
     shortDefinition: 'short',
     longExplanation: 'long',
     example: 'example',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
     ...overrides,
   };
 }
@@ -82,40 +80,76 @@ describe('filterEntries', () => {
 });
 
 describe('confusedWith', () => {
-  it('resolves commonlyConfusedWith ids to kb entries in order', () => {
-    const b = makeKbEntry({ id: 'b', name: 'Slippery Slope' });
-    const c = makeKbEntry({ id: 'c', name: 'False Cause' });
-    const entry = makeKbEntry({ id: 'a', name: 'Straw Man', commonlyConfusedWith: ['b', 'c'] });
-    const kb = [entry, b, c];
+  const straw = makeKbEntry({ id: 'straw', name: 'Straw Man' });
+  const dilemma = makeKbEntry({ id: 'dilemma', name: 'False Dilemma' });
+  const slope = makeKbEntry({ id: 'slope', name: 'Slippery Slope' });
+  const cause = makeKbEntry({ id: 'cause', name: 'False Cause' });
 
-    expect(confusedWith(entry, kb)).toEqual([b, c]);
+  it('returns the partner from a pair in either direction', () => {
+    const kb: KnowledgeBase = {
+      concepts: [straw, dilemma],
+      pairs: [{ concepts: ['straw', 'dilemma'] }],
+    };
+
+    expect(confusedWith(straw, kb)).toEqual([dilemma]);
+    expect(confusedWith(dilemma, kb)).toEqual([straw]);
   });
 
-  it('preserves the order given in commonlyConfusedWith even when kb order differs', () => {
-    const b = makeKbEntry({ id: 'b', name: 'Slippery Slope' });
-    const c = makeKbEntry({ id: 'c', name: 'False Cause' });
-    const entry = makeKbEntry({ id: 'a', name: 'Straw Man', commonlyConfusedWith: ['c', 'b'] });
-    const kb = [entry, b, c];
+  it('returns an empty array when the concept is in no pair', () => {
+    const kb: KnowledgeBase = {
+      concepts: [straw, dilemma, slope],
+      pairs: [{ concepts: ['straw', 'dilemma'] }],
+    };
 
-    expect(confusedWith(entry, kb)).toEqual([c, b]);
+    expect(confusedWith(slope, kb)).toEqual([]);
   });
 
-  it('skips ids that are not found in the kb', () => {
-    const b = makeKbEntry({ id: 'b', name: 'Slippery Slope' });
-    const entry = makeKbEntry({
-      id: 'a',
-      name: 'Straw Man',
-      commonlyConfusedWith: ['missing', 'b'],
-    });
-    const kb = [entry, b];
+  it('returns every partner in pairs order', () => {
+    const kb: KnowledgeBase = {
+      concepts: [straw, dilemma, slope, cause],
+      pairs: [
+        { concepts: ['straw', 'slope'] },
+        { concepts: ['cause', 'straw'] },
+        { concepts: ['dilemma', 'cause'] },
+      ],
+    };
 
-    expect(confusedWith(entry, kb)).toEqual([b]);
+    expect(confusedWith(straw, kb)).toEqual([slope, cause]);
   });
 
-  it('returns an empty array when commonlyConfusedWith is empty', () => {
-    const entry = makeKbEntry({ id: 'a', name: 'Straw Man', commonlyConfusedWith: [] });
-    const kb = [entry];
+  it('skips a pair whose partner is not in the concepts', () => {
+    const kb: KnowledgeBase = {
+      concepts: [straw],
+      pairs: [{ concepts: ['straw', 'missing'] }],
+    };
 
-    expect(confusedWith(entry, kb)).toEqual([]);
+    expect(confusedWith(straw, kb)).toEqual([]);
+  });
+});
+
+describe('pairTip', () => {
+  const kb: KnowledgeBase = {
+    concepts: [
+      makeKbEntry({ id: 'straw', name: 'Straw Man' }),
+      makeKbEntry({ id: 'dilemma', name: 'False Dilemma' }),
+      makeKbEntry({ id: 'slope', name: 'Slippery Slope' }),
+    ],
+    pairs: [
+      { concepts: ['straw', 'dilemma'], tip: 'Straw misrepresents; dilemma narrows.' },
+      { concepts: ['straw', 'slope'] },
+    ],
+  };
+
+  it('returns the tip for a pair in either order', () => {
+    expect(pairTip('straw', 'dilemma', kb)).toBe('Straw misrepresents; dilemma narrows.');
+    expect(pairTip('dilemma', 'straw', kb)).toBe('Straw misrepresents; dilemma narrows.');
+  });
+
+  it('returns undefined for a pair with no tip', () => {
+    expect(pairTip('straw', 'slope', kb)).toBeUndefined();
+  });
+
+  it('returns undefined when the two concepts are not paired', () => {
+    expect(pairTip('dilemma', 'slope', kb)).toBeUndefined();
   });
 });

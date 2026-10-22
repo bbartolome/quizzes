@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EMPTY, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
-import { KnowledgeBaseEntry, QuizStats } from '../../core/models/quiz.models';
+import { Concept, QuizStats } from '../../core/models/quiz.models';
 import { overallAccuracy, traitRows, type TraitRow } from './stats-rows';
 
 /**
@@ -36,7 +36,7 @@ export class StatsPage implements OnInit {
   readonly quizTitle = signal('');
 
   /** Knowledge base entries (empty until the page pattern resolves). */
-  readonly kb = signal<KnowledgeBaseEntry[]>([]);
+  readonly kb = signal<Concept[]>([]);
 
   /** Cumulative stats for this quiz, re-read after a reset. */
   readonly stats = signal<QuizStats>(this.statsService.getStats(this.id));
@@ -74,7 +74,7 @@ export class StatsPage implements OnInit {
       .subscribe({
         next: (bundle) => {
           if (bundle?.knowledgeBase) {
-            this.kb.set(bundle.knowledgeBase);
+            this.kb.set(bundle.knowledgeBase.concepts);
           }
         },
         error: () => {

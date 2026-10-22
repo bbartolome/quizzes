@@ -1,4 +1,9 @@
-import { KnowledgeBaseEntry, ScoredQuestionResult } from '../../core/models/quiz.models';
+import {
+  Concept,
+  ConfusedPair,
+  KnowledgeBase,
+  ScoredQuestionResult,
+} from '../../core/models/quiz.models';
 
 export type OptionStatus = 'correct' | 'wrong' | 'missed' | 'neutral';
 
@@ -21,52 +26,41 @@ export function optionStatus(r: ScoredQuestionResult, option: string): OptionSta
   return 'neutral';
 }
 
-export function findConfusionTips(options: string[], kb: KnowledgeBaseEntry[]): ConfusionTip[] {
-  // Map lowercased entry name -> entry (first wins on duplicate names).
-  const byName = new Map<string, KnowledgeBaseEntry>();
-  for (const entry of kb) {
-    const key = entry.name.toLowerCase();
+export function findConfusionTips(options: string[], kb: KnowledgeBase): ConfusionTip[] {
+  // Map lowercased concept name -> concept (first wins on duplicate names).
+  const byName = new Map<string, Concept>();
+  for (const concept of kb.concepts) {
+    const key = concept.name.toLowerCase();
     if (!byName.has(key)) {
-      byName.set(key, entry);
+      byName.set(key, concept);
     }
   }
 
-  // Map entry id -> entry.
-  const byId = new Map<string, KnowledgeBaseEntry>();
-  for (const entry of kb) {
-    if (!byId.has(entry.id)) {
-      byId.set(entry.id, entry);
-    }
-  }
-
-  // Determine which KB entries are matched by the options, preserving option order.
-  const matchedSet = new Set<KnowledgeBaseEntry>();
-  const matched: KnowledgeBaseEntry[] = [];
+  // Concepts matched by the options, keyed by id, in option order.
+  const matched = new Map<string, Concept>();
   for (const option of options) {
-    const entry = byName.get(option.toLowerCase());
-    if (entry && !matchedSet.has(entry)) {
-      matchedSet.add(entry);
-      matched.push(entry);
+    const concept = byName.get(option.toLowerCase());
+    if (concept && !matched.has(concept.id)) {
+      matched.set(concept.id, concept);
     }
   }
 
-  // For each matched X (in options order) and each id in X.commonlyConfusedWith
-  // whose entry Y is also matched, emit { a: X.name, b: Y.name, tip: X.distinguishingTip }.
-  // One tip per unordered pair (first wins); order follows options.
-  const seenPairs = new Set<string>();
+  // For each matched X (in option order), emit each pair containing X whose partner Y is also
+  // matched and which has a tip. a is the concept met first in option order; pairs are not repeated.
   const tips: ConfusionTip[] = [];
-  for (const x of matched) {
-    for (const confusedId of x.commonlyConfusedWith) {
-      const y = byId.get(confusedId);
-      if (!y || !matchedSet.has(y)) {
+  const emitted = new Set<ConfusedPair>();
+  for (const x of matched.values()) {
+    for (const pair of kb.pairs) {
+      if (emitted.has(pair) || pair.tip === undefined || !pair.concepts.includes(x.id)) {
         continue;
       }
-      const pairKey = [x.name.toLowerCase(), y.name.toLowerCase()].sort().join('\u0000');
-      if (seenPairs.has(pairKey)) {
+      const partnerId = pair.concepts[0] === x.id ? pair.concepts[1] : pair.concepts[0];
+      const y = matched.get(partnerId);
+      if (!y) {
         continue;
       }
-      seenPairs.add(pairKey);
-      tips.push({ a: x.name, b: y.name, tip: x.distinguishingTip });
+      emitted.add(pair);
+      tips.push({ a: x.name, b: y.name, tip: pair.tip });
     }
   }
 

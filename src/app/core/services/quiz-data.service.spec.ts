@@ -8,7 +8,7 @@ import {
   QuizManifestEntry,
   Question,
   Template,
-  KnowledgeBaseEntry,
+  KnowledgeBase,
 } from '../models/quiz.models';
 
 describe('QuizDataService', () => {
@@ -98,27 +98,28 @@ describe('QuizDataService', () => {
         },
       ];
 
-      const knowledgeBase: KnowledgeBaseEntry[] = [
-        {
-          id: 'strawman',
-          name: 'Straw Man',
-          type: 'fallacy',
-          shortDefinition: 'Misrepresenting an argument.',
-          longExplanation: 'A longer explanation.',
-          example: 'An example.',
-          commonlyConfusedWith: ['ad-hominem'],
-          distinguishingTip: 'Look for the misrepresentation.',
-        },
-      ];
+      const knowledgeBase: KnowledgeBase = {
+        concepts: [
+          {
+            id: 'strawman',
+            name: 'Straw Man',
+            type: 'fallacy',
+            shortDefinition: 'Misrepresenting an argument.',
+            longExplanation: 'A longer explanation.',
+            example: 'An example.',
+            spottingTip: 'Look for the misrepresentation.',
+          },
+        ],
+        pairs: [],
+      };
 
       let result:
-        | { questions: Question[]; templates: Template[]; knowledgeBase: KnowledgeBaseEntry[] }
-        | undefined;
+        { questions: Question[]; templates: Template[]; knowledgeBase: KnowledgeBase } | undefined;
       service.loadQuizBundle(entry).subscribe((value) => (result = value));
 
       const questionsReq = httpMock.expectOne(`${entry.dataPath}questions.json`);
       const templatesReq = httpMock.expectOne(`${entry.dataPath}templates.json`);
-      const knowledgeBaseReq = httpMock.expectOne(`${entry.dataPath}knowledge-base.json`);
+      const knowledgeBaseReq = httpMock.expectOne('data/concepts/knowledge-base.json');
 
       expect(questionsReq.request.method).toBe('GET');
       expect(templatesReq.request.method).toBe('GET');

@@ -48,12 +48,19 @@
           <p class="mt-3 text-sm text-slate-600">
             <span class="font-semibold">Example:</span> {{ sel.example }}
           </p>
+          @if (sel.spottingTip) {
+            <p class="mt-3 text-sm text-slate-600">
+              <span class="font-semibold">Spotting tip:</span> {{ sel.spottingTip }}
+            </p>
+          }
 
           <div class="mt-6 space-y-3">
             @for (other of confusedOthers(sel); track other.id) {
               <div data-testid="pair" class="rounded-lg border border-slate-200 bg-slate-50 p-4">
                 <p class="font-medium">{{ other.name }}</p>
-                <p class="mt-1 text-sm text-slate-600">{{ sel.distinguishingTip }}</p>
+                @if (pairTip(sel, other); as tip) {
+                  <p class="mt-1 text-sm text-slate-600">{{ tip }}</p>
+                }
                 <a
                   data-testid="quiz-pair"
                   [routerLink]="['/quiz', id(), 'round']"

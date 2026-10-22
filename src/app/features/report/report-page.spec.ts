@@ -5,7 +5,8 @@ import { of } from 'rxjs';
 import { ReportPage } from './report-page';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import {
-  KnowledgeBaseEntry,
+  ConfusedPair,
+  Concept,
   QuizManifestEntry,
   RoundQuestion,
   ScoredQuestionResult,
@@ -24,27 +25,28 @@ describe('ReportPage', () => {
     kind: 'traps',
   };
 
-  const strawman: KnowledgeBaseEntry = {
+  const strawman: Concept = {
     id: 'strawman',
     name: 'Strawman',
     type: 'fallacy',
     shortDefinition: 'short',
     longExplanation: 'long',
     example: 'example',
-    commonlyConfusedWith: ['slippery-slope'],
-    distinguishingTip: 'Strawman misrepresents the argument.',
+    spottingTip: 'Strawman misrepresents the argument.',
   };
-  const slipperySlope: KnowledgeBaseEntry = {
+  const slipperySlope: Concept = {
     id: 'slippery-slope',
     name: 'Slippery Slope',
     type: 'fallacy',
     shortDefinition: 'short',
     longExplanation: 'long',
     example: 'example',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
   };
-  const kb: KnowledgeBaseEntry[] = [strawman, slipperySlope];
+  const kb: Concept[] = [strawman, slipperySlope];
+  const pairs: ConfusedPair[] = [
+    { concepts: ['strawman', 'slippery-slope'], tip: 'Strawman misrepresents the argument.' },
+  ];
 
   function makeQuestion(overrides: Partial<RoundQuestion> & { id: string }): RoundQuestion {
     return {
@@ -100,7 +102,9 @@ describe('ReportPage', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0);
     quizData = {
       loadManifest: vi.fn(() => of({ quizzes: [entry] })),
-      loadQuizBundle: vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb })),
+      loadQuizBundle: vi.fn(() =>
+        of({ questions: [], templates: [], knowledgeBase: { concepts: kb, pairs } }),
+      ),
     };
   });
 
@@ -140,7 +144,7 @@ describe('ReportPage', () => {
     expect(fixture.componentInstance.results()).toEqual(results);
     expect(quizData.loadManifest).toHaveBeenCalled();
     expect(quizData.loadQuizBundle).toHaveBeenCalledWith(entry);
-    expect(fixture.componentInstance.kb()).toEqual(kb);
+    expect(fixture.componentInstance.kb()).toEqual({ concepts: kb, pairs });
   });
 
   it('renders the summary line produced by summaryLine', async () => {

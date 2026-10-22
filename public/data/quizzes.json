@@ -6,7 +6,7 @@
       "description": "Spot logical fallacies and cognitive biases in everyday claims.",
       "icon": "icons/reasoning-traps.svg",
       "accent": "#3b6ea5",
-      "version": 1,
+      "version": 2,
       "dataPath": "data/quizzes/reasoning-traps/",
       "order": 1,
       "kind": "traps"

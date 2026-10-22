@@ -10,12 +10,7 @@ import {
   TEMPLATE_PROBABILITY,
   NextQuestionDeps,
 } from './round-builder';
-import {
-  Template,
-  KnowledgeBaseEntry,
-  RoundQuestion,
-  Question,
-} from '../../core/models/quiz.models';
+import { Template, Concept, RoundQuestion, Question } from '../../core/models/quiz.models';
 import type { QuestionBank, SelectRoundOptions } from '../../core/services/quiz-engine.service';
 
 function makeTemplate(overrides: Partial<Template> & { id: string }): Template {
@@ -30,15 +25,14 @@ function makeTemplate(overrides: Partial<Template> & { id: string }): Template {
   };
 }
 
-function makeKbEntry(overrides: Partial<KnowledgeBaseEntry> & { id: string }): KnowledgeBaseEntry {
+function makeKbEntry(overrides: Partial<Concept> & { id: string }): Concept {
   return {
     name: overrides.id,
     type: 'fallacy',
     shortDefinition: 'short',
     longExplanation: 'long',
     example: 'example',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
     ...overrides,
   };
 }

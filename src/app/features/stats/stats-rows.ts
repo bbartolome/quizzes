@@ -1,4 +1,4 @@
-import { QuizStats, KnowledgeBaseEntry } from '../../core/models/quiz.models';
+import { QuizStats, Concept } from '../../core/models/quiz.models';
 
 export interface TraitRow {
   id: string;
@@ -8,7 +8,7 @@ export interface TraitRow {
   accuracy: number;
 }
 
-export function traitRows(stats: QuizStats, kb: KnowledgeBaseEntry[]): TraitRow[] {
+export function traitRows(stats: QuizStats, kb: Concept[]): TraitRow[] {
   const nameById = new Map<string, string>(kb.map((entry) => [entry.id, entry.name]));
 
   const rows: TraitRow[] = Object.entries(stats.perTrait)

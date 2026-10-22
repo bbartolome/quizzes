@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { StatsPage } from './stats-page';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
-import { KnowledgeBaseEntry, QuizManifestEntry, QuizStats } from '../../core/models/quiz.models';
+import { Concept, QuizManifestEntry, QuizStats } from '../../core/models/quiz.models';
 import { overallAccuracy, traitRows } from './stats-rows';
 
 describe('StatsPage', () => {
@@ -21,27 +21,25 @@ describe('StatsPage', () => {
     kind: 'traps',
   };
 
-  const strawman: KnowledgeBaseEntry = {
+  const strawman: Concept = {
     id: 'strawman',
     name: 'Strawman',
     type: 'fallacy',
     shortDefinition: 'Misrepresents an argument.',
     longExplanation: 'Long explanation.',
     example: 'Example.',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
   };
-  const slipperySlope: KnowledgeBaseEntry = {
+  const slipperySlope: Concept = {
     id: 'slippery-slope',
     name: 'Slippery Slope',
     type: 'fallacy',
     shortDefinition: 'Chains unlikely consequences.',
     longExplanation: 'Long explanation.',
     example: 'Example.',
-    commonlyConfusedWith: [],
-    distinguishingTip: 'tip',
+    spottingTip: 'tip',
   };
-  const kb: KnowledgeBaseEntry[] = [strawman, slipperySlope];
+  const kb: Concept[] = [strawman, slipperySlope];
 
   const populatedStats: QuizStats = {
     quizId: 'rt',
@@ -91,7 +89,9 @@ describe('StatsPage', () => {
   beforeEach(() => {
     quizData = {
       loadManifest: vi.fn(() => of({ quizzes: [entry] })),
-      loadQuizBundle: vi.fn(() => of({ questions: [], templates: [], knowledgeBase: kb })),
+      loadQuizBundle: vi.fn(() =>
+        of({ questions: [], templates: [], knowledgeBase: { concepts: kb, pairs: [] } }),
+      ),
     };
     statsService = {
       getStats: vi.fn(() => populatedStats),

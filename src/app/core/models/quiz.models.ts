@@ -36,15 +36,24 @@ export interface Template {
   explanation: string;
 }
 
-export interface KnowledgeBaseEntry {
+export interface Concept {
   id: string;
   name: string;
   type: 'fallacy' | 'bias';
   shortDefinition: string;
   longExplanation: string;
   example: string;
-  commonlyConfusedWith: string[];
-  distinguishingTip: string;
+  spottingTip?: string;
+}
+
+export interface ConfusedPair {
+  concepts: [string, string];
+  tip?: string;
+}
+
+export interface KnowledgeBase {
+  concepts: Concept[];
+  pairs: ConfusedPair[];
 }
 
 export interface PerTraitStats {

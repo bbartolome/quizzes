@@ -28,7 +28,7 @@
   "dataGroups": [
     {
       "name": "quiz-data",
-      "urls": ["data/quizzes.json", "data/quizzes/**/*.json"],
+      "urls": ["data/quizzes.json", "data/quizzes/**/*.json", "data/concepts/**/*.json"],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 100,
