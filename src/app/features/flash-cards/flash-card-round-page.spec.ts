@@ -581,4 +581,98 @@ describe('FlashCardRoundPage', () => {
       expect(component.cards()).toHaveLength(2);
     });
   });
+
+  describe('feedback block (S6.9)', () => {
+    const tipped: KnowledgeBase = {
+      concepts: [
+        { ...B1, spottingTip: 'spot-b1' },
+        { ...B2, spottingTip: 'spot-b2' },
+        F1,
+        concept('f2', 'fallacy'),
+      ],
+      pairs: [{ concepts: ['b1', 'b2'], tip: 'pair-tip' }],
+    };
+
+    beforeEach(() => {
+      // r = 0.5 draws b2 as the first target (weights 2 / 2), and b1 is its confused partner.
+      vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    });
+
+    function indexOf(
+      card: { target: Concept; card: { optionConcepts: Concept[] } },
+      right: boolean,
+    ) {
+      return card.card.optionConcepts.findIndex((c) => (c.id === card.target.id) === right);
+    }
+
+    function cardEl(fixture: { nativeElement: HTMLElement }, i: number): HTMLElement {
+      return fixture.nativeElement.querySelectorAll('[data-testid="card"]')[i] as HTMLElement;
+    }
+
+    function labelsOf(fixture: { nativeElement: HTMLElement }, i: number): string[] {
+      return Array.from(cardEl(fixture, i).querySelectorAll('label')).map(
+        (l) => l.textContent ?? '',
+      );
+    }
+
+    it('a correct pick shows Correct, the answer, the long explanation, the spotting tip, then the contrast', () => {
+      const { component, fixture } = setup('biases', 'bias', tipped);
+      const first = component.cards()[0];
+      component.selectOption(indexOf(first, true));
+      component.checkAnswer();
+      fixture.detectChanges();
+
+      const text = cardEl(fixture, 0).querySelector('[data-testid="feedback"]')?.textContent ?? '';
+      const order = ['Correct', 'Answer: Name b2', 'long b2', 'spot-b2', 'pair-tip'].map((t) =>
+        text.indexOf(t),
+      );
+      expect(order.every((i) => i >= 0)).toBe(true);
+      expect(order).toEqual([...order].sort((a, b) => a - b));
+    });
+
+    it('a wrong pick shows Incorrect in the same order, with the pair contrast', () => {
+      const { component, fixture } = setup('biases', 'bias', tipped);
+      const first = component.cards()[0];
+      component.selectOption(first.card.optionConcepts.findIndex((c) => c.id === 'b1'));
+      component.checkAnswer();
+      fixture.detectChanges();
+
+      const text = cardEl(fixture, 0).querySelector('[data-testid="feedback"]')?.textContent ?? '';
+      const order = [
+        'Incorrect',
+        'Answer: Name b2',
+        'long b2',
+        'spot-b2',
+        'Name b2 vs Name b1: pair-tip',
+      ].map((t) => text.indexOf(t));
+      expect(order.every((i) => i >= 0)).toBe(true);
+      expect(order).toEqual([...order].sort((a, b) => a - b));
+    });
+
+    it('on a wrong pick the picked option is labelled Your pick and the target Correct answer', () => {
+      const { component, fixture } = setup('biases', 'bias', tipped);
+      const first = component.cards()[0];
+      const pickedIndex = first.card.optionConcepts.findIndex((c) => c.id === 'b1');
+      component.selectOption(pickedIndex);
+      component.checkAnswer();
+      fixture.detectChanges();
+
+      const labels = labelsOf(fixture, 0);
+      expect(labels[pickedIndex]).toContain('Your pick');
+      expect(labels[first.card.correctIndex]).toContain('Correct answer');
+      expect(labels.filter((l) => l.includes('Your pick'))).toHaveLength(1);
+    });
+
+    it('on a correct pick the target is labelled Correct answer and no option is Your pick', () => {
+      const { component, fixture } = setup('biases', 'bias', tipped);
+      const first = component.cards()[0];
+      component.selectOption(indexOf(first, true));
+      component.checkAnswer();
+      fixture.detectChanges();
+
+      const labels = labelsOf(fixture, 0);
+      expect(labels[first.card.correctIndex]).toContain('Correct answer');
+      expect(labels.some((l) => l.includes('Your pick'))).toBe(false);
+    });
+  });
 });
