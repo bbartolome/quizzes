@@ -239,4 +239,88 @@ describe('FlashCardRoundPage', () => {
       expect(traitsReads).toHaveLength(1);
     });
   });
+
+  describe('in-round pair bump (S6.4)', () => {
+    const withPair: KnowledgeBase = {
+      concepts: [B1, B2, concept('b3', 'bias'), F1, concept('f2', 'fallacy')],
+      pairs: [{ concepts: ['b1', 'b2'], tip: 'pair tip' }],
+    };
+
+    beforeEach(() => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.62);
+    });
+
+    function partnerIdOf(targetId: string): string {
+      return targetId === 'b1' ? 'b2' : 'b1';
+    }
+
+    it('a wrong pick that is a confused partner of the target adds the picked id to bumpedIds', () => {
+      const { component } = setup('biases', 'bias', withPair);
+      const first = component.cards()[0];
+      const partnerId = partnerIdOf(first.target.id);
+
+      component.selectOption(first.card.optionConcepts.findIndex((c) => c.id === partnerId));
+      component.checkAnswer();
+
+      expect(component.bumpedIds().has(partnerId)).toBe(true);
+    });
+
+    it('a wrong pick that is not a confused partner does not change bumpedIds', () => {
+      const { component } = setup('biases', 'bias', withPair);
+      const first = component.cards()[0];
+      const partnerId = partnerIdOf(first.target.id);
+      const other = first.card.optionConcepts.findIndex(
+        (c) => c.id !== first.target.id && c.id !== partnerId,
+      );
+
+      component.selectOption(other);
+      component.checkAnswer();
+
+      expect(component.bumpedIds().size).toBe(0);
+    });
+
+    /** b1 has base weight 2.5 from stored history (1 attempt, 0 correct). b2 and b3 have 2 each. */
+    function storeB1History(): void {
+      localStorage.setItem(
+        'stats:biases',
+        JSON.stringify({
+          quizId: 'biases',
+          version: 1,
+          perTrait: { b1: { traitId: 'b1', correct: 0, attempted: 1 } },
+          streak: 0,
+          roundsPlayed: 0,
+        }),
+      );
+    }
+
+    it('after b1 is bumped, a draw that favours b1 takes it as the next target', () => {
+      // First draw: weights 2.5 / 2 / 2 put r = 0.58 on b2. Next draw without the bump: 2.5 / 2 gives b3.
+      // With the bump: 3 / 2 gives b1.
+      vi.spyOn(Math, 'random').mockReturnValue(0.58);
+      storeB1History();
+      const { component } = setup('biases', 'bias', withPair);
+      const first = component.cards()[0];
+      expect(first.target.id).toBe('b2');
+
+      component.selectOption(first.card.optionConcepts.findIndex((c) => c.id === 'b1'));
+      component.checkAnswer();
+
+      expect(component.cards()[1].target.id).toBe('b1');
+    });
+
+    it('the bumped weight is capped at 3 in the next draw', () => {
+      // Uncapped, b1 would weigh 3.5 against 2, and r = 0.62 would still land on b1.
+      // Capped at 3, it weighs 3 against 2, and r = 0.62 lands on b3.
+      vi.spyOn(Math, 'random').mockReturnValue(0.62);
+      storeB1History();
+      const { component } = setup('biases', 'bias', withPair);
+      const first = component.cards()[0];
+      expect(first.target.id).toBe('b2');
+
+      component.selectOption(first.card.optionConcepts.findIndex((c) => c.id === 'b1'));
+      component.checkAnswer();
+
+      expect(component.cards()[1].target.id).toBe('b3');
+    });
+  });
 });
