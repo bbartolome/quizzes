@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
+import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angular/router';
 import { FlashCardRoundPage } from './flash-card-round-page';
 import { StatsService } from '../../core/services/stats.service';
 import { Concept, KnowledgeBase, QuizManifest } from '../../core/models/quiz.models';
@@ -392,6 +392,79 @@ describe('FlashCardRoundPage', () => {
 
       const [, result] = recordResult.mock.calls[0];
       expect(result.question.traitIds.filter((id: string) => id !== first.target.id)).toEqual([]);
+    });
+  });
+
+  describe('end quiz (S6.6)', () => {
+    const fourConcepts: KnowledgeBase = {
+      concepts: [B1, B2, F1, concept('f2', 'fallacy')],
+      pairs: [],
+    };
+
+    beforeEach(() => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    });
+
+    function indexOf(
+      card: { target: Concept; card: { optionConcepts: Concept[] } },
+      right: boolean,
+    ) {
+      return card.card.optionConcepts.findIndex((c) => (c.id === card.target.id) === right);
+    }
+
+    function spies(component: FlashCardRoundPage) {
+      const stats = TestBed.inject(StatsService);
+      const router = TestBed.inject(Router);
+      return {
+        recordSessionEnd: vi.spyOn(stats, 'recordSessionEnd'),
+        navigate: vi.spyOn(router, 'navigate').mockResolvedValue(true),
+        component,
+      };
+    }
+
+    it('with a checked card, endQuiz calls recordSessionEnd once and navigates to the report', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const { recordSessionEnd, navigate } = spies(component);
+
+      component.selectOption(indexOf(component.cards()[0], true));
+      component.checkAnswer();
+      component.endQuiz();
+
+      expect(recordSessionEnd).toHaveBeenCalledTimes(1);
+      expect(recordSessionEnd).toHaveBeenCalledWith('biases');
+      expect(navigate.mock.calls[0][0]).toEqual(['../report']);
+    });
+
+    it('with zero checked cards, recordSessionEnd is not called and navigation still happens with empty results', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const { recordSessionEnd, navigate } = spies(component);
+
+      component.endQuiz();
+
+      expect(recordSessionEnd).not.toHaveBeenCalled();
+      expect(navigate).toHaveBeenCalledTimes(1);
+      expect(navigate.mock.calls[0][1]?.state).toEqual({ results: [] });
+    });
+
+    it('history state carries one result per checked card, in order: target, picked concept, correct', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const { navigate } = spies(component);
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, false));
+      component.checkAnswer();
+      const second = component.cards()[1];
+      component.selectOption(indexOf(second, true));
+      component.checkAnswer();
+      component.endQuiz();
+
+      const pickedFirst = first.card.optionConcepts[indexOf(first, false)].id;
+      expect(navigate.mock.calls[0][1]?.state).toEqual({
+        results: [
+          { targetId: first.target.id, pickedId: pickedFirst, correct: false },
+          { targetId: second.target.id, pickedId: second.target.id, correct: true },
+        ],
+      });
     });
   });
 });
