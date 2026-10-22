@@ -67,6 +67,23 @@ describe('knowledge base (S1)', () => {
     }
   });
 
+  it('has exactly 4 pairs, every pair with a non-empty tip', () => {
+    const kb = readJson(KB_PATH);
+    expect(kb.pairs).toHaveLength(4);
+    for (const p of kb.pairs) {
+      expect(typeof p.tip, `pair ${p.concepts} missing tip`).toBe('string');
+      expect(p.tip.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('has exactly 7 bias and 9 fallacy concepts', () => {
+    const concepts = readJson(KB_PATH).concepts;
+    const biases = concepts.filter((c: { type: string }) => c.type === 'bias');
+    const fallacies = concepts.filter((c: { type: string }) => c.type === 'fallacy');
+    expect(biases).toHaveLength(7);
+    expect(fallacies).toHaveLength(9);
+  });
+
   it('manifest bumps reasoning-traps to version 2', () => {
     const entry = readJson(MANIFEST_PATH).quizzes.find(
       (e: { id: string }) => e.id === 'reasoning-traps',
