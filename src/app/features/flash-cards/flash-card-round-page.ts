@@ -1,7 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
+  Injector,
   OnInit,
+  QueryList,
+  ViewChildren,
+  afterNextRender,
   computed,
   inject,
   signal,
@@ -25,7 +30,7 @@ export interface RoundCard {
 
 @Component({
   selector: 'app-flash-card-round-page',
-  template: '',
+  templateUrl: './flash-card-round-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlashCardRoundPage implements OnInit {
@@ -33,6 +38,9 @@ export class FlashCardRoundPage implements OnInit {
   private readonly quizData: QuizDataService = inject(QuizDataService);
   private readonly stats: StatsService = inject(StatsService);
   private readonly router: Router = inject(Router);
+  private readonly injector: Injector = inject(Injector);
+
+  @ViewChildren('cardEl') private readonly cardEls!: QueryList<ElementRef<HTMLElement>>;
 
   private kindId = '';
   private kb: KnowledgeBase = { concepts: [], pairs: [] };
@@ -160,5 +168,10 @@ export class FlashCardRoundPage implements OnInit {
     const target = drawTarget(deck, previous, this.baseWeightMap, this.bumpedIds(), Math.random);
     const card = buildCard(target, this.kb, Math.random);
     this.cards.update((current) => [...current, { target, card, picked: null, checked: false }]);
+    afterNextRender(
+      () =>
+        this.cardEls.last?.nativeElement.scrollIntoView?.({ behavior: 'smooth', block: 'start' }),
+      { injector: this.injector },
+    );
   }
 }
