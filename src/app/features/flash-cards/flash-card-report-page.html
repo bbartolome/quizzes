@@ -1,0 +1,55 @@
+<div class="mx-auto w-full max-w-2xl space-y-6 p-4 sm:p-6">
+  @if (empty()) {
+    <section class="space-y-4">
+      <p data-testid="empty" class="text-slate-700">
+        No cards were checked this round, so there is no report yet.
+      </p>
+      <button
+        type="button"
+        data-testid="back"
+        class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+        (click)="back()"
+      >
+        {{ backLabel() }}
+      </button>
+    </section>
+  } @else {
+    <p data-testid="summary" class="text-lg font-semibold text-slate-800">
+      {{ summary().n }} of {{ summary().m }} correct
+    </p>
+
+    @if (summary().missed.length > 0) {
+      <section class="space-y-2">
+        <h2 class="text-base font-semibold text-slate-800">Missed this round</h2>
+        <ul data-testid="missed-list" class="space-y-2 text-slate-700">
+          @for (line of summary().missed; track $index) {
+            <li data-testid="missed-line" class="rounded-md border border-slate-200 bg-white p-3">
+              {{ line.targetName }} — you picked {{ line.lureName }}
+            </li>
+          }
+        </ul>
+      </section>
+    } @else {
+      <p data-testid="no-misses" class="text-slate-700">No misses this round.</p>
+    }
+
+    <div class="flex flex-wrap gap-3">
+      <button
+        type="button"
+        data-testid="next-round"
+        class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
+        (click)="nextRound()"
+      >
+        Next round
+      </button>
+      <button
+        type="button"
+        data-testid="back"
+        class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+        (click)="back()"
+      >
+        {{ backLabel() }}
+      </button>
+    </div>
+  }
+</div>
