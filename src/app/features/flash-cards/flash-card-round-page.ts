@@ -6,7 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Concept, KnowledgeBase, ScoredQuestionResult } from '../../core/models/quiz.models';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
@@ -32,6 +32,7 @@ export class FlashCardRoundPage implements OnInit {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly quizData: QuizDataService = inject(QuizDataService);
   private readonly stats: StatsService = inject(StatsService);
+  private readonly router: Router = inject(Router);
 
   private kindId = '';
   private kb: KnowledgeBase = { concepts: [], pairs: [] };
@@ -52,6 +53,25 @@ export class FlashCardRoundPage implements OnInit {
       checked: checked.length,
     };
   });
+
+  /**
+   * Ends the round. Records the session end only if a card was checked, then goes to the report
+   * with one result per checked card in history.state (D1, revised: `results`).
+   */
+  endQuiz(): void {
+    const checked = this.cards().filter((c) => c.checked);
+    if (checked.length > 0) {
+      this.stats.recordSessionEnd(this.kindId);
+    }
+    const results = checked.flatMap((c) => {
+      if (c.picked === null) {
+        return [];
+      }
+      const pickedId = c.card.optionConcepts[c.picked].id;
+      return [{ targetId: c.target.id, pickedId, correct: pickedId === c.target.id }];
+    });
+    this.router.navigate(['../report'], { relativeTo: this.route, state: { results } });
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
