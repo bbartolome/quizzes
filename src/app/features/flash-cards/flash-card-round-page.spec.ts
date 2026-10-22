@@ -675,4 +675,62 @@ describe('FlashCardRoundPage', () => {
       expect(labels.some((l) => l.includes('Your pick'))).toBe(false);
     });
   });
+
+  describe('sticky footer (S6.10)', () => {
+    const fourConcepts: KnowledgeBase = {
+      concepts: [B1, B2, F1, concept('f2', 'fallacy')],
+      pairs: [],
+    };
+
+    beforeEach(() => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    });
+
+    function footer(fixture: { nativeElement: HTMLElement }): HTMLElement {
+      return fixture.nativeElement.querySelector('[data-testid="footer"]') as HTMLElement;
+    }
+
+    function endButton(fixture: { nativeElement: HTMLElement }): HTMLButtonElement {
+      return fixture.nativeElement.querySelector('[data-testid="end-quiz"]') as HTMLButtonElement;
+    }
+
+    it('with no card checked the footer reads "0 of 0 correct" and End quiz is enabled', () => {
+      const { fixture } = setup('biases', 'bias', fourConcepts);
+
+      expect(footer(fixture).textContent).toContain('0 of 0 correct');
+      expect(endButton(fixture).disabled).toBe(false);
+    });
+
+    it('with two correct out of three checked, the footer reads "2 of 3 correct"', () => {
+      const { component, fixture } = setup('biases', 'bias', fourConcepts);
+      const outcomes = [true, false, true];
+      outcomes.forEach((right, i) => {
+        const card = component.cards()[i];
+        component.selectOption(
+          card.card.optionConcepts.findIndex((c) => (c.id === card.target.id) === right),
+        );
+        component.checkAnswer();
+      });
+      fixture.detectChanges();
+
+      expect(footer(fixture).textContent).toContain('2 of 3 correct');
+    });
+
+    it('the footer is sticky', () => {
+      const { fixture } = setup('biases', 'bias', fourConcepts);
+
+      const classes = footer(fixture).classList;
+      expect(classes.contains('sticky') || classes.contains('fixed')).toBe(true);
+    });
+
+    it('clicking End quiz calls endQuiz', () => {
+      const { component, fixture } = setup('biases', 'bias', fourConcepts);
+      const endQuiz = vi.spyOn(component, 'endQuiz').mockImplementation(() => undefined);
+      fixture.detectChanges();
+
+      endButton(fixture).click();
+
+      expect(endQuiz).toHaveBeenCalledTimes(1);
+    });
+  });
 });
