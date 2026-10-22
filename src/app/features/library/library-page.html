@@ -46,7 +46,7 @@
                 <dt>Rounds played</dt>
                 <dd class="font-medium text-gray-900">{{ card.roundsPlayed }}</dd>
               </div>
-              @if (card.kind === 'traps') {
+              @if (card.kind !== 'calibration') {
                 <div class="flex justify-between">
                   <dt>Accuracy</dt>
                   <dd class="font-medium text-gray-900">

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { QuizManifestEntry } from '../../core/models/quiz.models';
+import { requireDataPath, type QuizManifestEntry } from '../../core/models/quiz.models';
 import type { CalibrationBank, CalibrationFormat, CalibrationItem } from './calibration.models';
 import { TOPICS, isFourWayItem } from './calibration.models';
 import manifestJson from '../../../../public/data/quizzes.json';
@@ -16,7 +16,8 @@ const banksByDataPath: Record<string, CalibrationBank> = {
 const entries = manifest.quizzes.filter((q) => q.kind === 'calibration');
 
 function bankFor(entry: QuizManifestEntry): CalibrationBank {
-  const key = entry.dataPath.endsWith('/') ? entry.dataPath : `${entry.dataPath}/`;
+  const dataPath = requireDataPath(entry);
+  const key = dataPath.endsWith('/') ? dataPath : `${dataPath}/`;
   const bank = banksByDataPath[key];
   if (!bank)
     throw new Error(`No bank imported for ${entry.id} (${key}); add it to banksByDataPath`);

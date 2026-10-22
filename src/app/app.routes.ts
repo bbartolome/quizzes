@@ -8,6 +8,8 @@ import { StatsPage } from './features/stats/stats-page';
 import { CalibrationHomePage } from './features/calibration/calibration-home-page';
 import { CalibrationRoundPage } from './features/calibration/calibration-round-page';
 import { CalibrationResultsPage } from './features/calibration/calibration-results-page';
+import { FlashCardHomePage } from './features/flash-cards/flash-card-home-page';
+import { FlashCardRoundPage } from './features/flash-cards/flash-card-round-page';
 
 export const routes: Routes = [
   { path: '', component: LibraryPage },
@@ -16,6 +18,10 @@ export const routes: Routes = [
   { path: 'quiz/:id/report', component: ReportPage },
   { path: 'quiz/:id/glossary', component: GlossaryPage },
   { path: 'quiz/:id/stats', component: StatsPage },
+  { path: 'biases/:id', component: FlashCardHomePage, data: { conceptType: 'bias' } },
+  { path: 'biases/:id/round', component: FlashCardRoundPage, data: { conceptType: 'bias' } },
+  { path: 'fallacies/:id', component: FlashCardHomePage, data: { conceptType: 'fallacy' } },
+  { path: 'fallacies/:id/round', component: FlashCardRoundPage, data: { conceptType: 'fallacy' } },
   { path: 'calibration/:id', component: CalibrationHomePage },
   { path: 'calibration/:id/round', component: CalibrationRoundPage },
   { path: 'calibration/:id/results', component: CalibrationResultsPage },

@@ -10,9 +10,17 @@ import { CalibrationHistoryService } from '../calibration/calibration-history.se
 import { calibrationCardStats } from '../calibration/calibration-card';
 import { formatOf } from '../calibration/calibration-format';
 
+/** URL prefix for each collection kind; each kind's pages live under its own prefix. */
+const ROUTE_PREFIX: Record<QuizManifestEntry['kind'], string> = {
+  traps: '/quiz',
+  calibration: '/calibration',
+  biases: '/biases',
+  fallacies: '/fallacies',
+};
+
 export interface QuizCard {
   entry: QuizManifestEntry;
-  kind: 'traps' | 'calibration';
+  kind: QuizManifestEntry['kind'];
   streak: number;
   roundsPlayed: number;
   correct: number;
@@ -91,7 +99,7 @@ export class LibraryPage {
   );
 
   protected routeFor(entry: QuizManifestEntry): string {
-    return entry.kind === 'traps' ? `/quiz/${entry.id}` : `/calibration/${entry.id}`;
+    return `${ROUTE_PREFIX[entry.kind]}/${entry.id}`;
   }
 
   protected formatPercent(value: number): string {
@@ -132,7 +140,7 @@ export class LibraryPage {
     }
     return {
       entry,
-      kind: 'traps',
+      kind: entry.kind,
       streak: s.streak,
       roundsPlayed: s.roundsPlayed,
       correct,
