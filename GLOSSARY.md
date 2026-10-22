@@ -60,6 +60,18 @@ _Avoid_: Sure answer, high-confidence answer
 A scored, multiple-choice quiz that drills one family of concepts, either biases or fallacies, in both directions: from a definition or example to the term, and from the term to its definition.
 _Avoid_: Flip cards, deck
 
+**Deck**:
+The concepts of one type (all the biases, or all the fallacies) that a flash card quiz draws its targets from. Lures can come from either deck.
+_Avoid_: Bank (names the calibration item files), category
+
+**Target**:
+The concept a flash card asks about. Its term or its definition is the one correct option.
+_Avoid_: Answer (names the option, not the concept), trait (in flash card text)
+
+**Card direction**:
+Which way a flash card runs: definition → term, example → term, or term → definition. The two → term directions together are drawn twice as often as term → definition. Results aren't stored per direction.
+_Avoid_: Card type, mode
+
 **Knowledge base**:
 The shared set of concept entries (biases and fallacies) that Reasoning Traps and the flash card quizzes all draw on.
 _Avoid_: Glossary (names the Reasoning Traps page)
