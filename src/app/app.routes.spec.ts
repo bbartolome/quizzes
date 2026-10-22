@@ -9,10 +9,23 @@ import { StatsPage } from './features/stats/stats-page';
 import { CalibrationHomePage } from './features/calibration/calibration-home-page';
 import { CalibrationRoundPage } from './features/calibration/calibration-round-page';
 import { CalibrationResultsPage } from './features/calibration/calibration-results-page';
+import { FlashCardHomePage } from './features/flash-cards/flash-card-home-page';
+import { FlashCardRoundPage } from './features/flash-cards/flash-card-round-page';
 
 describe('routes', () => {
-  it('has exactly 10 route entries', () => {
-    expect(routes.length).toBe(10);
+  it('has exactly 14 route entries', () => {
+    expect(routes.length).toBe(14);
+  });
+
+  it.each([
+    ['biases/:id', 'bias', FlashCardHomePage],
+    ['biases/:id/round', 'bias', FlashCardRoundPage],
+    ['fallacies/:id', 'fallacy', FlashCardHomePage],
+    ['fallacies/:id/round', 'fallacy', FlashCardRoundPage],
+  ])('maps "%s" to a flash card page with conceptType %s', (path, conceptType, component) => {
+    const route = routes.find((r) => r.path === path);
+    expect(route?.component).toBe(component);
+    expect(route?.data).toEqual({ conceptType });
   });
 
   it('maps "" to LibraryPage', () => {

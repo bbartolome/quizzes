@@ -6,6 +6,7 @@ import {
   Question,
   QuizManifest,
   QuizManifestEntry,
+  requireDataPath,
   Template,
 } from '../models/quiz.models';
 
@@ -27,7 +28,8 @@ export class QuizDataService {
   }
 
   loadQuizBundle(entry: QuizManifestEntry): Observable<QuizBundle> {
-    const base = entry.dataPath.endsWith('/') ? entry.dataPath : `${entry.dataPath}/`;
+    const dataPath = requireDataPath(entry);
+    const base = dataPath.endsWith('/') ? dataPath : `${dataPath}/`;
     return forkJoin({
       questions: this.http.get<Question[]>(`${base}questions.json`),
       templates: this.http.get<Template[]>(`${base}templates.json`),

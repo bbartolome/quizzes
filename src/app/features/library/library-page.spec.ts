@@ -270,3 +270,97 @@ describe('LibraryPage calibration cards', () => {
     expect(localStorage.getItem('stats:calibration:calibration')).toBeNull();
   });
 });
+
+describe('LibraryPage flash card collections', () => {
+  const biasesEntry: QuizManifestEntry = {
+    id: 'biases',
+    title: 'Biases',
+    description: 'Flash cards on cognitive biases.',
+    icon: 'icons/biases.svg',
+    accent: '#0f766e',
+    version: 1,
+    order: 1,
+    kind: 'biases',
+  };
+  const fallaciesEntry: QuizManifestEntry = {
+    id: 'fallacies',
+    title: 'Fallacies',
+    description: 'Flash cards on logical fallacies.',
+    icon: 'icons/fallacies.svg',
+    accent: '#9d174d',
+    version: 1,
+    order: 2,
+    kind: 'fallacies',
+  };
+  const orderedTraps: QuizManifestEntry = { ...trapsEntry, order: 3 };
+
+  beforeEach(() => {
+    const storage = new MemoryStorage();
+    vi.stubGlobal('localStorage', storage);
+    storage.setItem(
+      'stats:biases',
+      JSON.stringify({
+        quizId: 'biases',
+        version: 1,
+        perTrait: { anchoring: { traitId: 'anchoring', correct: 3, attempted: 4 } },
+        streak: 2,
+        roundsPlayed: 2,
+      }),
+    );
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([]),
+        {
+          provide: QuizDataService,
+          useValue: {
+            loadManifest: vi.fn(() => of({ quizzes: [orderedTraps, fallaciesEntry, biasesEntry] })),
+          },
+        },
+      ],
+    });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  async function render() {
+    const fixture = TestBed.createComponent(LibraryPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    return fixture.nativeElement as HTMLElement;
+  }
+
+  it('links the biases and fallacies cards to /biases/:id and /fallacies/:id', async () => {
+    const root = await render();
+    const biasesLink = root.querySelector<HTMLAnchorElement>('a[aria-label^="Biases"]');
+    const fallaciesLink = root.querySelector<HTMLAnchorElement>('a[aria-label^="Fallacies"]');
+    expect(biasesLink!.getAttribute('href')!.endsWith('/biases/biases')).toBe(true);
+    expect(fallaciesLink!.getAttribute('href')!.endsWith('/fallacies/fallacies')).toBe(true);
+  });
+
+  it('shows rounds, accuracy and streak for a flash card collection from stats:<kind>', async () => {
+    const root = await render();
+    const biasesLink = root.querySelector<HTMLAnchorElement>('a[aria-label^="Biases"]');
+    expect(biasesLink!.textContent).toContain('Accuracy');
+    expect(biasesLink!.textContent).toContain('75%');
+    expect(biasesLink!.textContent).toContain('Current streak');
+  });
+
+  it('counts flash card rounds and accuracy in the header totals', async () => {
+    const root = await render();
+    const header = root.querySelector('header')!.textContent!;
+    expect(header).toContain('2');
+    expect(header).toContain('rounds played');
+    expect(header).toContain('75%');
+  });
+
+  it('lists Biases, Fallacies, then Reasoning Traps', async () => {
+    const root = await render();
+    const titles = [...root.querySelectorAll<HTMLElement>('section a h2')].map((h) =>
+      h.textContent!.trim(),
+    );
+    expect(titles).toEqual(['Biases', 'Fallacies', 'Reasoning Traps']);
+  });
+});

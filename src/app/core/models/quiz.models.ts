@@ -5,9 +5,9 @@ export interface QuizManifestEntry {
   icon: string;
   accent: string;
   version: number;
-  dataPath: string;
+  dataPath?: string;
   order: number;
-  kind: 'traps' | 'calibration';
+  kind: 'traps' | 'calibration' | 'biases' | 'fallacies';
   format?: 'two-way' | 'four-way';
 }
 
@@ -86,4 +86,12 @@ export interface ScoredQuestionResult {
   correct: boolean;
   missed: string[];
   extra: string[];
+}
+
+/** Per-quiz data folder. Only Reasoning Traps and Confidence entries have one (spec §3.1). */
+export function requireDataPath(entry: QuizManifestEntry): string {
+  if (!entry.dataPath) {
+    throw new Error(`Quiz "${entry.id}" has no dataPath`);
+  }
+  return entry.dataPath;
 }
