@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Concept, KnowledgeBase } from '../../core/models/quiz.models';
+import { Concept, KnowledgeBase, ScoredQuestionResult } from '../../core/models/quiz.models';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { FlashCard, buildCard } from './card-builder';
@@ -33,6 +33,7 @@ export class FlashCardRoundPage implements OnInit {
   private readonly quizData: QuizDataService = inject(QuizDataService);
   private readonly stats: StatsService = inject(StatsService);
 
+  private kindId = '';
   private kb: KnowledgeBase = { concepts: [], pairs: [] };
   private baseWeightMap = new Map<string, number>();
   /** Confused partners picked wrongly this round; they weigh one more in the draw, capped at 3. */
@@ -54,6 +55,7 @@ export class FlashCardRoundPage implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.kindId = id;
     const conceptType = this.route.snapshot.data['conceptType'] as Concept['type'];
 
     this.quizData.loadManifest().subscribe((manifest) => {
@@ -104,6 +106,22 @@ export class FlashCardRoundPage implements OnInit {
       last.card.optionConcepts,
       this.kb,
     );
+    const correct = pickedConcept.id === last.target.id;
+    const result: ScoredQuestionResult = {
+      question: {
+        id: last.target.id,
+        prompt: last.card.prompt,
+        options: last.card.options,
+        correctAnswers: [last.card.options[last.card.correctIndex]],
+        traitIds: [last.target.id],
+        explanation: last.target.longExplanation,
+      },
+      selected: [pickedConcept.id],
+      correct,
+      missed: correct ? [] : [last.target.id],
+      extra: correct ? [] : [pickedConcept.id],
+    };
+    this.stats.recordResult(this.kindId, result);
     if (pickedConcept.id !== last.target.id) {
       this.bumpedIds.update((ids) => applyBump(ids, last.target, pickedConcept, this.kb));
     }
