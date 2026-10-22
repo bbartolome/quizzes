@@ -1,6 +1,6 @@
 <div class="mx-auto w-full max-w-2xl space-y-8 p-4 sm:p-6">
   <div class="space-y-8">
-    @for (entry of cards(); track $index; let i = $index) {
+    @for (entry of cards(); track $index; let i = $index; let last = $last) {
       <fieldset
         #cardEl
         data-testid="card"
@@ -39,6 +39,20 @@
             />
             <span class="flex-1">{{ option }}</span>
           </label>
+        }
+
+        @if (last && !entry.checked) {
+          <div class="flex justify-end">
+            <button
+              type="button"
+              data-testid="check-answer"
+              class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-300"
+              [disabled]="entry.picked === null"
+              (click)="checkAnswer()"
+            >
+              Check answer
+            </button>
+          </div>
         }
       </fieldset>
     }
