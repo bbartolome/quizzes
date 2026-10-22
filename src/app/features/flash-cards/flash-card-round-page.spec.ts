@@ -75,7 +75,8 @@ function setup(routeId: string, conceptType: Concept['type'], knowledgeBase: Kno
   fixture.detectChanges();
   http.expectOne('data/quizzes.json').flush(manifest);
   http.expectOne('data/concepts/knowledge-base.json').flush(knowledgeBase);
-  return { component: fixture.componentInstance, migrateVersion, getStats };
+  fixture.detectChanges();
+  return { component: fixture.componentInstance, fixture, migrateVersion, getStats };
 }
 
 describe('FlashCardRoundPage', () => {
@@ -465,6 +466,57 @@ describe('FlashCardRoundPage', () => {
           { targetId: second.target.id, pickedId: second.target.id, correct: true },
         ],
       });
+    });
+  });
+
+  describe('feed template (S6.7)', () => {
+    const fourConcepts: KnowledgeBase = {
+      concepts: [B1, B2, F1, concept('f2', 'fallacy')],
+      pairs: [],
+    };
+
+    beforeEach(() => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    });
+
+    function fieldsetsOf(fixture: { nativeElement: HTMLElement }): HTMLElement[] {
+      return Array.from(fixture.nativeElement.querySelectorAll('fieldset'));
+    }
+
+    it('renders one fieldset per card, in draw order', () => {
+      const { component, fixture } = setup('biases', 'bias', fourConcepts);
+      expect(fieldsetsOf(fixture)).toHaveLength(1);
+
+      component.selectOption(0);
+      component.checkAnswer();
+      fixture.detectChanges();
+
+      const fieldsets = fieldsetsOf(fixture);
+      expect(fieldsets).toHaveLength(2);
+      component.cards().forEach((card, i) => {
+        expect(fieldsets[i].textContent).toContain(card.card.legend);
+      });
+    });
+
+    it('scrolls the newest fieldset into view after a new card is appended', async () => {
+      const scrolled: Element[] = [];
+      const original = Element.prototype.scrollIntoView;
+      Element.prototype.scrollIntoView = function () {
+        scrolled.push(this as Element);
+      };
+      try {
+        const { component, fixture } = setup('biases', 'bias', fourConcepts);
+        component.selectOption(0);
+        component.checkAnswer();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const fieldsets = fieldsetsOf(fixture);
+        expect(fieldsets).toHaveLength(2);
+        expect(scrolled.at(-1)).toBe(fieldsets[1]);
+      } finally {
+        Element.prototype.scrollIntoView = original;
+      }
     });
   });
 });
