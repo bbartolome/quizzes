@@ -11,17 +11,20 @@ import { CalibrationRoundPage } from './features/calibration/calibration-round-p
 import { CalibrationResultsPage } from './features/calibration/calibration-results-page';
 import { FlashCardHomePage } from './features/flash-cards/flash-card-home-page';
 import { FlashCardRoundPage } from './features/flash-cards/flash-card-round-page';
+import { FlashCardReportPage } from './features/flash-cards/flash-card-report-page';
 
 describe('routes', () => {
-  it('has exactly 14 route entries', () => {
-    expect(routes.length).toBe(14);
+  it('has exactly 16 route entries', () => {
+    expect(routes.length).toBe(16);
   });
 
   it.each([
     ['biases/:id', 'bias', FlashCardHomePage],
     ['biases/:id/round', 'bias', FlashCardRoundPage],
+    ['biases/:id/report', 'bias', FlashCardReportPage],
     ['fallacies/:id', 'fallacy', FlashCardHomePage],
     ['fallacies/:id/round', 'fallacy', FlashCardRoundPage],
+    ['fallacies/:id/report', 'fallacy', FlashCardReportPage],
   ])('maps "%s" to a flash card page with conceptType %s', (path, conceptType, component) => {
     const route = routes.find((r) => r.path === path);
     expect(route?.component).toBe(component);
