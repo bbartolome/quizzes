@@ -11,7 +11,7 @@ import { Concept, KnowledgeBase } from '../../core/models/quiz.models';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { FlashCard, buildCard } from './card-builder';
-import { baseWeights, drawTarget } from './draw-weights';
+import { applyBump, baseWeights, drawTarget } from './draw-weights';
 import { Feedback, buildFeedback } from './feedback';
 
 /** One card in the feed. `picked` is the option index chosen, or null. */
@@ -35,7 +35,8 @@ export class FlashCardRoundPage implements OnInit {
 
   private kb: KnowledgeBase = { concepts: [], pairs: [] };
   private baseWeightMap = new Map<string, number>();
-  private readonly bumpedIds = signal<ReadonlySet<string>>(new Set());
+  /** Confused partners picked wrongly this round; they weigh one more in the draw, capped at 3. */
+  readonly bumpedIds = signal<ReadonlySet<string>>(new Set());
 
   /** The kind's concepts (route conceptType), in knowledge-base order. */
   readonly deck = signal<Concept[]>([]);
@@ -103,6 +104,9 @@ export class FlashCardRoundPage implements OnInit {
       last.card.optionConcepts,
       this.kb,
     );
+    if (pickedConcept.id !== last.target.id) {
+      this.bumpedIds.update((ids) => applyBump(ids, last.target, pickedConcept, this.kb));
+    }
     this.cards.update((current) =>
       current.map((c, i) => (i === current.length - 1 ? { ...c, checked: true, feedback } : c)),
     );
