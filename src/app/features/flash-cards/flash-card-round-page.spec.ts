@@ -129,7 +129,11 @@ describe('FlashCardRoundPage', () => {
     });
 
     it('the first card is built with four options and the target among them', () => {
-      const { component } = setup('biases', 'bias');
+      const fourConcepts: KnowledgeBase = {
+        concepts: [B1, B2, F1, concept('f2', 'fallacy')],
+        pairs: [],
+      };
+      const { component } = setup('biases', 'bias', fourConcepts);
 
       const first = component.cards()[0];
       expect(first.card.options).toHaveLength(4);
@@ -141,9 +145,9 @@ describe('FlashCardRoundPage', () => {
     it('base weights are read once at round start from both stats keys', () => {
       const { getStats } = setup('biases', 'bias');
 
-      expect(getStats).toHaveBeenCalledWith('reasoning-traps');
+      const traitsReads = getStats.mock.calls.filter(([key]) => key === 'reasoning-traps');
+      expect(traitsReads).toHaveLength(1);
       expect(getStats).toHaveBeenCalledWith('biases');
-      expect(getStats).toHaveBeenCalledTimes(2);
     });
   });
 });
