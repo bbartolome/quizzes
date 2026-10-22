@@ -148,6 +148,17 @@ describe('StatsPage', () => {
     expect(fixture.nativeElement.querySelector('[data-testid="focus-round"]')).toBeFalsy();
   });
 
+  it('keeps the "Performance by trait" heading', async () => {
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.querySelector('#performance-heading').textContent.trim()).toBe(
+      'Performance by trait',
+    );
+  });
+
   it('shows the no-stats indicator when roundsPlayed is 0', async () => {
     statsService.getStats = vi.fn(() => emptyStats);
     configure();
@@ -198,5 +209,121 @@ describe('StatsPage', () => {
     await fixture.whenStable();
 
     expect(statsService.resetQuiz).not.toHaveBeenCalled();
+  });
+});
+
+describe('StatsPage flash card routes', () => {
+  const entry: QuizManifestEntry = {
+    id: 'biases',
+    title: 'Cognitive biases',
+    description: 'desc',
+    icon: 'icon',
+    accent: 'accent',
+    version: 1,
+    order: 1,
+    kind: 'biases',
+  };
+  const anchoring: Concept = {
+    id: 'anchoring',
+    name: 'Anchoring',
+    type: 'bias',
+    shortDefinition: 'Over-relies on the first number.',
+    longExplanation: 'Long explanation.',
+    example: 'Example.',
+    spottingTip: 'tip',
+  };
+  const stats: QuizStats = {
+    quizId: 'biases',
+    version: 1,
+    perTrait: { anchoring: { traitId: 'anchoring', correct: 1, attempted: 4 } },
+    streak: 1,
+    roundsPlayed: 2,
+  };
+
+  let quizData: {
+    loadManifest: ReturnType<typeof vi.fn>;
+    loadQuizBundle: ReturnType<typeof vi.fn>;
+    loadKnowledgeBase: ReturnType<typeof vi.fn>;
+  };
+  let statsService: { getStats: ReturnType<typeof vi.fn>; resetQuiz: ReturnType<typeof vi.fn> };
+
+  async function render() {
+    TestBed.configureTestingModule({
+      imports: [StatsPage],
+      providers: [
+        provideRouter([]),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({ id: 'biases' }),
+              queryParamMap: convertToParamMap({}),
+              data: { conceptType: 'bias' },
+            },
+          },
+        },
+        { provide: QuizDataService, useValue: quizData },
+        { provide: StatsService, useValue: statsService },
+      ],
+    });
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    return fixture;
+  }
+
+  beforeEach(() => {
+    quizData = {
+      loadManifest: vi.fn(() => of({ quizzes: [entry] })),
+      loadQuizBundle: vi.fn(),
+      loadKnowledgeBase: vi.fn(() => of({ concepts: [anchoring], pairs: [] })),
+    };
+    statsService = { getStats: vi.fn(() => stats), resetQuiz: vi.fn() };
+  });
+
+  it('loads concept names from loadKnowledgeBase() and never loadQuizBundle', async () => {
+    const fixture = await render();
+
+    expect(quizData.loadKnowledgeBase).toHaveBeenCalledWith();
+    expect(quizData.loadQuizBundle).not.toHaveBeenCalled();
+    const rows = fixture.nativeElement.querySelectorAll('[data-testid="trait-row"]');
+    expect(rows.length).toBe(1);
+    expect(rows[0].textContent).toContain('Anchoring');
+  });
+
+  it('headlines the rows "Performance by concept"', async () => {
+    const fixture = await render();
+
+    expect(fixture.nativeElement.querySelector('#performance-heading').textContent.trim()).toBe(
+      'Performance by concept',
+    );
+  });
+
+  it('hides the focus-round link even when rows exist', async () => {
+    const fixture = await render();
+
+    expect(fixture.nativeElement.querySelectorAll('[data-testid="trait-row"]').length).toBe(1);
+    expect(fixture.nativeElement.querySelector('[data-testid="focus-round"]')).toBeFalsy();
+  });
+
+  it('reads stats for the route id', async () => {
+    await render();
+
+    expect(statsService.getStats).toHaveBeenCalledWith('biases');
+  });
+
+  it('resets only the route id and re-reads its stats', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    const fixture = await render();
+
+    statsService.getStats.mockClear();
+    fixture.nativeElement.querySelector('[data-testid="reset-quiz"]').click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(statsService.resetQuiz).toHaveBeenCalledTimes(1);
+    expect(statsService.resetQuiz).toHaveBeenCalledWith('biases');
+    expect(statsService.getStats).toHaveBeenCalledWith('biases');
   });
 });

@@ -14,8 +14,8 @@ import { FlashCardRoundPage } from './features/flash-cards/flash-card-round-page
 import { FlashCardReportPage } from './features/flash-cards/flash-card-report-page';
 
 describe('routes', () => {
-  it('has exactly 16 route entries', () => {
-    expect(routes.length).toBe(16);
+  it('has exactly 18 route entries', () => {
+    expect(routes.length).toBe(18);
   });
 
   it.each([
@@ -25,6 +25,8 @@ describe('routes', () => {
     ['fallacies/:id', 'fallacy', FlashCardHomePage],
     ['fallacies/:id/round', 'fallacy', FlashCardRoundPage],
     ['fallacies/:id/report', 'fallacy', FlashCardReportPage],
+    ['biases/:id/stats', 'bias', StatsPage],
+    ['fallacies/:id/stats', 'fallacy', StatsPage],
   ])('maps "%s" to a flash card page with conceptType %s', (path, conceptType, component) => {
     const route = routes.find((r) => r.path === path);
     expect(route?.component).toBe(component);
@@ -59,6 +61,7 @@ describe('routes', () => {
   it('maps "quiz/:id/stats" to StatsPage', () => {
     const route = routes.find((r) => r.path === 'quiz/:id/stats');
     expect(route?.component).toBe(StatsPage);
+    expect(route?.data).toBeUndefined();
   });
 
   it('maps "calibration/:id" to CalibrationHomePage', () => {
