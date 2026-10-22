@@ -98,6 +98,7 @@ describe('buildCard', () => {
         prompt: 'Misrepresents the argument.',
         promptFormat: 'plain',
         options: ['Anchoring', 'Straw Man', 'Base Rate Neglect', 'False Dilemma'],
+        optionConcepts: [kb.concepts[3], kb.concepts[0], kb.concepts[5], kb.concepts[1]],
         correctIndex: 1,
       };
       expect(card).toEqual(expected);
@@ -114,6 +115,7 @@ describe('buildCard', () => {
         prompt: 'Claims the opponent said something weaker.',
         promptFormat: 'italic',
         options: ['Anchoring', 'Straw Man', 'Base Rate Neglect', 'False Dilemma'],
+        optionConcepts: [kb.concepts[3], kb.concepts[0], kb.concepts[5], kb.concepts[1]],
         correctIndex: 1,
       };
       expect(card).toEqual(expected);
@@ -135,6 +137,7 @@ describe('buildCard', () => {
           'Ignores the background frequency.',
           'Limits the options to two.',
         ],
+        optionConcepts: [kb.concepts[3], kb.concepts[0], kb.concepts[5], kb.concepts[1]],
         correctIndex: 1,
       };
       expect(card).toEqual(expected);

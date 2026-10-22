@@ -12,11 +12,13 @@ export interface FlashCard {
   prompt: string;
   promptFormat: PromptFormat;
   options: string[];
+  optionConcepts: Concept[];
   correctIndex: number;
 }
 
 interface OptionRecord {
   text: string;
+  concept: Concept;
   isTarget: boolean;
 }
 
@@ -81,9 +83,10 @@ export function buildCard(target: Concept, kb: KnowledgeBase, rng: () => number)
   // 4. Option records (no rng).
   const isTermToDef = direction === 'term-to-definition';
   const records: OptionRecord[] = [
-    { text: isTermToDef ? target.shortDefinition : target.name, isTarget: true },
+    { text: isTermToDef ? target.shortDefinition : target.name, concept: target, isTarget: true },
     ...lures.map((lure) => ({
       text: isTermToDef ? lure.shortDefinition : lure.name,
+      concept: lure,
       isTarget: false,
     })),
   ];
@@ -92,6 +95,7 @@ export function buildCard(target: Concept, kb: KnowledgeBase, rng: () => number)
   const shuffledRecords = shuffle(records, rng);
   const correctIndex = shuffledRecords.findIndex((r) => r.isTarget);
   const options = shuffledRecords.map((r) => r.text);
+  const optionConcepts = shuffledRecords.map((r) => r.concept);
 
-  return { direction, legend, prompt, promptFormat, options, correctIndex };
+  return { direction, legend, prompt, promptFormat, options, optionConcepts, correctIndex };
 }
