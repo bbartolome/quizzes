@@ -323,4 +323,75 @@ describe('FlashCardRoundPage', () => {
       expect(component.cards()[1].target.id).toBe('b3');
     });
   });
+
+  describe('per-card recording (S6.5)', () => {
+    const fourConcepts: KnowledgeBase = {
+      concepts: [B1, B2, F1, concept('f2', 'fallacy')],
+      pairs: [],
+    };
+
+    beforeEach(() => {
+      vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    });
+
+    function indexOf(
+      card: { target: Concept; card: { optionConcepts: Concept[] } },
+      right: boolean,
+    ) {
+      return card.card.optionConcepts.findIndex((c) => (c.id === card.target.id) === right);
+    }
+
+    it('each checked card calls recordResult with the kind id and the target as the only trait', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const recordResult = vi.spyOn(TestBed.inject(StatsService), 'recordResult');
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, false));
+      component.checkAnswer();
+
+      expect(recordResult).toHaveBeenCalledTimes(1);
+      const [quizId, result] = recordResult.mock.calls[0];
+      expect(quizId).toBe('biases');
+      expect(result.question.traitIds).toEqual([first.target.id]);
+      expect(result.correct).toBe(false);
+      expect(result.selected).toEqual([first.card.optionConcepts[indexOf(first, false)].id]);
+    });
+
+    it('a correct pick records correct = true', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const recordResult = vi.spyOn(TestBed.inject(StatsService), 'recordResult');
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, true));
+      component.checkAnswer();
+
+      const [, result] = recordResult.mock.calls[0];
+      expect(result.correct).toBe(true);
+      expect(result.selected).toEqual([first.target.id]);
+    });
+
+    it('two checked cards produce exactly two calls', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const recordResult = vi.spyOn(TestBed.inject(StatsService), 'recordResult');
+
+      component.selectOption(indexOf(component.cards()[0], true));
+      component.checkAnswer();
+      component.selectOption(indexOf(component.cards()[1], true));
+      component.checkAnswer();
+
+      expect(recordResult).toHaveBeenCalledTimes(2);
+    });
+
+    it('lures get no counts: no trait other than the target appears in any recorded result', () => {
+      const { component } = setup('biases', 'bias', fourConcepts);
+      const recordResult = vi.spyOn(TestBed.inject(StatsService), 'recordResult');
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, false));
+      component.checkAnswer();
+
+      const [, result] = recordResult.mock.calls[0];
+      expect(result.question.traitIds.filter((id: string) => id !== first.target.id)).toEqual([]);
+    });
+  });
 });
