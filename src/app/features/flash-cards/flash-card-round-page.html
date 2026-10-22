@@ -38,7 +38,40 @@
               (change)="selectOption(o)"
             />
             <span class="flex-1">{{ option }}</span>
+            @if (entry.checked && o === entry.card.correctIndex) {
+              <span class="text-sm font-medium text-emerald-700">Correct answer</span>
+            }
+            @if (entry.checked && o === entry.picked && o !== entry.card.correctIndex) {
+              <span class="text-sm font-medium text-rose-700">Your pick</span>
+            }
           </label>
+        }
+
+        @if (entry.checked && entry.feedback; as fb) {
+          <div
+            data-testid="feedback"
+            class="space-y-2 rounded-md bg-slate-50 p-3 text-sm text-slate-700"
+          >
+            <p class="font-semibold">{{ fb.verdict }}</p>
+            <p>Answer: {{ fb.answer }}</p>
+            <p>{{ fb.explanation }}</p>
+            @if (fb.spottingTip) {
+              <p class="text-indigo-700">Tip: {{ fb.spottingTip }}</p>
+            }
+            @let contrast = fb.contrast;
+            @if (contrast.kind === 'pair-tip') {
+              <p>{{ contrast.target }} vs {{ contrast.lure }}: {{ contrast.tip }}</p>
+            }
+            @if (contrast.kind === 'side-by-side') {
+              <p>{{ contrast.lure.name }}: {{ contrast.lure.shortDefinition }}</p>
+              @if (contrast.lureSpottingTip) {
+                <p class="text-indigo-700">Tip: {{ contrast.lureSpottingTip }}</p>
+              }
+            }
+            @if (contrast.kind === 'correct-tip') {
+              <p>{{ contrast.tip }}</p>
+            }
+          </div>
         }
 
         @if (last && !entry.checked) {
