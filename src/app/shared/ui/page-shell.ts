@@ -17,7 +17,7 @@ const WIDTH = {
   imports: [Button, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="min-h-screen bg-surface">
+    <div class="flex min-h-screen flex-col bg-surface">
       <div [class]="column()">
         @if (back(); as b) {
           <a uiButton variant="link" [routerLink]="b.link">{{ b.label }}</a>
@@ -42,5 +42,7 @@ export class PageShell {
   readonly width = input.required<keyof typeof WIDTH>();
   readonly back = input<PageBack>();
 
-  protected readonly column = computed(() => `mx-auto px-4 py-8 sm:px-8 ${WIDTH[this.width()]}`);
+  protected readonly column = computed(
+    () => `mx-auto flex w-full flex-1 flex-col px-4 py-8 sm:px-8 ${WIDTH[this.width()]}`,
+  );
 }
