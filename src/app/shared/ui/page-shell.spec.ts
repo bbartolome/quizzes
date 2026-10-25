@@ -45,6 +45,17 @@ describe('PageShell (S2, §6.1, §6.2, §6.3, §7.2)', () => {
     expect(column?.classList).toContain('sm:px-8');
   });
 
+  it('lays the page out as a full-height flex column so the footer can stick', () => {
+    const { root } = render();
+    const outer = root.querySelector('.min-h-screen');
+    expect(outer?.classList).toContain('flex');
+    expect(outer?.classList).toContain('flex-col');
+    const column = root.querySelector('.max-w-5xl');
+    expect([...(column?.classList ?? [])]).toEqual(
+      expect.arrayContaining(['w-full', 'flex-1', 'flex', 'flex-col']),
+    );
+  });
+
   it('renders exactly one h1 with the type-title role', () => {
     const { root } = render();
     const headings = root.querySelectorAll('h1');
