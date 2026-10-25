@@ -64,4 +64,8 @@ describe('design tokens (S1)', () => {
     expect(html).toMatch(/<meta name="theme-color" media="\(prefers-color-scheme: light\)"/);
     expect(html).toMatch(/<meta name="theme-color" media="\(prefers-color-scheme: dark\)"/);
   });
+
+  it('defines @utility glossary-grid with grid-template-columns: 18rem minmax(0, 1fr)', () => {
+    expect(css).toMatch(/@utility\s+glossary-grid\s*\{[^}]*grid-template-columns:\s*18rem\s+minmax\(0,\s*1fr\)/);
+  });
 });
