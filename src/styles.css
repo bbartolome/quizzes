@@ -99,3 +99,7 @@
 @utility type-stat {
   @apply text-3xl font-bold tabular-nums text-text;
 }
+
+@utility glossary-grid {
+  grid-template-columns: 18rem minmax(0, 1fr);
+}
