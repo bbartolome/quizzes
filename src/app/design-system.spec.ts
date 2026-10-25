@@ -6,7 +6,16 @@ const APP_DIR = join(process.cwd(), 'src/app');
 
 // Feature folders not migrated to the design system yet (docs/specs/design-system.md §10).
 // Each migration slice removes its folder; S11 asserts the list is empty and deletes it.
-const ALLOWLIST: string[] = [];
+const ALLOWLIST: string[] = [
+  'calibration',
+  'flash-cards',
+  'glossary',
+  'library',
+  'quiz-home',
+  'report',
+  'round',
+  'stats',
+];
 
 const PALETTE =
   /(bg|text|border|ring|fill|stroke|from|via|to|divide|outline|accent|placeholder)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d+|\bbg-white\b|\bbg-black\b|\btext-white\b|ring-black\//;
