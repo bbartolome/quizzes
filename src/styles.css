@@ -1,3 +1,101 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-raised: var(--surface-raised);
+  --color-sunken: var(--surface-sunken);
+  --color-default: var(--border);
+  --color-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-focus: var(--focus);
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-danger: var(--danger);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+}
+
+:root {
+  color-scheme: light dark;
+  --surface: var(--color-slate-50);
+  --surface-raised: var(--color-white);
+  --surface-sunken: var(--color-slate-100);
+  --border: var(--color-slate-200);
+  --border-strong: var(--color-slate-300);
+  --text: var(--color-slate-900);
+  --text-muted: var(--color-slate-600);
+  --accent: var(--color-indigo-600);
+  --accent-hover: var(--color-indigo-500);
+  --on-accent: var(--color-white);
+  --accent-subtle: var(--color-indigo-50);
+  --focus: var(--color-indigo-500);
+  --success: var(--color-emerald-700);
+  --success-subtle: var(--color-emerald-50);
+  --danger: var(--color-rose-700);
+  --danger-subtle: var(--color-rose-50);
+  --warning: var(--color-amber-700);
+  --warning-subtle: var(--color-amber-50);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: var(--color-slate-950);
+    --surface-raised: var(--color-slate-900);
+    --surface-sunken: var(--color-slate-800);
+    --border: var(--color-slate-700);
+    --border-strong: var(--color-slate-600);
+    --text: var(--color-slate-50);
+    --text-muted: var(--color-slate-400);
+    --accent: var(--color-indigo-400);
+    --accent-hover: var(--color-indigo-300);
+    --on-accent: var(--color-slate-950);
+    --accent-subtle: var(--color-indigo-950);
+    --focus: var(--color-indigo-300);
+    --success: var(--color-emerald-400);
+    --success-subtle: var(--color-emerald-950);
+    --danger: var(--color-rose-400);
+    --danger-subtle: var(--color-rose-950);
+    --warning: var(--color-amber-400);
+    --warning-subtle: var(--color-amber-950);
+  }
+}
+
+@utility type-title {
+  @apply text-3xl font-semibold tracking-tight text-text;
+}
+
+@utility type-section {
+  @apply text-lg font-semibold text-text;
+}
+
+@utility type-card {
+  @apply text-base font-semibold text-text;
+}
+
+@utility type-eyebrow {
+  @apply text-xs font-semibold uppercase tracking-wide text-muted;
+}
+
+@utility type-body {
+  @apply text-base text-text;
+}
+
+@utility type-detail {
+  @apply text-sm text-muted;
+}
+
+@utility type-caption {
+  @apply text-xs text-muted;
+}
+
+@utility type-stat {
+  @apply text-3xl font-bold tabular-nums text-text;
+}
