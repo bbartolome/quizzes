@@ -20,7 +20,7 @@ const WIDTH = {
     <div class="flex min-h-screen flex-col bg-surface">
       <div [class]="column()">
         @if (back(); as b) {
-          <a uiButton variant="link" [routerLink]="b.link">{{ b.label }}</a>
+          <a uiButton variant="link" data-testid="back-home" [routerLink]="b.link">{{ b.label }}</a>
         }
         @if (eyebrow()) {
           <p class="type-eyebrow">{{ eyebrow() }}</p>
