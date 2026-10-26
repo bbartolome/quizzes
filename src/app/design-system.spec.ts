@@ -10,7 +10,6 @@ const ALLOWLIST: string[] = [
   'calibration',
   'flash-cards',
   'glossary',
-  'quiz-home',
   'report',
   'round',
   'stats',
