@@ -9,6 +9,7 @@ import { Card } from './card.directive';
     <section uiCard>Raised</section>
     <section uiCard tone="sunken">Sunken</section>
     <section uiCard interactive>Interactive</section>
+    <section uiCard interactive class="block">Focusable</section>
     <fieldset uiCard>Field</fieldset>
     <a uiCard href="#">Link</a>
     <ul><li uiCard>Item</li></ul>
@@ -43,6 +44,21 @@ describe('Card (S2, §7.1)', () => {
 
   it('interactive adds the hover shadow', () => {
     expect(classesOf(render(), 'section', 'Interactive')).toContain('hover:shadow-md');
+  });
+
+  it('interactive keeps the classes its template gives it', () => {
+    expect(classesOf(render(), 'section', 'Focusable')).toContain('block');
+  });
+
+  it('interactive adds the §9 focus ring', () => {
+    expect(classesOf(render(), 'section', 'Focusable')).toEqual(
+      expect.arrayContaining([
+        'focus-visible:ring-2',
+        'ring-focus',
+        'ring-offset-2',
+        'ring-offset-surface',
+      ]),
+    );
   });
 
   it('raised without interactive has no hover shadow', () => {
