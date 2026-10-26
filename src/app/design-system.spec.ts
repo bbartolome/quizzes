@@ -9,7 +9,6 @@ const APP_DIR = join(process.cwd(), 'src/app');
 const ALLOWLIST: string[] = [
   'calibration',
   'flash-cards',
-  'glossary',
   'report',
   'round',
   'stats',
