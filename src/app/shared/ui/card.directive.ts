@@ -3,7 +3,7 @@ import { Directive, booleanAttribute, computed, input } from '@angular/core';
 export type CardTone = 'raised' | 'sunken';
 
 const CLASSES: Record<CardTone, string> = {
-  raised: 'bg-raised border-default rounded-lg p-5 shadow-sm',
+  raised: 'bg-raised border border-default rounded-lg p-5 shadow-sm',
   sunken: 'bg-sunken rounded-lg p-4',
 };
 
