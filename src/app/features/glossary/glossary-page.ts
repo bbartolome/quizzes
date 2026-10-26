@@ -2,12 +2,16 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { Concept, KnowledgeBase } from '../../core/models/quiz.models';
+import { Button } from '../../shared/ui/button.directive';
+import { Callout } from '../../shared/ui/callout';
+import { Card } from '../../shared/ui/card.directive';
+import { PageBack, PageShell } from '../../shared/ui/page-shell';
 import { confusedWith, filterEntries, pairTip } from './glossary-search';
 
 @Component({
   selector: 'app-glossary-page',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, PageShell, Button, Card, Callout],
   templateUrl: './glossary-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -25,6 +29,10 @@ export class GlossaryPage {
   readonly selected = computed(() =>
     this.kb().concepts.find((entry) => entry.id === this.selectedId()),
   );
+  readonly back = computed<PageBack>(() => ({
+    label: `← Back to ${this.quizTitle()}`,
+    link: `/quiz/${this.id()}`,
+  }));
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
