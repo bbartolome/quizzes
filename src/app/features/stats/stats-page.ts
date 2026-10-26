@@ -5,6 +5,14 @@ import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { Concept, QuizStats } from '../../core/models/quiz.models';
 import { overallAccuracy, traitRows, type TraitRow } from './stats-rows';
+import { Button } from '../../shared/ui/button.directive';
+import { Card } from '../../shared/ui/card.directive';
+import { EmptyState } from '../../shared/ui/empty-state';
+import { PageBack, PageShell } from '../../shared/ui/page-shell';
+import { ProgressBar } from '../../shared/ui/progress-bar';
+
+/** Route segment of each flash card home (`biases/:id`, `fallacies/:id`), keyed by concept type. */
+const FLASH_HOME: Record<Concept['type'], string> = { bias: 'biases', fallacy: 'fallacies' };
 
 /**
  * Shows cumulative per-quiz stats: rounds played, current streak, overall
@@ -19,11 +27,11 @@ import { overallAccuracy, traitRows, type TraitRow } from './stats-rows';
  *
  * The template lives in `stats-page.html` (a separate step) and consumes the
  * public members below: `id`, `quizTitle`, `stats`, `kb`, `rows`,
- * `roundsPlayed`, `streak`, `totalAccuracy`, `hasRows`, `noStats`, and `reset`.
+ * `roundsPlayed`, `streak`, `totalAccuracy`, `hasRows`, `noStats`, `back`, and `reset`.
  */
 @Component({
   selector: 'app-stats-page',
-  imports: [RouterLink],
+  imports: [RouterLink, PageShell, Button, Card, EmptyState, ProgressBar],
   templateUrl: './stats-page.html',
 })
 export class StatsPage implements OnInit {
@@ -58,6 +66,12 @@ export class StatsPage implements OnInit {
   readonly totalAccuracy = computed(() => overallAccuracy(this.stats()));
   readonly hasRows = computed(() => this.rows().length > 0);
   readonly noStats = computed(() => this.stats().roundsPlayed === 0);
+
+  /** Back link to the quiz home, or to the flash card home on the flash card routes. */
+  readonly back = computed<PageBack>(() => ({
+    label: `← Back to ${this.quizTitle()}`,
+    link: this.conceptType ? `/${FLASH_HOME[this.conceptType]}/${this.id}` : `/quiz/${this.id}`,
+  }));
 
   ngOnInit(): void {
     this.loadQuizBundle();
