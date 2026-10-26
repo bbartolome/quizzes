@@ -63,6 +63,18 @@ const calibrationEntry: QuizManifestEntry = {
   format: 'two-way',
 };
 
+/** The library card whose heading reads `title`. Cards carry no aria-label (design-system §9). */
+function cardFor(root: ParentNode, title: string): HTMLAnchorElement | undefined {
+  return [...root.querySelectorAll<HTMLAnchorElement>('a[uiCard]')].find(
+    (card) => card.querySelector('h2')?.textContent?.trim() === title,
+  );
+}
+
+/** The stats summary paragraph in the page header. */
+function summaryOf(root: ParentNode): HTMLElement {
+  return root.querySelector<HTMLElement>('[data-testid="library-summary"]')!;
+}
+
 describe('LibraryPage', () => {
   beforeEach(() => {
     vi.stubGlobal('localStorage', new MemoryStorage());
@@ -84,8 +96,7 @@ describe('LibraryPage', () => {
   });
 
   function cardHref(root: HTMLElement, title: string): string | null {
-    const anchor = root.querySelector<HTMLAnchorElement>(`a[aria-label^="${title}"]`);
-    return anchor ? anchor.getAttribute('href') : null;
+    return cardFor(root, title)?.getAttribute('href') ?? null;
   }
 
   it('links the traps card to /quiz/:id', async () => {
@@ -198,7 +209,7 @@ describe('LibraryPage calibration cards', () => {
   }
 
   function cardText(root: HTMLElement): string {
-    return text(root.querySelector(`a[aria-label^="${calibrationEntry.title}"]`)!);
+    return text(cardFor(root, calibrationEntry.title)!);
   }
 
   it('shows rounds played and Skill score N on the calibration card', async () => {
@@ -207,6 +218,14 @@ describe('LibraryPage calibration cards', () => {
 
     expect(cardText(root)).toMatch(/Rounds played\s*1/);
     expect(cardText(root)).toMatch(/Skill score:? 92/);
+  });
+
+  it('shows only the number as the Skill score value', async () => {
+    playCalibrationRound();
+    const root = await render();
+
+    const values = [...cardFor(root, calibrationEntry.title)!.querySelectorAll('dd')].map(text);
+    expect(values).toContain('92');
   });
 
   it('hides the Skill score before any round', async () => {
@@ -228,7 +247,7 @@ describe('LibraryPage calibration cards', () => {
     playCalibrationRound();
     const root = await render();
 
-    expect(text(root.querySelector('header')!)).toContain('2 rounds played across all');
+    expect(text(summaryOf(root))).toContain('2 rounds played across all');
   });
 
   it('computes overall accuracy from Traps answers only', async () => {
@@ -236,7 +255,7 @@ describe('LibraryPage calibration cards', () => {
     playCalibrationRound();
     const root = await render();
 
-    expect(text(root.querySelector('header')!)).toContain('75% overall accuracy');
+    expect(text(summaryOf(root))).toContain('75% overall accuracy');
   });
 
   it('migrates a calibration history whose stored bankVersion differs from entry.version', async () => {
@@ -268,6 +287,15 @@ describe('LibraryPage calibration cards', () => {
     reset.click();
 
     expect(localStorage.getItem('stats:calibration:calibration')).toBeNull();
+  });
+
+  it('renders Reset all progress as the danger button', async () => {
+    const root = await render();
+
+    const reset = [...root.querySelectorAll('button')].find((b) =>
+      text(b).includes('Reset all progress'),
+    )!;
+    expect([...reset.classList]).toContain('bg-danger');
   });
 });
 
@@ -334,15 +362,15 @@ describe('LibraryPage flash card collections', () => {
 
   it('links the biases and fallacies cards to /biases/:id and /fallacies/:id', async () => {
     const root = await render();
-    const biasesLink = root.querySelector<HTMLAnchorElement>('a[aria-label^="Biases"]');
-    const fallaciesLink = root.querySelector<HTMLAnchorElement>('a[aria-label^="Fallacies"]');
+    const biasesLink = cardFor(root, 'Biases');
+    const fallaciesLink = cardFor(root, 'Fallacies');
     expect(biasesLink!.getAttribute('href')!.endsWith('/biases/biases')).toBe(true);
     expect(fallaciesLink!.getAttribute('href')!.endsWith('/fallacies/fallacies')).toBe(true);
   });
 
   it('shows rounds, accuracy and streak for a flash card collection from stats:<kind>', async () => {
     const root = await render();
-    const biasesLink = root.querySelector<HTMLAnchorElement>('a[aria-label^="Biases"]');
+    const biasesLink = cardFor(root, 'Biases');
     expect(biasesLink!.textContent).toContain('Accuracy');
     expect(biasesLink!.textContent).toContain('75%');
     expect(biasesLink!.textContent).toContain('Current streak');
@@ -350,10 +378,16 @@ describe('LibraryPage flash card collections', () => {
 
   it('counts flash card rounds and accuracy in the header totals', async () => {
     const root = await render();
-    const header = root.querySelector('header')!.textContent!;
+    const header = summaryOf(root).textContent!;
     expect(header).toContain('2');
     expect(header).toContain('rounds played');
     expect(header).toContain('75%');
+  });
+
+  it('drops aria-live from the stats summary (design-system §9)', async () => {
+    const root = await render();
+
+    expect(summaryOf(root).hasAttribute('aria-live')).toBe(false);
   });
 
   it('lists Biases, Fallacies, then Reasoning Traps', async () => {
