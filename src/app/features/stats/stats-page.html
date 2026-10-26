@@ -1,88 +1,64 @@
-<div class="mx-auto w-full max-w-2xl space-y-8 p-4 sm:p-6">
-  <h1 class="text-3xl font-bold tracking-tight text-slate-900">
-    {{ quizTitle() }}
-  </h1>
-
-  @if (noStats()) {
-    <div
-      data-testid="no-stats"
-      class="space-y-2 rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm"
-    >
-      <h2 class="text-lg font-semibold text-slate-800">No stats yet</h2>
-      <p class="text-sm text-slate-600">
-        Complete a round to start tracking your progress for this quiz.
-      </p>
-    </div>
-  } @else {
-    <section aria-label="Quiz statistics" class="space-y-6">
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Rounds played</p>
-          <p data-testid="rounds-played" class="mt-1 text-2xl font-bold text-slate-900">
-            {{ roundsPlayed() }}
-          </p>
-        </div>
-        <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Current streak</p>
-          <p data-testid="streak" class="mt-1 text-2xl font-bold text-slate-900">
-            {{ streak() }}
-          </p>
-        </div>
-        <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Overall accuracy</p>
-          <p data-testid="overall-accuracy" class="mt-1 text-2xl font-bold text-slate-900">
-            {{ totalAccuracy() }}%
-          </p>
-        </div>
-      </div>
-
-      <section aria-labelledby="performance-heading" class="space-y-4">
-        <h2 id="performance-heading" class="text-base font-semibold text-slate-800">
-          {{ isFlashCards ? 'Performance by concept' : 'Performance by trait' }}
-        </h2>
-
-        @for (row of rows(); track row.id) {
-          <div
-            data-testid="trait-row"
-            class="space-y-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
-          >
-            <!-- The bar must be the first (and width-driven) descendant div. -->
-            <div
-              [style.width.%]="row.accuracy"
-              class="h-2 min-w-2 rounded-full bg-indigo-600"
-              aria-hidden="true"
-            ></div>
-            <div class="flex items-baseline justify-between gap-3 text-sm">
-              <span class="font-medium text-slate-800">{{ row.name }}</span>
-              <span class="text-slate-500">
-                {{ row.correct }}/{{ row.attempted }} correct ({{ row.accuracy }}%)
-              </span>
-            </div>
+<ui-page-shell width="narrow" [title]="quizTitle()" [back]="back()">
+  <div class="mt-6 space-y-8">
+    @if (noStats()) {
+      <ui-empty-state
+        data-testid="no-stats"
+        heading="No stats yet"
+        message="Complete a round to start tracking your progress for this quiz."
+      />
+    } @else {
+      <section aria-label="Quiz statistics" class="space-y-6">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div uiCard>
+            <p class="type-eyebrow">Rounds played</p>
+            <p data-testid="rounds-played" class="type-stat">{{ roundsPlayed() }}</p>
           </div>
-        }
+          <div uiCard>
+            <p class="type-eyebrow">Current streak</p>
+            <p data-testid="streak" class="type-stat">{{ streak() }}</p>
+          </div>
+          <div uiCard>
+            <p class="type-eyebrow">Overall accuracy</p>
+            <p data-testid="overall-accuracy" class="type-stat">{{ totalAccuracy() }}%</p>
+          </div>
+        </div>
+
+        <section aria-labelledby="performance-heading" class="space-y-4">
+          <h2 id="performance-heading" class="type-section">
+            {{ isFlashCards ? 'Performance by concept' : 'Performance by trait' }}
+          </h2>
+
+          @for (row of rows(); track row.id) {
+            <div data-testid="trait-row" uiCard class="space-y-3">
+              <ui-progress [value]="row.accuracy" />
+              <div class="flex items-baseline justify-between gap-3">
+                <span class="type-body font-medium">{{ row.name }}</span>
+                <span class="type-detail">
+                  {{ row.correct }}/{{ row.attempted }} correct ({{ row.accuracy }}%)
+                </span>
+              </div>
+            </div>
+          }
+        </section>
       </section>
-    </section>
 
-    @if (hasRows() && !isFlashCards) {
-      <a
-        data-testid="focus-round"
-        [routerLink]="['/quiz', id, 'round']"
-        [queryParams]="{ weakTraits: 'true' }"
-        class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-      >
-        Start a round focused on your weakest traits
-      </a>
+      @if (hasRows() && !isFlashCards) {
+        <a
+          data-testid="focus-round"
+          uiButton
+          class="inline-block"
+          [routerLink]="['/quiz', id, 'round']"
+          [queryParams]="{ weakTraits: 'true' }"
+        >
+          Start a round focused on your weakest traits
+        </a>
+      }
     }
-  }
 
-  <div class="flex justify-end border-t border-slate-200 pt-6">
-    <button
-      data-testid="reset-quiz"
-      type="button"
-      (click)="reset()"
-      class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-    >
-      Reset progress for this quiz
-    </button>
+    <div class="flex justify-end border-t border-default pt-6">
+      <button data-testid="reset-quiz" type="button" uiButton variant="danger" (click)="reset()">
+        Reset progress for this quiz
+      </button>
+    </div>
   </div>
-</div>
+</ui-page-shell>
