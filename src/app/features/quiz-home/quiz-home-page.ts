@@ -4,12 +4,16 @@ import { map, takeUntil, Subject } from 'rxjs';
 import { QuizBundle, QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { Concept, QuizManifestEntry } from '../../core/models/quiz.models';
+import { Button } from '../../shared/ui/button.directive';
+import { Card } from '../../shared/ui/card.directive';
+import { Chip } from '../../shared/ui/chip.directive';
+import { PageBack, PageShell } from '../../shared/ui/page-shell';
 
 export type CategoryFilter = 'fallacy' | 'bias' | 'both';
 
 @Component({
   selector: 'app-quiz-home-page',
-  imports: [RouterLink],
+  imports: [RouterLink, PageShell, Button, Card, Chip],
   templateUrl: './quiz-home-page.html',
 })
 export class QuizHomePage implements OnInit, OnDestroy {
@@ -24,6 +28,7 @@ export class QuizHomePage implements OnInit, OnDestroy {
   protected readonly entry = signal<QuizManifestEntry | null>(null);
   protected readonly traits = signal<Concept[]>([]);
   protected readonly hasStats = signal(false);
+  protected readonly back: PageBack = { label: '← Back to library', link: '/' };
 
   // --- In-memory filter state ---
   protected category = signal<CategoryFilter>('both');

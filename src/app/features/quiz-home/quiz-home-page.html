@@ -1,58 +1,37 @@
-<div class="min-h-screen bg-gray-50 px-4 py-8 sm:px-8">
-  <div class="mx-auto max-w-4xl space-y-6">
-    <!-- Back to library -->
-    <a
-      [routerLink]="['/']"
-      class="inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:underline"
-    >
-      &larr; Back to library
-    </a>
-
-    @if (entry(); as quiz) {
-      <header class="space-y-2">
-        <h1 class="text-3xl font-semibold tracking-tight text-gray-900">
-          {{ quiz.title }}
-        </h1>
-        <p class="text-sm text-gray-700">{{ quiz.description }}</p>
-        <div class="flex flex-wrap items-center gap-3 pt-2">
-          <a
-            [routerLink]="['/quiz', id(), 'round']"
-            [queryParams]="roundParams()"
-            class="inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
-            [style.backgroundColor]="quiz.accent"
-          >
-            Start quiz
-          </a>
-          @if (hasStats()) {
-            <a
-              [routerLink]="['/quiz', id(), 'round']"
-              [queryParams]="weakRoundParams()"
-              class="inline-flex items-center rounded-lg border border-amber-400 bg-amber-50 px-5 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
-            >
-              Weak spots
-            </a>
-          }
-        </div>
-      </header>
-    }
+<ui-page-shell
+  width="wide"
+  [title]="entry()?.title ?? ''"
+  [description]="entry()?.description"
+  [back]="back"
+>
+  <div class="space-y-6">
+    <div class="flex flex-wrap items-center gap-3">
+      <a uiButton variant="primary" [routerLink]="['/quiz', id(), 'round']" [queryParams]="roundParams()">
+        Start quiz
+      </a>
+      @if (hasStats()) {
+        <a
+          uiButton
+          variant="secondary"
+          [routerLink]="['/quiz', id(), 'round']"
+          [queryParams]="weakRoundParams()"
+        >
+          Weak spots
+        </a>
+      }
+    </div>
 
     <!-- Filters -->
-    <section
-      aria-label="Round filters"
-      class="space-y-4 rounded-lg border border-gray-200 bg-white p-5 shadow-sm"
-    >
+    <section uiCard aria-label="Round filters" class="space-y-4">
       <div>
-        <h2 class="text-sm font-medium text-gray-700">Category</h2>
+        <h2 class="type-eyebrow">Category</h2>
         <div class="mt-2 flex gap-2">
           @for (opt of ['fallacy', 'bias', 'both']; track opt) {
             <button
               type="button"
+              uiChip
+              [state]="category() === opt ? 'selected' : 'idle'"
               (click)="setCategory(opt)"
-              [class]="
-                category() === opt
-                  ? 'rounded-md border border-blue-300 bg-blue-50 px-3 py-1.5 text-sm font-medium text-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2'
-                  : 'rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2'
-              "
               [attr.aria-pressed]="category() === opt ? 'true' : 'false'"
             >
               {{ opt === 'both' ? 'Both' : opt.charAt(0).toUpperCase() + opt.slice(1) }}
@@ -64,26 +43,16 @@
       @if (visibleTraits().length > 0) {
         <div>
           <div class="flex items-center justify-between">
-            <h2 class="text-sm font-medium text-gray-700">Traits</h2>
+            <h2 class="type-eyebrow">Traits</h2>
             @if (traitsSelected().length > 0) {
-              <button
-                type="button"
-                (click)="clearTraits()"
-                class="text-xs text-blue-700 hover:underline"
-              >
+              <button type="button" uiButton variant="secondary" (click)="clearTraits()">
                 Clear selection
               </button>
             }
           </div>
           <div class="mt-2 flex flex-wrap gap-2" role="group" aria-label="Trait multi-select">
             @for (trait of visibleTraits(); track trait.id) {
-              <label
-                [class]="
-                  isTraitSelected(trait.id)
-                    ? 'cursor-pointer select-none rounded-md border border-blue-300 bg-blue-50 px-3 py-1.5 text-sm text-blue-800'
-                    : 'cursor-pointer select-none rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 transition hover:bg-gray-50'
-                "
-              >
+              <label uiChip [state]="isTraitSelected(trait.id) ? 'selected' : 'idle'">
                 <input
                   type="checkbox"
                   class="sr-only"
@@ -99,18 +68,10 @@
       }
     </section>
 
-    <!-- Glossary link -->
-    <a
-      [routerLink]="['/quiz', id(), 'glossary']"
-      class="text-sm font-medium text-blue-700 hover:underline"
-    >
-      View glossary &rarr;
-    </a>
-    <a
-      [routerLink]="['/quiz', id(), 'stats']"
-      class="text-sm font-medium text-blue-700 hover:underline"
-    >
-      Your stats &rarr;
-    </a>
+    <!-- Glossary and stats links -->
+    <div class="flex flex-wrap gap-4">
+      <a uiButton variant="link" [routerLink]="['/quiz', id(), 'glossary']">View glossary &rarr;</a>
+      <a uiButton variant="link" [routerLink]="['/quiz', id(), 'stats']">Your stats &rarr;</a>
+    </div>
   </div>
-</div>
+</ui-page-shell>
