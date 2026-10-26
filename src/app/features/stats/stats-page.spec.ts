@@ -113,7 +113,7 @@ describe('StatsPage', () => {
     );
   });
 
-  it('renders one trait-row per computed row, each with a width-styled bar', async () => {
+  it('renders one trait-row per computed row, each with a ProgressBar sized to its accuracy', async () => {
     configure();
     const fixture = TestBed.createComponent(StatsPage);
     fixture.detectChanges();
@@ -123,8 +123,82 @@ describe('StatsPage', () => {
     const rows = fixture.nativeElement.querySelectorAll('[data-testid="trait-row"]');
     expect(rows.length).toBe(expectedRows.length);
 
-    const bar = rows[0].querySelector('div');
+    const bar = rows[0].querySelector('ui-progress > div > div');
     expect(bar.style.width).toBe(`${expectedRows[0].accuracy}%`);
+  });
+
+  it('renders the page in the narrow shell with a back link to the quiz', async () => {
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const el = fixture.nativeElement;
+    expect(el.querySelector('ui-page-shell .max-w-2xl')).toBeTruthy();
+    const back = el.querySelector('[data-testid="back-home"]');
+    expect(back.textContent.trim()).toBe('← Back to Logic Quiz');
+    expect(back.getAttribute('href')).toBe('/quiz/rt');
+  });
+
+  it('shows the rounds, streak and accuracy as stat tiles on the type scale', async () => {
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const el = fixture.nativeElement;
+    const roundsPlayed = el.querySelector('[data-testid="rounds-played"]');
+    expect(roundsPlayed.classList).toContain('type-stat');
+    const tile = roundsPlayed.closest('[uiCard]');
+    expect(tile.querySelector('.type-eyebrow').textContent.trim()).toBe('Rounds played');
+    expect(el.querySelector('[data-testid="streak"]').classList).toContain('type-stat');
+    expect(el.querySelector('[data-testid="overall-accuracy"]').classList).toContain('type-stat');
+  });
+
+  it('sets the performance heading to the section type role', async () => {
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const heading = fixture.nativeElement.querySelector('#performance-heading');
+    expect(heading.classList).toContain('type-section');
+  });
+
+  it('makes the focus-round link the primary button', async () => {
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const focusRound = fixture.nativeElement.querySelector('[data-testid="focus-round"]');
+    expect(focusRound.hasAttribute('uiButton')).toBe(true);
+    expect(focusRound.classList).toContain('bg-accent');
+  });
+
+  it('makes reset progress a danger button', async () => {
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const reset = fixture.nativeElement.querySelector('[data-testid="reset-quiz"]');
+    expect(reset.hasAttribute('uiButton')).toBe(true);
+    expect(reset.classList).toContain('bg-danger');
+    expect(reset.classList).not.toContain('bg-white');
+  });
+
+  it('shows the no-stats state as an EmptyState with a section-scale heading', async () => {
+    statsService.getStats = vi.fn(() => emptyStats);
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const empty = fixture.nativeElement.querySelector('[data-testid="no-stats"]');
+    expect(empty.tagName.toLowerCase()).toBe('ui-empty-state');
+    expect(empty.querySelector('h2').classList).toContain('type-section');
+    expect(empty.textContent).toContain('No stats yet');
   });
 
   it('shows the focus-round link to the traits-filtered round when rows are non-empty', async () => {
@@ -311,6 +385,14 @@ describe('StatsPage flash card routes', () => {
     await render();
 
     expect(statsService.getStats).toHaveBeenCalledWith('biases');
+  });
+
+  it('links the back link to the flash card home', async () => {
+    const fixture = await render();
+
+    const back = fixture.nativeElement.querySelector('[data-testid="back-home"]');
+    expect(back.textContent.trim()).toBe('← Back to Cognitive biases');
+    expect(back.getAttribute('href')).toBe('/biases/biases');
   });
 
   it('resets only the route id and re-reads its stats', async () => {
