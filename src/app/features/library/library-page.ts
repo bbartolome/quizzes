@@ -9,6 +9,9 @@ import { CalibrationBankService } from '../calibration/calibration-bank.service'
 import { CalibrationHistoryService } from '../calibration/calibration-history.service';
 import { calibrationCardStats } from '../calibration/calibration-card';
 import { formatOf } from '../calibration/calibration-format';
+import { Button } from '../../shared/ui/button.directive';
+import { Card } from '../../shared/ui/card.directive';
+import { PageShell } from '../../shared/ui/page-shell';
 
 /** URL prefix for each collection kind; each kind's pages live under its own prefix. */
 const ROUTE_PREFIX: Record<QuizManifestEntry['kind'], string> = {
@@ -37,7 +40,7 @@ export interface CollectionSummary {
 
 @Component({
   selector: 'app-library-page',
-  imports: [RouterLink, AsyncPipe],
+  imports: [RouterLink, AsyncPipe, Button, Card, PageShell],
   templateUrl: './library-page.html',
 })
 export class LibraryPage {
@@ -106,11 +109,6 @@ export class LibraryPage {
     return `${Math.round(value * 100)}%`;
   }
 
-  protected accentTint(accent: string): string {
-    const rgba = this.withAlpha(accent, 0.08);
-    return rgba ?? '#ffffff';
-  }
-
   protected resetAll(): void {
     if (confirm('Reset all quiz progress across every collection? This cannot be undone.')) {
       this.stats.resetAll();
@@ -148,23 +146,5 @@ export class LibraryPage {
       accuracy: attempted > 0 ? correct / attempted : null,
       skillScore: null,
     };
-  }
-
-  /** Convert #rgb/#rrggbb hex to an rgba() string at the given alpha, or null if not hex. */
-  private withAlpha(hexColor: string, alpha: number): string | null {
-    const hex = hexColor.trim().replace(/^#/, '');
-    let r: number, g: number, b: number;
-    if (/^[0-9a-fA-F]{3}$/.test(hex)) {
-      r = parseInt(hex.charAt(0).repeat(2), 16);
-      g = parseInt(hex.charAt(1).repeat(2), 16);
-      b = parseInt(hex.charAt(2).repeat(2), 16);
-    } else if (/^[0-9a-fA-F]{6}$/.test(hex)) {
-      r = parseInt(hex.slice(0, 2), 16);
-      g = parseInt(hex.slice(2, 4), 16);
-      b = parseInt(hex.slice(4, 6), 16);
-    } else {
-      return null;
-    }
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 }

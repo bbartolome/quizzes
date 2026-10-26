@@ -217,7 +217,7 @@ describe('LibraryPage calibration cards', () => {
     const root = await render();
 
     expect(cardText(root)).toMatch(/Rounds played\s*1/);
-    expect(cardText(root)).toMatch(/Skill score:? 92/);
+    expect(cardText(root)).toMatch(/Skill score\s*92/);
   });
 
   it('shows only the number as the Skill score value', async () => {

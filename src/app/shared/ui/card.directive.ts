@@ -7,6 +7,8 @@ const CLASSES: Record<CardTone, string> = {
   sunken: 'bg-sunken rounded-lg p-4',
 };
 
+const FOCUS = 'focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface';
+
 @Directive({
   selector: '[uiCard]',
   host: { '[class]': 'classes()' },
@@ -16,6 +18,6 @@ export class Card {
   readonly interactive = input(false, { transform: booleanAttribute });
 
   protected readonly classes = computed(() =>
-    this.interactive() ? `${CLASSES[this.tone()]} hover:shadow-md` : CLASSES[this.tone()],
+    this.interactive() ? `${CLASSES[this.tone()]} hover:shadow-md ${FOCUS}` : CLASSES[this.tone()],
   );
 }
