@@ -181,4 +181,99 @@ describe('GlossaryPage', () => {
     const backHome = fixture.nativeElement.querySelector('[data-testid="back-home"]');
     expect(backHome.getAttribute('href')).toBe('/quiz/rt');
   });
+
+  // --- Design system (S6, docs/specs/design-system.md §6, §7, §12) ---
+
+  async function renderPage() {
+    configure();
+    const fixture = TestBed.createComponent(GlossaryPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    return fixture;
+  }
+
+  async function renderWithDetail() {
+    const fixture = await renderPage();
+    fixture.nativeElement.querySelector('[data-testid="trap"]').click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    return fixture;
+  }
+
+  it('puts the quiz title in the one page h1 and drops the header bar', async () => {
+    const fixture = await renderPage();
+    const root = fixture.nativeElement as HTMLElement;
+
+    expect(root.querySelectorAll('h1')).toHaveLength(1);
+    expect(root.querySelector('h1.type-title')?.textContent?.trim()).toBe('Logic Quiz');
+    expect(root.querySelector('header')).toBeNull();
+  });
+
+  it('reads "← Back to <quiz title>" in the shell back link', async () => {
+    const fixture = await renderPage();
+    const backHome = fixture.nativeElement.querySelector('[data-testid="back-home"]');
+
+    expect(backHome.textContent?.trim()).toBe('← Back to Logic Quiz');
+  });
+
+  it('renders each trap row as an interactive Card', async () => {
+    const fixture = await renderPage();
+    const traps = [...fixture.nativeElement.querySelectorAll('[data-testid="trap"][uiCard]')];
+
+    expect(traps).toHaveLength(2);
+    traps.forEach((trap) => expect([...trap.classList]).toContain('hover:shadow-md'));
+  });
+
+  it('marks the chosen trap with the selected border and background', async () => {
+    const fixture = await renderWithDetail();
+    const [chosen, other] = [...fixture.nativeElement.querySelectorAll('[data-testid="trap"]')];
+
+    expect([...chosen.classList]).toEqual(
+      expect.arrayContaining(['border-accent', 'bg-accent-subtle']),
+    );
+    expect([...other.classList]).not.toContain('border-accent');
+  });
+
+  it('renders the detail as a raised Card with the concept name as its card heading', async () => {
+    const fixture = await renderWithDetail();
+    const detail = fixture.nativeElement.querySelector('[data-testid="detail"]');
+
+    expect(detail.hasAttribute('uiCard')).toBe(true);
+    expect([...detail.classList]).toEqual(expect.arrayContaining(['bg-raised', 'border-default']));
+    expect(detail.querySelector('h2.type-card')?.textContent?.trim()).toBe('Strawman');
+  });
+
+  it('renders each pair as a sunken Card with its tip in a Callout', async () => {
+    const fixture = await renderWithDetail();
+    const pair = fixture.nativeElement.querySelector('[data-testid="pair"]');
+
+    expect(pair.hasAttribute('uiCard')).toBe(true);
+    expect([...pair.classList]).toContain('bg-sunken');
+    expect(pair.querySelector('ui-callout')?.textContent).toContain(
+      'Strawman misrepresents the argument.',
+    );
+  });
+
+  it('makes the quiz-pair link a link-variant Button', async () => {
+    const fixture = await renderWithDetail();
+    const link = fixture.nativeElement.querySelector('[data-testid="quiz-pair"]');
+
+    expect(link.hasAttribute('uiButton')).toBe(true);
+    expect(link.getAttribute('variant')).toBe('link');
+  });
+
+  it('lays the trap list and detail out on the glossary-grid track', async () => {
+    const fixture = await renderWithDetail();
+    const trap = fixture.nativeElement.querySelector('[data-testid="trap"]');
+
+    expect([...trap.closest('ul').parentElement.classList]).toContain('md:glossary-grid');
+  });
+
+  it('styles the search input with the token input border', async () => {
+    const fixture = await renderPage();
+    const search = fixture.nativeElement.querySelector('[data-testid="search"]');
+
+    expect([...search.classList]).toContain('border-strong');
+  });
 });

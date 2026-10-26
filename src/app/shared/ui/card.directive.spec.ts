@@ -13,6 +13,8 @@ import { Card } from './card.directive';
     <fieldset uiCard>Field</fieldset>
     <a uiCard href="#">Link</a>
     <ul><li uiCard>Item</li></ul>
+    <section uiCard selected>Picked</section>
+    <section uiCard tone="sunken" selected>Picked sunken</section>
   `,
 })
 class Host {}
@@ -76,5 +78,26 @@ describe('Card (S2, §7.1)', () => {
     expect(classesOf(root, 'fieldset', 'Field')).toContain('bg-raised');
     expect(classesOf(root, 'a', 'Link')).toContain('bg-raised');
     expect(classesOf(root, 'li', 'Item')).toContain('bg-raised');
+  });
+
+  // --- Selected look (S6, docs/specs/design-system.md §7.3) ---
+
+  it('selected raised takes the accent border and subtle background, not the raised ones', () => {
+    const classes = classesOf(render(), 'section', 'Picked');
+    expect(classes).toEqual(expect.arrayContaining(['border-accent', 'bg-accent-subtle']));
+    expect(classes).not.toContain('bg-raised');
+    expect(classes).not.toContain('border-default');
+  });
+
+  it('selected sunken takes the accent border and subtle background, not the sunken one', () => {
+    const classes = classesOf(render(), 'section', 'Picked sunken');
+    expect(classes).toEqual(
+      expect.arrayContaining(['border-accent', 'bg-accent-subtle', 'rounded-lg', 'p-4']),
+    );
+    expect(classes).not.toContain('bg-sunken');
+  });
+
+  it('an unselected card has no accent classes', () => {
+    expect(classesOf(render(), 'section', 'Raised')).not.toContain('border-accent');
   });
 });
