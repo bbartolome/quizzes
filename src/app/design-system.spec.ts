@@ -11,7 +11,6 @@ const ALLOWLIST: string[] = [
   'flash-cards',
   'report',
   'round',
-  'stats',
 ];
 
 const PALETTE =
