@@ -35,6 +35,12 @@ describe('Card (S2, §7.1)', () => {
     );
   });
 
+  it('raised draws a 1px border in the default color (§3.3)', () => {
+    expect(classesOf(render(), 'section', 'Raised')).toEqual(
+      expect.arrayContaining(['border', 'border-default']),
+    );
+  });
+
   it('sunken: bg-sunken, rounded-lg, p-4, with no border and no shadow', () => {
     const classes = classesOf(render(), 'section', 'Sunken');
     expect(classes).toEqual(expect.arrayContaining(['bg-sunken', 'rounded-lg', 'p-4']));
