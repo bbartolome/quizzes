@@ -174,6 +174,7 @@ Directives are used where the host element's semantics matter (a `fieldset`, a n
 | `Button`    | `button[uiButton], a[uiButton]` | `variant: 'primary' \| 'secondary' \| 'danger' \| 'link'` (default `primary`)  | One size: `px-5 py-2.5 text-sm font-semibold rounded-lg`. `link` has no padding or fill. Disabled: `opacity-50 cursor-not-allowed`. Every variant gets the §9 focus ring.                                 |
 | `Card`      | `[uiCard]`                      | `tone: 'raised' \| 'sunken'` (default `raised`), `interactive: boolean`        | `raised`: `bg-raised border-default rounded-lg p-5 shadow-sm`. `sunken`: `bg-sunken rounded-lg p-4`, no border or shadow. `interactive` adds the hover shadow. Works on `section`, `fieldset`, `a`, `li`. |
 | `OptionRow` | `label[uiOption]`               | `state: 'idle' \| 'selected' \| 'correct' \| 'wrong' \| 'missed' \| 'neutral'` | Border and background per §7.3. The native `input` stays inside the label and is restyled with `accent-accent`.                                                                                           |
+| `Chip` | `button[uiChip], label[uiChip]` | `state: 'idle' \| 'selected'` (default `idle`) | Filter toggles: category and trait chips. `idle` is `border-default bg-raised`; `selected` is the §7.3 selected look. `rounded-full` (§3.3). Every chip gets the §9 focus ring. |
 
 Variants by role:
 
