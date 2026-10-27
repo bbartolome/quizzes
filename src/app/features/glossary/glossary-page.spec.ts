@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { NEVER, of } from 'rxjs';
 import { GlossaryPage } from './glossary-page';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { ConfusedPair, Concept, QuizManifestEntry } from '../../core/models/quiz.models';
@@ -215,6 +215,17 @@ describe('GlossaryPage', () => {
     const backHome = fixture.nativeElement.querySelector('[data-testid="back-home"]');
 
     expect(backHome.textContent?.trim()).toBe('← Back to Logic Quiz');
+  });
+
+  it('keeps a back link with a fallback label while the manifest is still loading', async () => {
+    quizData.loadManifest = vi.fn(() => NEVER);
+    configure();
+    const fixture = TestBed.createComponent(GlossaryPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const backHome = fixture.nativeElement.querySelector('[data-testid="back-home"]');
+    expect(backHome.textContent?.trim()).toBe('← Back to quiz');
   });
 
   it('renders each trap row as an interactive Card', async () => {
