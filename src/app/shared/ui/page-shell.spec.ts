@@ -113,6 +113,7 @@ describe('PageShell (S2, §6.1, §6.2, §6.3, §7.2)', () => {
     class BackTestIdHost {
       readonly back = { label: '← Back to library', link: '/' };
     }
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({ imports: [BackTestIdHost], providers: [provideRouter([])] });
     const fixture = TestBed.createComponent(BackTestIdHost);
     fixture.detectChanges();
