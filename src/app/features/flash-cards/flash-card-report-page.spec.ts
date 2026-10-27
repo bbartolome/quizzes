@@ -5,7 +5,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angular/router';
 import { FlashCardReportPage } from './flash-card-report-page';
 import { ReportResult } from './report-summary';
-import { Concept, KnowledgeBase } from '../../core/models/quiz.models';
+import { Concept, KnowledgeBase, QuizManifest } from '../../core/models/quiz.models';
 
 function concept(id: string, name: string, type: Concept['type']): Concept {
   return {
@@ -26,6 +26,31 @@ const kb: KnowledgeBase = {
     concept('hasty-generalization', 'Hasty generalization', 'fallacy'),
   ],
   pairs: [],
+};
+
+const manifest: QuizManifest = {
+  quizzes: [
+    {
+      id: 'biases',
+      title: 'Biases',
+      description: 'desc',
+      icon: 'icons/biases.svg',
+      accent: '#000000',
+      version: 1,
+      order: 1,
+      kind: 'biases',
+    },
+    {
+      id: 'fallacies',
+      title: 'Fallacies',
+      description: 'desc',
+      icon: 'icons/fallacies.svg',
+      accent: '#000000',
+      version: 1,
+      order: 2,
+      kind: 'fallacies',
+    },
+  ],
 };
 
 const mixed: ReportResult[] = [
@@ -68,6 +93,7 @@ function setup(
   const navigate = vi.spyOn(router, 'navigate').mockResolvedValue(true);
   const fixture = TestBed.createComponent(FlashCardReportPage);
   fixture.detectChanges();
+  http.match('data/quizzes.json').forEach((request) => request.flush(manifest));
   http.expectOne('data/concepts/knowledge-base.json').flush(knowledgeBase);
   fixture.detectChanges();
   const route = TestBed.inject(ActivatedRoute) as unknown as Setup['route'];
@@ -142,6 +168,28 @@ describe('FlashCardReportPage', () => {
       const { fixture } = setup('bias', perfect);
 
       expect(text(fixture, 'summary')).toBe('2 of 2 correct');
+    });
+  });
+
+  describe('heading and empty state (S9, §6.3, §7.2)', () => {
+    it('the h1 is "<Quiz title>: report" for the bias route', () => {
+      const { fixture } = setup('bias', mixed);
+
+      expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Biases: report');
+    });
+
+    it('the h1 is "<Quiz title>: report" for the fallacy route', () => {
+      const { fixture } = setup('fallacy', mixed);
+
+      expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Fallacies: report');
+    });
+
+    it('the empty state is a ui-empty-state with no heading, and keeps its message testid', () => {
+      const { fixture } = setup('bias', undefined);
+
+      expect(fixture.nativeElement.querySelector('ui-empty-state')).not.toBeNull();
+      expect(fixture.nativeElement.querySelector('ui-empty-state h2')).toBeNull();
+      expect(text(fixture, 'empty')).toBe('No cards were checked this round, so there is no report yet.');
     });
   });
 
