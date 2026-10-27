@@ -8,7 +8,6 @@ const APP_DIR = join(process.cwd(), 'src/app');
 // Each migration slice removes its folder; S11 asserts the list is empty and deletes it.
 const ALLOWLIST: string[] = [
   'calibration',
-  'flash-cards',
 ];
 
 const PALETTE =
