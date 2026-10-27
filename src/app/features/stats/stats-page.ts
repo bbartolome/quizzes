@@ -69,7 +69,7 @@ export class StatsPage implements OnInit {
 
   /** Back link to the quiz home, or to the flash card home on the flash card routes. */
   readonly back = computed<PageBack>(() => ({
-    label: `← Back to ${this.quizTitle()}`,
+    label: `← Back to ${this.quizTitle() || 'quiz'}`,
     link: this.conceptType ? `/${FLASH_HOME[this.conceptType]}/${this.id}` : `/quiz/${this.id}`,
   }));
 
