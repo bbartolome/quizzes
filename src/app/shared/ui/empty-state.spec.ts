@@ -43,4 +43,18 @@ describe('EmptyState (S2, §7.2)', () => {
   it('projects the action', () => {
     expect(render().querySelector('button.action')?.textContent?.trim()).toBe('Start a round');
   });
+
+  it('binds messageTestId to the message element (S9)', () => {
+    @Component({
+      imports: [EmptyState],
+      template: `<ui-empty-state heading="Nothing yet" message="Nothing here yet." messageTestId="empty" />`,
+    })
+    class TestIdHost {}
+    TestBed.configureTestingModule({ imports: [TestIdHost] });
+    const fixture = TestBed.createComponent(TestIdHost);
+    fixture.detectChanges();
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector('[data-testid="empty"]')?.textContent?.trim(),
+    ).toBe('Nothing here yet.');
+  });
 });

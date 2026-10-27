@@ -676,6 +676,29 @@ describe('FlashCardRoundPage', () => {
     });
   });
 
+  describe('design system (S9, §6.3, §7)', () => {
+    it('the h1 is the quiz title from the manifest', () => {
+      const { fixture } = setup('biases', 'bias');
+
+      expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Biases');
+    });
+
+    it('each option is an OptionRow label', () => {
+      const { component, fixture } = setup('biases', 'bias');
+      const first = component.cards()[0];
+      const fieldset = fixture.nativeElement.querySelectorAll('[data-testid="card"]')[0] as HTMLElement;
+
+      expect(fieldset.querySelectorAll('label[uiOption]')).toHaveLength(first.card.options.length);
+    });
+
+    it('the footer is the shared sticky footer', () => {
+      const { fixture } = setup('biases', 'bias');
+      const footer = fixture.nativeElement.querySelector('[data-testid="footer"]') as HTMLElement;
+
+      expect(footer.tagName.toLowerCase()).toBe('ui-sticky-footer');
+    });
+  });
+
   describe('sticky footer (S6.10)', () => {
     const fourConcepts: KnowledgeBase = {
       concepts: [B1, B2, F1, concept('f2', 'fallacy')],

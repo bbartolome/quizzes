@@ -100,7 +100,7 @@ describe('FlashCardHomePage', () => {
 
     expect(start).not.toBeNull();
     expect(start!.getAttribute('href')).toBe('/biases/biases/round');
-    expect(start!.className).toContain('bg-indigo-600');
+    expect(start!.className).toContain('bg-accent');
   });
 
   it('C3 shows a dash for rounds played and accuracy with empty stats', async () => {
@@ -150,11 +150,13 @@ describe('FlashCardHomePage', () => {
     expect(back!.getAttribute('href')).toBe('/');
   });
 
-  it('C8 renders nothing and loads no deck when the manifest has no entry for the id', async () => {
+  it('C8 renders the shell and back link, with an empty h1 and no start round or deck, when the manifest has no entry for the id', async () => {
     const { el } = await setup({ routeId: 'missing' });
 
-    expect(el.querySelector('h1')).toBeNull();
+    expect(el.querySelector('h1')).not.toBeNull();
+    expect(el.querySelector('h1')?.textContent?.trim()).toBe('');
+    expect(byTestId(el, 'back')).not.toBeNull();
     expect(byTestId(el, 'start-round')).toBeNull();
-    expect(el.textContent?.trim() ?? '').toBe('');
+    expect(byTestId(el, 'deck-item')).toBeNull();
   });
 });

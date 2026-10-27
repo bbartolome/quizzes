@@ -102,6 +102,25 @@ describe('PageShell (S2, §6.1, §6.2, §6.3, §7.2)', () => {
     expect(root.querySelector('.max-w-5xl')).toBeNull();
   });
 
+  it('gives the back link the backTestId testid, and back-home when none is given', () => {
+    const { root } = render();
+    expect(root.querySelector('[data-testid="back-home"]')).not.toBeNull();
+
+    @Component({
+      imports: [PageShell],
+      template: `<ui-page-shell title="Home" width="narrow" [back]="back" backTestId="back" />`,
+    })
+    class BackTestIdHost {
+      readonly back = { label: '← Back to library', link: '/' };
+    }
+    TestBed.configureTestingModule({ imports: [BackTestIdHost], providers: [provideRouter([])] });
+    const fixture = TestBed.createComponent(BackTestIdHost);
+    fixture.detectChanges();
+    const link = fixture.nativeElement.querySelector('[data-testid="back"]') as HTMLElement | null;
+    expect(link?.textContent?.trim()).toBe('← Back to library');
+    expect(fixture.nativeElement.querySelector('[data-testid="back-home"]')).toBeNull();
+  });
+
   it('renders the back link with its label and link, and omits it when not given', () => {
     const { root, host, fixture } = render();
     const link = [...root.querySelectorAll('a')].find((a) => a.textContent?.trim() === '← Back to library');
