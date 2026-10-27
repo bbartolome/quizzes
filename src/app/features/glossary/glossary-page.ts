@@ -30,7 +30,7 @@ export class GlossaryPage {
     this.kb().concepts.find((entry) => entry.id === this.selectedId()),
   );
   readonly back = computed<PageBack>(() => ({
-    label: `← Back to ${this.quizTitle()}`,
+    label: `← Back to ${this.quizTitle() || 'quiz'}`,
     link: `/quiz/${this.id()}`,
   }));
 
