@@ -1,85 +1,74 @@
-<div class="mx-auto w-full max-w-2xl space-y-8 p-4 sm:p-6">
-  <div class="space-y-8">
+<ui-page-shell width="narrow" [title]="quizTitle()">
+  <div class="mt-6 space-y-8">
     @for (entry of cards(); track $index; let i = $index; let last = $last) {
-      <fieldset
-        #cardEl
-        data-testid="card"
-        class="space-y-4 rounded-lg border border-slate-200 bg-white p-4 focus-within:ring-2 focus-within:ring-indigo-500"
-      >
-        <legend class="px-1 text-base font-semibold text-slate-800">
-          {{ entry.card.legend }}
-        </legend>
+      <fieldset #cardEl data-testid="card" uiCard class="space-y-4">
+        <legend class="type-card">{{ entry.card.legend }}</legend>
 
-        <div class="rounded-md bg-slate-50 p-3 text-slate-800">
+        <div class="rounded-lg bg-sunken p-3">
           @switch (entry.card.promptFormat) {
             @case ('italic') {
-              <p class="italic">{{ entry.card.prompt }}</p>
+              <p class="type-body italic">{{ entry.card.prompt }}</p>
             }
             @case ('bold') {
-              <p class="font-bold">{{ entry.card.prompt }}</p>
+              <p class="type-body font-bold">{{ entry.card.prompt }}</p>
             }
             @default {
-              <p>{{ entry.card.prompt }}</p>
+              <p class="type-body">{{ entry.card.prompt }}</p>
             }
           }
         </div>
 
         @for (option of entry.card.options; track $index; let o = $index) {
-          <label
-            class="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200 p-3 text-slate-700 hover:bg-slate-50"
-          >
+          @let outcome = outcomeOf(entry, o);
+          <label uiOption [state]="optionState(entry, o)">
             <input
               type="radio"
-              class="h-5 w-5 border-slate-300 text-indigo-600"
+              class="h-5 w-5 accent-accent"
               [name]="'card-' + i"
               [value]="o"
               [checked]="entry.picked === o"
               [disabled]="entry.checked"
               (change)="selectOption(o)"
             />
-            <span class="flex-1">{{ option }}</span>
-            @if (entry.checked && o === entry.card.correctIndex) {
-              <span class="text-sm font-medium text-emerald-700">Correct answer</span>
-            }
-            @if (entry.checked && o === entry.picked && o !== entry.card.correctIndex) {
-              <span class="text-sm font-medium text-rose-700">Your pick</span>
+            <span class="type-body flex-1">{{ option }}</span>
+            @if (outcome && outcomeLabels[outcome]; as statusText) {
+              <ui-status [tone]="outcomeLook[outcome].tone" [label]="statusText" />
             }
           </label>
         }
 
         @if (entry.checked && entry.feedback; as fb) {
-          <div
+          <ui-feedback
             data-testid="feedback"
-            class="space-y-2 rounded-md bg-slate-50 p-3 text-sm text-slate-700"
+            [verdict]="fb.verdict === 'Correct' ? 'correct' : 'incorrect'"
           >
-            <p class="font-semibold">{{ fb.verdict }}</p>
-            <p>Answer: {{ fb.answer }}</p>
-            <p>{{ fb.explanation }}</p>
+            <p class="type-detail">Answer: {{ fb.answer }}</p>
+            <p class="type-detail">{{ fb.explanation }}</p>
             @if (fb.spottingTip) {
-              <p class="text-indigo-700">Tip: {{ fb.spottingTip }}</p>
+              <ui-callout label="Tip">{{ fb.spottingTip }}</ui-callout>
             }
             @let contrast = fb.contrast;
             @if (contrast.kind === 'pair-tip') {
-              <p>{{ contrast.target }} vs {{ contrast.lure }}: {{ contrast.tip }}</p>
+              <ui-callout [label]="contrast.target + ' vs ' + contrast.lure">{{ contrast.tip }}</ui-callout>
             }
             @if (contrast.kind === 'side-by-side') {
-              <p>{{ contrast.lure.name }}: {{ contrast.lure.shortDefinition }}</p>
+              <p class="type-detail">{{ contrast.lure.name }}: {{ contrast.lure.shortDefinition }}</p>
               @if (contrast.lureSpottingTip) {
-                <p class="text-indigo-700">Tip: {{ contrast.lureSpottingTip }}</p>
+                <ui-callout label="Tip">{{ contrast.lureSpottingTip }}</ui-callout>
               }
             }
             @if (contrast.kind === 'correct-tip') {
-              <p>{{ contrast.tip }}</p>
+              <ui-callout>{{ contrast.tip }}</ui-callout>
             }
-          </div>
+          </ui-feedback>
         }
 
         @if (last && !entry.checked) {
           <div class="flex justify-end">
             <button
+              uiButton
               type="button"
               data-testid="check-answer"
-              class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-300"
               [disabled]="entry.picked === null"
               (click)="checkAnswer()"
             >
@@ -91,20 +80,17 @@
     }
   </div>
 
-  <footer
-    data-testid="footer"
-    class="sticky bottom-0 -mx-4 flex items-center justify-between border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6"
-  >
-    <p class="text-sm font-medium text-slate-700">
-      {{ score().correct }} of {{ score().checked }} correct
-    </p>
+  <ui-sticky-footer footer data-testid="footer">
+    <span class="type-body">{{ score().correct }} of {{ score().checked }} correct</span>
     <button
+      uiButton
+      variant="secondary"
       type="button"
       data-testid="end-quiz"
-      class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+      actions
       (click)="endQuiz()"
     >
       End quiz
     </button>
-  </footer>
-</div>
+  </ui-sticky-footer>
+</ui-page-shell>

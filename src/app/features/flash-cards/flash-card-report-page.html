@@ -1,55 +1,54 @@
-<div class="mx-auto w-full max-w-2xl space-y-6 p-4 sm:p-6">
-  @if (empty()) {
-    <section class="space-y-4">
-      <p data-testid="empty" class="text-slate-700">
-        No cards were checked this round, so there is no report yet.
-      </p>
-      <button
-        type="button"
-        data-testid="back"
-        class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-        (click)="back()"
+<ui-page-shell width="narrow" [title]="reportTitle()">
+  <div class="mt-6 space-y-8">
+    @if (empty()) {
+      <ui-empty-state
+        message="No cards were checked this round, so there is no report yet."
+        messageTestId="empty"
       >
-        {{ backLabel() }}
-      </button>
-    </section>
-  } @else {
-    <p data-testid="summary" class="text-lg font-semibold text-slate-800">
-      {{ summary().n }} of {{ summary().m }} correct
-    </p>
-
-    @if (summary().missed.length > 0) {
-      <section class="space-y-2">
-        <h2 class="text-base font-semibold text-slate-800">Missed this round</h2>
-        <ul data-testid="missed-list" class="space-y-2 text-slate-700">
-          @for (line of summary().missed; track $index) {
-            <li data-testid="missed-line" class="rounded-md border border-slate-200 bg-white p-3">
-              {{ line.targetName }} — you picked {{ line.lureName }}
-            </li>
-          }
-        </ul>
-      </section>
+        <button
+          uiButton
+          variant="secondary"
+          type="button"
+          data-testid="back"
+          (click)="back()"
+        >
+          {{ backLabel() }}
+        </button>
+      </ui-empty-state>
     } @else {
-      <p data-testid="no-misses" class="text-slate-700">No misses this round.</p>
-    }
+      <p data-testid="summary" class="type-section">
+        {{ summary().n }} of {{ summary().m }} correct
+      </p>
 
-    <div class="flex flex-wrap gap-3">
-      <button
-        type="button"
-        data-testid="next-round"
-        class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
-        (click)="nextRound()"
-      >
-        Next round
-      </button>
-      <button
-        type="button"
-        data-testid="back"
-        class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-        (click)="back()"
-      >
-        {{ backLabel() }}
-      </button>
-    </div>
-  }
-</div>
+      @if (summary().missed.length > 0) {
+        <section class="space-y-2">
+          <h2 class="type-section">Missed this round</h2>
+          <ul data-testid="missed-list" class="space-y-2">
+            @for (line of summary().missed; track $index) {
+              <li data-testid="missed-line" uiCard>
+                {{ line.targetName }} — you picked {{ line.lureName }}
+              </li>
+            }
+          </ul>
+        </section>
+      } @else {
+        <p data-testid="no-misses" class="type-detail">No misses this round.</p>
+      }
+
+      <div class="flex flex-wrap gap-3">
+        <button uiButton type="button" data-testid="next-round" (click)="nextRound()">
+          Next round
+        </button>
+        <button
+          uiButton
+          variant="secondary"
+          type="button"
+          data-testid="back"
+          (click)="back()"
+        >
+          {{ backLabel() }}
+        </button>
+      </div>
+    }
+  </div>
+</ui-page-shell>
