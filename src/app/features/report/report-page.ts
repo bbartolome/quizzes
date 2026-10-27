@@ -10,6 +10,13 @@ import {
   summaryLine,
   type OptionStatus,
 } from './report-logic';
+import { Button } from '../../shared/ui/button.directive';
+import { Callout } from '../../shared/ui/callout';
+import { Card } from '../../shared/ui/card.directive';
+import { EmptyState } from '../../shared/ui/empty-state';
+import { OUTCOME_LOOK } from '../../shared/ui/outcome-look';
+import { PageShell } from '../../shared/ui/page-shell';
+import { StatusBadge } from '../../shared/ui/status-badge';
 
 /** Shape of the data passed to the report page through history.state. */
 interface ReportHistoryState {
@@ -24,12 +31,12 @@ interface ReportHistoryState {
  *
  * The template lives in `report-page.html` (a separate step) and consumes the
  * public members below: `id`, `quizTitle`, `results`, `kb`, `hasResults`,
- * `statusLabels`, and the report-logic helpers `optionStatus`,
+ * `statusLabels`, `outcomeLook`, and the report-logic helpers `optionStatus`,
  * `findConfusionTips`, and `summaryLine`.
  */
 @Component({
   selector: 'app-report-page',
-  imports: [RouterLink],
+  imports: [RouterLink, Button, Callout, Card, EmptyState, PageShell, StatusBadge],
   templateUrl: './report-page.html',
 })
 export class ReportPage implements OnInit {
@@ -53,6 +60,9 @@ export class ReportPage implements OnInit {
 
   /** Human-readable text for each option status (status -> label). */
   readonly statusLabels = STATUS_LABELS;
+
+  /** Tone and look for each option status (design-system.md §7.3). */
+  readonly outcomeLook = OUTCOME_LOOK;
 
   // Exposed for report-page.html, which calls these directly per result/option.
   readonly optionStatus = optionStatus;
