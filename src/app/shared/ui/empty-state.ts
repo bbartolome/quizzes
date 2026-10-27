@@ -7,13 +7,17 @@ import { Card } from './card.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section uiCard tone="sunken">
-      <h2 class="type-section">{{ heading() }}</h2>
-      <p class="type-detail">{{ message() }}</p>
+      @if (heading()) {
+        <h2 class="type-section">{{ heading() }}</h2>
+      }
+      <p class="type-detail" [attr.data-testid]="messageTestId()">{{ message() }}</p>
       <ng-content />
     </section>
   `,
 })
 export class EmptyState {
-  readonly heading = input.required<string>();
+  readonly heading = input<string>();
   readonly message = input.required<string>();
+  /** Testid of the message element. A page with an existing testid keeps it (docs/specs/design-system.md §12). */
+  readonly messageTestId = input<string>();
 }

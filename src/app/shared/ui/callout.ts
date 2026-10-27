@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   template: `
     <div class="rounded-lg bg-accent-subtle p-4 text-sm text-text">
       @if (label()) {
-        <span class="font-semibold">{{ label() }}:</span>
+        <span class="font-semibold">{{ label() }}: </span>
       }
       <ng-content />
     </div>

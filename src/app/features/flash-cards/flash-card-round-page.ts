@@ -18,6 +18,15 @@ import { StatsService } from '../../core/services/stats.service';
 import { FlashCard, buildCard } from './card-builder';
 import { applyBump, baseWeights, drawTarget } from './draw-weights';
 import { Feedback, buildFeedback } from './feedback';
+import { Card } from '../../shared/ui/card.directive';
+import { Callout } from '../../shared/ui/callout';
+import { Button } from '../../shared/ui/button.directive';
+import { FeedbackPanel } from '../../shared/ui/feedback-panel';
+import { OUTCOME_LOOK, Outcome } from '../../shared/ui/outcome-look';
+import { OptionRow, OptionRowState } from '../../shared/ui/option-row';
+import { PageShell } from '../../shared/ui/page-shell';
+import { StatusBadge } from '../../shared/ui/status-badge';
+import { StickyFooter } from '../../shared/ui/sticky-footer';
 
 /** One card in the feed. `picked` is the option index chosen, or null. */
 export interface RoundCard {
@@ -28,8 +37,16 @@ export interface RoundCard {
   feedback?: Feedback;
 }
 
+/** Flash card wording for the outcomes that show a label (spec §7.3); the look comes from OUTCOME_LOOK. */
+const OUTCOME_LABELS: Partial<Record<Outcome, string>> = {
+  correct: 'Correct answer',
+  wrong: 'Your pick',
+  missed: 'Correct answer',
+};
+
 @Component({
   selector: 'app-flash-card-round-page',
+  imports: [Button, Callout, Card, FeedbackPanel, OptionRow, PageShell, StatusBadge, StickyFooter],
   templateUrl: './flash-card-round-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -51,6 +68,30 @@ export class FlashCardRoundPage implements OnInit {
   /** The kind's concepts (route conceptType), in knowledge-base order. */
   readonly deck = signal<Concept[]>([]);
   readonly cards = signal<RoundCard[]>([]);
+  /** The quiz title from the manifest, the page h1. Empty until the manifest loads. */
+  readonly quizTitle = signal('');
+  protected readonly outcomeLook = OUTCOME_LOOK;
+  protected readonly outcomeLabels = OUTCOME_LABELS;
+
+  /** The §7.3 outcome of option `index` once its card is checked; null before that. */
+  protected outcomeOf(entry: RoundCard, index: number): Outcome | null {
+    if (!entry.checked) {
+      return null;
+    }
+    if (index === entry.card.correctIndex) {
+      return entry.picked === index ? 'correct' : 'missed';
+    }
+    return entry.picked === index ? 'wrong' : 'neutral';
+  }
+
+  /** Unchecked: the picked option is selected. Checked: the outcome's look. */
+  protected optionState(entry: RoundCard, index: number): OptionRowState {
+    const outcome = this.outcomeOf(entry, index);
+    if (outcome) {
+      return OUTCOME_LOOK[outcome].state;
+    }
+    return entry.picked === index ? 'selected' : 'idle';
+  }
 
   readonly score = computed(() => {
     const checked = this.cards().filter((c) => c.checked);
@@ -91,6 +132,7 @@ export class FlashCardRoundPage implements OnInit {
       if (!entry) {
         return;
       }
+      this.quizTitle.set(entry.title);
       this.quizData.loadKnowledgeBase().subscribe((kb) => {
         this.kb = kb;
         const deck = kb.concepts.filter((c) => c.type === conceptType);
