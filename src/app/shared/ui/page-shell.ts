@@ -20,7 +20,7 @@ const WIDTH = {
     <div class="flex min-h-screen flex-col bg-surface">
       <div [class]="column()">
         @if (back(); as b) {
-          <a uiButton variant="link" data-testid="back-home" [routerLink]="b.link">{{ b.label }}</a>
+          <a uiButton variant="link" [attr.data-testid]="backTestId()" [routerLink]="b.link">{{ b.label }}</a>
         }
         @if (eyebrow()) {
           <p class="type-eyebrow">{{ eyebrow() }}</p>
@@ -41,6 +41,8 @@ export class PageShell {
   readonly description = input<string>();
   readonly width = input.required<keyof typeof WIDTH>();
   readonly back = input<PageBack>();
+  /** Testid of the back link. A page with an existing testid keeps it (docs/specs/design-system.md §12). */
+  readonly backTestId = input('back-home');
 
   protected readonly column = computed(
     () => `mx-auto flex w-full flex-1 flex-col px-4 py-8 sm:px-8 ${WIDTH[this.width()]}`,
