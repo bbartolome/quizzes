@@ -288,6 +288,15 @@ Each slice moves one feature onto `PageShell`, the directives, the components an
 | Flash cards (`flash-cards`)                          | Narrow shells; round and report gain their `h1` (§6.3). Home renders before its data (§6.1). Options use `OptionRow` + `StatusBadge`. Tips use `Callout`. Report empty state uses `EmptyState`. `flash-card-home-page.spec.ts` C2 asserts `bg-indigo-600`; it changes to assert the `primary` variant.                                                                                                                                                                 |
 | Calibration (`calibration`)                          | Wide shells for home and results, narrow for the round. `ProgressDots`, `selected` looks for both answer controls, §8 for the chart, sparkline, skill card and table. `confidence-card.ts` drops its `styles:` block and becomes a raised `Card` with a `type-card` heading, matching the skill card beside it. `bank-unavailable.ts` uses `EmptyState` with a `secondary` **Retry**. **Start over** is `danger`. `review-list.ts` flags use `StatusBadge` (`danger`). |
 
+Flash card decisions (S9), which refine the flash cards row above:
+
+- The home back link is the shell's, reading "← Back to library". It keeps its `back` testid through `PageShell`'s `backTestId` input (default `back-home`).
+- The home shell and back link render at once. The body waits for the manifest title, so a missing entry shows an empty `h1` and no Start round.
+- The round `h1` is the quiz title. The report `h1` is "<Quiz title>: report", and the report page loads the manifest for it.
+- Option labels: "Correct answer" for the correct option (picked or missed) and "Your pick" for a wrong pick, shown as `StatusBadge`s inside the `OptionRow`, per §7.3.
+- The report empty state is an `EmptyState` with no heading, so copy does not change. `EmptyState`'s heading is optional, and its message keeps the `empty` testid through `messageTestId`.
+- A `Callout` label is followed by a space, so "Tip: …" and "A vs B: …" no longer run into the body text.
+
 Reasoning Traps decisions (S8), which refine the round and report row above:
 
 - The ⓘ definition is `type-body`. Its spotting tip is a `ui-callout` labelled "Tip", so the copy stays "Tip:".
