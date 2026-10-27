@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { NEVER, of } from 'rxjs';
 import { StatsPage } from './stats-page';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
@@ -137,6 +137,18 @@ describe('StatsPage', () => {
     expect(el.querySelector('ui-page-shell .max-w-2xl')).toBeTruthy();
     const back = el.querySelector('[data-testid="back-home"]');
     expect(back.textContent.trim()).toBe('← Back to Logic Quiz');
+    expect(back.getAttribute('href')).toBe('/quiz/rt');
+  });
+
+  it('keeps a back link with a fallback label while the manifest is still loading', async () => {
+    quizData.loadManifest = vi.fn(() => NEVER);
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const back = fixture.nativeElement.querySelector('[data-testid="back-home"]');
+    expect(back.textContent.trim()).toBe('← Back to quiz');
     expect(back.getAttribute('href')).toBe('/quiz/rt');
   });
 
