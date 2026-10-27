@@ -19,6 +19,15 @@ import {
   type RoundFilters,
 } from './round-builder';
 import { STATUS_LABELS, findConfusionTips, optionStatus } from '../report/report-logic';
+import { Button } from '../../shared/ui/button.directive';
+import { Callout } from '../../shared/ui/callout';
+import { Card } from '../../shared/ui/card.directive';
+import { FeedbackPanel } from '../../shared/ui/feedback-panel';
+import { OUTCOME_LOOK } from '../../shared/ui/outcome-look';
+import { OptionRow, type OptionRowState } from '../../shared/ui/option-row';
+import { PageShell } from '../../shared/ui/page-shell';
+import { StatusBadge } from '../../shared/ui/status-badge';
+import { StickyFooter } from '../../shared/ui/sticky-footer';
 
 export interface RoundEntry {
   question: RoundQuestion;
@@ -28,6 +37,7 @@ export interface RoundEntry {
 
 @Component({
   selector: 'app-round-page',
+  imports: [Button, Callout, Card, FeedbackPanel, OptionRow, PageShell, StatusBadge, StickyFooter],
   templateUrl: './round-page.html',
 })
 export class RoundPage implements OnInit {
@@ -68,6 +78,7 @@ export class RoundPage implements OnInit {
   });
 
   readonly statusLabels = STATUS_LABELS;
+  readonly outcomeLook = OUTCOME_LOOK;
   readonly optionStatus = optionStatus;
   readonly findConfusionTips = findConfusionTips;
 
@@ -126,6 +137,14 @@ export class RoundPage implements OnInit {
     } else {
       this.exhausted.set(true);
     }
+  }
+
+  /** The outcome look once checked; otherwise picked or idle (design-system.md §7.3). */
+  optionState(entry: RoundEntry, option: string): OptionRowState {
+    if (entry.result) {
+      return OUTCOME_LOOK[optionStatus(entry.result, option)].state;
+    }
+    return entry.selected.includes(option) ? 'selected' : 'idle';
   }
 
   infoFor(option: string): Concept | undefined {

@@ -479,7 +479,9 @@ describe('RoundPage', () => {
       };
       engine.selectRound = vi.fn().mockReturnValueOnce([pairQuestion]).mockReturnValue([]);
       configure();
-      quizData.loadQuizBundle = vi.fn(() => of({ questions: [], templates: [], knowledgeBase: pairKb }));
+      quizData.loadQuizBundle = vi.fn(() =>
+        of({ questions: [], templates: [], knowledgeBase: pairKb }),
+      );
       const fixture = TestBed.createComponent(RoundPage);
       fixture.detectChanges();
       await fixture.whenStable();
