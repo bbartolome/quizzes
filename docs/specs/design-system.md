@@ -288,6 +288,14 @@ Each slice moves one feature onto `PageShell`, the directives, the components an
 | Flash cards (`flash-cards`)                          | Narrow shells; round and report gain their `h1` (§6.3). Home renders before its data (§6.1). Options use `OptionRow` + `StatusBadge`. Tips use `Callout`. Report empty state uses `EmptyState`. `flash-card-home-page.spec.ts` C2 asserts `bg-indigo-600`; it changes to assert the `primary` variant.                                                                                                                                                                 |
 | Calibration (`calibration`)                          | Wide shells for home and results, narrow for the round. `ProgressDots`, `selected` looks for both answer controls, §8 for the chart, sparkline, skill card and table. `confidence-card.ts` drops its `styles:` block and becomes a raised `Card` with a `type-card` heading, matching the skill card beside it. `bank-unavailable.ts` uses `EmptyState` with a `secondary` **Retry**. **Start over** is `danger`. `review-list.ts` flags use `StatusBadge` (`danger`). |
 
+Reasoning Traps decisions (S8), which refine the round and report row above:
+
+- The ⓘ definition is `type-body`. Its spotting tip is a `ui-callout` labelled "Tip", so the copy stays "Tip:".
+- The ⓘ button is a `link` `Button` after the option row, with `min-h-6 min-w-6` for the §9 24px target. The state border stays on the label.
+- Round feedback's confusion tips are `ui-callout`s labelled with the pair ("A vs B"), as the report's are.
+- Report option rows stay neutral (`border-default bg-sunken`). The `StatusBadge` carries the tone.
+- Report "Back to quiz" is a `secondary` `Button`. "Next round" is `primary`. The no-results block is an `EmptyState` with a `primary` "Go to quiz" link.
+
 All `data-testid` attributes stay where they are; specs find elements by them.
 
 ## 13. Proposed implementation slices
