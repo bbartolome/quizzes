@@ -9,6 +9,7 @@ import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { TemplateGeneratorService } from '../../core/services/template-generator.service';
 import {
   Concept,
+  KnowledgeBase,
   QuizManifestEntry,
   RoundQuestion,
   ScoredQuestionResult,
@@ -187,7 +188,7 @@ describe('RoundPage', () => {
     }
   });
 
-  it('shows "1 / 1 correct" in the score footer after checking the correct option', async () => {
+  it('shows "1 of 1 correct" in the score footer after checking the correct option', async () => {
     configure();
     const fixture = TestBed.createComponent(RoundPage);
     fixture.detectChanges();
@@ -201,7 +202,7 @@ describe('RoundPage', () => {
     fixture.detectChanges();
 
     const score = fixture.nativeElement.querySelector('[data-testid="score"]');
-    expect(score.textContent).toContain('1 / 1 correct');
+    expect(score.textContent).toContain('1 of 1 correct');
   });
 
   it('shows the exhausted message and adds no further question once selectRound returns none', async () => {
@@ -345,6 +346,21 @@ describe('RoundPage', () => {
       expect(infoButtons(fixture)[0].getAttribute('aria-expanded')).toBe('true');
     });
 
+    it('shows the spotting tip in a Callout labelled Tip, below the definition', async () => {
+      const fixture = await load();
+
+      infoButtons(fixture)[0].click();
+      fixture.detectChanges();
+
+      const callout = fixture.nativeElement.querySelector(
+        '[data-testid="option-definition"] ui-callout',
+      );
+      expect(callout).toBeTruthy();
+      expect(callout.textContent).toContain('Tip:');
+      expect(callout.textContent).toContain(kb[0].spottingTip);
+      expect(callout.textContent).not.toContain(kb[0].shortDefinition);
+    });
+
     it('clicking the info button does not select the option', async () => {
       const fixture = await load();
 
@@ -370,6 +386,133 @@ describe('RoundPage', () => {
 
       expect(fixture.nativeElement.querySelector('[data-testid="option-definition"]')).toBeNull();
       expect(infoButtons(fixture)[0].getAttribute('aria-expanded')).toBe('false');
+    });
+  });
+
+  describe('design system (S8, §6–§7)', () => {
+    async function load() {
+      configure();
+      const fixture = TestBed.createComponent(RoundPage);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      return fixture;
+    }
+
+    async function checkFirst(fixture: Awaited<ReturnType<typeof load>>, option: string) {
+      fixture.componentInstance.toggle(0, option);
+      fixture.componentInstance.check();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+    }
+
+    function firstLabels(fixture: Awaited<ReturnType<typeof load>>): HTMLLabelElement[] {
+      const question = fixture.nativeElement.querySelector('[data-testid="question"]');
+      return Array.from(question.querySelectorAll('label[uiOption]')) as HTMLLabelElement[];
+    }
+
+    it('renders the quiz title as the only h1, inside the page shell', async () => {
+      const fixture = await load();
+
+      expect(fixture.nativeElement.querySelectorAll('h1').length).toBe(1);
+      const title = fixture.nativeElement.querySelector('ui-page-shell h1.type-title');
+      expect(title?.textContent?.trim()).toBe('Logic Quiz');
+    });
+
+    it('renders each question as a raised Card with its options as OptionRow labels', async () => {
+      const fixture = await load();
+
+      const question = fixture.nativeElement.querySelector('[data-testid="question"]');
+      expect(question.hasAttribute('uiCard')).toBe(true);
+      expect(firstLabels(fixture).length).toBe(2);
+    });
+
+    it('marks a ticked option with the selected look', async () => {
+      const fixture = await load();
+
+      fixture.componentInstance.toggle(0, 'A');
+      fixture.detectChanges();
+
+      const [a, b] = firstLabels(fixture);
+      expect(a.classList).toContain('border-accent');
+      expect(b.classList).not.toContain('border-accent');
+    });
+
+    it('shows each option outcome as an OptionRow state and a StatusBadge tone after checking', async () => {
+      const fixture = await load();
+
+      await checkFirst(fixture, 'A');
+
+      const [a, b] = firstLabels(fixture);
+      expect(a.classList).toContain('border-success');
+      expect(a.querySelector('ui-status')?.textContent).toContain('Correct');
+      expect(a.querySelector('ui-status > span')?.classList).toContain('text-success');
+      expect(b.querySelector('ui-status')?.textContent).toContain('Not picked');
+    });
+
+    it('renders the feedback as a FeedbackPanel with the verdict', async () => {
+      const fixture = await load();
+
+      await checkFirst(fixture, 'A');
+
+      const feedback = fixture.nativeElement.querySelector('[data-testid="feedback"]');
+      expect(feedback.tagName.toLowerCase()).toBe('ui-feedback');
+      expect(feedback.textContent).toContain('Correct');
+    });
+
+    it('renders each confusion tip in feedback as a Callout labelled with the pair', async () => {
+      const pairKb: KnowledgeBase = {
+        concepts: [
+          { ...kb[0] },
+          { ...kb[0], id: 'kb2', name: 'Red Herring', spottingTip: 'herring tip' },
+        ],
+        pairs: [{ concepts: ['kb1', 'kb2'], tip: 'Look for the topic shift.' }],
+      };
+      const pairQuestion: RoundQuestion = {
+        id: 'qp',
+        prompt: 'PP',
+        options: ['Straw Man', 'Red Herring'],
+        correctAnswers: ['Straw Man'],
+        traitIds: [],
+        explanation: 'EP',
+      };
+      engine.selectRound = vi.fn().mockReturnValueOnce([pairQuestion]).mockReturnValue([]);
+      configure();
+      quizData.loadQuizBundle = vi.fn(() => of({ questions: [], templates: [], knowledgeBase: pairKb }));
+      const fixture = TestBed.createComponent(RoundPage);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      fixture.componentInstance.toggle(0, 'Straw Man');
+      fixture.componentInstance.check();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const tip = fixture.nativeElement.querySelector('[data-testid="feedback"] ui-callout');
+      expect(tip).toBeTruthy();
+      expect(tip.textContent).toContain('Straw Man vs Red Herring:');
+      expect(tip.textContent).toContain('Look for the topic shift.');
+    });
+
+    it('puts the score line and a secondary End quiz in a sticky footer inside the page shell', async () => {
+      const fixture = await load();
+
+      const footer = fixture.nativeElement.querySelector('ui-page-shell ui-sticky-footer');
+      expect(footer).toBeTruthy();
+      expect(footer.querySelector('[data-testid="score"]')).toBeTruthy();
+      const endQuiz = footer.querySelector('[data-testid="end-quiz"]');
+      expect(endQuiz.classList).toContain('border-strong');
+      expect(endQuiz.classList).not.toContain('bg-accent');
+    });
+
+    it('makes Check answer the primary button', async () => {
+      const fixture = await load();
+
+      const check = fixture.nativeElement.querySelector('[data-testid="check-answer"]');
+      expect(check.classList).toContain('bg-accent');
     });
   });
 });

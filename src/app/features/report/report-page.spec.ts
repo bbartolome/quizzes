@@ -233,4 +233,92 @@ describe('ReportPage', () => {
     expect(nextRound.getAttribute('href')).toBe('/quiz/rt/round');
     expect(backHome.getAttribute('href')).toBe('/quiz/rt');
   });
+
+  describe('design system (S8, §6–§7)', () => {
+    async function load(results: ScoredQuestionResult[]) {
+      setHistoryState({ results, quizTitle: 'Logic Quiz' });
+      configure();
+      const fixture = TestBed.createComponent(ReportPage);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      return fixture;
+    }
+
+    it('renders the quiz title as the only h1, inside the page shell', async () => {
+      const fixture = await load([makeResult()]);
+
+      expect(fixture.nativeElement.querySelectorAll('h1').length).toBe(1);
+      const title = fixture.nativeElement.querySelector('ui-page-shell h1.type-title');
+      expect(title?.textContent?.trim()).toBe('Logic Quiz');
+    });
+
+    it('renders each result as a raised Card with an h3 type-card heading', async () => {
+      const fixture = await load([makeResult()]);
+
+      const result = fixture.nativeElement.querySelector('[data-testid="result"]');
+      expect(result.hasAttribute('uiCard')).toBe(true);
+      const heading = result.querySelector('h3');
+      expect(heading?.textContent).toContain('Prompt for q1');
+      expect(heading.classList).toContain('type-card');
+    });
+
+    it('gives a correct option the success tone and an unpicked one the neutral tone', async () => {
+      const fixture = await load([makeResult({ selected: ['Strawman'], correct: true })]);
+
+      const statuses = fixture.nativeElement.querySelectorAll('[data-testid="option-status"]');
+      expect(statuses[0].querySelector('ui-status > span').classList).toContain('text-success');
+      expect(statuses[1].querySelector('ui-status > span').classList).toContain('text-muted');
+    });
+
+    it('gives a missed option the warning tone and a wrong pick the danger tone', async () => {
+      const fixture = await load([
+        makeResult({
+          selected: ['Slippery Slope'],
+          correct: false,
+          missed: ['Strawman'],
+          extra: ['Slippery Slope'],
+        }),
+      ]);
+
+      const statuses = fixture.nativeElement.querySelectorAll('[data-testid="option-status"]');
+      expect(statuses[0].querySelector('ui-status > span').classList).toContain('text-warning');
+      expect(statuses[1].querySelector('ui-status > span').classList).toContain('text-danger');
+    });
+
+    it('keeps each option row neutral, so only its status carries the tone', async () => {
+      const fixture = await load([makeResult({ selected: ['Strawman'], correct: true })]);
+
+      const status = fixture.nativeElement.querySelector('[data-testid="option-status"]');
+      expect(status.classList).toContain('border-default');
+      expect(status.classList).toContain('bg-sunken');
+      expect(status.classList).not.toContain('border-slate-100');
+    });
+
+    it('renders each confusion tip as a Callout labelled with the pair', async () => {
+      const fixture = await load([makeResult()]);
+
+      const tip = fixture.nativeElement.querySelector('[data-testid="tip"]');
+      expect(tip.tagName.toLowerCase()).toBe('ui-callout');
+      expect(tip.textContent).toContain('Strawman vs Slippery Slope:');
+    });
+
+    it('renders the no-results block as an EmptyState with a primary Go to quiz button', async () => {
+      const fixture = await load([]);
+
+      const empty = fixture.nativeElement.querySelector('[data-testid="no-results"]');
+      expect(empty.tagName.toLowerCase()).toBe('ui-empty-state');
+      expect(empty.querySelector('h2').classList).toContain('type-section');
+      expect(empty.querySelector('a').classList).toContain('bg-accent');
+    });
+
+    it('makes Back to quiz a secondary button and Next round the primary one', async () => {
+      const fixture = await load([makeResult()]);
+
+      const backHome = fixture.nativeElement.querySelector('[data-testid="back-home"]');
+      const nextRound = fixture.nativeElement.querySelector('[data-testid="next-round"]');
+      expect(backHome.classList).toContain('border-strong');
+      expect(nextRound.classList).toContain('bg-accent');
+    });
+  });
 });
