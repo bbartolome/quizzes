@@ -1,80 +1,55 @@
-<div class="mx-auto w-full max-w-2xl space-y-8 p-4 sm:p-6">
-  <h1 class="text-3xl font-bold tracking-tight text-slate-900">{{ quizTitle() }}</h1>
+<ui-page-shell width="narrow" [title]="quizTitle()">
+  <div class="mt-6 space-y-8">
+    @if (hasResults()) {
+      <div data-testid="summary" uiCard>
+        <p class="type-section">{{ summaryLine(results()) }}</p>
+      </div>
 
-  @if (hasResults()) {
-    <div data-testid="summary" class="rounded-lg border border-slate-200 bg-white px-4 py-3">
-      <p class="text-lg font-semibold text-slate-800">{{ summaryLine(results()) }}</p>
-    </div>
+      <div class="space-y-6">
+        @for (result of results(); track result.question.id) {
+          <article data-testid="result" uiCard class="space-y-4">
+            <h3 class="type-card">{{ result.question.prompt }}</h3>
 
-    <div class="space-y-6">
-      @for (result of results(); track result.question.id) {
-        <article
-          data-testid="result"
-          class="space-y-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
-        >
-          <h2 class="text-base font-semibold text-slate-800">{{ result.question.prompt }}</h2>
+            <ul class="space-y-2">
+              @for (option of result.question.options; track option) {
+                @let status = optionStatus(result, option);
+                <li
+                  data-testid="option-status"
+                  class="flex items-center justify-between gap-3 rounded-lg border border-default bg-sunken px-3 py-2"
+                >
+                  <span class="type-body">{{ option }}</span>
+                  <ui-status [tone]="outcomeLook[status].tone" [label]="statusLabels[status]" />
+                </li>
+              }
+            </ul>
 
-          <ul class="space-y-2">
-            @for (option of result.question.options; track option) {
-              <li
-                data-testid="option-status"
-                class="flex items-center justify-between gap-3 rounded-md border border-slate-100 bg-slate-50 px-3 py-2 text-sm text-slate-700"
-              >
-                <span>{{ option }}</span>
-                <span class="font-semibold text-slate-900">
-                  {{ statusLabels[optionStatus(result, option)] }}
-                </span>
-              </li>
+            <p data-testid="explanation" class="type-detail">{{ result.question.explanation }}</p>
+
+            @for (tip of findConfusionTips(result.question.options, kb()); track tip.a + tip.b) {
+              <ui-callout data-testid="tip" [label]="tip.a + ' vs ' + tip.b">{{
+                tip.tip
+              }}</ui-callout>
             }
-          </ul>
+          </article>
+        }
+      </div>
 
-          <p data-testid="explanation" class="text-sm leading-relaxed text-slate-600">
-            {{ result.question.explanation }}
-          </p>
-
-          @for (tip of findConfusionTips(result.question.options, kb()); track tip.a + tip.b) {
-            <p
-              data-testid="tip"
-              class="rounded-md border-l-4 border-indigo-300 bg-indigo-50 px-3 py-2 text-sm text-indigo-900"
-            >
-              <span class="font-semibold">{{ tip.a }} vs {{ tip.b }}:</span> {{ tip.tip }}
-            </p>
-          }
-        </article>
-      }
-    </div>
-
-    <div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200 pt-6">
-      <a
-        data-testid="back-home"
-        [routerLink]="['/quiz', id()]"
-        class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+      <div class="flex flex-wrap items-center justify-between gap-4 border-t border-default pt-6">
+        <a uiButton variant="secondary" data-testid="back-home" [routerLink]="['/quiz', id()]">
+          Back to quiz
+        </a>
+        <a uiButton data-testid="next-round" [routerLink]="['/quiz', id(), 'round']">
+          Next round
+        </a>
+      </div>
+    } @else {
+      <ui-empty-state
+        data-testid="no-results"
+        heading="No results yet"
+        message="You haven't completed a round for this quiz. Start one to see your report here."
       >
-        Back to quiz
-      </a>
-      <a
-        data-testid="next-round"
-        [routerLink]="['/quiz', id(), 'round']"
-        class="inline-flex items-center rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-      >
-        Next round
-      </a>
-    </div>
-  } @else {
-    <div
-      data-testid="no-results"
-      class="space-y-4 rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm"
-    >
-      <h2 class="text-lg font-semibold text-slate-800">No results yet</h2>
-      <p class="text-sm text-slate-600">
-        You haven't completed a round for this quiz. Start one to see your report here.
-      </p>
-      <a
-        [routerLink]="['/quiz', id()]"
-        class="inline-flex items-center rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-      >
-        Go to quiz
-      </a>
-    </div>
-  }
-</div>
+        <a uiButton [routerLink]="['/quiz', id()]">Go to quiz</a>
+      </ui-empty-state>
+    }
+  </div>
+</ui-page-shell>

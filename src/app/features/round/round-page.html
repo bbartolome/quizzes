@@ -1,49 +1,37 @@
-<div class="mx-auto w-full max-w-2xl space-y-8 p-4 sm:p-6">
-  <h1 class="text-3xl font-bold tracking-tight text-slate-900">
-    {{ quizTitle() }}
-  </h1>
-
-  <div class="space-y-8">
+<ui-page-shell width="narrow" [title]="quizTitle()">
+  <div class="mt-6 space-y-8">
     @for (entry of entries(); track entry.question.id; let i = $index) {
-      <fieldset
-        data-testid="question"
-        class="space-y-4 rounded-lg border border-slate-200 bg-white p-4 focus-within:ring-2 focus-within:ring-indigo-500"
-      >
-        <legend class="px-1 text-base font-semibold text-slate-800">
+      <fieldset data-testid="question" uiCard class="space-y-4">
+        <legend class="type-card">
           {{ entry.question.prompt }}
         </legend>
 
         @for (option of entry.question.options; track option) {
           @let open = openInfo() === i + ':' + option;
-          <div
-            class="overflow-hidden rounded-lg border transition"
-            [class.border-indigo-400]="open"
-            [class.border-slate-200]="!open"
-          >
-            <div class="flex items-center">
-              <label
-                class="flex flex-1 cursor-pointer items-center gap-3 p-3 text-slate-700 hover:bg-slate-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
-              >
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <label uiOption class="flex-1" [state]="optionState(entry, option)">
                 <input
                   data-testid="option"
                   type="checkbox"
-                  class="h-5 w-5 rounded border-slate-300 text-indigo-600 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+                  class="h-5 w-5 accent-accent"
                   [checked]="entry.selected.includes(option)"
                   [disabled]="!!entry.result"
                   (change)="toggle(i, option)"
                 />
-                <span class="flex-1">{{ option }}</span>
-                @if (entry.result) {
-                  <span class="text-sm font-medium text-slate-500">
-                    {{ statusLabels[optionStatus(entry.result, option)] }}
-                  </span>
+                <span class="type-body flex-1">{{ option }}</span>
+                @if (entry.result; as result) {
+                  @let status = optionStatus(result, option);
+                  <ui-status [tone]="outcomeLook[status].tone" [label]="statusLabels[status]" />
                 }
               </label>
               @if (infoFor(option)) {
                 <button
+                  uiButton
+                  variant="link"
                   type="button"
                   data-testid="option-info"
-                  class="self-stretch border-l border-slate-200 px-4 text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500"
+                  class="inline-flex min-h-6 min-w-6 items-center justify-center"
                   [attr.aria-label]="'Definition of ' + option"
                   [attr.aria-expanded]="open"
                   (click)="toggleInfo(i, option)"
@@ -54,13 +42,10 @@
             </div>
             @if (open) {
               @if (infoFor(option); as info) {
-                <div
-                  data-testid="option-definition"
-                  class="border-t border-indigo-100 bg-indigo-50 px-4 py-3 text-sm text-indigo-900"
-                >
-                  <p>{{ info.shortDefinition }}</p>
+                <div data-testid="option-definition" class="space-y-2">
+                  <p class="type-body">{{ info.shortDefinition }}</p>
                   @if (info.spottingTip) {
-                    <p class="mt-1 text-indigo-700">Tip: {{ info.spottingTip }}</p>
+                    <ui-callout label="Tip">{{ info.spottingTip }}</ui-callout>
                   }
                 </div>
               }
@@ -68,28 +53,22 @@
           </div>
         }
 
-        @if (entry.result) {
-          <div
-            data-testid="feedback"
-            class="space-y-2 rounded-md bg-slate-50 p-3 text-sm text-slate-700"
-          >
-            <p class="font-semibold">
-              {{ entry.result.correct ? 'Correct' : 'Incorrect' }}
-            </p>
-            <p>Answer: {{ entry.question.correctAnswers.join(', ') }}</p>
-            <p>{{ entry.question.explanation }}</p>
+        @if (entry.result; as result) {
+          <ui-feedback data-testid="feedback" [verdict]="result.correct ? 'correct' : 'incorrect'">
+            <p class="type-detail">Answer: {{ entry.question.correctAnswers.join(', ') }}</p>
+            <p class="type-detail">{{ entry.question.explanation }}</p>
             @for (tip of findConfusionTips(entry.question.options, kb()); track tip.a + tip.b) {
-              <p>{{ tip.a }} vs {{ tip.b }}: {{ tip.tip }}</p>
+              <ui-callout [label]="tip.a + ' vs ' + tip.b">{{ tip.tip }}</ui-callout>
             }
-          </div>
+          </ui-feedback>
         } @else if (i === entries().length - 1) {
           <div class="flex justify-end">
             <button
+              uiButton
               type="button"
               data-testid="check-answer"
               [disabled]="!canCheck()"
               (click)="check()"
-              class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-slate-300"
             >
               Check answer
             </button>
@@ -99,25 +78,25 @@
     }
 
     @if (exhausted()) {
-      <p data-testid="exhausted" class="text-center text-slate-500">
+      <p data-testid="exhausted" class="type-detail text-center">
         You've seen every question for these filters.
       </p>
     }
   </div>
-</div>
 
-<div
-  class="sticky bottom-0 flex items-center justify-between border-t border-slate-200 bg-white/90 px-4 py-3 backdrop-blur"
->
-  <span data-testid="score" class="text-sm font-semibold text-slate-700">
-    {{ score().correct }} / {{ score().answered }} correct
-  </span>
-  <button
-    type="button"
-    data-testid="end-quiz"
-    (click)="endQuiz()"
-    class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-  >
-    End quiz
-  </button>
-</div>
+  <ui-sticky-footer footer>
+    <span data-testid="score" class="type-body">
+      {{ score().correct }} of {{ score().answered }} correct
+    </span>
+    <button
+      uiButton
+      variant="secondary"
+      type="button"
+      data-testid="end-quiz"
+      actions
+      (click)="endQuiz()"
+    >
+      End quiz
+    </button>
+  </ui-sticky-footer>
+</ui-page-shell>
