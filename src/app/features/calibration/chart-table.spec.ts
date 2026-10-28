@@ -29,6 +29,12 @@ function render(b: BucketStat[], o?: BucketStat[] | null) {
 }
 
 describe('ChartTable', () => {
+  it('styles the header row as caption text and right-aligns the numbers', () => {
+    const { root } = render(buckets);
+    expect(root.querySelector('thead th')?.className).toContain('type-caption');
+    expect(root.querySelectorAll('tbody td')[1]?.className).toContain('tabular-nums');
+  });
+
   it('renders a table', () => {
     const { root } = render(buckets);
     expect(root.querySelector('table')).not.toBeNull();
