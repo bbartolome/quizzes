@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
@@ -11,6 +11,8 @@ import { SkillScoreCard } from './skill-score-card';
 import { ConfidenceCard } from './confidence-card';
 import { ReviewList } from './review-list';
 import { BankUnavailable } from './bank-unavailable';
+import { PageShell } from '../../shared/ui/page-shell';
+import { Button } from '../../shared/ui/button.directive';
 
 @Component({
   selector: 'app-calibration-results-page',
@@ -23,6 +25,8 @@ import { BankUnavailable } from './bank-unavailable';
     ReviewList,
     BankUnavailable,
     RouterLink,
+    PageShell,
+    Button,
   ],
 })
 export class CalibrationResultsPage {
@@ -35,6 +39,7 @@ export class CalibrationResultsPage {
   readonly ctx = signal<CalibrationContext | null>(null);
   readonly view = signal<ResultsView | null>(null);
   readonly loadError = signal(false);
+  readonly title = computed(() => (this.ctx() ? `${this.ctx()!.entry.title}: results` : ''));
 
   constructor() {
     this.load();

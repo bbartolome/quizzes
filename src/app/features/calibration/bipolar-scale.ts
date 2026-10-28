@@ -1,4 +1,5 @@
 import { Component, input, output } from '@angular/core';
+import { SELECTED_LOOK } from '../../shared/ui/option-row';
 
 interface Stop {
   side: 0 | 1;
@@ -12,7 +13,7 @@ const STOP_CONFIDENCES: readonly number[] = [100, 90, 80, 70, 60];
   standalone: true,
   template: `
     <div class="w-full">
-      <div class="mb-1 flex items-center justify-between text-xs font-medium text-gray-500">
+      <div class="type-caption mb-1 flex items-center justify-between font-medium">
         <span>{{ options()[0] }}</span>
         <span>{{ options()[1] }}</span>
       </div>
@@ -22,11 +23,8 @@ const STOP_CONFIDENCES: readonly number[] = [100, 90, 80, 70, 60];
             type="button"
             [attr.aria-label]="label(stop)"
             [attr.aria-pressed]="isPressed(stop) ? 'true' : 'false'"
-            [class.border-blue-600]="isPressed(stop)"
-            [class.bg-blue-600]="isPressed(stop)"
-            [class.text-white]="isPressed(stop)"
-            [class.hover:bg-blue-50]="!isPressed(stop)"
-            class="rounded border border-gray-300 bg-white px-0.5 py-1.5 text-[10px] font-medium leading-none text-gray-900 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+            [class]="isPressed(stop) ? pressedLook : idleLook"
+            class="min-h-6 min-w-6 rounded-lg border px-0.5 py-1.5 text-xs font-medium leading-none transition focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
             (click)="answer.emit({ side: stop.side, confidence: stop.confidence })"
           >
             {{ stop.confidence }}
@@ -40,6 +38,9 @@ export class BipolarScale {
   readonly options = input.required<[string, string]>();
   readonly selected = input<{ side: 0 | 1; confidence: number } | null>(null);
   readonly answer = output<{ side: 0 | 1; confidence: number }>();
+
+  readonly idleLook = 'border-default bg-raised text-text hover:bg-sunken';
+  readonly pressedLook = `${SELECTED_LOOK} text-text`;
 
   readonly stops: readonly Stop[] = [
     ...STOP_CONFIDENCES.map((confidence): Stop => ({ side: 0, confidence })),

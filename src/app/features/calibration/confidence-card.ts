@@ -1,27 +1,23 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Card } from '../../shared/ui/card.directive';
 import { ScoreSide } from './score-side';
 
 @Component({
   selector: 'app-confidence-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [Card],
   template: `
-    <h3>Confidence vs. accuracy</h3>
-    <p class="text-lg font-semibold">{{ side().label }}</p>
-    <p>
-      Average confidence {{ round(side().meanConfidence) }}% · {{ round(side().percentCorrect) }}%
-      correct
-    </p>
-    @if (before(); as b) {
-      <p class="text-sm">Before this round: {{ b.label }}</p>
-    }
-  `,
-  styles: `
-    :host {
-      display: block;
-      background: white;
-      border-radius: 0.75rem;
-      padding: 1rem;
-    }
+    <section uiCard>
+      <h3 class="type-card">Confidence vs. accuracy</h3>
+      <p class="type-body font-semibold">{{ side().label }}</p>
+      <p class="type-detail">
+        Average confidence {{ round(side().meanConfidence) }}% · {{ round(side().percentCorrect) }}%
+        correct
+      </p>
+      @if (before(); as b) {
+        <p class="type-detail">Before this round: {{ b.label }}</p>
+      }
+    </section>
   `,
 })
 export class ConfidenceCard {

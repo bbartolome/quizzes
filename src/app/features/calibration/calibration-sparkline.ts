@@ -19,7 +19,7 @@ type BucketStat = Parameters<typeof chartGeometry>[1][number];
         [attr.y1]="g().diagonal.y1"
         [attr.x2]="g().diagonal.x2"
         [attr.y2]="g().diagonal.y2"
-        stroke="gray"
+        class="stroke-strong"
       />
       @for (segment of g().segments; track segment) {
         <line
@@ -27,10 +27,11 @@ type BucketStat = Parameters<typeof chartGeometry>[1][number];
           [attr.y1]="segment.y1"
           [attr.x2]="segment.x2"
           [attr.y2]="segment.y2"
+          class="stroke-text stroke-2"
         />
       }
       @for (point of g().points; track point) {
-        <circle data-point r="3" [attr.cx]="point.x" [attr.cy]="point.y" />
+        <circle data-point r="3" [attr.cx]="point.x" [attr.cy]="point.y" class="fill-text" />
       }
     </svg>
   `,
