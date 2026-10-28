@@ -60,7 +60,9 @@ describe('SkillScoreCard', () => {
     expect(t).toContain('guessing');
     expect(t).toContain('perfect');
     expect(t).not.toContain('worse than guessing');
-    expect(fixture.nativeElement.querySelector('[aria-label="worse than guessing"]')).not.toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('[aria-label="worse than guessing"]'),
+    ).not.toBeNull();
     expect(fixture.nativeElement.querySelector('[title="worse than guessing"]')).not.toBeNull();
   });
 

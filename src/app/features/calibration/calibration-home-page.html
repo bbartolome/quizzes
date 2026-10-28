@@ -14,7 +14,9 @@
             {{ s.hasPending ? 'Resume round' : 'Start round' }}
           </a>
           @if (s.hasPending) {
-            <button uiButton variant="danger" type="button" (click)="startOver()">Start over</button>
+            <button uiButton variant="danger" type="button" (click)="startOver()">
+              Start over
+            </button>
           }
         </div>
 
