@@ -95,7 +95,7 @@ describe('CalibrationChart', () => {
       (e) => e.textContent?.trim() === 'Overconfident',
     );
     expect(region?.className).toContain('text-xs');
-    expect(el().querySelector('[data-n]')?.className).toContain('text-xs');
+    expect(el().querySelector('[data-n]')?.className).toContain('type-caption');
   });
 
   it('sets the first-round note in type-caption', () => {
