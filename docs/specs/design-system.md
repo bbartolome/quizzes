@@ -288,6 +288,15 @@ Each slice moves one feature onto `PageShell`, the directives, the components an
 | Flash cards (`flash-cards`)                          | Narrow shells; round and report gain their `h1` (§6.3). Home renders before its data (§6.1). Options use `OptionRow` + `StatusBadge`. Tips use `Callout`. Report empty state uses `EmptyState`. `flash-card-home-page.spec.ts` C2 asserts `bg-indigo-600`; it changes to assert the `primary` variant.                                                                                                                                                                 |
 | Calibration (`calibration`)                          | Wide shells for home and results, narrow for the round. `ProgressDots`, `selected` looks for both answer controls, §8 for the chart, sparkline, skill card and table. `confidence-card.ts` drops its `styles:` block and becomes a raised `Card` with a `type-card` heading, matching the skill card beside it. `bank-unavailable.ts` uses `EmptyState` with a `secondary` **Retry**. **Start over** is `danger`. `review-list.ts` flags use `StatusBadge` (`danger`). |
 
+Calibration decisions (S10), which refine the calibration row above:
+
+- The chart keeps its text in HTML, not in the svg. Axis labels, tick labels, bucket counts and region labels are placed as a percentage of the chart box, so they stay at 12px at every width. The svg keeps only the marks, and each mark uses a token.
+- The two chart text roles (§8) take these values. A label is a region name ("Overconfident", "Underconfident") in `text-xs font-semibold`, coloured `text-danger` or `text-accent`. A caption is everything else in the chart, and the first-round note: `type-caption`. §8 names the roles without values.
+- The selected look for the bipolar scale and the four-way control is `SELECTED_LOOK` from `shared/ui/option-row.ts`. No new directive, and `Chip` is not used (§7.1 reserves it for filter toggles).
+- The skill card track is `bg-raised` with a `border-default` outline. The "worse than guessing" band stays `bg-sunken`; a `bg-sunken` track would hide it.
+- Calibration home is a wide shell with "← Back to library" (§6.3). Results has a primary **Next round** to the round route and a secondary **Back to quiz** to the home page, the same action pair as the Reasoning Traps report (§12).
+- The calibration round has no **End quiz**. **Submit round** exits to results, and the calibration row above names no End quiz.
+
 Flash card decisions (S9), which refine the flash cards row above:
 
 - The home back link is the shell's, reading "← Back to library". It keeps its `back` testid through `PageShell`'s `backTestId` input (default `back-home`).
