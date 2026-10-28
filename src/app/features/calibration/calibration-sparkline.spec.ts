@@ -46,6 +46,21 @@ describe('CalibrationSparkline', () => {
     expect(qa('[data-point]').length).toBe(4);
   });
 
+  it('strokes the curve segments and the diagonal with tokens', () => {
+    const segments = qa('line').filter((l) => !l.hasAttribute('data-diagonal'));
+    expect(segments.length).toBeGreaterThan(0);
+    for (const segment of segments) {
+      expect(segment.getAttribute('class')).toContain('stroke-text');
+    }
+    expect(q('[data-diagonal]')?.getAttribute('class')).toContain('stroke-strong');
+  });
+
+  it('fills the points with the text token', () => {
+    for (const point of qa('[data-point]')) {
+      expect(point.getAttribute('class')).toContain('fill-text');
+    }
+  });
+
   it('draws the diagonal', () => {
     expect(q('[data-diagonal]')).not.toBeNull();
   });

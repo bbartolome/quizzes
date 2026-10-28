@@ -148,6 +148,26 @@ describe('CalibrationHomePage', () => {
     expect(root(fixture).textContent).toContain('How sure are you, really?');
   });
 
+  describe('design system (S10)', () => {
+    it('renders a page shell with the back link to the library', async () => {
+      configure();
+      const fixture = await render();
+
+      expect(root(fixture).querySelector('ui-page-shell')).not.toBeNull();
+      expect(root(fixture).querySelector('[data-testid="back-home"]')?.textContent).toContain(
+        'Back to library',
+      );
+    });
+
+    it('renders Start round as a primary Button', async () => {
+      configure();
+      const fixture = await render();
+
+      expect(roundLink(fixture)?.hasAttribute('uiButton')).toBe(true);
+      expect(roundLink(fixture)?.className).toContain('bg-accent');
+    });
+  });
+
   describe('with no history', () => {
     it('offers Start round and prompts for a first round instead of a sparkline', async () => {
       configure();
