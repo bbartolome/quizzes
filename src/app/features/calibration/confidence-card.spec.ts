@@ -26,6 +26,12 @@ describe('ConfidenceCard', () => {
     TestBed.configureTestingModule({ imports: [ConfidenceCard] });
   });
 
+  it('is a raised Card with a type-card heading', () => {
+    const fixture = render(side());
+    expect(fixture.nativeElement.querySelector('h3')?.className).toContain('type-card');
+    expect(fixture.nativeElement.querySelector('[uiCard]')).not.toBeNull();
+  });
+
   it('shows the side label', () => {
     const text = render(side()).nativeElement.textContent;
     expect(text).toContain('14 points overconfident');

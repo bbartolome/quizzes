@@ -16,6 +16,20 @@ describe('BankUnavailable', () => {
     );
   });
 
+  it('renders the message in an EmptyState', () => {
+    const fixture = TestBed.createComponent(BankUnavailable);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('ui-empty-state')).not.toBeNull();
+  });
+
+  it('renders Retry as a secondary Button', () => {
+    const fixture = TestBed.createComponent(BankUnavailable);
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    expect(button.hasAttribute('uiButton')).toBe(true);
+    expect(button.className).toContain('border-strong');
+  });
+
   it('renders a Retry button', () => {
     const fixture = TestBed.createComponent(BankUnavailable);
     fixture.detectChanges();

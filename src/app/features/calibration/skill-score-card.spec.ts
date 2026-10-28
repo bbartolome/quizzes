@@ -55,10 +55,24 @@ describe('SkillScoreCard', () => {
   });
 
   it('labels the guessing and perfect ticks and the worse-than-guessing zone', () => {
-    const t = text(render());
+    const fixture = render();
+    const t = text(fixture);
     expect(t).toContain('guessing');
     expect(t).toContain('perfect');
-    expect(t).toContain('worse than guessing');
+    expect(t).not.toContain('worse than guessing');
+    expect(fixture.nativeElement.querySelector('[aria-label="worse than guessing"]')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('[title="worse than guessing"]')).not.toBeNull();
+  });
+
+  it('draws the track as a raised surface with a token border', () => {
+    const track = render().nativeElement.querySelector('[data-track]');
+    expect(track?.className).toContain('bg-raised');
+    expect(track?.className).toContain('border-default');
+  });
+
+  it('shows the Skill score as a type-card heading', () => {
+    const heading = render().nativeElement.querySelector('h3');
+    expect(heading?.className).toContain('type-card');
   });
 
   it('places the marker at the skill score', () => {

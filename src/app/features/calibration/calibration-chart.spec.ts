@@ -83,6 +83,38 @@ describe('CalibrationChart', () => {
     expect(el().textContent).not.toContain('too few answers');
   });
 
+  it('keeps chart text out of the svg so the 12px floor holds at every width', () => {
+    render({});
+    expect(el().querySelectorAll('svg text').length).toBe(0);
+    expect(el().querySelectorAll('[font-size]').length).toBe(0);
+  });
+
+  it('sets the region labels and bucket counts at caption size', () => {
+    render({});
+    const region = Array.from(el().querySelectorAll('*')).find(
+      (e) => e.textContent?.trim() === 'Overconfident',
+    );
+    expect(region?.className).toContain('text-xs');
+    expect(el().querySelector('[data-n]')?.className).toContain('text-xs');
+  });
+
+  it('sets the first-round note in type-caption', () => {
+    render({ firstRound: true });
+    const note = Array.from(el().querySelectorAll('p')).find((p) =>
+      p.textContent?.includes('too few answers'),
+    );
+    expect(note?.className).toContain('type-caption');
+  });
+
+  it('renders Show as table as a secondary Button', () => {
+    render({});
+    const toggle = Array.from(el().querySelectorAll('button')).find((b) =>
+      b.textContent?.includes('Show as table'),
+    ) as HTMLButtonElement;
+    expect(toggle.hasAttribute('uiButton')).toBe(true);
+    expect(toggle.className).toContain('border-strong');
+  });
+
   it('toggles the data table with the Show as table button', () => {
     render({});
     expect(el().querySelector('app-chart-table')).toBeNull();
