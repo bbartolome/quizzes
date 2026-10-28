@@ -18,7 +18,6 @@ describe('ReportPage', () => {
     title: 'Logic Quiz',
     description: 'desc',
     icon: 'icon',
-    accent: 'accent',
     version: 3,
     dataPath: 'data/rt/',
     order: 1,

@@ -45,7 +45,6 @@ describe('CalibrationResultsPage', () => {
     title: 'Calibration',
     description: 'desc',
     icon: 'icon',
-    accent: 'accent',
     version: 1,
     dataPath: 'data/calibration/',
     order: 2,

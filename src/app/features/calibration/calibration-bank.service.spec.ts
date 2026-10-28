@@ -12,7 +12,6 @@ function entryWith(dataPath: string): QuizManifestEntry {
     title: 'Confidence Calibration',
     description: 'Judge how sure you should be.',
     icon: 'icons/confidence-calibration.svg',
-    accent: '#3b6ea5',
     version: 1,
     dataPath,
     order: 2,

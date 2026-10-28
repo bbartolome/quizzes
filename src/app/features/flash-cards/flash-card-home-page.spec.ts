@@ -15,7 +15,6 @@ const manifest: QuizManifest = {
       title: 'Biases',
       description: 'Cognitive biases to drill.',
       icon: 'icons/biases.svg',
-      accent: '#000000',
       version: 1,
       order: 1,
       kind: 'biases',
