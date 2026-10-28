@@ -1,5 +1,6 @@
 import { Component, computed, input, signal } from '@angular/core';
 
+import { Button } from '../../shared/ui/button.directive';
 import { ChartTable } from './chart-table';
 import { chartGeometry, DEFAULT_BOX } from './chart-geometry';
 import type { BucketStat, CalibrationFormat } from './calibration.models';
@@ -8,7 +9,7 @@ import type { BucketStat, CalibrationFormat } from './calibration.models';
   selector: 'app-calibration-chart',
   standalone: true,
   templateUrl: './calibration-chart.html',
-  imports: [ChartTable],
+  imports: [ChartTable, Button],
 })
 export class CalibrationChart {
   format = input.required<CalibrationFormat>();
@@ -17,6 +18,11 @@ export class CalibrationChart {
   firstRound = input(false);
 
   readonly box = DEFAULT_BOX;
+
+  // The two chart text roles (docs/specs/design-system.md §8). Labels name the regions;
+  // captions are the axis labels, bucket counts and notes.
+  readonly labelClass = 'text-xs font-semibold';
+  readonly captionClass = 'type-caption';
 
   geometry = computed(() => chartGeometry(this.format(), this.buckets(), this.overlay()));
 
