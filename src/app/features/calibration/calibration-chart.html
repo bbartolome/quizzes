@@ -85,14 +85,18 @@
 
   <!-- Chart text is HTML, placed as a percentage of the box, so its size does not scale with the svg. -->
   <span
-    [class]="labelClass + ' absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-danger'"
+    [class]="
+      labelClass + ' absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-danger'
+    "
     [style.left.%]="50"
     [style.top.%]="(16 / box.height) * 100"
   >
     Overconfident
   </span>
   <span
-    [class]="labelClass + ' absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-accent'"
+    [class]="
+      labelClass + ' absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-accent'
+    "
     [style.left.%]="50"
     [style.top.%]="((box.height / 2 - 24) / box.height) * 100"
   >
