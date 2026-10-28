@@ -41,6 +41,13 @@ describe('ReviewList', () => {
     fixture = TestBed.createComponent(ReviewList);
   });
 
+  it('renders each flag as a danger StatusBadge', () => {
+    render([section({ rows: [row({ flags: ['miss-at-100'] })] })]);
+    const badge = el().querySelector('ui-status');
+    expect(badge?.textContent).toContain('Miss at 100%');
+    expect(badge?.querySelector('span')?.textContent).toContain('✗');
+  });
+
   it('renders one details per section with "Title (n)" summary', () => {
     render([
       section({ rows: [row(), row({ itemId: 'i2' })] }),

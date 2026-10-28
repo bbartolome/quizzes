@@ -156,6 +156,23 @@ describe('CalibrationResultsPage', () => {
     vi.unstubAllGlobals();
   });
 
+  it('ends with a primary Next round and a secondary Back to quiz', async () => {
+    configure();
+    submitRound(twoWayPick);
+
+    const fixture = await render();
+    const actions = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('a, button'),
+    );
+    const next = actions.find((e) => /next round/i.test(e.textContent ?? ''));
+    const back = actions.find((e) => /back to quiz/i.test(e.textContent ?? ''));
+
+    expect(next?.hasAttribute('uiButton')).toBe(true);
+    expect(next?.className).toContain('bg-accent');
+    expect(back?.hasAttribute('uiButton')).toBe(true);
+    expect(back?.className).toContain('border-strong');
+  });
+
   it('redirects to the home page, replacing the URL, when no round has been submitted', async () => {
     configure();
 
