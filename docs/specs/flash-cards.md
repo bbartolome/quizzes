@@ -96,7 +96,7 @@ _From [How do the flash card quizzes plug into the library and routes?](https://
 | `biases`    | Biases    | `biases`    | 1       | 1     |
 | `fallacies` | Fallacies | `fallacies` | 1       | 2     |
 
-The existing entries move down: Reasoning Traps 3, Confidence 4, Confidence: Advanced 5. Descriptions, `icon` (`icons/biases.svg`, `icons/fallacies.svg`, following the existing convention) are picked at implementation; they're easy to change.
+The existing entries move down: Reasoning Traps 3, Confidence 4, Confidence: Advanced 5. Descriptions, `icon` (`icons/biases.svg`, `icons/fallacies.svg`, following the existing convention) and `accent` are picked at implementation; they're easy to change.
 
 ### 3.2 Routes
 
