@@ -18,11 +18,14 @@ import { CALIBRATION_RNG } from './draw';
 import { BipolarScale } from './bipolar-scale';
 import { BankUnavailable } from './bank-unavailable';
 import { FourWayControl } from './four-way-control';
+import { PageShell } from '../../shared/ui/page-shell';
+import { ProgressDots } from '../../shared/ui/progress-dots';
+import { Button } from '../../shared/ui/button.directive';
 
 @Component({
   selector: 'app-calibration-round-page',
   templateUrl: './calibration-round-page.html',
-  imports: [BipolarScale, BankUnavailable, FourWayControl],
+  imports: [BipolarScale, BankUnavailable, FourWayControl, PageShell, ProgressDots, Button],
 })
 export class CalibrationRoundPage {
   private readonly route = inject(ActivatedRoute);
@@ -40,6 +43,9 @@ export class CalibrationRoundPage {
   readonly entry = computed(() => this.ctx()?.entry ?? null);
   readonly bank = computed(() => this.ctx()?.bank ?? null);
   readonly isFourWay = computed(() => this.ctx()?.format === 'four-way');
+  readonly answeredFlags = computed(() =>
+    (this.pending()?.items ?? []).map((_, i) => this.isAnswered(i)),
+  );
 
   constructor() {
     this.load();

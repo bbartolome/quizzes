@@ -1,5 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { Card } from '../../shared/ui/card.directive';
 import { FORMATS } from './calibration-format';
 import type { CalibrationFormat } from './calibration.models';
 import type { ScoreSide } from './score-side';
@@ -8,7 +9,7 @@ import type { ScoreSide } from './score-side';
   selector: 'app-skill-score-card',
   standalone: true,
   templateUrl: './skill-score-card.html',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, Card],
 })
 export class SkillScoreCard {
   format = input.required<CalibrationFormat>();

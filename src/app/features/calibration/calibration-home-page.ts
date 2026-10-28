@@ -8,12 +8,15 @@ import { CalibrationHistoryService } from './calibration-history.service';
 import { HomeStats, homeStats } from './home-stats';
 import { CalibrationSparkline } from './calibration-sparkline';
 import { BankUnavailable } from './bank-unavailable';
+import { PageBack, PageShell } from '../../shared/ui/page-shell';
+import { Button } from '../../shared/ui/button.directive';
+import { Card } from '../../shared/ui/card.directive';
 
 @Component({
   selector: 'app-calibration-home-page',
   standalone: true,
   templateUrl: './calibration-home-page.html',
-  imports: [RouterLink, CalibrationSparkline, BankUnavailable],
+  imports: [RouterLink, CalibrationSparkline, BankUnavailable, PageShell, Button, Card],
 })
 export class CalibrationHomePage {
   private readonly route = inject(ActivatedRoute);
@@ -25,6 +28,7 @@ export class CalibrationHomePage {
   readonly ctx = signal<CalibrationContext | null>(null);
   readonly stats = signal<HomeStats | null>(null);
   readonly loadError = signal(false);
+  protected readonly back: PageBack = { label: '← Back to library', link: '/' };
 
   constructor() {
     this.load();
