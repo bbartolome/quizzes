@@ -4,24 +4,24 @@ import type { BucketStat } from './calibration.models';
 @Component({
   selector: 'app-chart-table',
   template: `
-    <table class="w-full text-sm">
+    <table class="w-full text-sm text-text">
       <thead>
         <tr>
-          <th>Confidence</th>
-          <th>Answers</th>
-          <th>% correct</th>
-          <th>95% range</th>
-          <th>This round</th>
+          <th class="type-caption pb-2 text-left font-medium">Confidence</th>
+          <th class="type-caption pb-2 text-right font-medium">Answers</th>
+          <th class="type-caption pb-2 text-right font-medium">% correct</th>
+          <th class="type-caption pb-2 text-right font-medium">95% range</th>
+          <th class="type-caption pb-2 text-right font-medium">This round</th>
         </tr>
       </thead>
       <tbody>
         @for (row of rows(); track row.stop) {
           <tr>
-            <td>{{ row.stop }}</td>
-            <td>{{ row.n }}</td>
-            <td>{{ row.pct }}</td>
-            <td>{{ row.range }}</td>
-            <td>{{ row.round }}</td>
+            <td class="border-b border-default py-2 text-left">{{ row.stop }}</td>
+            <td class="border-b border-default py-2 text-right tabular-nums">{{ row.n }}</td>
+            <td class="border-b border-default py-2 text-right tabular-nums">{{ row.pct }}</td>
+            <td class="border-b border-default py-2 text-right tabular-nums">{{ row.range }}</td>
+            <td class="border-b border-default py-2 text-right tabular-nums">{{ row.round }}</td>
           </tr>
         }
       </tbody>
