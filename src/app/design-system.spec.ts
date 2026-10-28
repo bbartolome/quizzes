@@ -4,10 +4,6 @@ import { describe, expect, it } from 'vitest';
 
 const APP_DIR = join(process.cwd(), 'src/app');
 
-// Feature folders not migrated to the design system yet (docs/specs/design-system.md §10).
-// Each migration slice removes its folder; S11 asserts the list is empty and deletes it.
-const ALLOWLIST: string[] = [];
-
 const PALETTE =
   /(bg|text|border|ring|fill|stroke|from|via|to|divide|outline|accent|placeholder)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d+|\bbg-white\b|\bbg-black\b|\btext-white\b|ring-black\//;
 const HEX_IN_ATTRIBUTE = /="[^"]*#[0-9a-fA-F]{3,8}\b[^"]*"/;
@@ -83,17 +79,10 @@ function violationsIn(file: string): string[] {
   return found;
 }
 
-function isAllowlisted(file: string): boolean {
-  const rel = relative(APP_DIR, file);
-  return ALLOWLIST.some((folder) => rel.startsWith(`features/${folder}/`));
-}
-
 describe('design system guard (S2, §10)', () => {
-  it('reports no raw palette, hex, arbitrary, style-binding, dark: or styles: violations outside the allowlist', () => {
+  it('reports no raw palette, hex, arbitrary, style-binding, dark: or styles: violations', () => {
     const files = walk(APP_DIR).filter(
-      (file) =>
-        (file.endsWith('.html') || (file.endsWith('.ts') && !file.endsWith('.spec.ts'))) &&
-        !isAllowlisted(file),
+      (file) => file.endsWith('.html') || (file.endsWith('.ts') && !file.endsWith('.spec.ts')),
     );
     const violations = files.flatMap(violationsIn);
     expect(violations).toEqual([]);

@@ -45,7 +45,6 @@ describe('CalibrationHomePage', () => {
     title: 'Calibration Quiz',
     description: 'How sure are you, really?',
     icon: 'icon',
-    accent: 'accent',
     version: 1,
     dataPath: 'data/calibration/',
     order: 2,

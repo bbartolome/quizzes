@@ -3,7 +3,6 @@ export interface QuizManifestEntry {
   title: string;
   description: string;
   icon: string;
-  accent: string;
   version: number;
   dataPath?: string;
   order: number;

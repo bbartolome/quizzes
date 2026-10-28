@@ -13,7 +13,6 @@ describe('QuizHomePage', () => {
     title: 'Logic Quiz',
     description: 'desc',
     icon: 'icon',
-    accent: 'accent',
     version: 1,
     dataPath: 'data/rt/',
     order: 1,

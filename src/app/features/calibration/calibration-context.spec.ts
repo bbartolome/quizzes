@@ -9,7 +9,6 @@ const entry = (overrides: Partial<QuizManifestEntry> = {}): QuizManifestEntry =>
   title: 'Calibration',
   description: 'desc',
   icon: 'x',
-  accent: 'blue',
   version: 3,
   dataPath: 'data/cal-1',
   order: 1,
