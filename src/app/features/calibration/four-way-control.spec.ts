@@ -39,6 +39,12 @@ describe('FourWayControl', () => {
     TestBed.configureTestingModule({ imports: [FourWayControl] });
   });
 
+  it('marks the picked choice with the shared selected look', () => {
+    setup({ choice: 'a' });
+    expect(byText('Platypus')?.className).toContain('bg-accent-subtle');
+    expect(byText('Platypus')?.className).not.toContain('indigo');
+  });
+
   it('renders the four choice buttons', () => {
     setup();
     for (const label of ['Neither', 'Platypus', 'Penguin', 'Both']) {

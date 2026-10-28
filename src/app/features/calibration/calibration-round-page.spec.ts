@@ -299,6 +299,18 @@ describe('CalibrationRoundPage (two-way)', () => {
       history.savePending(QUIZ_ID, seededPending());
     });
 
+    it('shows the items as progress dots and Submit round as a primary Button', async () => {
+      const fixture = await render();
+
+      expect(root(fixture).querySelector('ui-page-shell')).not.toBeNull();
+      expect(root(fixture).querySelector('ui-progress-dots')).not.toBeNull();
+      const submit = Array.from(root(fixture).querySelectorAll<HTMLButtonElement>('button')).find(
+        (b) => /submit round/i.test(b.textContent ?? ''),
+      );
+      expect(submit?.hasAttribute('uiButton')).toBe(true);
+      expect(submit?.className).toContain('bg-accent');
+    });
+
     it('keeps Submit round disabled until every item is answered, then enables it', async () => {
       const fixture = await render();
       expect(buttonByText(fixture, /submit round/i).disabled).toBe(true);

@@ -50,6 +50,14 @@ describe('BipolarScale', () => {
     expect(text).toContain('New York');
   });
 
+  it('marks the pressed stop with the shared selected look', () => {
+    fixture.componentRef.setInput('selected', { side: 0, confidence: 80 });
+    fixture.detectChanges();
+    const pressedStop = byLabel('Rome 80%');
+    expect(pressedStop.className).toContain('bg-accent-subtle');
+    expect(pressedStop.className).not.toContain('blue');
+  });
+
   it('emits side 0 with the confidence when a left stop is clicked', () => {
     const handler = vi.fn();
     fixture.componentInstance.answer.subscribe(handler);
