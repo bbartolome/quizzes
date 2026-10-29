@@ -119,7 +119,7 @@ One scale, defined once as Tailwind `@utility` classes in `src/styles.css`. Temp
 | -------------- | ---------------------------------------------- | ---------------------------------------------------------- |
 | `type-title`   | The page `h1`                                  | `text-3xl font-semibold tracking-tight text-text`          |
 | `type-section` | Section `h2`, empty-state heading              | `text-lg font-semibold text-text`                          |
-| `type-card`    | Card `h3`, card `legend`                       | `text-base font-semibold text-text`                        |
+| `type-card`    | Card `h3`, card `legend`, card sub-label       | `text-base font-semibold text-text`                        |
 | `type-eyebrow` | Small label above a title or stat              | `text-xs font-semibold uppercase tracking-wide text-muted` |
 | `type-body`    | Running text                                   | `text-base text-text`                                      |
 | `type-detail`  | Descriptions, feedback text, option status     | `text-sm text-muted`                                       |
@@ -129,6 +129,7 @@ One scale, defined once as Tailwind `@utility` classes in `src/styles.css`. Temp
 - Headings are `font-semibold`. `font-bold` is reserved for `type-stat` and for the flash card bold prompt (`docs/specs/flash-cards.md` §4.1).
 - The smallest size is `text-xs` (12px). Arbitrary sizes (`text-[9px]`, `text-[10px]`) are removed.
 - The system font stack stays. No web font is added.
+- Sanctioned raw utilities. These are the exceptions to the role-class rule above, and each has no role class. A `font-medium` weight on `type-caption` for table headers (`chart-table.ts`) and for the bipolar scale label (`bipolar-scale.ts`). The sizes and weights of the four-way answer control (`four-way-control.ts`), the callout and feedback verdict (`callout.ts`, `feedback-panel.ts`), the status badge (`status-badge.ts`), the review list label (`review-list.ts`) and the chart table body (`chart-table.ts`). Any other raw size or weight needs a new role class or a new entry here.
 
 ## 6. Layout
 
