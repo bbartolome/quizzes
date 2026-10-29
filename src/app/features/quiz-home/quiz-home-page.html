@@ -24,7 +24,7 @@
     <!-- Filters -->
     <section uiCard aria-label="Round filters" class="space-y-4">
       <div>
-        <h2 class="type-eyebrow">Category</h2>
+        <p class="type-eyebrow">Category</p>
         <div class="mt-2 flex gap-2">
           @for (opt of ['fallacy', 'bias', 'both']; track opt) {
             <button
@@ -43,7 +43,7 @@
       @if (visibleTraits().length > 0) {
         <div>
           <div class="flex items-center justify-between">
-            <h2 class="type-eyebrow">Traits</h2>
+            <p class="type-eyebrow">Traits</p>
             @if (traitsSelected().length > 0) {
               <button type="button" uiButton variant="secondary" (click)="clearTraits()">
                 Clear selection
