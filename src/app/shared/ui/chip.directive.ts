@@ -4,7 +4,9 @@ export type ChipState = 'idle' | 'selected';
 
 const SHAPE =
   'border rounded-full px-3 py-1.5 text-sm font-medium text-text cursor-pointer select-none transition';
-const FOCUS = 'focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface';
+// has-focus-visible rings a label chip when the input inside it takes keyboard focus.
+const FOCUS =
+  'focus-visible:ring-2 has-focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface';
 
 const LOOK: Record<ChipState, string> = {
   idle: 'border-default bg-raised hover:bg-sunken',
