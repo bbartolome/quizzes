@@ -2,13 +2,13 @@
   <div class="mt-6 space-y-8">
     @for (entry of entries(); track entry.question.id; let i = $index) {
       <fieldset data-testid="question" uiCard class="space-y-4">
-        <legend class="type-card">
+        <legend class="type-card float-left w-full">
           {{ entry.question.prompt }}
         </legend>
 
         @for (option of entry.question.options; track option) {
           @let open = openInfo() === i + ':' + option;
-          <div class="space-y-2">
+          <div class="clear-both space-y-2">
             <div class="flex items-center gap-2">
               <label uiOption class="flex-1" [state]="optionState(entry, option)">
                 <input
