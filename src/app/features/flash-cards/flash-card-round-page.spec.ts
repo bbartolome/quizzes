@@ -684,7 +684,9 @@ describe('FlashCardRoundPage', () => {
     it('each option is an OptionRow label', () => {
       const { component, fixture } = setup('biases', 'bias');
       const first = component.cards()[0];
-      const fieldset = fixture.nativeElement.querySelectorAll('[data-testid="card"]')[0] as HTMLElement;
+      const fieldset = fixture.nativeElement.querySelectorAll(
+        '[data-testid="card"]',
+      )[0] as HTMLElement;
 
       expect(fieldset.querySelectorAll('label[uiOption]')).toHaveLength(first.card.options.length);
     });

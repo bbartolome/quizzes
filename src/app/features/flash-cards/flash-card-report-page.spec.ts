@@ -179,7 +179,9 @@ describe('FlashCardReportPage', () => {
     it('the h1 is "<Quiz title>: report" for the fallacy route', () => {
       const { fixture } = setup('fallacy', mixed);
 
-      expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Fallacies: report');
+      expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe(
+        'Fallacies: report',
+      );
     });
 
     it('the empty state is a ui-empty-state with no heading, and keeps its message testid', () => {
@@ -187,7 +189,9 @@ describe('FlashCardReportPage', () => {
 
       expect(fixture.nativeElement.querySelector('ui-empty-state')).not.toBeNull();
       expect(fixture.nativeElement.querySelector('ui-empty-state h2')).toBeNull();
-      expect(text(fixture, 'empty')).toBe('No cards were checked this round, so there is no report yet.');
+      expect(text(fixture, 'empty')).toBe(
+        'No cards were checked this round, so there is no report yet.',
+      );
     });
   });
 

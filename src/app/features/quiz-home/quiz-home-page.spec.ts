@@ -178,7 +178,9 @@ describe('QuizHomePage', () => {
   }
 
   function chipFor(root: HTMLElement, label: string): Element | undefined {
-    return [...root.querySelectorAll('label[uiChip]')].find((el) => el.textContent?.includes(label));
+    return [...root.querySelectorAll('label[uiChip]')].find((el) =>
+      el.textContent?.includes(label),
+    );
   }
 
   it('puts the quiz title in the page shell h1', async () => {
@@ -192,7 +194,11 @@ describe('QuizHomePage', () => {
   it('makes Start quiz a primary Button linking to the round', async () => {
     const fixture = await renderPage();
 
-    const start = buttonNamed(fixture.nativeElement, 'a[uiButton][variant="primary"]', 'Start quiz');
+    const start = buttonNamed(
+      fixture.nativeElement,
+      'a[uiButton][variant="primary"]',
+      'Start quiz',
+    );
     expect(start?.getAttribute('href')).toContain('/quiz/rt/round');
   });
 
