@@ -11,7 +11,7 @@ import { Card } from './card.directive';
         <h2 class="type-section">{{ heading() }}</h2>
       }
       <p class="type-detail" [attr.data-testid]="messageTestId()">{{ message() }}</p>
-      <ng-content />
+      <div class="mt-3 empty:hidden"><ng-content /></div>
     </section>
   `,
 })
