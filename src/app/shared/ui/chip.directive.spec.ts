@@ -42,7 +42,9 @@ describe('Chip (S5, §7.1, §7.3, §3.3, §9)', () => {
   it('uses the default border and raised background when idle', () => {
     const root = render();
     for (const text of ['Fallacy', 'Anchoring']) {
-      expect(classesOf(root, text)).toEqual(expect.arrayContaining(['border-default', 'bg-raised']));
+      expect(classesOf(root, text)).toEqual(
+        expect.arrayContaining(['border-default', 'bg-raised']),
+      );
     }
   });
 
@@ -68,6 +70,14 @@ describe('Chip (S5, §7.1, §7.3, §3.3, §9)', () => {
     const root = render();
     for (const text of ['Fallacy', 'Bias', 'Anchoring', 'Straw man']) {
       expect(classesOf(root, text)).toEqual(expect.arrayContaining(FOCUS_RING));
+    }
+  });
+
+  // A label chip wraps a visually hidden checkbox, so the label is never :focus-visible itself.
+  it('rings a label chip when the input inside it has keyboard focus', () => {
+    const root = render();
+    for (const text of ['Fallacy', 'Bias', 'Anchoring', 'Straw man']) {
+      expect(classesOf(root, text)).toContain('has-focus-visible:ring-2');
     }
   });
 });
