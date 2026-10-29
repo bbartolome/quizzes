@@ -9,7 +9,8 @@ const PALETTE =
 const HEX_IN_ATTRIBUTE = /="[^"]*#[0-9a-fA-F]{3,8}\b[^"]*"/;
 const NAMED_SVG_COLOR = /\b(fill|stroke)="(?!none"|currentColor")[a-zA-Z]+"/;
 const ARBITRARY_VALUE = /\b(text|bg|border)-\[/;
-const COLOR_STYLE_BINDING = /\[style\.(color|backgroundColor|borderColor|borderLeftColor|fill|stroke)\]|\[style\.[^\]]+\]="[^"]*accent/;
+const COLOR_STYLE_BINDING =
+  /\[style\.(color|backgroundColor|borderColor|borderLeftColor|fill|stroke)\]|\[style\.[^\]]+\]="[^"]*accent/;
 const DARK_VARIANT = /(^|[\s"'`])dark:/;
 const HEX_ANYWHERE = /#[0-9a-fA-F]{3,8}\b/;
 const STYLE_PROPERTY = /(^|[\s;{])(background(-color)?|color|border-radius)\s*:/;
@@ -73,7 +74,8 @@ function violationsIn(file: string): string[] {
   styleBlocks(text).forEach(({ firstLine, body }) =>
     linesOf(body, firstLine).forEach(({ line, text: source }) => {
       if (HEX_ANYWHERE.test(source)) found.push(`${rel}:${line} hex color in styles`);
-      if (STYLE_PROPERTY.test(source)) found.push(`${rel}:${line} styles: sets background, color or border-radius`);
+      if (STYLE_PROPERTY.test(source))
+        found.push(`${rel}:${line} styles: sets background, color or border-radius`);
     }),
   );
   return found;
