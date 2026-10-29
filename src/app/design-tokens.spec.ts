@@ -65,7 +65,14 @@ describe('design tokens (S1)', () => {
     expect(html).toMatch(/<meta name="theme-color" media="\(prefers-color-scheme: dark\)"/);
   });
 
+  // §9: non-text marks meet 3:1 on every surface in both themes. Slate-500 is the shade that does (§3.2 allows a shade change).
+  it('sets --border-strong to slate-500 in both themes (§9)', () => {
+    expect(css.match(/--border-strong: var\(--color-slate-500\);/g)).toHaveLength(2);
+  });
+
   it('defines @utility glossary-grid with grid-template-columns: 18rem minmax(0, 1fr)', () => {
-    expect(css).toMatch(/@utility\s+glossary-grid\s*\{[^}]*grid-template-columns:\s*18rem\s+minmax\(0,\s*1fr\)/);
+    expect(css).toMatch(
+      /@utility\s+glossary-grid\s*\{[^}]*grid-template-columns:\s*18rem\s+minmax\(0,\s*1fr\)/,
+    );
   });
 });
