@@ -3,20 +3,20 @@
     <p class="mt-2 type-detail" data-testid="library-summary">
       @if (summary$ | async; as summary) {
         <span>
-          <strong class="font-medium text-text">{{ summary.totalRounds }}</strong>
+          <strong>{{ summary.totalRounds }}</strong>
           {{ summary.totalRounds === 1 ? 'round' : 'rounds' }} played across all collections
         </span>
         @if (summary.accuracy; as acc) {
           <span>
             ·
-            <strong class="font-medium text-text">{{ formatPercent(acc) }}</strong>
+            <strong>{{ formatPercent(acc) }}</strong>
             overall accuracy
           </span>
         }
         @if (summary.recentlyPlayed; as recent) {
           <span>
             · most recently played:
-            <strong class="font-medium text-text">{{ recent.entry.title }}</strong>
+            <strong>{{ recent.entry.title }}</strong>
           </span>
         }
       }
@@ -34,26 +34,32 @@
             <dl class="mt-4 space-y-1 type-detail">
               <div class="flex justify-between">
                 <dt>Rounds played</dt>
-                <dd class="font-medium text-text">{{ card.roundsPlayed }}</dd>
+                <dd>
+                  <strong>{{ card.roundsPlayed }}</strong>
+                </dd>
               </div>
               @if (card.kind !== 'calibration') {
                 <div class="flex justify-between">
                   <dt>Accuracy</dt>
-                  <dd class="font-medium text-text">
+                  <dd>
                     @if (card.accuracy; as acc) {
-                      {{ formatPercent(acc) }}
+                      <strong>{{ formatPercent(acc) }}</strong>
                     }
                   </dd>
                 </div>
                 <div class="flex justify-between">
                   <dt>Current streak</dt>
-                  <dd class="font-medium text-text">{{ card.streak }}</dd>
+                  <dd>
+                    <strong>{{ card.streak }}</strong>
+                  </dd>
                 </div>
               }
               @if (card.kind === 'calibration' && card.skillScore !== null) {
                 <div class="flex justify-between">
                   <dt>Skill score</dt>
-                  <dd class="font-medium text-text">{{ card.skillScore }}</dd>
+                  <dd>
+                    <strong>{{ card.skillScore }}</strong>
+                  </dd>
                 </div>
               }
             </dl>

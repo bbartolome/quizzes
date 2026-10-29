@@ -24,7 +24,7 @@
           @if (s.roundsPlayed > 0) {
             <app-calibration-sparkline [format]="c.format" [buckets]="s.lifetimeBuckets" />
             @if (s.lifetimeSkill !== null) {
-              <p class="type-body font-semibold">Skill score {{ s.lifetimeSkill }}</p>
+              <p class="type-card">Skill score {{ s.lifetimeSkill }}</p>
             }
             <p class="type-detail">
               {{ s.roundsPlayed }} {{ s.roundsPlayed === 1 ? 'round' : 'rounds' }} played
