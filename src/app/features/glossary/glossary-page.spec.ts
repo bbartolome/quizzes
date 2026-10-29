@@ -251,7 +251,7 @@ describe('GlossaryPage', () => {
 
     expect(detail.hasAttribute('uiCard')).toBe(true);
     expect([...detail.classList]).toEqual(expect.arrayContaining(['bg-raised', 'border-default']));
-    expect(detail.querySelector('h2.type-card')?.textContent?.trim()).toBe('Strawman');
+    expect(detail.querySelector('h3.type-card')?.textContent?.trim()).toBe('Strawman');
   });
 
   it('renders each pair as a sunken Card with its tip in a Callout', async () => {

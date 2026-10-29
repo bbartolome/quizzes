@@ -29,7 +29,7 @@
       @if (cards$ | async; as cards) {
         @for (card of cards; track card.entry.id) {
           <a uiCard interactive class="block transition" [routerLink]="routeFor(card.entry)">
-            <h2 class="type-card">{{ card.entry.title }}</h2>
+            <h3 class="type-card">{{ card.entry.title }}</h3>
             <p class="mt-1 type-detail">{{ card.entry.description }}</p>
             <dl class="mt-4 space-y-1 type-detail">
               <div class="flex justify-between">
