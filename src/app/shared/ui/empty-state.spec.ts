@@ -35,6 +35,11 @@ describe('EmptyState (S2, §7.2)', () => {
     expect(heading?.classList).toContain('type-section');
   });
 
+  it('puts a projected action below the message with a gap', () => {
+    const wrapper = render().querySelector('.action')?.parentElement;
+    expect(wrapper?.classList).toContain('mt-3');
+  });
+
   it('renders the message with type-detail', () => {
     const message = render().querySelector('.type-detail');
     expect(message?.textContent?.trim()).toBe('Finish a round to see your stats.');
@@ -47,14 +52,20 @@ describe('EmptyState (S2, §7.2)', () => {
   it('binds messageTestId to the message element (S9)', () => {
     @Component({
       imports: [EmptyState],
-      template: `<ui-empty-state heading="Nothing yet" message="Nothing here yet." messageTestId="empty" />`,
+      template: `<ui-empty-state
+        heading="Nothing yet"
+        message="Nothing here yet."
+        messageTestId="empty"
+      />`,
     })
     class TestIdHost {}
     TestBed.configureTestingModule({ imports: [TestIdHost] });
     const fixture = TestBed.createComponent(TestIdHost);
     fixture.detectChanges();
     expect(
-      (fixture.nativeElement as HTMLElement).querySelector('[data-testid="empty"]')?.textContent?.trim(),
+      (fixture.nativeElement as HTMLElement)
+        .querySelector('[data-testid="empty"]')
+        ?.textContent?.trim(),
     ).toBe('Nothing here yet.');
   });
 });
