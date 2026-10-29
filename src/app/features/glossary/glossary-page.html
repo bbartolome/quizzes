@@ -4,7 +4,7 @@
     type="search"
     placeholder="Search the knowledge base..."
     (input)="onSearch($any($event.target).value)"
-    class="w-full rounded-lg border border-strong bg-raised px-4 py-2 text-sm text-text outline-none placeholder:text-muted focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
+    class="w-full rounded-lg border border-strong bg-raised px-4 py-2 type-body outline-none placeholder:text-muted focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
   />
 
   <div class="mt-6 gap-6 md:grid md:glossary-grid">
@@ -18,7 +18,7 @@
             interactive
             [selected]="entry.id === selectedId()"
             (click)="select(entry.id)"
-            class="w-full text-left text-sm font-medium text-text"
+            class="w-full text-left type-card"
           >
             {{ entry.name }}
           </button>
@@ -31,7 +31,7 @@
         <h2 class="type-card">{{ sel.name }}</h2>
         <p class="type-body">{{ sel.shortDefinition }}</p>
         <p class="type-detail leading-6">{{ sel.longExplanation }}</p>
-        <p class="type-detail"><span class="font-semibold">Example:</span> {{ sel.example }}</p>
+        <p class="type-detail"><strong>Example:</strong> {{ sel.example }}</p>
         @if (sel.spottingTip) {
           <ui-callout label="Spotting tip">{{ sel.spottingTip }}</ui-callout>
         }
