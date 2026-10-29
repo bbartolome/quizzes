@@ -29,7 +29,7 @@
   --surface-raised: var(--color-white);
   --surface-sunken: var(--color-slate-100);
   --border: var(--color-slate-200);
-  --border-strong: var(--color-slate-300);
+  --border-strong: var(--color-slate-500);
   --text: var(--color-slate-900);
   --text-muted: var(--color-slate-600);
   --accent: var(--color-indigo-600);
@@ -51,7 +51,7 @@
     --surface-raised: var(--color-slate-900);
     --surface-sunken: var(--color-slate-800);
     --border: var(--color-slate-700);
-    --border-strong: var(--color-slate-600);
+    --border-strong: var(--color-slate-500);
     --text: var(--color-slate-50);
     --text-muted: var(--color-slate-400);
     --accent: var(--color-indigo-400);
