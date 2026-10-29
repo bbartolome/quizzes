@@ -8,6 +8,8 @@ const APP_DIR = join(process.cwd(), 'src/app');
 const PALETTE =
   /(bg|text|border|ring|fill|stroke|from|via|to|divide|outline|accent|placeholder)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d+|\bbg-white\b|\bbg-black\b|\btext-white\b|ring-black\//;
 const HEX_IN_ATTRIBUTE = /="[^"]*#[0-9a-fA-F]{3,8}\b[^"]*"/;
+// Attributes whose quoted value is a link, label or id, not a colour (§10).
+const NON_COLOR_ATTRIBUTE = /\b(href|title|id|aria-[\w-]+)="[^"]*"/g;
 const NAMED_SVG_COLOR = /\b(fill|stroke)="(?!none"|currentColor")[a-zA-Z]+"/;
 const ARBITRARY_VALUE = /\b(text|bg|border)-\[/;
 const COLOR_STYLE_BINDING =
@@ -57,7 +59,8 @@ function violationsIn(file: string): string[] {
   const found: string[] = [];
   const check = (line: number, source: string) => {
     if (PALETTE.test(source)) found.push(`${rel}:${line} raw palette class`);
-    if (HEX_IN_ATTRIBUTE.test(source)) found.push(`${rel}:${line} hex color in attribute`);
+    if (HEX_IN_ATTRIBUTE.test(source.replace(NON_COLOR_ATTRIBUTE, '')))
+      found.push(`${rel}:${line} hex color in attribute`);
     if (NAMED_SVG_COLOR.test(source)) found.push(`${rel}:${line} named SVG color`);
     if (ARBITRARY_VALUE.test(source)) found.push(`${rel}:${line} arbitrary size or color value`);
     if (COLOR_STYLE_BINDING.test(source)) found.push(`${rel}:${line} color style binding`);
