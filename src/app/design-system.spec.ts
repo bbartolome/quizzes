@@ -1,4 +1,5 @@
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -88,5 +89,33 @@ describe('design system guard (S2, §10)', () => {
     );
     const violations = files.flatMap(violationsIn);
     expect(violations).toEqual([]);
+  });
+
+  it('does not read hex-like text in href, title, id or aria attributes as a color', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'guard-'));
+    const file = join(dir, 'anchors.html');
+    try {
+      writeFileSync(
+        file,
+        '<a href="#add">jump</a>\n<p title="#bad">hint</p>\n<span aria-controls="#face">x</span>\n',
+      );
+      expect(violationsIn(file)).toEqual([]);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it('still flags hex colors in color-bearing attributes', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'guard-'));
+    const file = join(dir, 'colors.html');
+    try {
+      writeFileSync(
+        file,
+        `<div [ngStyle]="{ color: '#fff' }">x</div>\n<svg><rect fill="#fff"/></svg>\n`,
+      );
+      expect(violationsIn(file)).toHaveLength(2);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
