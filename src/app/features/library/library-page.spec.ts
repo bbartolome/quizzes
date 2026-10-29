@@ -64,7 +64,7 @@ const calibrationEntry: QuizManifestEntry = {
 /** The library card whose heading reads `title`. Cards carry no aria-label (design-system §9). */
 function cardFor(root: ParentNode, title: string): HTMLAnchorElement | undefined {
   return [...root.querySelectorAll<HTMLAnchorElement>('a[uiCard]')].find(
-    (card) => card.querySelector('h2')?.textContent?.trim() === title,
+    (card) => card.querySelector('h3')?.textContent?.trim() === title,
   );
 }
 
@@ -388,7 +388,7 @@ describe('LibraryPage flash card collections', () => {
 
   it('lists Biases, Fallacies, then Reasoning Traps', async () => {
     const root = await render();
-    const titles = [...root.querySelectorAll<HTMLElement>('section a h2')].map((h) =>
+    const titles = [...root.querySelectorAll<HTMLElement>('section a h3')].map((h) =>
       h.textContent!.trim(),
     );
     expect(titles).toEqual(['Biases', 'Fallacies', 'Reasoning Traps']);

@@ -9,7 +9,7 @@ import { ScoreSide } from './score-side';
   template: `
     <section uiCard>
       <h3 class="type-card">Confidence vs. accuracy</h3>
-      <p class="type-body font-semibold">{{ side().label }}</p>
+      <p class="type-card">{{ side().label }}</p>
       <p class="type-detail">
         Average confidence {{ round(side().meanConfidence) }}% · {{ round(side().percentCorrect) }}%
         correct
