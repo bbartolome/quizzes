@@ -257,7 +257,7 @@ Every SVG mark uses a token through a `fill-*` / `stroke-*` utility or `currentC
 `src/app/design-system.spec.ts` reads every `*.html` under `src/app` and every inline `template:` in `*.ts` (excluding `*.spec.ts`), using `readFileSync` from `node:fs` the way `knowledge-base.spec.ts` does. It fails on:
 
 - Raw Tailwind palette classes: `(bg|text|border|ring|fill|stroke|from|via|to|divide|outline|accent|placeholder)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d+`, plus `bg-white`, `bg-black`, `text-white`, `ring-black/…`.
-- Hex colors (`#[0-9a-fA-F]{3,8}\b`) inside quoted attribute values and `styles:` blocks. Template reference variables such as `#cardEl` are not colors and must not trip it. Quoted values of `href`, `title`, `id` and `aria-*` are not colors and are exempt.
+- Hex colors (`#[0-9a-fA-F]{3,8}\b`) inside quoted attribute values and `styles:` blocks. Template reference variables such as `#cardEl` are not colors and must not trip it. Quoted values of `href`, `title`, `id` and `aria-*` are exempt, because a link, label or id can hold `#` text rather than a colour.
 - Named SVG colors in `fill=` / `stroke=` attributes other than `none` and `currentColor`.
 - Arbitrary size and color values: `text-[…]`, `bg-[…]`, `border-[…]`.
 - Color style bindings: `[style.color]`, `[style.backgroundColor]`, `[style.borderColor]`, `[style.borderLeftColor]`, `[style.fill]`, `[style.stroke]`, and any `[style.…]` bound to an `accent` value.
