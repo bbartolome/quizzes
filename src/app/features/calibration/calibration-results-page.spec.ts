@@ -8,34 +8,7 @@ import { CalibrationBankService } from './calibration-bank.service';
 import { CalibrationHistoryService } from './calibration-history.service';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { QuizManifestEntry } from '../../core/models/quiz.models';
-
-class MemoryStorage implements Storage {
-  private store = new Map<string, string>();
-
-  get length(): number {
-    return this.store.size;
-  }
-
-  clear(): void {
-    this.store.clear();
-  }
-
-  getItem(key: string): string | null {
-    return this.store.has(key) ? this.store.get(key)! : null;
-  }
-
-  key(index: number): string | null {
-    return [...this.store.keys()][index] ?? null;
-  }
-
-  removeItem(key: string): void {
-    this.store.delete(key);
-  }
-
-  setItem(key: string, value: string): void {
-    this.store.set(key, value);
-  }
-}
+import { MemoryStorage } from '../../../testing/memory-storage';
 
 describe('CalibrationResultsPage', () => {
   const QUIZ_ID = 'calibration';
