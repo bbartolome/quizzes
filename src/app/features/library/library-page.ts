@@ -7,40 +7,18 @@ import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { CalibrationBankService } from '../calibration/calibration-bank.service';
 import { CalibrationHistoryService } from '../calibration/calibration-history.service';
-import { calibrationCardStats } from '../calibration/calibration-card';
-import { formatOf } from '../calibration/calibration-format';
 import { Button } from '../../shared/ui/button.directive';
 import { Card } from '../../shared/ui/card.directive';
 import { PageShell } from '../../shared/ui/page-shell';
+import { LibraryCard } from './library-card';
+import { QuizCard, calibrationCard, formatPercent, routeFor, statsCard } from './library-cards';
+import { CollectionSummary, summarize } from './library-summary';
 
-/** URL prefix for each collection kind; each kind's pages live under its own prefix. */
-const ROUTE_PREFIX: Record<QuizManifestEntry['kind'], string> = {
-  traps: '/quiz',
-  calibration: '/calibration',
-  biases: '/biases',
-  fallacies: '/fallacies',
-};
-
-export interface QuizCard {
-  entry: QuizManifestEntry;
-  kind: QuizManifestEntry['kind'];
-  streak: number;
-  roundsPlayed: number;
-  correct: number;
-  attempted: number;
-  accuracy: number | null;
-  skillScore: number | null;
-}
-
-export interface CollectionSummary {
-  totalRounds: number;
-  accuracy: number | null;
-  recentlyPlayed: QuizCard | null;
-}
+const RESET_ALL_MESSAGE = 'Reset all quiz progress across every collection? This cannot be undone.';
 
 @Component({
   selector: 'app-library-page',
-  imports: [RouterLink, AsyncPipe, Button, Card, PageShell],
+  imports: [RouterLink, AsyncPipe, Button, Card, PageShell, LibraryCard],
   templateUrl: './library-page.html',
 })
 export class LibraryPage {
@@ -72,79 +50,20 @@ export class LibraryPage {
     shareReplay(1),
   );
 
-  protected readonly summary$: Observable<CollectionSummary> = this.cards$.pipe(
-    map((cards) => {
-      let totalRounds = 0;
-      let correct = 0;
-      let attempted = 0;
-      let bestStreak = -1;
-      let bestRounds = -1;
-      let recentlyPlayed: QuizCard | null = null;
-      for (const card of cards) {
-        totalRounds += card.roundsPlayed;
-        correct += card.correct;
-        attempted += card.attempted;
-        const newer =
-          card.streak > bestStreak ||
-          (card.streak === bestStreak && card.roundsPlayed > bestRounds);
-        if (newer) {
-          bestStreak = card.streak;
-          bestRounds = card.roundsPlayed;
-          recentlyPlayed = card;
-        }
-      }
-      return {
-        totalRounds,
-        accuracy: attempted > 0 ? correct / attempted : null,
-        recentlyPlayed,
-      };
-    }),
-  );
+  protected readonly summary$: Observable<CollectionSummary> = this.cards$.pipe(map(summarize));
 
-  protected routeFor(entry: QuizManifestEntry): string {
-    return `${ROUTE_PREFIX[entry.kind]}/${entry.id}`;
-  }
-
-  protected formatPercent(value: number): string {
-    return `${Math.round(value * 100)}%`;
-  }
+  protected readonly routeFor = routeFor;
+  protected readonly formatPercent = formatPercent;
 
   protected resetAll(): void {
-    if (confirm('Reset all quiz progress across every collection? This cannot be undone.')) {
+    if (confirm(RESET_ALL_MESSAGE)) {
       this.stats.resetAll();
     }
   }
 
   private toCard(entry: QuizManifestEntry): QuizCard {
-    if (entry.kind === 'calibration') {
-      const c = calibrationCardStats(this.calibration.getSummary(entry.id), formatOf(entry));
-      return {
-        entry,
-        kind: 'calibration',
-        streak: 0,
-        roundsPlayed: c.roundsPlayed,
-        correct: 0,
-        attempted: 0,
-        accuracy: null,
-        skillScore: c.skillScore,
-      };
-    }
-    const s = this.stats.getStats(entry.id);
-    let correct = 0;
-    let attempted = 0;
-    for (const value of Object.values(s.perTrait)) {
-      correct += value.correct;
-      attempted += value.attempted;
-    }
-    return {
-      entry,
-      kind: entry.kind,
-      streak: s.streak,
-      roundsPlayed: s.roundsPlayed,
-      correct,
-      attempted,
-      accuracy: attempted > 0 ? correct / attempted : null,
-      skillScore: null,
-    };
+    return entry.kind === 'calibration'
+      ? calibrationCard(entry, this.calibration.getSummary(entry.id))
+      : statsCard(entry, this.stats.getStats(entry.id));
   }
 }

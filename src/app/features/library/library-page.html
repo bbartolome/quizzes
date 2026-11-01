@@ -21,6 +21,7 @@
         }
       }
     </p>
+    <!-- Today panel (P5) goes here, between the summary and the collections. -->
 
     <section
       aria-label="Quiz collections"
@@ -28,45 +29,19 @@
     >
       @if (cards$ | async; as cards) {
         @for (card of cards; track card.entry.id) {
-          <a uiCard interactive class="block transition" [routerLink]="routeFor(card.entry)">
-            <h3 class="type-card">{{ card.entry.title }}</h3>
-            <p class="mt-1 type-detail">{{ card.entry.description }}</p>
-            <dl class="mt-4 space-y-1 type-detail">
-              <div class="flex justify-between">
-                <dt>Rounds played</dt>
-                <dd>
-                  <strong>{{ card.roundsPlayed }}</strong>
-                </dd>
-              </div>
-              @if (card.kind !== 'calibration') {
-                <div class="flex justify-between">
-                  <dt>Accuracy</dt>
-                  <dd>
-                    @if (card.accuracy; as acc) {
-                      <strong>{{ formatPercent(acc) }}</strong>
-                    }
-                  </dd>
-                </div>
-                <div class="flex justify-between">
-                  <dt>Current streak</dt>
-                  <dd>
-                    <strong>{{ card.streak }}</strong>
-                  </dd>
-                </div>
-              }
-              @if (card.kind === 'calibration' && card.skillScore !== null) {
-                <div class="flex justify-between">
-                  <dt>Skill score</dt>
-                  <dd>
-                    <strong>{{ card.skillScore }}</strong>
-                  </dd>
-                </div>
-              }
-            </dl>
-          </a>
+          <a
+            appLibraryCard
+            uiCard
+            interactive
+            class="block transition"
+            [card]="card"
+            [routerLink]="routeFor(card.entry)"
+          ></a>
         }
       }
     </section>
+
+    <!-- Insights list (P7b) goes here, between the collections and the footer. -->
 
     <footer class="flex flex-wrap items-center justify-between gap-4 border-t border-default pt-6">
       <p class="type-detail">Progress is stored locally in this browser only.</p>
