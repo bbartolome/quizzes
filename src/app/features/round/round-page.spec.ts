@@ -7,6 +7,7 @@ import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { TemplateGeneratorService } from '../../core/services/template-generator.service';
+import { MemoryStorage } from '../../../testing/memory-storage';
 import {
   Concept,
   KnowledgeBase,
@@ -105,6 +106,7 @@ describe('RoundPage', () => {
   }
 
   beforeEach(() => {
+    vi.stubGlobal('localStorage', new MemoryStorage());
     quizData = {
       loadManifest: vi.fn(() => of({ quizzes: [entry] })),
       loadQuizBundle: vi.fn(() =>
