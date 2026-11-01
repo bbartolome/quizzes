@@ -70,6 +70,7 @@ export class RoundPage implements OnInit {
   });
 
   private readonly kbIndex = computed(() => kbByName(this.kb().concepts));
+  private readonly knowledgeBaseIds = computed(() => new Set(this.kb().concepts.map((c) => c.id)));
 
   readonly canCheck = computed(() => {
     const entries = this.entries();
@@ -102,11 +103,7 @@ export class RoundPage implements OnInit {
         this.weights = this.filters.weakTraits
           ? weakTraitWeights(this.stats.getWeakTraits(id))
           : undefined;
-        this.stats.migrateVersion(
-          id,
-          entry.version,
-          bundle.knowledgeBase.concepts.map((k: Concept) => k.id),
-        );
+        this.stats.migrateVersion(id, entry.version, [...this.knowledgeBaseIds()]);
 
         this.appendNext();
       });
