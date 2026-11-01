@@ -14,14 +14,14 @@ export function traitRows(stats: QuizStats, kb: Concept[]): TraitRow[] {
   const rows: TraitRow[] = Object.entries(stats.perTrait)
     .filter(([, perTrait]) => perTrait.attempted > 0)
     .map(([id, perTrait]) => {
-      const accuracy = Math.round((perTrait.correct / perTrait.attempted) * 100);
-      return {
+      const baseRow = {
         id,
         name: nameById.get(id) ?? id,
         correct: perTrait.correct,
         attempted: perTrait.attempted,
-        accuracy,
+        accuracy: Math.round((perTrait.correct / perTrait.attempted) * 100),
       };
+      return baseRow;
     });
 
   return rows.sort((a, b) => {
