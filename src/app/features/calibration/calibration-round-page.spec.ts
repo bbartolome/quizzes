@@ -310,6 +310,19 @@ describe('CalibrationRoundPage (two-way)', () => {
       expect(navigate).toHaveBeenCalledWith(['/calibration', QUIZ_ID, 'results']);
     });
 
+    it('records the round once when submit runs twice before navigation', async () => {
+      const fixture = await render();
+      await click(fixture, buttonByLabel(fixture, 'Alpha1 80%'));
+      await click(fixture, buttonByLabel(fixture, 'Beta2 90%'));
+      await click(fixture, buttonByLabel(fixture, 'Alpha3 100%'));
+      const record = vi.spyOn(history, 'submit');
+
+      fixture.componentInstance.submit();
+      fixture.componentInstance.submit();
+
+      expect(record).toHaveBeenCalledTimes(1);
+    });
+
     it('shows no correctness before submit', async () => {
       const fixture = await render();
       await click(fixture, buttonByLabel(fixture, 'Alpha1 80%'));
