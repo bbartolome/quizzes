@@ -39,6 +39,7 @@ export class CalibrationRoundPage {
   readonly pending = signal<PendingRound | null>(null);
   readonly index = signal(0);
   readonly loadError = signal(false);
+  private submitted = false;
 
   readonly entry = computed(() => this.ctx()?.entry ?? null);
   readonly bank = computed(() => this.ctx()?.bank ?? null);
@@ -166,10 +167,11 @@ export class CalibrationRoundPage {
   }
 
   submit(): void {
-    if (!this.allAnswered()) return;
+    if (this.submitted || !this.allAnswered()) return;
     const ctx = this.ctx();
     const p = this.pending();
     if (!ctx || !p) return;
+    this.submitted = true;
     this.history.submit(ctx.quizId, ctx.bank, p);
     this.router.navigate(['/calibration', ctx.quizId, 'results']);
   }
