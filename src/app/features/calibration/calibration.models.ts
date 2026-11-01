@@ -1,4 +1,4 @@
-export type CalibrationFormat = 'two-way' | 'four-way';
+export type { CalibrationFormat } from '../../core/models/quiz.models';
 
 export type Topic = 'history' | 'science' | 'geography' | 'nature' | 'culture' | 'numbers';
 

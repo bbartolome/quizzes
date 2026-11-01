@@ -1,3 +1,5 @@
+export type CalibrationFormat = 'two-way' | 'four-way';
+
 export interface QuizManifestEntry {
   id: string;
   title: string;
@@ -7,7 +9,7 @@ export interface QuizManifestEntry {
   dataPath?: string;
   order: number;
   kind: 'traps' | 'calibration' | 'biases' | 'fallacies';
-  format?: 'two-way' | 'four-way';
+  format?: CalibrationFormat;
 }
 
 export interface QuizManifest {

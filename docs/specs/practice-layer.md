@@ -65,6 +65,8 @@ class PracticeService {
 - The recorder reads `globalThis.localStorage` at call time, so it works under both `localStorage.clear()` specs and `vi.stubGlobal('localStorage', new MemoryStorage())` specs.
 - A per-tap calibration save (`CalibrationHistoryService.record`, which calls `savePending`) is **not** a scored attempt and must not call the recorder.
 
+> **Amendment (prefactor R2, `docs/specs/practice-layer-prefactor.md`):** the service also exposes `lastPlayed()`, `conceptDays()`, `badges()`, `recordBadges(earned, now?)` and `saveFailed: Signal<boolean>`. Consumer lanes read through the service and never touch storage.
+
 ## 4. Practice day, streak and rest days
 
 ### 4.1 Practice day
@@ -247,6 +249,8 @@ Four cross-quiz badges ship here; game theory registers eight more (`game-theory
 | `sure-means-sure`     | trusts their high confidence for good reason  | At least 20 answers at confidence ≥ 90%, with a hit rate ≥ 85%                                                                                           |
 
 Presentation: a quiet line on the relevant results screen ("You showed that your confident answers are right more often than your guesses"), plus an **Insights** list on the library page. The list shows earned badges and, below them, each unearned criterion as "Can you show…?". Four-way answers use `confidence ≥ 75%` as high and `≤ 25%` as low for the two `knows-what-it-knows` groups, matching their confident-stop definition.
+
+> **Amendment (prefactor R2):** each `BadgeContext.calibration` entry carries `format: CalibrationFormat`. The four-way thresholds (≥75% / ≤25%) differ from the two-way ones, and `{ confidence, correct }` alone can't tell the formats apart. `CalibrationFormat` is declared in `core/models/quiz.models.ts` and re-exported from `features/calibration/calibration.models.ts`.
 
 ## 9. Evidence and guardrails
 
