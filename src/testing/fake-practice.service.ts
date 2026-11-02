@@ -3,8 +3,12 @@ import { AttemptInput, PracticeSnapshot } from '../app/core/models/practice.mode
 import { PracticeService } from '../app/core/services/practice.service';
 import { DateKey } from '../app/core/utils/dates';
 
-/** In-memory PracticeService for consumer specs. Records calls; a spec seeds the state it reads. */
-export class FakePracticeService implements PracticeService {
+/**
+ * In-memory PracticeService for consumer specs. Records calls; a spec seeds the state it reads.
+ * It implements the public surface only: the real service has private members (clock, save, load),
+ * and a class cannot be `implements`-checked against those.
+ */
+export class FakePracticeService implements Pick<PracticeService, keyof PracticeService> {
   readonly attempts: { quizId: string; input: AttemptInput }[] = [];
   readonly recordedBadges: { id: string; evidence: string }[] = [];
   dailyCount = 0;

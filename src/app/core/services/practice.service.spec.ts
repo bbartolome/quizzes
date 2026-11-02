@@ -125,7 +125,7 @@ describe('PracticeService', () => {
   describe('midnight rollover', () => {
     it('resets today attempts when the local date changes, and the streak continues', () => {
       const service = setup();
-      service.recordAttempt('biases', { count: 4 }, local(2026, 11, 2, 23, 55));
+      service.recordAttempt('biases', { count: 5 }, local(2026, 11, 2, 23, 55));
       const after = service.recordAttempt('biases', { count: 1 }, local(2026, 11, 3, 0, 5));
 
       expect(after.attemptsToday).toBe(1);
