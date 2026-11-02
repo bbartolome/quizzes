@@ -63,6 +63,8 @@ export class RoundPage implements OnInit {
   readonly entries = signal<RoundEntry[]>([]);
   readonly exhausted = signal(false);
   readonly openInfo = signal<string | null>(null);
+  /** First run: no round finished yet. The ⓘ hint fades after a few answers. */
+  readonly firstRun = signal(false);
 
   readonly score = computed(() => {
     const checked = this.entries().filter((e) => e.result !== undefined);
@@ -103,6 +105,7 @@ export class RoundPage implements OnInit {
       this.quizData.loadQuizBundle(entry).subscribe((bundle: QuizBundle) => {
         this.bundle = bundle;
         this.kb.set(bundle.knowledgeBase);
+        this.firstRun.set(this.stats.getStats(id).roundsPlayed === 0);
         this.weights = this.filters.weakTraits
           ? weakTraitWeights(this.stats.getWeakTraits(id))
           : undefined;

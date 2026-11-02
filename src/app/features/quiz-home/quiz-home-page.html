@@ -6,7 +6,12 @@
 >
   <div class="space-y-6">
     <div class="flex flex-wrap items-center gap-3">
-      <a uiButton variant="primary" [routerLink]="['/quiz', id(), 'round']" [queryParams]="roundParams()">
+      <a
+        uiButton
+        variant="primary"
+        [routerLink]="['/quiz', id(), 'round']"
+        [queryParams]="roundParams()"
+      >
         Start quiz
       </a>
       @if (hasStats()) {
@@ -43,7 +48,7 @@
       @if (visibleTraits().length > 0) {
         <div>
           <div class="flex items-center justify-between">
-            <p class="type-eyebrow">Traits</p>
+            <p class="type-eyebrow">Concepts</p>
             @if (traitsSelected().length > 0) {
               <button type="button" uiButton variant="secondary" (click)="clearTraits()">
                 Clear selection

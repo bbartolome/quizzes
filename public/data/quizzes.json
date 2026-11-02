@@ -3,7 +3,7 @@
     {
       "id": "biases",
       "title": "Biases",
-      "description": "Flash cards on cognitive biases. Match each bias to its definition or an example.",
+      "description": "A bias is a habit of thinking that pushes judgment off course. Match each bias to its meaning or an example.",
       "icon": "icons/biases.svg",
       "version": 1,
       "order": 1,
@@ -12,7 +12,7 @@
     {
       "id": "fallacies",
       "title": "Fallacies",
-      "description": "Flash cards on logical fallacies. Match each fallacy to its definition or an example.",
+      "description": "A fallacy is a flaw in how an argument is built. Match each fallacy to its meaning or an example.",
       "icon": "icons/fallacies.svg",
       "version": 1,
       "order": 2,
