@@ -66,6 +66,7 @@ describe('RoundPage', () => {
   let stats: {
     migrateVersion: ReturnType<typeof vi.fn>;
     getWeakTraits: ReturnType<typeof vi.fn>;
+    getStats: ReturnType<typeof vi.fn>;
     recordResult: ReturnType<typeof vi.fn>;
     recordSessionEnd: ReturnType<typeof vi.fn>;
   };
@@ -120,6 +121,7 @@ describe('RoundPage', () => {
     stats = {
       migrateVersion: vi.fn(),
       getWeakTraits: vi.fn(() => []),
+      getStats: vi.fn(() => ({ roundsPlayed: 1 })),
       recordResult: vi.fn(),
       recordSessionEnd: vi.fn(),
     };
@@ -192,6 +194,40 @@ describe('RoundPage', () => {
     for (const option of Array.from(firstOptions) as HTMLInputElement[]) {
       expect(option.disabled).toBe(true);
     }
+  });
+
+  it('shows the Traps instruction line above the options', async () => {
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain(
+      'Pick every trap that applies. Usually it is one.',
+    );
+  });
+
+  it('shows the ⓘ hint on a first run', async () => {
+    stats.getStats = vi.fn(() => ({ roundsPlayed: 0 }));
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('Tap ⓘ on an option to see what it means.');
+  });
+
+  it('hides the ⓘ hint once the player has played a round before', async () => {
+    stats.getStats = vi.fn(() => ({ roundsPlayed: 2 }));
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).not.toContain('Tap ⓘ');
   });
 
   it('shows "1 of 1 correct" in the score footer after checking the correct option', async () => {

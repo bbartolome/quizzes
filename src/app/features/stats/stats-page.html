@@ -24,9 +24,7 @@
         </div>
 
         <section aria-labelledby="performance-heading" class="space-y-4">
-          <h2 id="performance-heading" class="type-section">
-            {{ isFlashCards ? 'Performance by concept' : 'Performance by trait' }}
-          </h2>
+          <h2 id="performance-heading" class="type-section">Performance by concept</h2>
 
           @for (row of rows(); track row.id) {
             <div data-testid="trait-row" uiCard class="space-y-3">

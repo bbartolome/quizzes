@@ -47,19 +47,32 @@ describe('CalibrationHomePage', () => {
     };
   }
 
+  const basicEntry: QuizManifestEntry = {
+    id: 'calibration-basic',
+    title: 'Confidence: Basic',
+    description: 'Easier questions and shorter rounds.',
+    icon: 'icon',
+    version: 1,
+    dataPath: 'data/quizzes/calibration-basic/',
+    order: 4,
+    kind: 'calibration',
+    format: 'two-way',
+    roundSize: 10,
+  };
+
   let quizData: { loadManifest: ReturnType<typeof vi.fn> };
   let bankService: { loadBank: ReturnType<typeof vi.fn> };
   let history: CalibrationHistoryService;
   let navigate: ReturnType<typeof vi.spyOn>;
 
-  function configure(): void {
+  function configure(id: string = QUIZ_ID): void {
     TestBed.configureTestingModule({
       imports: [CalibrationHomePage],
       providers: [
         provideRouter([]),
         {
           provide: ActivatedRoute,
-          useValue: { paramMap: of(convertToParamMap({ id: QUIZ_ID })) },
+          useValue: { paramMap: of(convertToParamMap({ id })) },
         },
         { provide: QuizDataService, useValue: quizData },
         { provide: CalibrationBankService, useValue: bankService },
@@ -230,6 +243,46 @@ describe('CalibrationHomePage', () => {
       expect(bankService.loadBank).toHaveBeenCalledTimes(2);
       expect(root(fixture).textContent).not.toContain("Couldn't load this quiz");
       expect(root(fixture).textContent).toContain('Calibration Quiz');
+    });
+  });
+
+  describe('Confidence: Basic first-run explainer', () => {
+    function useBasic(): void {
+      quizData = { loadManifest: vi.fn(() => of({ quizzes: [basicEntry] })) };
+    }
+
+    it('shows the explainer above Start round on a new Basic home', async () => {
+      useBasic();
+      configure('calibration-basic');
+      const fixture = await render();
+      const text = root(fixture).textContent ?? '';
+
+      expect(text).toContain('Sure should be right about 9 times in 10');
+      expect(text).toContain('Sure (90% or more)');
+      expect(text).toContain('Fairly sure (70–80%)');
+      expect(text).toContain('Guessing (60% or less)');
+
+      const explainer = root(fixture).querySelector('[data-testid="basic-explainer"]')!;
+      const startLink = roundLink(fixture)!;
+      expect(
+        explainer.compareDocumentPosition(startLink) & Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy();
+    });
+
+    it('hides the explainer once a round has been submitted on Basic', async () => {
+      useBasic();
+      configure('calibration-basic');
+      history.submit('calibration-basic', bank, completePending());
+      const fixture = await render();
+
+      expect(root(fixture).querySelector('[data-testid="basic-explainer"]')).toBeNull();
+    });
+
+    it('does not show the explainer on the standard Confidence home', async () => {
+      configure();
+      const fixture = await render();
+
+      expect(root(fixture).querySelector('[data-testid="basic-explainer"]')).toBeNull();
     });
   });
 });

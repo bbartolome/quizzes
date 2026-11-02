@@ -1,0 +1,2085 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "b001",
+      "prompt": "Which is larger by area?",
+      "options": ["Russia", "Canada"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 1,
+      "fact": "Russia covers about 17.1 million km²; Canada about 10 million km².",
+      "source": {
+        "label": "Worldometer: Largest countries",
+        "url": "https://www.worldometers.info/geography/largest-countries-in-the-world/"
+      }
+    },
+    {
+      "id": "b002",
+      "prompt": "Which is the largest ocean?",
+      "options": ["Pacific", "Atlantic"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 1,
+      "fact": "The Pacific is the largest ocean, about twice the size of the Atlantic.",
+      "source": {
+        "label": "Wikipedia: Pacific Ocean",
+        "url": "https://en.wikipedia.org/wiki/Pacific_Ocean"
+      }
+    },
+    {
+      "id": "b003",
+      "prompt": "Which city is Australia's capital?",
+      "options": ["Sydney", "Canberra"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 1,
+      "fact": "Canberra is Australia's capital; it was built as a planned capital.",
+      "source": {
+        "label": "WorldAtlas: Capital of Australia",
+        "url": "https://www.worldatlas.com/articles/what-is-the-capital-of-australia.html"
+      }
+    },
+    {
+      "id": "b004",
+      "prompt": "Which is taller?",
+      "options": ["Mount Everest", "K2"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 1,
+      "fact": "Everest is about 8,849 m high; K2 is about 8,611 m.",
+      "source": {
+        "label": "Wikipedia: K2",
+        "url": "https://en.wikipedia.org/wiki/K2"
+      }
+    },
+    {
+      "id": "b005",
+      "prompt": "Which is the largest hot desert?",
+      "options": ["Sahara", "Gobi"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 2,
+      "fact": "The Sahara is the largest hot desert, about 9 million km²; the Gobi is a cold desert.",
+      "source": {
+        "label": "Wikipedia: Sahara",
+        "url": "https://en.wikipedia.org/wiki/Sahara"
+      }
+    },
+    {
+      "id": "b006",
+      "prompt": "Which country has more people?",
+      "options": ["China", "United States"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 1,
+      "fact": "China had about 1.41 billion people in 2023; the US about 335 million.",
+      "source": {
+        "label": "Georank: China vs United States",
+        "url": "https://georank.org/facts/china/united-states"
+      }
+    },
+    {
+      "id": "b007",
+      "prompt": "Which is the smallest country?",
+      "options": ["Vatican City", "Monaco"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Vatican City covers about 0.44 km²; Monaco covers about 2 km².",
+      "source": {
+        "label": "Britannica: Smallest countries",
+        "url": "https://britannica.com/topic/list-of-the-smallest-countries-by-area"
+      }
+    },
+    {
+      "id": "b008",
+      "prompt": "Which city is further south?",
+      "options": ["Sydney", "Auckland"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 3,
+      "fact": "Auckland is about 36.8°S and Sydney about 33.9°S.",
+      "source": {
+        "label": "Find Latitude and Longitude: Auckland, Sydney",
+        "url": "https://www.findlatitudeandlongitude.com/l/Auckland,+Sydney/3985820/"
+      }
+    },
+    {
+      "id": "b009",
+      "prompt": "Which is taller?",
+      "options": ["Angel Falls", "Niagara Falls"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Angel Falls in Venezuela is about 979 m high, far taller than Niagara Falls.",
+      "source": {
+        "label": "Wikipedia: Angel Falls",
+        "url": "https://en.wikipedia.org/wiki/Angel_Falls"
+      }
+    },
+    {
+      "id": "b010",
+      "prompt": "Which lake is deeper?",
+      "options": ["Lake Baikal", "Lake Tanganyika"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 3,
+      "fact": "Lake Baikal is about 1,642 m deep; Lake Tanganyika about 1,471 m.",
+      "source": {
+        "label": "Wikipedia: Lake Baikal",
+        "url": "https://en.wikipedia.org/wiki/Lake_Baikal"
+      }
+    },
+    {
+      "id": "b011",
+      "prompt": "Which country has no coastline?",
+      "options": ["Austria", "Italy"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 1,
+      "fact": "Austria has no coastline; Italy has about 7,600 km of coast.",
+      "source": {
+        "label": "IndexMundi: Austria vs Italy geography",
+        "url": "https://www.indexmundi.com/factbook/compare/austria.italy/geography"
+      }
+    },
+    {
+      "id": "b012",
+      "prompt": "Which is the capital of Turkey?",
+      "options": ["Istanbul", "Ankara"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Ankara has been Turkey's capital since 1923; Istanbul is the largest city.",
+      "source": {
+        "label": "WorldAtlas: Capital of Turkey",
+        "url": "https://www.worldatlas.com/articles/what-is-the-capital-of-turkey.html"
+      }
+    },
+    {
+      "id": "b013",
+      "prompt": "Which mountain range holds Mount Everest?",
+      "options": ["Andes", "Himalayas"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 1,
+      "fact": "Mount Everest is in the Himalayas, on the Nepal–China border.",
+      "source": {
+        "label": "National Geographic Education: Mount Everest",
+        "url": "https://education.nationalgeographic.org/resource/mount-everest/"
+      }
+    },
+    {
+      "id": "b014",
+      "prompt": "Which is the largest US state by area?",
+      "options": ["Texas", "Alaska"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 1,
+      "fact": "Alaska is the largest US state; Texas is second.",
+      "source": {
+        "label": "Wikipedia: List of U.S. states by area",
+        "url": "https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_area"
+      }
+    },
+    {
+      "id": "b015",
+      "prompt": "Which is the capital of Brazil?",
+      "options": ["Rio de Janeiro", "Brasília"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Brasília has been Brazil's capital since 1960, replacing Rio de Janeiro.",
+      "source": {
+        "label": "Wikipedia: Capitals of Brazil",
+        "url": "https://en.wikipedia.org/wiki/Capitals_of_Brazil"
+      }
+    },
+    {
+      "id": "b016",
+      "prompt": "Which country has more people?",
+      "options": ["Egypt", "Nigeria"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Nigeria has over 240 million people, about twice Egypt's population.",
+      "source": {
+        "label": "Vanguard: Nigeria population 2026",
+        "url": "https://www.vanguardngr.com/2026/07/nigerias-population-now-242-4-million-remains-africas-most-populous-full-list/"
+      }
+    },
+    {
+      "id": "b017",
+      "prompt": "Which country is Mount Kilimanjaro in?",
+      "options": ["Kenya", "Tanzania"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Mount Kilimanjaro, about 5,895 m high, is in Tanzania near the Kenyan border.",
+      "source": {
+        "label": "Wikipedia: Mount Kilimanjaro",
+        "url": "https://en.wikipedia.org/wiki/Mount_Kilimanjaro"
+      }
+    },
+    {
+      "id": "b018",
+      "prompt": "Which is the largest desert overall?",
+      "options": ["Sahara", "Antarctica"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 3,
+      "fact": "Antarctica is about 14 million km², about half again the Sahara's area.",
+      "source": {
+        "label": "Visual Capitalist: World's largest deserts",
+        "url": "https://www.visualcapitalist.com/the-worlds-largest-deserts/"
+      }
+    },
+    {
+      "id": "b019",
+      "prompt": "Which strait separates Spain and Morocco?",
+      "options": ["Strait of Gibraltar", "Bosporus Strait"],
+      "correct": 0,
+      "topic": "geography",
+      "level": 2,
+      "fact": "The Strait of Gibraltar separates Spain from Morocco, linking the Atlantic and the Mediterranean.",
+      "source": {
+        "label": "NASA: Strait of Gibraltar",
+        "url": "https://www.nasa.gov/image-article/strait-of-gibraltar-connects-atlantic-mediterranean/"
+      }
+    },
+    {
+      "id": "b020",
+      "prompt": "Which is the capital of Canada?",
+      "options": ["Toronto", "Ottawa"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 1,
+      "fact": "Ottawa is Canada's capital; Toronto is only the capital of Ontario.",
+      "source": {
+        "label": "Britannica: Ottawa",
+        "url": "https://www.britannica.com/place/Ottawa"
+      }
+    },
+    {
+      "id": "b021",
+      "prompt": "Which is the largest continent?",
+      "options": ["Africa", "Asia"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 1,
+      "fact": "Asia is the largest continent, about 44.6 million km²; Africa is second.",
+      "source": {
+        "label": "Guinness World Records: Largest continent",
+        "url": "https://www.guinnessworldrecords.com/world-records/66721-largest-continent"
+      }
+    },
+    {
+      "id": "b022",
+      "prompt": "Which country has more people?",
+      "options": ["Japan", "Brazil"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Brazil had about 213 million people in 2025, Japan about 123 million.",
+      "source": {
+        "label": "Georank: Brazil vs Japan population",
+        "url": "https://georank.org/population/brazil/japan"
+      }
+    },
+    {
+      "id": "b023",
+      "prompt": "Which is the larger lake by area?",
+      "options": ["Lake Tanganyika", "Lake Victoria"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Lake Victoria covers about 68,800 km²; Lake Tanganyika about 32,900 km².",
+      "source": {
+        "label": "Wikipedia: List of lakes of Tanzania",
+        "url": "https://en.wikipedia.org/wiki/List_of_lakes_of_Tanzania"
+      }
+    },
+    {
+      "id": "b024",
+      "prompt": "Which capital city is higher above sea level?",
+      "options": ["Quito", "La Paz"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 3,
+      "fact": "La Paz is about 3,640 m above sea level, the highest capital; Quito is about 2,850 m.",
+      "source": {
+        "label": "WorldAtlas: Highest capital cities",
+        "url": "https://www.worldatlas.com/cities/the-highest-capital-cities-in-the-world.html"
+      }
+    },
+    {
+      "id": "b025",
+      "prompt": "Which is the largest island?",
+      "options": ["New Guinea", "Greenland"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 2,
+      "fact": "Greenland is the largest island, about 2.1 million km²; New Guinea is second.",
+      "source": {
+        "label": "WorldAtlas: 10 largest islands",
+        "url": "https://www.worldatlas.com/geography/10-largest-islands-in-the-world.html"
+      }
+    },
+    {
+      "id": "b026",
+      "prompt": "Which is the longest river in Europe?",
+      "options": ["Danube", "Volga"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 3,
+      "fact": "The Volga is Europe's longest river, about 3,530 km; the Danube is about 2,850 km.",
+      "source": {
+        "label": "WorldAtlas: Longest rivers of Europe",
+        "url": "https://www.worldatlas.com/articles/the-longest-rivers-of-europe.html"
+      }
+    },
+    {
+      "id": "b027",
+      "prompt": "Which river flows through London?",
+      "options": ["Seine", "Thames"],
+      "correct": 1,
+      "topic": "geography",
+      "level": 1,
+      "fact": "The Thames flows through London; the Seine flows through Paris.",
+      "source": {
+        "label": "Wikipedia: River Thames",
+        "url": "https://en.wikipedia.org/wiki/River_Thames"
+      }
+    },
+    {
+      "id": "b028",
+      "prompt": "Who was the first US president?",
+      "options": ["Thomas Jefferson", "George Washington"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "George Washington was elected the first US president in 1789.",
+      "source": {
+        "label": "Britannica: George Washington",
+        "url": "https://www.britannica.com/biography/George-Washington"
+      }
+    },
+    {
+      "id": "b029",
+      "prompt": "Who painted the Mona Lisa?",
+      "options": ["Michelangelo", "Leonardo da Vinci"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "The Mona Lisa is an oil painting by Leonardo da Vinci, dated about 1503–1519.",
+      "source": {
+        "label": "Wikipedia: Mona Lisa",
+        "url": "https://en.wikipedia.org/wiki/Mona_Lisa"
+      }
+    },
+    {
+      "id": "b030",
+      "prompt": "Which country first landed people on the Moon?",
+      "options": ["Soviet Union", "United States"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "Apollo 11, the first crewed Moon landing, touched down on 20 July 1969.",
+      "source": {
+        "label": "NASA: Apollo 11 mission overview",
+        "url": "https://www.nasa.gov/history/apollo-11-mission-overview/"
+      }
+    },
+    {
+      "id": "b031",
+      "prompt": "Which city was buried by Mount Vesuvius in 79 AD?",
+      "options": ["Carthage", "Pompeii"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "The 79 AD eruption of Vesuvius buried Pompeii under metres of ash.",
+      "source": {
+        "label": "Wikipedia: Eruption of Mount Vesuvius in 79 AD",
+        "url": "https://en.wikipedia.org/wiki/Eruption_of_Mount_Vesuvius_in_79_AD"
+      }
+    },
+    {
+      "id": "b032",
+      "prompt": "Which ship sank first?",
+      "options": ["Lusitania", "Titanic"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "The Titanic sank in April 1912; the Lusitania sank in May 1915.",
+      "source": {
+        "label": "Wikipedia: Sinking of the Titanic",
+        "url": "https://en.wikipedia.org/wiki/Sinking_of_the_Titanic"
+      }
+    },
+    {
+      "id": "b033",
+      "prompt": "Which battle was fought first?",
+      "options": ["Battle of Agincourt", "Battle of Hastings"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "The Battle of Hastings was fought in 1066; Agincourt in 1415.",
+      "source": {
+        "label": "Wikipedia: Battle of Hastings",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Hastings"
+      }
+    },
+    {
+      "id": "b034",
+      "prompt": "Who was China's first emperor?",
+      "options": ["Kublai Khan", "Qin Shi Huang"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Qin Shi Huang, reigning 221–210 BC, unified China as its first emperor.",
+      "source": {
+        "label": "Wikipedia: Qin Shi Huang",
+        "url": "https://en.wikipedia.org/wiki/Qin_Shi_Huang"
+      }
+    },
+    {
+      "id": "b035",
+      "prompt": "Which document was sealed in 1215?",
+      "options": ["US Constitution", "Magna Carta"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "King John sealed Magna Carta on 15 June 1215 at Runnymede.",
+      "source": {
+        "label": "History.com: Magna Carta sealed",
+        "url": "https://www.history.com/this-day-in-history/june-15/magna-carta-sealed"
+      }
+    },
+    {
+      "id": "b036",
+      "prompt": "Who discovered penicillin?",
+      "options": ["Louis Pasteur", "Alexander Fleming"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Alexander Fleming identified penicillin in 1928 at St Mary's Hospital, London.",
+      "source": {
+        "label": "Britannica: Alexander Fleming",
+        "url": "https://www.britannica.com/biography/Alexander-Fleming"
+      }
+    },
+    {
+      "id": "b037",
+      "prompt": "Who was the first human in space?",
+      "options": ["Neil Armstrong", "Yuri Gagarin"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Yuri Gagarin became the first human to orbit Earth on 12 April 1961.",
+      "source": {
+        "label": "Britannica: Yuri Gagarin",
+        "url": "https://www.britannica.com/biography/Yuri-Gagarin"
+      }
+    },
+    {
+      "id": "b038",
+      "prompt": "Which came first?",
+      "options": ["Soviet Union dissolved", "Berlin Wall fell"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "The Berlin Wall's border opened in November 1989; the Soviet Union dissolved in December 1991.",
+      "source": {
+        "label": "WorldAtlas: Why did the Berlin Wall fall",
+        "url": "https://www.worldatlas.com/history/why-did-the-berlin-wall-fall.html"
+      }
+    },
+    {
+      "id": "b039",
+      "prompt": "Which country built the Great Wall?",
+      "options": ["Japan", "China"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "The Great Wall was built by Chinese states and dynasties over many centuries.",
+      "source": {
+        "label": "Britannica: Great Wall of China",
+        "url": "https://www.britannica.com/topic/Great-Wall-of-China"
+      }
+    },
+    {
+      "id": "b040",
+      "prompt": "Who conquered Constantinople in 1453?",
+      "options": ["Suleiman the Magnificent", "Mehmed II"],
+      "correct": 1,
+      "topic": "history",
+      "level": 3,
+      "fact": "Mehmed II's forces took Constantinople on 29 May 1453.",
+      "source": {
+        "label": "Wikipedia: Mehmed II",
+        "url": "https://en.wikipedia.org/wiki/Mehmed_II"
+      }
+    },
+    {
+      "id": "b041",
+      "prompt": "Who began the Colosseum in Rome?",
+      "options": ["Nero", "Vespasian"],
+      "correct": 1,
+      "topic": "history",
+      "level": 3,
+      "fact": "Construction of the Colosseum began under Emperor Vespasian around 70–72 CE.",
+      "source": {
+        "label": "Britannica: Colosseum",
+        "url": "https://www.britannica.com/topic/Colosseum"
+      }
+    },
+    {
+      "id": "b042",
+      "prompt": "Which country gave women the vote in 1893?",
+      "options": ["United Kingdom", "New Zealand"],
+      "correct": 1,
+      "topic": "history",
+      "level": 3,
+      "fact": "New Zealand's 1893 Electoral Act gave women the national vote; the UK did not until 1918.",
+      "source": {
+        "label": "Te Ara: Women gain the vote",
+        "url": "https://teara.govt.nz/en/cartoon/1467/women-gain-the-vote"
+      }
+    },
+    {
+      "id": "b043",
+      "prompt": "Who was the first woman prime minister of the UK?",
+      "options": ["Theresa May", "Margaret Thatcher"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Margaret Thatcher became Britain's first woman prime minister in May 1979.",
+      "source": {
+        "label": "History.com: Margaret Thatcher",
+        "url": "https://www.history.com/articles/margaret-thatcher"
+      }
+    },
+    {
+      "id": "b044",
+      "prompt": "Who published the law of universal gravitation?",
+      "options": ["Albert Einstein", "Isaac Newton"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "Newton published the law of universal gravitation in the Principia in 1687.",
+      "source": {
+        "label": "Britannica: Principia",
+        "url": "https://www.britannica.com/topic/Principia"
+      }
+    },
+    {
+      "id": "b045",
+      "prompt": "Which civilisation built Machu Picchu?",
+      "options": ["Aztec", "Inca"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Machu Picchu was built by the Inca, probably as a royal estate, around 1450.",
+      "source": {
+        "label": "History.com: Machu Picchu",
+        "url": "https://www.history.com/articles/machu-picchu"
+      }
+    },
+    {
+      "id": "b046",
+      "prompt": "Which war began in 1914?",
+      "options": ["World War II", "World War I"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "The First World War began in 1914, after Archduke Franz Ferdinand was assassinated.",
+      "source": {
+        "label": "Wikipedia: Assassination of Archduke Franz Ferdinand",
+        "url": "https://en.wikipedia.org/wiki/Assassination_of_Archduke_Franz_Ferdinand"
+      }
+    },
+    {
+      "id": "b047",
+      "prompt": "Who wrote Romeo and Juliet?",
+      "options": ["Christopher Marlowe", "William Shakespeare"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "Every source credits William Shakespeare with Romeo and Juliet, written in the 1590s.",
+      "source": {
+        "label": "Wikipedia: Romeo and Juliet",
+        "url": "https://en.wikipedia.org/wiki/Romeo_and_Juliet"
+      }
+    },
+    {
+      "id": "b048",
+      "prompt": "Which civilisation built the Great Pyramid of Giza?",
+      "options": ["Romans", "Egyptians"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "The Great Pyramid was built for King Khufu in ancient Egypt around 2600 BC.",
+      "source": {
+        "label": "Britannica: Great Pyramid of Giza",
+        "url": "https://www.britannica.com/place/Great-Pyramid-of-Giza"
+      }
+    },
+    {
+      "id": "b049",
+      "prompt": "Which came first?",
+      "options": ["Mayflower voyage", "Columbus reaches the Americas"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Columbus reached the Americas in 1492; the Mayflower sailed in 1620.",
+      "source": {
+        "label": "Colonial America Timeline",
+        "url": "https://totallyhistory.com/us-history/colonial-america/"
+      }
+    },
+    {
+      "id": "b050",
+      "prompt": "Who invented movable-type printing in Europe?",
+      "options": ["William Caxton", "Johannes Gutenberg"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Johannes Gutenberg developed movable-type printing in Mainz in the 1440s.",
+      "source": {
+        "label": "Wikipedia: Johannes Gutenberg",
+        "url": "https://en.wikipedia.org/wiki/Johannes_Gutenberg"
+      }
+    },
+    {
+      "id": "b051",
+      "prompt": "Where was Napoleon finally defeated?",
+      "options": ["Trafalgar", "Waterloo"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Napoleon's final defeat came at Waterloo on 18 June 1815.",
+      "source": {
+        "label": "Britannica: Battle of Waterloo",
+        "url": "https://www.britannica.com/event/Battle-of-Waterloo"
+      }
+    },
+    {
+      "id": "b052",
+      "prompt": "Which war started first?",
+      "options": ["Thirty Years' War", "Hundred Years' War"],
+      "correct": 1,
+      "topic": "history",
+      "level": 3,
+      "fact": "The Hundred Years' War is dated from 1337; the Thirty Years' War began in 1618.",
+      "source": {
+        "label": "Wikipedia: Hundred Years' War",
+        "url": "https://en.wikipedia.org/wiki/Hundred_Years%27_War"
+      }
+    },
+    {
+      "id": "b053",
+      "prompt": "Who led Nazi Germany in World War II?",
+      "options": ["Benito Mussolini", "Adolf Hitler"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "Adolf Hitler was chancellor and Führer of Germany from 1933 to 1945.",
+      "source": {
+        "label": "Britannica: Adolf Hitler",
+        "url": "https://www.britannica.com/biography/Adolf-Hitler"
+      }
+    },
+    {
+      "id": "b054",
+      "prompt": "Which country did Queen Elizabeth I rule?",
+      "options": ["Scotland", "England"],
+      "correct": 1,
+      "topic": "history",
+      "level": 1,
+      "fact": "Elizabeth I ruled England and Ireland from 1558 until her death in 1603.",
+      "source": {
+        "label": "Wikipedia: Elizabeth I",
+        "url": "https://en.wikipedia.org/wiki/Elizabeth_I"
+      }
+    },
+    {
+      "id": "b055",
+      "prompt": "Which empire did Genghis Khan found?",
+      "options": ["Ottoman Empire", "Mongol Empire"],
+      "correct": 1,
+      "topic": "history",
+      "level": 2,
+      "fact": "Genghis Khan was proclaimed ruler of the Mongol Empire in 1206.",
+      "source": {
+        "label": "Britannica: Mongol Empire",
+        "url": "https://www.britannica.com/place/Mongol-empire"
+      }
+    },
+    {
+      "id": "b056",
+      "prompt": "Who was crowned emperor on Christmas Day 800?",
+      "options": ["Otto I", "Charlemagne"],
+      "correct": 1,
+      "topic": "history",
+      "level": 3,
+      "fact": "Charlemagne was crowned emperor in Rome on 25 December 800; Otto I was crowned in 962.",
+      "source": {
+        "label": "Medievalists.net: Coronation of Charlemagne",
+        "url": "https://www.medievalists.net/2010/12/the-significance-of-the-coronation-of-charlemagne/"
+      }
+    },
+    {
+      "id": "b057",
+      "prompt": "Which planet is closest to the Sun?",
+      "options": ["Venus", "Mercury"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "Mercury orbits closer to the Sun than any other planet, at about 57.9 million km on average.",
+      "source": {
+        "label": "Live Science: Closest planet to the Sun",
+        "url": "https://www.livescience.com/space/planets/which-planet-is-closest-to-the-sun"
+      }
+    },
+    {
+      "id": "b058",
+      "prompt": "Which planet is famous for its rings?",
+      "options": ["Mars", "Saturn"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "Saturn is known as the Ringed Planet because of its prominent ring system.",
+      "source": {
+        "label": "Wikipedia: Saturn",
+        "url": "https://en.wikipedia.org/wiki/Saturn"
+      }
+    },
+    {
+      "id": "b059",
+      "prompt": "Which organ pumps blood around the body?",
+      "options": ["Lungs", "Heart"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "The heart is a muscular pump that moves blood around the body.",
+      "source": {
+        "label": "CDC: How the heart works",
+        "url": "https://www.cdc.gov/heart-defects/how-the-heart-works/index.html"
+      }
+    },
+    {
+      "id": "b060",
+      "prompt": "Which particle has a negative charge?",
+      "options": ["Proton", "Electron"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "The electron has a negative charge of one elementary unit; the proton is positive.",
+      "source": {
+        "label": "Wikipedia: Electron",
+        "url": "https://en.wikipedia.org/wiki/Electron"
+      }
+    },
+    {
+      "id": "b061",
+      "prompt": "At sea level, what temperature does water boil at?",
+      "options": ["50 °C", "100 °C"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "Water boils at about 100 °C (212 °F) at standard sea-level pressure.",
+      "source": {
+        "label": "Wikipedia: Boiling point",
+        "url": "https://en.wikipedia.org/wiki/Boiling_point"
+      }
+    },
+    {
+      "id": "b062",
+      "prompt": "Which travels faster?",
+      "options": ["Sound", "Light"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "Light travels about 300,000 km/s; sound in air travels about 343 m/s.",
+      "source": {
+        "label": "IOP Spark: Speed of sound and light",
+        "url": "https://spark.iop.org/speed-sound-speed-light"
+      }
+    },
+    {
+      "id": "b063",
+      "prompt": "Which gas do plants take in for photosynthesis?",
+      "options": ["Oxygen", "Carbon dioxide"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "Plants take in carbon dioxide through their leaves during photosynthesis.",
+      "source": {
+        "label": "US DOE: The carbon cycle",
+        "url": "https://www.energy.gov/science/doe-explainsthe-carbon-cycle"
+      }
+    },
+    {
+      "id": "b064",
+      "prompt": "Which gas makes up most of Earth's atmosphere?",
+      "options": ["Oxygen", "Nitrogen"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Nitrogen makes up about 78% of dry air by volume; oxygen about 21%.",
+      "source": {
+        "label": "NASA Science: Atmosphere",
+        "url": "https://science.nasa.gov/earth/climate-change/greenhouse-gases/the-atmosphere-getting-a-handle-on-carbon-dioxide/"
+      }
+    },
+    {
+      "id": "b065",
+      "prompt": "Which is the chemical symbol for gold?",
+      "options": ["Ag", "Au"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Gold's symbol Au comes from the Latin word aurum.",
+      "source": {
+        "label": "Wikipedia: Gold",
+        "url": "https://en.wikipedia.org/wiki/Gold"
+      }
+    },
+    {
+      "id": "b066",
+      "prompt": "How many bones does an adult human skeleton have?",
+      "options": ["300 bones", "206 bones"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "The adult human skeleton is usually counted as 206 bones.",
+      "source": {
+        "label": "Wikipedia: List of bones of the human skeleton",
+        "url": "https://en.wikipedia.org/wiki/List_of_bones_of_the_human_skeleton"
+      }
+    },
+    {
+      "id": "b067",
+      "prompt": "Which planet is the largest?",
+      "options": ["Saturn", "Jupiter"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "Jupiter is the largest planet, about 11 times wider than Earth.",
+      "source": {
+        "label": "NASA Science: Planet sizes",
+        "url": "https://science.nasa.gov/solar-system/planets/planet-sizes-and-locations-in-our-solar-system/"
+      }
+    },
+    {
+      "id": "b068",
+      "prompt": "Which is the hardest natural mineral on the Mohs scale?",
+      "options": ["Quartz", "Diamond"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Diamond rates 10 on the Mohs scale, the top of the scale.",
+      "source": {
+        "label": "Britannica: Is diamond the hardest substance",
+        "url": "https://www.britannica.com/science/Is-Diamond-the-Hardest-Substance-on-Earth"
+      }
+    },
+    {
+      "id": "b069",
+      "prompt": "Which element has atomic number 1?",
+      "options": ["Helium", "Hydrogen"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Hydrogen is element 1 and the lightest element.",
+      "source": {
+        "label": "Simple Wikipedia: Hydrogen",
+        "url": "https://simple.wikipedia.org/wiki/Hydrogen"
+      }
+    },
+    {
+      "id": "b070",
+      "prompt": "Which metal is liquid at room temperature?",
+      "options": ["Lead", "Mercury"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Mercury is the only metal that is liquid at ordinary room temperature.",
+      "source": {
+        "label": "Britannica: Mercury",
+        "url": "https://www.britannica.com/science/mercury-chemical-element"
+      }
+    },
+    {
+      "id": "b071",
+      "prompt": "Which planet is the hottest?",
+      "options": ["Mercury", "Venus"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Venus is the hottest planet, with a surface around 467 °C.",
+      "source": {
+        "label": "NASA Science: Venus facts",
+        "url": "https://science.nasa.gov/venus/venus-facts/"
+      }
+    },
+    {
+      "id": "b072",
+      "prompt": "Which element is most abundant in the universe?",
+      "options": ["Oxygen", "Hydrogen"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Hydrogen makes up about 75% of ordinary matter by mass.",
+      "source": {
+        "label": "ACS: Hydrogen molecule of the week",
+        "url": "https://www.acs.org/molecule-of-the-week/archive/h/hydrogen.html"
+      }
+    },
+    {
+      "id": "b073",
+      "prompt": "Which planet takes longer to orbit the Sun?",
+      "options": ["Venus", "Mars"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Mars takes about 687 Earth days to orbit the Sun.",
+      "source": {
+        "label": "Wikipedia: Orbit of Mars",
+        "url": "https://en.wikipedia.org/wiki/Orbit_of_Mars"
+      }
+    },
+    {
+      "id": "b074",
+      "prompt": "Which blood type is the universal red cell donor?",
+      "options": ["A positive", "O negative"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "O negative red cells can be given to patients of any blood type.",
+      "source": {
+        "label": "Cleveland Clinic: Universal blood donor",
+        "url": "https://health.clevelandclinic.org/universal-blood-donor-type"
+      }
+    },
+    {
+      "id": "b075",
+      "prompt": "Which is the largest organ of the human body?",
+      "options": ["Liver", "Skin"],
+      "correct": 1,
+      "topic": "science",
+      "level": 2,
+      "fact": "Skin is the largest organ of the human body, about 2 square metres in an adult.",
+      "source": {
+        "label": "Wikipedia: Human skin",
+        "url": "https://en.wikipedia.org/wiki/Human_skin"
+      }
+    },
+    {
+      "id": "b076",
+      "prompt": "Which planet has the strongest winds?",
+      "options": ["Jupiter", "Neptune"],
+      "correct": 1,
+      "topic": "science",
+      "level": 3,
+      "fact": "Neptune's winds exceed 1,200 mph (about 2,000 km/h), the fastest in the solar system.",
+      "source": {
+        "label": "Caltech Cool Cosmos: Strongest winds",
+        "url": "https://coolcosmos.ipac.caltech.edu/ask/202-Which-planet-has-the-strongest-winds-"
+      }
+    },
+    {
+      "id": "b077",
+      "prompt": "Apart from the Sun, which star is closest to Earth?",
+      "options": ["Sirius", "Proxima Centauri"],
+      "correct": 1,
+      "topic": "science",
+      "level": 3,
+      "fact": "Proxima Centauri, about 4.24 light-years away, is the nearest star to the Sun.",
+      "source": {
+        "label": "EarthSky: Proxima Centauri",
+        "url": "https://earthsky.org/astronomy-essentials/proxima-centauri-our-suns-nearest-neighbor/"
+      }
+    },
+    {
+      "id": "b078",
+      "prompt": "Which metal has the highest melting point?",
+      "options": ["Iron", "Tungsten"],
+      "correct": 1,
+      "topic": "science",
+      "level": 3,
+      "fact": "Tungsten melts at about 3,422 °C, the highest melting point of any metal.",
+      "source": {
+        "label": "Wikipedia: Tungsten",
+        "url": "https://en.wikipedia.org/wiki/Tungsten"
+      }
+    },
+    {
+      "id": "b079",
+      "prompt": "What acid is the main part of stomach acid?",
+      "options": ["Sulfuric acid", "Hydrochloric acid"],
+      "correct": 1,
+      "topic": "science",
+      "level": 3,
+      "fact": "Stomach acid (gastric juice) is mainly hydrochloric acid (HCl).",
+      "source": {
+        "label": "Britannica: Gastric juice",
+        "url": "https://www.britannica.com/science/gastric-juice"
+      }
+    },
+    {
+      "id": "b080",
+      "prompt": "Which is bigger, the Earth or the Sun?",
+      "options": ["Earth", "Sun"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "The Sun's diameter is about 109 times Earth's.",
+      "source": {
+        "label": "Stanford Solar Center: Vital statistics",
+        "url": "https://solar-center.stanford.edu/vitalstats.html"
+      }
+    },
+    {
+      "id": "b081",
+      "prompt": "Which gas do humans breathe in for cellular respiration?",
+      "options": ["Carbon dioxide", "Oxygen"],
+      "correct": 1,
+      "topic": "science",
+      "level": 1,
+      "fact": "Cells use oxygen from breathing in cellular respiration; carbon dioxide is the waste.",
+      "source": {
+        "label": "CK-12: Oxygen and carbon dioxide",
+        "url": "https://www.ck12.org/book/human-biology-breathing/section/4.1/"
+      }
+    },
+    {
+      "id": "b082",
+      "prompt": "Which animal has the largest brain?",
+      "options": ["Elephant", "Sperm whale"],
+      "correct": 1,
+      "topic": "science",
+      "level": 3,
+      "fact": "The sperm whale has the largest brain of any animal, about 8 kg.",
+      "source": {
+        "label": "Wikipedia: Cetacean intelligence",
+        "url": "https://en.wikipedia.org/wiki/Cetacean_intelligence"
+      }
+    },
+    {
+      "id": "b083",
+      "prompt": "Which is the largest animal on Earth?",
+      "options": ["Elephant", "Blue whale"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "The blue whale is the largest animal on Earth, reaching about 30 m long.",
+      "source": {
+        "label": "NOAA Fisheries: Blue whale",
+        "url": "https://www.fisheries.noaa.gov/species/blue-whale"
+      }
+    },
+    {
+      "id": "b084",
+      "prompt": "Which is the tallest living animal?",
+      "options": ["Elephant", "Giraffe"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "Giraffes are the tallest living animals; adult males stand about 4.6–5.5 m.",
+      "source": {
+        "label": "Guinness World Records: Tallest living animal",
+        "url": "https://www.guinnessworldrecords.com/world-records/542207-tallest-living-animal"
+      }
+    },
+    {
+      "id": "b085",
+      "prompt": "Which is the fastest land animal?",
+      "options": ["Lion", "Cheetah"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "The cheetah is the fastest land animal, with top speeds of about 60–70 mph.",
+      "source": {
+        "label": "Smithsonian National Zoo: Cheetah",
+        "url": "https://www.nationalzoo.si.edu/node/6886"
+      }
+    },
+    {
+      "id": "b086",
+      "prompt": "Which bird cannot fly?",
+      "options": ["Eagle", "Penguin"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "Penguins are flightless birds, better built for swimming and diving.",
+      "source": {
+        "label": "Britannica: Flightless bird",
+        "url": "https://www.britannica.com/animal/flightless-bird"
+      }
+    },
+    {
+      "id": "b087",
+      "prompt": "Which mammal can truly fly?",
+      "options": ["Flying squirrel", "Bat"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "Bats are the only mammals capable of true powered flight; flying squirrels only glide.",
+      "source": {
+        "label": "PubMed Central: Bat flight review",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12650304/"
+      }
+    },
+    {
+      "id": "b088",
+      "prompt": "Which animal has three hearts?",
+      "options": ["Dolphin", "Octopus"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "An octopus has three hearts: one systemic heart and two branchial hearts.",
+      "source": {
+        "label": "Britannica: How many hearts does an octopus have",
+        "url": "https://www.britannica.com/science/How-Many-Hearts-Does-an-Octopus-Have"
+      }
+    },
+    {
+      "id": "b089",
+      "prompt": "Which mammal lays eggs?",
+      "options": ["Kangaroo", "Platypus"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "The platypus is a monotreme: a mammal that lays eggs.",
+      "source": {
+        "label": "Britannica: Platypus",
+        "url": "https://www.britannica.com/animal/platypus"
+      }
+    },
+    {
+      "id": "b090",
+      "prompt": "Which is the largest living fish?",
+      "options": ["Great white shark", "Whale shark"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "The whale shark is the largest living fish, reaching about 18 m long.",
+      "source": {
+        "label": "Wikipedia: List of largest fish",
+        "url": "https://en.wikipedia.org/wiki/List_of_largest_fish"
+      }
+    },
+    {
+      "id": "b091",
+      "prompt": "Are mushrooms plants or fungi?",
+      "options": ["Plants", "Fungi"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "Mushrooms belong to the fungi kingdom, which is separate from plants.",
+      "source": {
+        "label": "National Park Service: Mushrooms and other fungi",
+        "url": "https://home.nps.gov/kaww/learn/nature/mushrooms.htm"
+      }
+    },
+    {
+      "id": "b092",
+      "prompt": "Is a crocodile a reptile or an amphibian?",
+      "options": ["Amphibian", "Reptile"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "Crocodiles are reptiles: they breathe with lungs and lay hard-shelled eggs on land.",
+      "source": {
+        "label": "Wikipedia: Reptile",
+        "url": "https://en.wikipedia.org/wiki/Reptile"
+      }
+    },
+    {
+      "id": "b093",
+      "prompt": "What do bees make from nectar?",
+      "options": ["Ants", "Honey"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "Bees collect nectar and dry it in the hive to make honey.",
+      "source": {
+        "label": "Honey.com: How honey is made",
+        "url": "https://honey.com/about-honey/how-honey-is-made"
+      }
+    },
+    {
+      "id": "b094",
+      "prompt": "Which animal carries its young in a pouch?",
+      "options": ["Horse", "Kangaroo"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "Kangaroos are marsupials, and the young develop in a pouch.",
+      "source": {
+        "label": "Britannica: Marsupium",
+        "url": "https://www.britannica.com/science/marsupium"
+      }
+    },
+    {
+      "id": "b095",
+      "prompt": "Which is the heaviest wild cat?",
+      "options": ["Lion", "Tiger"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "Tigers are the largest cat species by weight; male Siberian tigers can exceed 300 kg.",
+      "source": {
+        "label": "Wikipedia: Bengal tiger",
+        "url": "https://en.wikipedia.org/wiki/Bengal_tiger"
+      }
+    },
+    {
+      "id": "b096",
+      "prompt": "Which is the largest living bird?",
+      "options": ["Emu", "Ostrich"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "The common ostrich is the largest living bird, with males up to about 2.8 m tall.",
+      "source": {
+        "label": "Wikipedia: List of largest birds",
+        "url": "https://en.wikipedia.org/wiki/List_of_largest_birds"
+      }
+    },
+    {
+      "id": "b097",
+      "prompt": "Which is the largest living lizard?",
+      "options": ["Iguana", "Komodo dragon"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "The Komodo dragon is the largest living lizard, adults about 3 m long.",
+      "source": {
+        "label": "Britannica: Komodo dragon",
+        "url": "https://www.britannica.com/animal/Komodo-dragon"
+      }
+    },
+    {
+      "id": "b098",
+      "prompt": "Which animal is fastest in a hunting dive?",
+      "options": ["Eagle", "Peregrine falcon"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 3,
+      "fact": "The peregrine falcon's hunting dive exceeds 300 km/h, the fastest animal dive.",
+      "source": {
+        "label": "Britannica: Peregrine falcon",
+        "url": "https://www.britannica.com/animal/peregrine-falcon"
+      }
+    },
+    {
+      "id": "b099",
+      "prompt": "Which animal is a mammal?",
+      "options": ["Shark", "Dolphin"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "Dolphins are mammals that breathe air through a blowhole.",
+      "source": {
+        "label": "IFAW: Dolphins",
+        "url": "https://www.ifaw.org/animals/dolphins"
+      }
+    },
+    {
+      "id": "b100",
+      "prompt": "Is a frog a reptile or an amphibian?",
+      "options": ["Reptile", "Amphibian"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "Frogs are amphibians, a separate group from reptiles.",
+      "source": {
+        "label": "PBS Nature: Frog fact sheet",
+        "url": "https://www.pbs.org/wnet/nature/blog/frog-fact-sheet/"
+      }
+    },
+    {
+      "id": "b101",
+      "prompt": "Which is the largest living land animal?",
+      "options": ["Giraffe", "African elephant"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 1,
+      "fact": "The African bush elephant is the largest living land animal.",
+      "source": {
+        "label": "Britannica: African bush elephant",
+        "url": "https://www.britannica.com/animal/African-bush-elephant"
+      }
+    },
+    {
+      "id": "b102",
+      "prompt": "Which vertebrate is thought to live longest?",
+      "options": ["Tortoise", "Greenland shark"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 3,
+      "fact": "Greenland sharks are the longest-lived vertebrates, estimated at over 270 years.",
+      "source": {
+        "label": "Wikipedia: Greenland shark",
+        "url": "https://en.wikipedia.org/wiki/Greenland_shark"
+      }
+    },
+    {
+      "id": "b103",
+      "prompt": "Why do chameleons mainly change colour?",
+      "options": ["Mostly to hide", "Mostly to signal"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 3,
+      "fact": "Chameleons change colour mainly to signal to other chameleons and regulate temperature.",
+      "source": {
+        "label": "KQED: How chameleons change color",
+        "url": "https://www.kqed.org/science/206401/natures-mood-rings-how-chameleons-really-change-color"
+      }
+    },
+    {
+      "id": "b104",
+      "prompt": "Which is the largest living rodent?",
+      "options": ["Beaver", "Capybara"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "Capybaras are the largest living rodents, up to about 1.3 m long.",
+      "source": {
+        "label": "Natural History Museum: Capybaras",
+        "url": "https://www.nhm.ac.uk/discover/things-you-might-not-know-about-capybaras.html"
+      }
+    },
+    {
+      "id": "b105",
+      "prompt": "Are sharks' skeletons made of bone or cartilage?",
+      "options": ["Bone", "Cartilage"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "Shark skeletons are made of cartilage, not bone.",
+      "source": {
+        "label": "Natural History Museum: Do sharks have bones",
+        "url": "https://www.nhm.ac.uk/discover/quick-questions/do-sharks-have-bones.html"
+      }
+    },
+    {
+      "id": "b106",
+      "prompt": "Is a koala a bear or a marsupial?",
+      "options": ["A bear", "A marsupial"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 2,
+      "fact": "Koalas are marsupials, not bears, despite the nickname \"koala bear\".",
+      "source": {
+        "label": "PBS Nature: Koala fact sheet",
+        "url": "https://www.pbs.org/wnet/nature/blog/koala-fact-sheet/"
+      }
+    },
+    {
+      "id": "b107",
+      "prompt": "Which living bird has the largest wingspan?",
+      "options": ["Andean condor", "Wandering albatross"],
+      "correct": 1,
+      "topic": "nature",
+      "level": 3,
+      "fact": "The wandering albatross has the largest wingspan of any living bird, about 3 to 3.6 m.",
+      "source": {
+        "label": "Guinness World Records: Largest wingspan",
+        "url": "https://www.guinnessworldrecords.com/world-records/69469-largest-wingspan-of-any-living-species-of-bird"
+      }
+    },
+    {
+      "id": "b108",
+      "prompt": "Which is Japan's tallest mountain?",
+      "options": ["Mount Aso", "Mount Fuji"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Mount Fuji is Japan's highest mountain, at about 3,776 m.",
+      "source": {
+        "label": "Fuji Mountain Guides: About Mt. Fuji",
+        "url": "https://www.fujimountainguides.com/about-mt-fuji.html"
+      }
+    },
+    {
+      "id": "b109",
+      "prompt": "Who wrote the Harry Potter series?",
+      "options": ["Roald Dahl", "J.K. Rowling"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "Harry Potter is a seven-book series by J.K. Rowling, published 1997–2007.",
+      "source": {
+        "label": "Britannica: Harry Potter",
+        "url": "https://www.britannica.com/topic/Harry-Potter"
+      }
+    },
+    {
+      "id": "b110",
+      "prompt": "How many keys does a standard full-size piano have?",
+      "options": ["61 keys", "88 keys"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "The standard full-size piano has 88 keys: 52 white and 36 black.",
+      "source": {
+        "label": "NoteAtlas: Piano keys",
+        "url": "https://www.noteatlas.org/piano/keys/"
+      }
+    },
+    {
+      "id": "b111",
+      "prompt": "Which sport is played with a shuttlecock?",
+      "options": ["Tennis", "Badminton"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "Badminton is a racket sport played with a shuttlecock over a net.",
+      "source": {
+        "label": "Britannica: Badminton",
+        "url": "https://www.britannica.com/sports/badminton"
+      }
+    },
+    {
+      "id": "b112",
+      "prompt": "Who composed The Four Seasons?",
+      "options": ["Bach", "Vivaldi"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Vivaldi's The Four Seasons is four violin concertos, published in Amsterdam in 1725.",
+      "source": {
+        "label": "Britannica: The Four Seasons by Vivaldi",
+        "url": "https://www.britannica.com/topic/The-Four-Seasons-by-Vivaldi"
+      }
+    },
+    {
+      "id": "b113",
+      "prompt": "Who painted The Starry Night?",
+      "options": ["Claude Monet", "Vincent van Gogh"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "The Starry Night is an 1889 painting by Vincent van Gogh, held at MoMA in New York.",
+      "source": {
+        "label": "Britannica: The Starry Night",
+        "url": "https://www.britannica.com/topic/The-Starry-Night"
+      }
+    },
+    {
+      "id": "b114",
+      "prompt": "Which country is flamenco from?",
+      "options": ["Portugal", "Spain"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "Flamenco developed in southern Spain, especially Andalusia.",
+      "source": {
+        "label": "Britannica: Flamenco",
+        "url": "https://www.britannica.com/art/flamenco"
+      }
+    },
+    {
+      "id": "b115",
+      "prompt": "Who wrote Pride and Prejudice?",
+      "options": ["Charlotte Brontë", "Jane Austen"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "Jane Austen's Pride and Prejudice was published in January 1813.",
+      "source": {
+        "label": "Britannica: Pride and Prejudice",
+        "url": "https://www.britannica.com/topic/Pride-and-Prejudice"
+      }
+    },
+    {
+      "id": "b116",
+      "prompt": "Who wrote Nineteen Eighty-Four?",
+      "options": ["Aldous Huxley", "George Orwell"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "Nineteen Eighty-Four is a 1949 dystopian novel by George Orwell.",
+      "source": {
+        "label": "Britannica: Nineteen Eighty-four",
+        "url": "https://www.britannica.com/topic/Nineteen-Eighty-four"
+      }
+    },
+    {
+      "id": "b117",
+      "prompt": "Who wrote Don Quixote?",
+      "options": ["Dante Alighieri", "Miguel de Cervantes"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Don Quixote by Miguel de Cervantes was published in two parts, in 1605 and 1615.",
+      "source": {
+        "label": "Britannica: Miguel de Cervantes",
+        "url": "https://www.britannica.com/biography/Miguel-de-Cervantes"
+      }
+    },
+    {
+      "id": "b118",
+      "prompt": "Who wrote Moby-Dick?",
+      "options": ["Mark Twain", "Herman Melville"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Moby-Dick was published on 14 November 1851 by Herman Melville.",
+      "source": {
+        "label": "History.com: Moby-Dick published",
+        "url": "https://www.history.com/this-day-in-history/november-14/moby-dick-published"
+      }
+    },
+    {
+      "id": "b119",
+      "prompt": "Which composer wrote the Ninth Symphony?",
+      "options": ["Mozart", "Beethoven"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Beethoven's Ninth Symphony premiered in Vienna in 1824.",
+      "source": {
+        "label": "Wikipedia: Symphony No. 9 (Beethoven)",
+        "url": "https://en.wikipedia.org/wiki/Symphony_No._9_(Beethoven)"
+      }
+    },
+    {
+      "id": "b120",
+      "prompt": "Which city hosted the 2016 Summer Olympics?",
+      "options": ["Madrid", "Rio de Janeiro"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Rio de Janeiro hosted the 2016 Summer Olympics, the first in South America.",
+      "source": {
+        "label": "Wikipedia: Rio de Janeiro bid for 2016 Olympics",
+        "url": "https://en.wikipedia.org/wiki/Rio_de_Janeiro_bid_for_the_2016_Summer_Olympics"
+      }
+    },
+    {
+      "id": "b121",
+      "prompt": "Who created Sherlock Holmes?",
+      "options": ["Agatha Christie", "Arthur Conan Doyle"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Sherlock Holmes was created by Arthur Conan Doyle, who debuted him in 1887.",
+      "source": {
+        "label": "Britannica: Sherlock Holmes",
+        "url": "https://www.britannica.com/topic/Sherlock-Holmes"
+      }
+    },
+    {
+      "id": "b122",
+      "prompt": "Who painted The Scream?",
+      "options": ["Vincent van Gogh", "Edvard Munch"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Edvard Munch painted the first version of The Scream in 1893.",
+      "source": {
+        "label": "National Museum Norway: The Scream",
+        "url": "https://www.nasjonalmuseet.no/en/collection/object/NG.M.00939"
+      }
+    },
+    {
+      "id": "b123",
+      "prompt": "What sport is the Tour de France?",
+      "options": ["Motor racing", "Cycling"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "The Tour de France is an annual multi-stage road cycling race, held in July.",
+      "source": {
+        "label": "Britannica Kids: Tour de France",
+        "url": "https://kids.britannica.com/kids/article/Tour-de-France/390093"
+      }
+    },
+    {
+      "id": "b124",
+      "prompt": "What is Brazil's official language?",
+      "options": ["Spanish", "Portuguese"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "The official language of Brazil is Portuguese, under Article 13 of the 1988 constitution.",
+      "source": {
+        "label": "Wikipedia: Languages of Brazil",
+        "url": "https://en.wikipedia.org/wiki/Languages_of_Brazil"
+      }
+    },
+    {
+      "id": "b125",
+      "prompt": "Who painted Guernica?",
+      "options": ["Salvador Dalí", "Pablo Picasso"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Guernica is a 1937 painting by Pablo Picasso, made after the bombing of the Basque town.",
+      "source": {
+        "label": "Wikipedia: Guernica (Picasso)",
+        "url": "https://en.wikipedia.org/wiki/Guernica_(Picasso)"
+      }
+    },
+    {
+      "id": "b126",
+      "prompt": "Who made The Great Wave off Kanagawa?",
+      "options": ["Hiroshige", "Hokusai"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 3,
+      "fact": "The Great Wave off Kanagawa is a woodblock print by Katsushika Hokusai, c. 1830.",
+      "source": {
+        "label": "LACMA: Katsushika Hokusai, The Great Wave",
+        "url": "https://collections.lacma.org/object/88781"
+      }
+    },
+    {
+      "id": "b127",
+      "prompt": "Who wrote The Divine Comedy?",
+      "options": ["Petrarch", "Dante Alighieri"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 3,
+      "fact": "Dante wrote The Divine Comedy in Italian around 1308–1321.",
+      "source": {
+        "label": "Britannica: The Divine Comedy",
+        "url": "https://www.britannica.com/topic/The-Divine-Comedy"
+      }
+    },
+    {
+      "id": "b128",
+      "prompt": "Who composed The Magic Flute?",
+      "options": ["Haydn", "Mozart"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 3,
+      "fact": "The Magic Flute, Mozart's last complete opera, premiered in Vienna in September 1791.",
+      "source": {
+        "label": "Royal Ballet and Opera: The Magic Flute",
+        "url": "https://www.rbo.org.uk/opera-essentials-the-magic-flute"
+      }
+    },
+    {
+      "id": "b129",
+      "prompt": "Which city hosted the first modern Olympic Games?",
+      "options": ["Paris", "Athens"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Athens hosted the first modern Olympic Games in 1896.",
+      "source": {
+        "label": "Britannica: Athens 1896 Olympic Games",
+        "url": "https://www.britannica.com/event/Athens-1896-Olympic-Games"
+      }
+    },
+    {
+      "id": "b130",
+      "prompt": "Which language has the most native speakers?",
+      "options": ["English", "Mandarin Chinese"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Mandarin Chinese has the most native speakers, roughly 900 million or more.",
+      "source": {
+        "label": "Wikipedia: Mandarin Chinese",
+        "url": "https://en.wikipedia.org/wiki/Mandarin_Chinese"
+      }
+    },
+    {
+      "id": "b131",
+      "prompt": "Where is the Eiffel Tower?",
+      "options": ["London", "Paris"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 1,
+      "fact": "The Eiffel Tower stands on the Champ de Mars in Paris, France.",
+      "source": {
+        "label": "Wikipedia: Eiffel Tower",
+        "url": "https://en.wikipedia.org/wiki/Eiffel_Tower"
+      }
+    },
+    {
+      "id": "b132",
+      "prompt": "Who wrote the opera Carmen?",
+      "options": ["Verdi", "Bizet"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 3,
+      "fact": "Bizet's opera Carmen premiered in Paris on 3 March 1875.",
+      "source": {
+        "label": "Britannica: Carmen (opera by Bizet)",
+        "url": "https://www.britannica.com/topic/Carmen-opera-by-Bizet"
+      }
+    },
+    {
+      "id": "b133",
+      "prompt": "Who composed The Rite of Spring?",
+      "options": ["Debussy", "Stravinsky"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 3,
+      "fact": "Stravinsky's The Rite of Spring premiered in Paris on 29 May 1913.",
+      "source": {
+        "label": "Britannica: The Rite of Spring",
+        "url": "https://www.britannica.com/topic/The-Rite-of-Spring"
+      }
+    },
+    {
+      "id": "b134",
+      "prompt": "Which country hosted and won the first World Cup?",
+      "options": ["Brazil", "Uruguay"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 2,
+      "fact": "Uruguay hosted and won the first FIFA World Cup in 1930.",
+      "source": {
+        "label": "Wikipedia: 1930 FIFA World Cup",
+        "url": "https://en.wikipedia.org/wiki/1930_FIFA_World_Cup"
+      }
+    },
+    {
+      "id": "b135",
+      "prompt": "Which ancient wonder stood in Alexandria?",
+      "options": ["Hanging Gardens", "Lighthouse"],
+      "correct": 1,
+      "topic": "culture",
+      "level": 3,
+      "fact": "The Lighthouse of Alexandria was built under the Ptolemies in the 3rd century BC.",
+      "source": {
+        "label": "Wikipedia: Lighthouse of Alexandria",
+        "url": "https://en.wikipedia.org/wiki/Lighthouse_of_Alexandria"
+      }
+    },
+    {
+      "id": "b136",
+      "prompt": "Which is larger: one half or one third?",
+      "options": ["1/3", "1/2"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "One half (0.5) is larger than one third (about 0.333).",
+      "source": {
+        "label": "Everyday Calculation: Compare 1/2 and 1/3",
+        "url": "https://answers.everydaycalculation.com/compare-fractions/1-2-and-1-3"
+      }
+    },
+    {
+      "id": "b137",
+      "prompt": "Which is larger: one million or one billion?",
+      "options": ["One billion", "One million"],
+      "correct": 0,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "One billion is one thousand million, or 10^9.",
+      "source": {
+        "label": "Wikipedia: Billion",
+        "url": "https://en.wikipedia.org/wiki/Billion"
+      }
+    },
+    {
+      "id": "b138",
+      "prompt": "Which is a prime number?",
+      "options": ["9", "11"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "11 is prime; 9 is divisible by 3, so it is not prime.",
+      "source": {
+        "label": "Wikipedia: Prime number",
+        "url": "https://en.wikipedia.org/wiki/Prime_number"
+      }
+    },
+    {
+      "id": "b139",
+      "prompt": "Which is warmer: -5 °C or 0 °C?",
+      "options": ["-5 °C", "0 °C"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "Water freezes at 0 °C, so 0 °C is warmer than -5 °C.",
+      "source": {
+        "label": "EBSCO: Freezing point",
+        "url": "https://www.ebsco.com/research-starters/science/freezing-point/"
+      }
+    },
+    {
+      "id": "b140",
+      "prompt": "How many sides does a hexagon have?",
+      "options": ["8", "6"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "A hexagon has six sides.",
+      "source": {
+        "label": "Britannica: Hexagon",
+        "url": "https://www.britannica.com/science/hexagon"
+      }
+    },
+    {
+      "id": "b141",
+      "prompt": "What is a right angle in degrees?",
+      "options": ["45 degrees", "90 degrees"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "A right angle measures exactly 90 degrees, or a quarter turn.",
+      "source": {
+        "label": "SplashLearn: Right angle",
+        "url": "https://www.splashlearn.com/math-vocabulary/geometry/right-angle"
+      }
+    },
+    {
+      "id": "b142",
+      "prompt": "How many degrees are in a triangle?",
+      "options": ["90 degrees", "180 degrees"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "The three interior angles of any flat triangle add up to 180 degrees.",
+      "source": {
+        "label": "Cuemath: Triangle angle sum theorem",
+        "url": "https://www.cuemath.com/geometry/angle-sum-theorem/"
+      }
+    },
+    {
+      "id": "b143",
+      "prompt": "How many days are in a week?",
+      "options": ["5", "7"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "A week is seven days, or 168 hours.",
+      "source": {
+        "label": "Wikipedia: Week",
+        "url": "https://en.wikipedia.org/wiki/Week"
+      }
+    },
+    {
+      "id": "b144",
+      "prompt": "Which is heavier: one kilogram or one pound?",
+      "options": ["1 pound", "1 kilogram"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "One kilogram is about 2.2 pounds, so it is heavier.",
+      "source": {
+        "label": "UnitConverters: kg to lbs",
+        "url": "https://www.unitconverters.net/weight-and-mass/kg-to-lbs.htm"
+      }
+    },
+    {
+      "id": "b145",
+      "prompt": "Which is longer: one metre or one foot?",
+      "options": ["1 foot", "1 metre"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 1,
+      "fact": "One metre is about 3.28 feet, so a metre is longer.",
+      "source": {
+        "label": "HowStuffWorks: Meters to feet",
+        "url": "https://science.howstuffworks.com/math-concepts/meters-to-feet.htm"
+      }
+    },
+    {
+      "id": "b146",
+      "prompt": "Which is longer: one kilometre or one mile?",
+      "options": ["1 kilometre", "1 mile"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "One mile is 1.609344 km, so a mile is longer than a kilometre.",
+      "source": {
+        "label": "Wikipedia: Mile (disambiguation)",
+        "url": "https://en.wikipedia.org/wiki/Mile_(disambiguation)"
+      }
+    },
+    {
+      "id": "b147",
+      "prompt": "Which is a perfect square?",
+      "options": ["48", "49"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "49 is 7 × 7, so it is a perfect square.",
+      "source": {
+        "label": "Byju's: Perfect squares",
+        "url": "https://byjus.com/maths/perfect-squares/"
+      }
+    },
+    {
+      "id": "b148",
+      "prompt": "Which year was a leap year?",
+      "options": ["2023", "2024"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "2024 is divisible by 4 and is not a century year, so it is a leap year.",
+      "source": {
+        "label": "Wikipedia: Leap year",
+        "url": "https://en.wikipedia.org/wiki/Leap_year"
+      }
+    },
+    {
+      "id": "b149",
+      "prompt": "Which is longer: 100 yards or 100 metres?",
+      "options": ["100 yards", "100 metres"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "One yard is exactly 0.9144 m, so 100 yards is 91.44 m; 100 metres is longer.",
+      "source": {
+        "label": "Wikipedia: Yard",
+        "url": "https://en.wikipedia.org/wiki/Yard"
+      }
+    },
+    {
+      "id": "b150",
+      "prompt": "Which is more: a dozen or a score?",
+      "options": ["Dozen", "Score"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "A dozen is 12 and a score is 20.",
+      "source": {
+        "label": "Wikipedia: Non-numerical words for quantities",
+        "url": "https://en.wikipedia.org/wiki/Non-numerical_words_for_quantities"
+      }
+    },
+    {
+      "id": "b151",
+      "prompt": "Which is larger: three quarters or two thirds?",
+      "options": ["2/3", "3/4"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "3/4 is 0.75 and 2/3 is about 0.667, so 3/4 is larger.",
+      "source": {
+        "label": "Fraction to decimal chart: 2/3 vs 3/4",
+        "url": "https://fractionratio.com/compare/2-3-vs-3-4"
+      }
+    },
+    {
+      "id": "b152",
+      "prompt": "Which is larger: 10² or 2⁵?",
+      "options": ["2⁵", "10²"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "10² is 100 and 2⁵ is 32.",
+      "source": {
+        "label": "Math is Fun: Index notation and powers",
+        "url": "https://www.mathsisfun.com/index-notation-powers.html"
+      }
+    },
+    {
+      "id": "b153",
+      "prompt": "What is the square root of 81?",
+      "options": ["8", "9"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "The square root of 81 is 9, because 9 × 9 = 81.",
+      "source": {
+        "label": "Easy Calculation: Square root of 81",
+        "url": "https://www.easycalculation.com/square-roots-81.html"
+      }
+    },
+    {
+      "id": "b154",
+      "prompt": "Which is larger: one sixth or one eighth?",
+      "options": ["1/8", "1/6"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "One sixth (about 0.167) is larger than one eighth (0.125).",
+      "source": {
+        "label": "Everyday Calculation: Compare 1/6 and 1/8",
+        "url": "https://answers.everydaycalculation.com/compare-fractions/1-6-and-1-8"
+      }
+    },
+    {
+      "id": "b155",
+      "prompt": "What is the next prime number after 13?",
+      "options": ["15", "17"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 2,
+      "fact": "After 13 the next prime is 17; 15 is divisible by 3 and 5.",
+      "source": {
+        "label": "Dreambox: Prime numbers",
+        "url": "https://www.dreambox.com/math/skills/numbers/prime-numbers"
+      }
+    },
+    {
+      "id": "b156",
+      "prompt": "Is zero an even number?",
+      "options": ["Odd", "Even"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 3,
+      "fact": "Zero is an even number, because it is 0 × 2 and divisible by 2.",
+      "source": {
+        "label": "Wikipedia: Parity of zero",
+        "url": "https://en.wikipedia.org/wiki/Parity_of_zero"
+      }
+    },
+    {
+      "id": "b157",
+      "prompt": "Which is longer: a million seconds or a day?",
+      "options": ["One day", "A million seconds"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 3,
+      "fact": "A million seconds is about 11.6 days, far longer than one day (86,400 seconds).",
+      "source": {
+        "label": "Calculate Me: 1,000,000 seconds to days",
+        "url": "https://www.calculateme.com/time/seconds/to-days/1000000"
+      }
+    },
+    {
+      "id": "b158",
+      "prompt": "Which is closer to 1: 0.9 or 1.2?",
+      "options": ["1.2", "0.9"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 3,
+      "fact": "0.9 is 0.1 from 1, and 1.2 is 0.2 from 1, so 0.9 is closer.",
+      "source": {
+        "label": "One Mathematical Cat: Absolute value as distance",
+        "url": "https://www.onemathematicalcat.org/Math/Precalculus_obj/absValDistBet.htm"
+      }
+    },
+    {
+      "id": "b159",
+      "prompt": "Which is larger: two thirds or 0.7?",
+      "options": ["2/3", "0.7"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 3,
+      "fact": "Two thirds is about 0.667, so 0.7 is larger.",
+      "source": {
+        "label": "Science Made Simple: Fractions and decimals",
+        "url": "https://www.sciencemadesimple.com/fractions-decimals.html"
+      }
+    },
+    {
+      "id": "b160",
+      "prompt": "Which is longer: 1,000 hours or one week?",
+      "options": ["One week", "1,000 hours"],
+      "correct": 1,
+      "topic": "numbers",
+      "level": 3,
+      "fact": "A week is 168 hours; 1,000 hours is about 41.7 days.",
+      "source": {
+        "label": "Wikipedia: Week",
+        "url": "https://en.wikipedia.org/wiki/Week"
+      }
+    }
+  ]
+}

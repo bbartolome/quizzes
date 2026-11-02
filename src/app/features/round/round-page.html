@@ -5,6 +5,10 @@
         <legend class="type-card float-left w-full">
           {{ entry.question.prompt }}
         </legend>
+        <p class="type-caption clear-both">Pick every trap that applies. Usually it is one.</p>
+        @if (firstRun() && score().answered < 3) {
+          <p class="type-caption clear-both">Tap ⓘ on an option to see what it means.</p>
+        }
 
         @for (option of entry.question.options; track option) {
           @let open = openInfo() === i + ':' + option;

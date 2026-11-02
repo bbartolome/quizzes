@@ -267,14 +267,14 @@ describe('StatsPage', () => {
     expect(fixture.nativeElement.querySelector('[data-testid="focus-round"]')).toBeFalsy();
   });
 
-  it('keeps the "Performance by trait" heading', async () => {
+  it('uses the "Performance by concept" heading', async () => {
     configure();
     const fixture = TestBed.createComponent(StatsPage);
     fixture.detectChanges();
     await fixture.whenStable();
 
     expect(fixture.nativeElement.querySelector('#performance-heading').textContent.trim()).toBe(
-      'Performance by trait',
+      'Performance by concept',
     );
   });
 

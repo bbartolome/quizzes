@@ -260,3 +260,55 @@ describe('drawRound with a round size', () => {
     );
   });
 });
+
+function makeLeveledBank(perTopicPerLevel: number): CalibrationBank {
+  const items: TwoWayItem[] = [];
+  for (const topic of TOPICS) {
+    for (const level of [1, 2, 3] as const) {
+      for (let i = 0; i < perTopicPerLevel; i++) {
+        items.push({
+          id: `${topic}-L${level}-${i}`,
+          prompt: `Prompt ${topic} ${level} ${i}`,
+          options: ['A', 'B'],
+          correct: 0,
+          topic,
+          level,
+          fact: 'A fact.',
+          source: { label: 'Source', url: 'https://example.com' },
+        });
+      }
+    }
+  }
+  return { version: 1, items };
+}
+
+function levelCounts(bank: CalibrationBank, drawn: { itemId: string }[]): Record<number, number> {
+  const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0 };
+  for (const d of drawn) {
+    const item = bank.items.find((i) => i.id === d.itemId) as TwoWayItem;
+    counts[item.level!]++;
+  }
+  return counts;
+}
+
+describe('drawRound level mix', () => {
+  it('draws a 4 / 4 / 2 level mix for a 10-item round', () => {
+    const bank = makeLeveledBank(10);
+    for (const seed of [1, 2, 3]) {
+      expect(levelCounts(bank, drawRound(bank, [], mulberry32(seed), 10))).toEqual({
+        1: 4,
+        2: 4,
+        3: 2,
+      });
+    }
+  });
+
+  it('draws 8 / 8 / 4 for a 20-item round', () => {
+    const bank = makeLeveledBank(10);
+    expect(levelCounts(bank, drawRound(bank, [], mulberry32(4), 20))).toEqual({
+      1: 8,
+      2: 8,
+      3: 4,
+    });
+  });
+});

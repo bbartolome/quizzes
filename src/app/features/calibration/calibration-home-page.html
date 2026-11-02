@@ -9,6 +9,20 @@
   } @else if (ctx(); as c) {
     @if (stats(); as s) {
       <div class="space-y-6">
+        @if (c.quizId === 'calibration-basic' && s.roundsPlayed === 0) {
+          <section uiCard class="space-y-3" data-testid="basic-explainer">
+            <p class="type-card">How to read your answers</p>
+            <p class="type-detail">
+              Example: "Which is larger: 1/2 or 1/3?" Pick 1/2 and say you are 90% sure.
+            </p>
+            <ul class="type-detail space-y-1">
+              <li>Sure (90% or more): right most of the time</li>
+              <li>Fairly sure (70–80%): right about 3 times in 4</li>
+              <li>Guessing (60% or less): close to a coin flip</li>
+            </ul>
+            <p class="type-caption">Sure should be right about 9 times in 10.</p>
+          </section>
+        }
         <div class="flex flex-wrap items-center gap-3">
           <a uiButton variant="primary" [routerLink]="['/calibration', c.quizId, 'round']">
             {{ s.hasPending ? 'Resume round' : 'Start round' }}

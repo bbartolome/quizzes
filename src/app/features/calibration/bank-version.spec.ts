@@ -4,12 +4,14 @@ import type { CalibrationBank, CalibrationFormat, CalibrationItem } from './cali
 import { TOPICS, isFourWayItem } from './calibration.models';
 import manifestJson from '../../../../public/data/quizzes.json';
 import twoWayJson from '../../../../public/data/quizzes/calibration/items.json';
+import basicJson from '../../../../public/data/quizzes/calibration-basic/items.json';
 import fourWayJson from '../../../../public/data/quizzes/calibration-advanced/items.json';
 
 // Build-time guard over the real data files shipped under public/.
 const manifest = manifestJson as unknown as { quizzes: QuizManifestEntry[] };
 const banksByDataPath: Record<string, CalibrationBank> = {
   'data/quizzes/calibration/': twoWayJson as unknown as CalibrationBank,
+  'data/quizzes/calibration-basic/': basicJson as unknown as CalibrationBank,
   'data/quizzes/calibration-advanced/': fourWayJson as unknown as CalibrationBank,
 };
 
