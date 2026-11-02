@@ -12,14 +12,15 @@ import { Button } from '../../shared/ui/button.directive';
 import { Card } from '../../shared/ui/card.directive';
 import { PageShell } from '../../shared/ui/page-shell';
 import { LibraryCard } from './library-card';
+import { TodayPanel } from './today-panel';
 import { QuizCard, calibrationCard, formatPercent, routeFor, statsCard } from './library-cards';
 import { CollectionSummary, summarize } from './library-summary';
 
-const RESET_ALL_MESSAGE = 'Reset all quiz progress across every collection? This cannot be undone.';
+const RESET_ALL_MESSAGE = 'Reset all quiz progress and practice streak? This cannot be undone.';
 
 @Component({
   selector: 'app-library-page',
-  imports: [RouterLink, AsyncPipe, Button, Card, PageShell, LibraryCard],
+  imports: [RouterLink, AsyncPipe, Button, Card, PageShell, LibraryCard, TodayPanel],
   templateUrl: './library-page.html',
 })
 export class LibraryPage {

@@ -89,10 +89,7 @@ describe('summarize', () => {
 
   it('breaks a streak tie on rounds played when there is no lastPlayedAt', () => {
     const summary = summarize(
-      [
-        card('fewer', { streak: 3, roundsPlayed: 4 }),
-        card('more', { streak: 3, roundsPlayed: 9 }),
-      ],
+      [card('fewer', { streak: 3, roundsPlayed: 4 }), card('more', { streak: 3, roundsPlayed: 9 })],
       {},
     );
 

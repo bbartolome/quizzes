@@ -21,7 +21,7 @@
         }
       }
     </p>
-    <!-- Today panel (P5) goes here, between the summary and the collections. -->
+    <app-today-panel [cards]="cards$ | async" />
 
     <section
       aria-label="Quiz collections"
