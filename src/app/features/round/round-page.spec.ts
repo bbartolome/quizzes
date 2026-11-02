@@ -196,6 +196,38 @@ describe('RoundPage', () => {
     }
   });
 
+  it('shows the Traps instruction line above the options', async () => {
+    configure();
+    const fixture = TestBed.createComponent(RoundPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain(
+      'Pick every trap that applies. Usually it is one.',
+    );
+  });
+
+  it('shows the \u24d8 hint on a first run only', async () => {
+    stats.getStats = vi.fn(() => ({ roundsPlayed: 0 }));
+    configure();
+    const first = TestBed.createComponent(RoundPage);
+    first.detectChanges();
+    await first.whenStable();
+    first.detectChanges();
+    expect(first.nativeElement.textContent).toContain(
+      'Tap \u24d8 on an option to see what it means.',
+    );
+
+    stats.getStats = vi.fn(() => ({ roundsPlayed: 2 }));
+    configure();
+    const later = TestBed.createComponent(RoundPage);
+    later.detectChanges();
+    await later.whenStable();
+    later.detectChanges();
+    expect(later.nativeElement.textContent).not.toContain('Tap \u24d8');
+  });
+
   it('shows "1 of 1 correct" in the score footer after checking the correct option', async () => {
     configure();
     const fixture = TestBed.createComponent(RoundPage);
