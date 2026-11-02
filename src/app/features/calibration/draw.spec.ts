@@ -236,3 +236,27 @@ describe('seenItemIds / unseenCount', () => {
     expect(unseenCount(bank, log)).toBe(7);
   });
 });
+
+describe('drawRound with a round size', () => {
+  it('draws the requested number of items', () => {
+    expect(drawRound(makeBank(10), [], mulberry32(1), 10)).toHaveLength(10);
+    expect(drawRound(makeBank(10), [], mulberry32(1), 7)).toHaveLength(7);
+  });
+
+  it('spreads a size-10 round as one per topic plus four extra topics', () => {
+    const bank = makeBank(10);
+    const counts = new Map<Topic, number>();
+    for (const drawn of drawRound(bank, [], mulberry32(5), 10)) {
+      const topic = topicOf(bank, drawn.itemId);
+      counts.set(topic, (counts.get(topic) ?? 0) + 1);
+    }
+    const values = TOPICS.map((topic) => counts.get(topic) ?? 0).sort();
+    expect(values).toEqual([1, 1, 2, 2, 2, 2]);
+  });
+
+  it('defaults to 20 when no size is given', () => {
+    expect(drawRound(makeBank(10), [], mulberry32(9))).toHaveLength(
+      drawRound(makeBank(10), [], mulberry32(9), 20).length,
+    );
+  });
+});
