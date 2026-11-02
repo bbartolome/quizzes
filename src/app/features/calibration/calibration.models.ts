@@ -16,12 +16,16 @@ export interface ItemSource {
   url: string;
 }
 
+/** Difficulty band for a calibration item; never shown to the player. */
+export type ItemLevel = 1 | 2 | 3;
+
 export interface TwoWayItem {
   id: string;
   prompt: string;
   options: [string, string];
   correct: 0 | 1;
   topic: Topic;
+  level?: ItemLevel;
   fact: string;
   source: ItemSource;
 }
@@ -32,6 +36,7 @@ export interface FourWayItem {
   options: [string, string];
   truth: [boolean, boolean];
   topic: Topic;
+  level?: ItemLevel;
   facts: [string, string];
   source: ItemSource;
 }

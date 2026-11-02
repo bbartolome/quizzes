@@ -4,6 +4,7 @@ import {
   CalibrationItem,
   CalibrationRound,
   DrawnItem,
+  ItemLevel,
   TOPICS,
   Topic,
 } from './calibration.models';
@@ -82,6 +83,43 @@ function quotasFor(rng: Rng, size: number): Map<Topic, number> {
   return quotas;
 }
 
+/**
+ * Items per level for a round of `size`: 40% / 40% / 20% by largest remainder
+ * (ties go to the lower level). At 10 that is 4 / 4 / 2; at 20, 8 / 8 / 4.
+ */
+export function levelMix(size: number): ItemLevel[] {
+  const raw = [0.4 * size, 0.4 * size, 0.2 * size];
+  const counts = raw.map(Math.floor);
+  let left = size - counts.reduce((a, b) => a + b, 0);
+  const order = [0, 1, 2].sort((a, b) => raw[b] - counts[b] - (raw[a] - counts[a]) || a - b);
+  for (const i of order) {
+    if (left-- > 0) counts[i]++;
+  }
+  const levels: ItemLevel[] = [];
+  ([1, 2, 3] as const).forEach((level, i) => {
+    for (let n = 0; n < counts[i]; n++) levels.push(level);
+  });
+  return levels;
+}
+
+/** An unseen candidate at `level`, else at the nearest level (lower first on a tie); random within a level. */
+function nearestLevel(
+  candidates: CalibrationItem[],
+  level: ItemLevel,
+  rng: Rng,
+): CalibrationItem | undefined {
+  for (const distance of [0, 1, 2]) {
+    const wanted = distance === 0 ? [level] : [level - distance, level + distance];
+    const options = candidates.filter(
+      (item) => item.level !== undefined && wanted.includes(item.level),
+    );
+    if (options.length > 0) {
+      return options[Math.floor(rng() * options.length)];
+    }
+  }
+  return undefined;
+}
+
 function lastAnsweredAt(log: CalibrationRound[]): Map<string, string> {
   const last = new Map<string, string>();
   for (const round of log) {
@@ -103,6 +141,7 @@ function pickIds(
   rng: Rng,
 ): string[] {
   const quotas = quotasFor(rng, size);
+  const levelled = bank.items.some((item) => item.level !== undefined);
 
   const itemsByTopic = new Map<Topic, CalibrationItem[]>();
   for (const topic of TOPICS) {
@@ -120,17 +159,36 @@ function pickIds(
   };
 
   // 1. Fill each topic's quota with that topic's unseen items, at random.
-  for (const topic of TOPICS) {
-    let remaining = quotas.get(topic) ?? 0;
-    if (remaining === 0) continue;
-    const candidates = shuffle(
-      (itemsByTopic.get(topic) ?? []).filter((item) => !seen.has(item.id)),
-      rng,
-    );
-    for (const item of candidates) {
-      if (remaining === 0) break;
-      pick(item);
-      remaining--;
+  // Levelled banks: a shuffled multiset of levels is assigned to the slots first
+  // (rng draws: one shuffle of the level multiset), and each slot takes an unseen
+  // item of its topic and level, else the nearest level in that topic.
+  // Banks with no levels skip this branch entirely, so their rng sequence is unchanged.
+  if (levelled) {
+    const levels = shuffle(levelMix(size), rng);
+    let slot = 0;
+    for (const topic of TOPICS) {
+      for (let n = quotas.get(topic) ?? 0; n > 0; n--) {
+        const level = levels[slot++];
+        const candidates = (itemsByTopic.get(topic) ?? []).filter(
+          (item) => !seen.has(item.id) && !pickedIds.has(item.id),
+        );
+        const match = nearestLevel(candidates, level, rng);
+        if (match) pick(match);
+      }
+    }
+  } else {
+    for (const topic of TOPICS) {
+      let remaining = quotas.get(topic) ?? 0;
+      if (remaining === 0) continue;
+      const candidates = shuffle(
+        (itemsByTopic.get(topic) ?? []).filter((item) => !seen.has(item.id)),
+        rng,
+      );
+      for (const item of candidates) {
+        if (remaining === 0) break;
+        pick(item);
+        remaining--;
+      }
     }
   }
 
