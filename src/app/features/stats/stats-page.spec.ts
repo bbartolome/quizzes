@@ -7,6 +7,8 @@ import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { Concept, QuizManifestEntry, QuizStats } from '../../core/models/quiz.models';
 import { overallAccuracy, traitRows } from './stats-rows';
+import { PracticeService } from '../../core/services/practice.service';
+import { FakePracticeService } from '../../../testing/fake-practice.service';
 
 describe('StatsPage', () => {
   const entry: QuizManifestEntry = {
@@ -124,6 +126,36 @@ describe('StatsPage', () => {
 
     const bar = rows[0].querySelector('ui-progress > div > div');
     expect(bar.style.width).toBe(`${expectedRows[0].accuracy}%`);
+  });
+
+  it('shows a mastery glyph and its word on each trait row (P6)', async () => {
+    configure();
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // Sorted by accuracy: slippery-slope (1/5, Learning) first, strawman (3/4, Practised) second.
+    const rows = fixture.nativeElement.querySelectorAll('[data-testid="trait-row"]');
+    expect(rows[0].textContent).toContain('◔ Learning');
+    expect(rows[1].textContent).toContain('◑ Practised');
+  });
+
+  it('shows Mastered when the FakePracticeService seeds two practice days (P6)', async () => {
+    configure();
+    const practice = new FakePracticeService();
+    practice.seed({ conceptDays: { strawman: { days: 2, lastDay: '2026-10-30' } } });
+    TestBed.configureTestingModule({ providers: [{ provide: PracticeService, useValue: practice }] });
+    statsService.getStats.mockReturnValue({
+      ...populatedStats,
+      perTrait: { strawman: { traitId: 'strawman', correct: 8, attempted: 8 } },
+    });
+
+    const fixture = TestBed.createComponent(StatsPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const rows = fixture.nativeElement.querySelectorAll('[data-testid="trait-row"]');
+    expect(rows[0].textContent).toContain('● Mastered');
   });
 
   it('renders the page in the narrow shell with a back link to the quiz', async () => {
