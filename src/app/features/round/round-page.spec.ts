@@ -8,6 +8,8 @@ import { StatsService } from '../../core/services/stats.service';
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { TemplateGeneratorService } from '../../core/services/template-generator.service';
 import { MemoryStorage } from '../../../testing/memory-storage';
+import { FakePracticeService } from '../../../testing/fake-practice.service';
+import { PracticeService } from '../../core/services/practice.service';
 import {
   Concept,
   KnowledgeBase,
@@ -69,6 +71,7 @@ describe('RoundPage', () => {
   };
   let engine: { selectRound: ReturnType<typeof vi.fn>; score: ReturnType<typeof vi.fn> };
   let templateGenerator: { render: ReturnType<typeof vi.fn> };
+  let practice: FakePracticeService;
 
   function configure(): void {
     quizData.loadQuizBundle = vi.fn(() =>
@@ -92,6 +95,7 @@ describe('RoundPage', () => {
         { provide: StatsService, useValue: stats },
         { provide: QuizEngineService, useValue: engine },
         { provide: TemplateGeneratorService, useValue: templateGenerator },
+        { provide: PracticeService, useValue: practice },
       ],
     });
   }
@@ -128,6 +132,7 @@ describe('RoundPage', () => {
       score: vi.fn(scoreStub),
     };
     templateGenerator = { render: vi.fn() };
+    practice = new FakePracticeService();
   });
 
   it('renders one question after load', async () => {
@@ -290,6 +295,50 @@ describe('RoundPage', () => {
     fixture.componentInstance.toggle(0, 'B');
 
     expect(fixture.componentInstance.entries()[0].selected).toEqual(selectedBefore);
+  });
+
+  describe('practice recorder (P3)', () => {
+    const traitQuestion: RoundQuestion = {
+      id: 'qt',
+      prompt: 'PT',
+      options: ['A', 'B'],
+      correctAnswers: ['A'],
+      traitIds: ['kb1', 'sound-reasoning'],
+      explanation: 'ET',
+    };
+
+    async function checkTraitQuestion(questions: RoundQuestion[]) {
+      engine.selectRound = vi.fn().mockReturnValueOnce(questions).mockReturnValueOnce([]);
+      configure();
+      const fixture = TestBed.createComponent(RoundPage);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      fixture.componentInstance.toggle(0, 'A');
+      fixture.componentInstance.check();
+      return fixture;
+    }
+
+    it('records one attempt for the knowledge-base trait ids of the checked question', async () => {
+      await checkTraitQuestion([traitQuestion]);
+
+      expect(practice.attempts).toEqual([
+        { quizId: 'rt', input: { conceptIds: ['kb1'], count: 1 } },
+      ]);
+    });
+
+    it('never passes the sound-reasoning pseudo-trait to the recorder', async () => {
+      await checkTraitQuestion([traitQuestion]);
+
+      expect(practice.attempts[0].input.conceptIds).not.toContain('sound-reasoning');
+    });
+
+    it('records an attempt with no concept ids when no trait is a knowledge-base id', async () => {
+      await checkTraitQuestion([{ ...traitQuestion, traitIds: ['sound-reasoning'] }]);
+
+      expect(practice.attempts).toEqual([{ quizId: 'rt', input: { conceptIds: [], count: 1 } }]);
+    });
   });
 
   describe('option info icons', () => {

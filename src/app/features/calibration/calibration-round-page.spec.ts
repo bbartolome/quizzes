@@ -10,6 +10,10 @@ import { CALIBRATION_RNG } from './draw';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { QuizManifestEntry } from '../../core/models/quiz.models';
 import { MemoryStorage } from '../../../testing/memory-storage';
+import { FakePracticeService } from '../../../testing/fake-practice.service';
+import { PracticeService } from '../../core/services/practice.service';
+
+let practice: FakePracticeService;
 
 describe('CalibrationRoundPage (two-way)', () => {
   const QUIZ_ID = 'calibration';
@@ -58,6 +62,7 @@ describe('CalibrationRoundPage (two-way)', () => {
   let navigate: ReturnType<typeof vi.spyOn>;
 
   function configure(): void {
+    practice = new FakePracticeService();
     TestBed.configureTestingModule({
       imports: [CalibrationRoundPage],
       providers: [
@@ -69,6 +74,7 @@ describe('CalibrationRoundPage (two-way)', () => {
         { provide: QuizDataService, useValue: quizData },
         { provide: CalibrationBankService, useValue: bankService },
         { provide: CALIBRATION_RNG, useValue: () => 0.9 },
+        { provide: PracticeService, useValue: practice },
       ],
     });
     history = TestBed.inject(CalibrationHistoryService);
@@ -323,6 +329,39 @@ describe('CalibrationRoundPage (two-way)', () => {
       expect(record).toHaveBeenCalledTimes(1);
     });
 
+    it('records one practice attempt with the scored answer count and no concepts', async () => {
+      const fixture = await render();
+      await click(fixture, buttonByLabel(fixture, 'Alpha1 80%'));
+      await click(fixture, buttonByLabel(fixture, 'Beta2 90%'));
+      await click(fixture, buttonByLabel(fixture, 'Alpha3 100%'));
+
+      await click(fixture, buttonByText(fixture, /submit round/i));
+
+      expect(practice.attempts).toStrictEqual([{ quizId: QUIZ_ID, input: { count: 3 } }]);
+    });
+
+    it('a double submit records one practice attempt', async () => {
+      const fixture = await render();
+      await click(fixture, buttonByLabel(fixture, 'Alpha1 80%'));
+      await click(fixture, buttonByLabel(fixture, 'Beta2 90%'));
+      await click(fixture, buttonByLabel(fixture, 'Alpha3 100%'));
+
+      fixture.componentInstance.submit();
+      fixture.componentInstance.submit();
+
+      expect(practice.attempts).toHaveLength(1);
+    });
+
+    it('a per-tap save records no practice attempt', async () => {
+      const fixture = await render();
+
+      await click(fixture, buttonByLabel(fixture, 'Alpha1 80%'));
+      await click(fixture, buttonByLabel(fixture, 'Beta2 90%'));
+
+      expect(history.getPending(QUIZ_ID)!.picks['i2']).toEqual({ pick: 1, confidence: 90 });
+      expect(practice.attempts).toEqual([]);
+    });
+
     it('shows no correctness before submit', async () => {
       const fixture = await render();
       await click(fixture, buttonByLabel(fixture, 'Alpha1 80%'));
@@ -400,6 +439,7 @@ describe('CalibrationRoundPage (four-way)', () => {
   let navigate: ReturnType<typeof vi.spyOn>;
 
   function configure(): void {
+    practice = new FakePracticeService();
     TestBed.configureTestingModule({
       imports: [CalibrationRoundPage],
       providers: [
@@ -411,6 +451,7 @@ describe('CalibrationRoundPage (four-way)', () => {
         { provide: QuizDataService, useValue: quizData },
         { provide: CalibrationBankService, useValue: bankService },
         { provide: CALIBRATION_RNG, useValue: () => 0.9 },
+        { provide: PracticeService, useValue: practice },
       ],
     });
     history = TestBed.inject(CalibrationHistoryService);
@@ -564,5 +605,30 @@ describe('CalibrationRoundPage (four-way)', () => {
     expect(history.lastRound(QUIZ_ID)!.answers.length).toBe(3);
     expect(history.getPending(QUIZ_ID)).toBeNull();
     expect(navigate).toHaveBeenCalledWith(['/calibration', QUIZ_ID, 'results']);
+  });
+
+  it('records one practice attempt with the scored answer count and no concepts', async () => {
+    const fixture = await render();
+    await tap(fixture, 'Alpha1');
+    await tap(fixture, '100%');
+    await tap(fixture, 'Neither');
+    await tap(fixture, '25%');
+    await tap(fixture, 'Both');
+    await tap(fixture, '0%');
+
+    submitButton(fixture).click();
+    await settle(fixture);
+
+    expect(practice.attempts).toStrictEqual([{ quizId: QUIZ_ID, input: { count: 3 } }]);
+  });
+
+  it('a per-tap save records no practice attempt', async () => {
+    const fixture = await render();
+
+    await tap(fixture, 'Alpha1');
+    await tap(fixture, '100%');
+
+    expect(history.getPending(QUIZ_ID)!.picks['f1'].confidence).toBe(100);
+    expect(practice.attempts).toEqual([]);
   });
 });

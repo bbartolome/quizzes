@@ -5,6 +5,8 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angular/router';
 import { FlashCardRoundPage } from './flash-card-round-page';
 import { StatsService } from '../../core/services/stats.service';
+import { PracticeService } from '../../core/services/practice.service';
+import { FakePracticeService } from '../../../testing/fake-practice.service';
 import { Concept, KnowledgeBase, QuizManifest } from '../../core/models/quiz.models';
 
 const manifest: QuizManifest = {
@@ -48,12 +50,14 @@ const F1 = concept('f1', 'fallacy');
 const kb: KnowledgeBase = { concepts: [B1, F1, B2], pairs: [] };
 
 function setup(routeId: string, conceptType: Concept['type'], knowledgeBase: KnowledgeBase = kb) {
+  const practice = new FakePracticeService();
   TestBed.configureTestingModule({
     imports: [FlashCardRoundPage],
     providers: [
       provideRouter([]),
       provideHttpClient(),
       provideHttpClientTesting(),
+      { provide: PracticeService, useValue: practice },
       {
         provide: ActivatedRoute,
         useValue: {
@@ -74,7 +78,7 @@ function setup(routeId: string, conceptType: Concept['type'], knowledgeBase: Kno
   http.expectOne('data/quizzes.json').flush(manifest);
   http.expectOne('data/concepts/knowledge-base.json').flush(knowledgeBase);
   fixture.detectChanges();
-  return { component: fixture.componentInstance, fixture, migrateVersion, getStats };
+  return { component: fixture.componentInstance, fixture, migrateVersion, getStats, practice };
 }
 
 describe('FlashCardRoundPage', () => {
@@ -367,6 +371,41 @@ describe('FlashCardRoundPage', () => {
       const [, result] = recordResult.mock.calls[0];
       expect(result.correct).toBe(true);
       expect(result.selected).toEqual([first.target.id]);
+    });
+
+    it('each checked card records one practice attempt for its target concept', () => {
+      const { component, practice } = setup('biases', 'bias', fourConcepts);
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, false));
+      component.checkAnswer();
+
+      expect(practice.attempts).toEqual([
+        { quizId: 'biases', input: { conceptIds: [first.target.id], count: 1 } },
+      ]);
+    });
+
+    it('a correct pick also records one practice attempt for the target concept', () => {
+      const { component, practice } = setup('biases', 'bias', fourConcepts);
+      const first = component.cards()[0];
+
+      component.selectOption(indexOf(first, true));
+      component.checkAnswer();
+
+      expect(practice.attempts).toEqual([
+        { quizId: 'biases', input: { conceptIds: [first.target.id], count: 1 } },
+      ]);
+    });
+
+    it('two checked cards record two practice attempts', () => {
+      const { component, practice } = setup('biases', 'bias', fourConcepts);
+
+      component.selectOption(indexOf(component.cards()[0], true));
+      component.checkAnswer();
+      component.selectOption(indexOf(component.cards()[1], true));
+      component.checkAnswer();
+
+      expect(practice.attempts).toHaveLength(2);
     });
 
     it('two checked cards produce exactly two calls', () => {
