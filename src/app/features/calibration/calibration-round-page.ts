@@ -16,6 +16,7 @@ import {
   twoWayScreenSelection,
 } from './round-sides';
 import { CALIBRATION_RNG } from './draw';
+import { eyebrowLabel } from './calibration-format';
 import { BipolarScale } from './bipolar-scale';
 import { BankUnavailable } from './bank-unavailable';
 import { FourWayControl } from './four-way-control';
@@ -46,6 +47,7 @@ export class CalibrationRoundPage {
   readonly entry = computed(() => this.ctx()?.entry ?? null);
   readonly bank = computed(() => this.ctx()?.bank ?? null);
   readonly isFourWay = computed(() => this.ctx()?.format === 'four-way');
+  protected eyebrowFor = eyebrowLabel;
   readonly answeredFlags = computed(() =>
     (this.pending()?.items ?? []).map((_, i) => this.isAnswered(i)),
   );
