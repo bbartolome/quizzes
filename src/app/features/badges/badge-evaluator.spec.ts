@@ -108,6 +108,15 @@ describe('BadgeEvaluator', () => {
     expect(result).toEqual({ earned: ['knows-what-it-knows'], newlyEarned: [] });
   });
 
+  it('loads the manifest and knowledge base once across two evaluations', () => {
+    const evaluator = setup();
+    evaluator.evaluate().subscribe();
+    evaluator.evaluate().subscribe();
+
+    expect(quizData.loadManifest).toHaveBeenCalledTimes(1);
+    expect(quizData.loadKnowledgeBase).toHaveBeenCalledTimes(1);
+  });
+
   it('records nothing and keeps the stored badges when the manifest cannot load', () => {
     practice.seed({
       badges: { 'names-the-trap': { earnedAt: '2026-10-01T00:00:00.000Z', evidence: 'old' } },
