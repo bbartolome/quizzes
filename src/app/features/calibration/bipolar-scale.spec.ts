@@ -44,6 +44,28 @@ describe('BipolarScale', () => {
     expect(buttons().map((b) => b.getAttribute('aria-label'))).toEqual(expectedLabels);
   });
 
+  it('shows each stop as a percentage', () => {
+    expect(buttons().map((b) => b.textContent?.trim())).toEqual([
+      '100%',
+      '90%',
+      '80%',
+      '70%',
+      '60%',
+      '50%',
+      '60%',
+      '70%',
+      '80%',
+      '90%',
+      '100%',
+    ]);
+  });
+
+  it('labels the centre Guess and the two ends Certain', () => {
+    const text = fixture.nativeElement.textContent as string;
+    expect(text).toContain('Guess');
+    expect(text.match(/Certain/g)?.length).toBe(2);
+  });
+
   it('shows both option names as end labels', () => {
     const text = fixture.nativeElement.textContent as string;
     expect(text).toContain('Rome');
