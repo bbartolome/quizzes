@@ -39,6 +39,12 @@ describe('FourWayControl', () => {
     TestBed.configureTestingModule({ imports: [FourWayControl] });
   });
 
+  it('shows a visible Confidence label once a choice is made', () => {
+    setup();
+    click('Platypus');
+    expect((fixture.nativeElement.textContent as string)).toContain('Confidence');
+  });
+
   it('marks the picked choice with the shared selected look', () => {
     setup({ choice: 'a' });
     expect(byText('Platypus')?.className).toContain('bg-accent-subtle');

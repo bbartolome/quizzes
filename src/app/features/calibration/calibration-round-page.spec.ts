@@ -184,6 +184,13 @@ describe('CalibrationRoundPage (two-way)', () => {
       history.savePending(QUIZ_ID, seededPending());
     });
 
+    it('shows a plain explainer of the confidence scale under the prompt', async () => {
+      const fixture = await render();
+      const text = root(fixture).textContent ?? '';
+      expect(text).toContain('How sure are you? 100 means certain, 50 means a coin flip.');
+      expect(text).not.toContain('two-way');
+    });
+
     it('shows one prompt at a time and one progress dot per item', async () => {
       const fixture = await render();
       const text = root(fixture).textContent ?? '';
