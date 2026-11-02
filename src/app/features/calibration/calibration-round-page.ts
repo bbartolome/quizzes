@@ -70,6 +70,7 @@ export class CalibrationRoundPage {
             c.bank,
             this.history.getHistory(c.quizId).log,
             this.rng,
+            c.entry.roundSize,
           );
           if (fresh) {
             this.history.savePending(c.quizId, pending);

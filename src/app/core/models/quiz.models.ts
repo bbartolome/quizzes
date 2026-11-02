@@ -10,6 +10,8 @@ export interface QuizManifestEntry {
   order: number;
   kind: 'traps' | 'calibration' | 'biases' | 'fallacies';
   format?: CalibrationFormat;
+  /** Calibration entries only: items per round (default 20). */
+  roundSize?: number;
 }
 
 export interface QuizManifest {

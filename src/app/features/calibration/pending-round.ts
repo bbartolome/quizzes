@@ -4,7 +4,7 @@ import type {
   PendingPick,
   PendingRound,
 } from './calibration.models';
-import { drawRound, type Rng } from './draw';
+import { ROUND_SIZE, drawRound, type Rng } from './draw';
 
 export function setPick(pending: PendingRound, itemId: string, pick: PendingPick): PendingRound {
   return {
@@ -29,6 +29,7 @@ export function resumeOrDraw(
   bank: CalibrationBank,
   log: CalibrationRound[],
   rng: Rng,
+  roundSize: number = ROUND_SIZE,
 ): { pending: PendingRound; fresh: boolean } {
   if (existing && existing.bankVersion === bank.version) {
     return { pending: existing, fresh: false };
@@ -36,7 +37,7 @@ export function resumeOrDraw(
   return {
     pending: {
       bankVersion: bank.version,
-      items: drawRound(bank, log, rng),
+      items: drawRound(bank, log, rng, roundSize),
       picks: {},
     },
     fresh: true,
