@@ -114,3 +114,13 @@ describe('homeStats', () => {
     expect(homeStats(historyWith(ids), bankOf(30), 'two-way').showRepeats).toBe(true);
   });
 });
+
+describe('homeStats with a round size', () => {
+  it('compares unseen items against the given round size', () => {
+    const bank = bankOf(30);
+    const history = historyWith(Array.from({ length: 25 }, (_, i) => `i${i}`));
+    // 5 unseen: below the default 20 (so repeats show), not below a size-4 round.
+    expect(homeStats(history, bank, 'two-way').showRepeats).toBe(true);
+    expect(homeStats(history, bank, 'two-way', 4).showRepeats).toBe(false);
+  });
+});
