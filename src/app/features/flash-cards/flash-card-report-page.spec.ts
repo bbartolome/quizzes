@@ -6,6 +6,10 @@ import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angul
 import { FlashCardReportPage } from './flash-card-report-page';
 import { ReportResult } from './report-summary';
 import { Concept, KnowledgeBase, QuizManifest } from '../../core/models/quiz.models';
+import { BadgeEvaluation, BadgeEvaluator } from '../badges/badge-evaluator';
+import { of } from 'rxjs';
+
+let badgeResult: BadgeEvaluation = { earned: [], newlyEarned: [] };
 
 function concept(id: string, name: string, type: Concept['type']): Concept {
   return {
@@ -75,6 +79,7 @@ function setup(
       provideRouter([]),
       provideHttpClient(),
       provideHttpClientTesting(),
+      { provide: BadgeEvaluator, useValue: { evaluate: () => of(badgeResult) } },
       {
         provide: ActivatedRoute,
         useValue: {
@@ -241,6 +246,22 @@ describe('FlashCardReportPage', () => {
       const { fixture } = setup('fallacy', mixed);
 
       expect(button(fixture, 'back').textContent?.trim()).toBe('Back to Fallacies');
+    });
+  });
+
+  describe('badge line (P7b)', () => {
+    it('shows the practice insight for a badge newly earned on this report', () => {
+      badgeResult = { earned: ['names-the-trap'], newlyEarned: ['names-the-trap'] };
+      const { fixture } = setup('bias', mixed);
+
+      expect(text(fixture, 'badge-line')).toBe('You can name what you spot.');
+    });
+
+    it('does not repeat a badge that was earned on an earlier report', () => {
+      badgeResult = { earned: ['names-the-trap'], newlyEarned: [] };
+      const { fixture } = setup('bias', mixed);
+
+      expect(text(fixture, 'badge-line')).toBeNull();
     });
   });
 });

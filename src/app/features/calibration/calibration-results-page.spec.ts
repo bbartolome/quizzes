@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { BadgeEvaluation, BadgeEvaluator } from '../badges/badge-evaluator';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -9,6 +10,8 @@ import { CalibrationHistoryService } from './calibration-history.service';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { QuizManifestEntry } from '../../core/models/quiz.models';
 import { MemoryStorage } from '../../../testing/memory-storage';
+
+let badgeResult: BadgeEvaluation = { earned: [], newlyEarned: [] };
 
 describe('CalibrationResultsPage', () => {
   const QUIZ_ID = 'calibration';
@@ -81,6 +84,7 @@ describe('CalibrationResultsPage', () => {
         },
         { provide: QuizDataService, useValue: quizData },
         { provide: CalibrationBankService, useValue: bankService },
+        { provide: BadgeEvaluator, useValue: { evaluate: () => of(badgeResult) } },
       ],
     });
     history = TestBed.inject(CalibrationHistoryService);
@@ -173,6 +177,18 @@ describe('CalibrationResultsPage', () => {
       expect(has(fixture, 'app-skill-score-card')).toBe(true);
       expect(has(fixture, 'app-confidence-card')).toBe(true);
       expect(has(fixture, 'app-review-list')).toBe(true);
+    });
+
+    it('shows the knows-what-it-knows line once that badge is earned (P7b)', async () => {
+      badgeResult = { earned: ['knows-what-it-knows'], newlyEarned: ['knows-what-it-knows'] };
+      configure();
+      submitRound(twoWayPick);
+
+      const fixture = await render();
+
+      expect(fixture.nativeElement.querySelector('[data-testid="badge-line"]')?.textContent?.trim()).toBe(
+        'You showed that your confident answers are right more often than your guesses',
+      );
     });
 
     it('does not show the previous Skill score comparison', async () => {

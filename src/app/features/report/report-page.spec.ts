@@ -4,6 +4,7 @@ import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/route
 import { of } from 'rxjs';
 import { ReportPage } from './report-page';
 import { QuizDataService } from '../../core/services/quiz-data.service';
+import { BadgeEvaluation, BadgeEvaluator } from '../badges/badge-evaluator';
 import {
   ConfusedPair,
   Concept,
@@ -93,9 +94,12 @@ describe('ReportPage', () => {
           },
         },
         { provide: QuizDataService, useValue: quizData },
+        { provide: BadgeEvaluator, useValue: { evaluate: () => of(badgeResult) } },
       ],
     });
   }
+
+  let badgeResult: BadgeEvaluation = { earned: [], newlyEarned: [] };
 
   beforeEach(() => {
     vi.spyOn(Math, 'random').mockReturnValue(0);
@@ -318,6 +322,33 @@ describe('ReportPage', () => {
       const nextRound = fixture.nativeElement.querySelector('[data-testid="next-round"]');
       expect(backHome.classList).toContain('border-strong');
       expect(nextRound.classList).toContain('bg-accent');
+    });
+  });
+
+  describe('badge line (P7b)', () => {
+    it('shows the practice insight for a badge newly earned on this report', async () => {
+      badgeResult = { earned: ['names-the-trap'], newlyEarned: ['names-the-trap'] };
+      setHistoryState({ results: [makeResult({ correct: true })], quizTitle: 'Logic Quiz' });
+      configure();
+      const fixture = TestBed.createComponent(ReportPage);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const line = fixture.nativeElement.querySelector('[data-testid="badge-line"]');
+      expect(line?.textContent?.trim()).toBe('You can name what you spot.');
+    });
+
+    it('does not repeat a badge that was earned on an earlier report', async () => {
+      badgeResult = { earned: ['names-the-trap'], newlyEarned: [] };
+      setHistoryState({ results: [makeResult({ correct: true })], quizTitle: 'Logic Quiz' });
+      configure();
+      const fixture = TestBed.createComponent(ReportPage);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('[data-testid="badge-line"]')).toBeNull();
     });
   });
 });
