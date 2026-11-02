@@ -5,6 +5,7 @@ import { QuizDataService } from '../../core/services/quiz-data.service';
 import { CalibrationItem, DrawnItem, PendingRound, type FourWayChoice } from './calibration.models';
 import { CalibrationBankService } from './calibration-bank.service';
 import { CalibrationHistoryService } from './calibration-history.service';
+import { PracticeService } from '../../core/services/practice.service';
 import { CalibrationContext, loadCalibrationContext } from './calibration-context';
 import { allItemsAnswered, isItemAnswered, resumeOrDraw, setPick } from './pending-round';
 import {
@@ -33,6 +34,7 @@ export class CalibrationRoundPage {
   private readonly quizData = inject(QuizDataService);
   private readonly bankService = inject(CalibrationBankService);
   private readonly history = inject(CalibrationHistoryService);
+  private readonly practice = inject(PracticeService);
   private readonly rng = inject(CALIBRATION_RNG);
 
   readonly ctx = signal<CalibrationContext | null>(null);
@@ -172,7 +174,8 @@ export class CalibrationRoundPage {
     const p = this.pending();
     if (!ctx || !p) return;
     this.submitted = true;
-    this.history.submit(ctx.quizId, ctx.bank, p);
+    const round = this.history.submit(ctx.quizId, ctx.bank, p);
+    this.practice.recordAttempt(ctx.quizId, { count: round.answers.length });
     this.router.navigate(['/calibration', ctx.quizId, 'results']);
   }
 }

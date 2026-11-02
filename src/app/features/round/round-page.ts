@@ -9,6 +9,7 @@ import {
 } from '../../core/models/quiz.models';
 import { QuizBundle, QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
+import { PracticeService } from '../../core/services/practice.service';
 import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { TemplateGeneratorService } from '../../core/services/template-generator.service';
 import {
@@ -45,6 +46,7 @@ export class RoundPage implements OnInit {
   private readonly router: Router = inject(Router);
   private readonly quizData: QuizDataService = inject(QuizDataService);
   private readonly stats: StatsService = inject(StatsService);
+  private readonly practice: PracticeService = inject(PracticeService);
   private readonly engine: QuizEngineService = inject(QuizEngineService);
   private readonly templateGenerator: TemplateGeneratorService = inject(TemplateGeneratorService);
 
@@ -177,6 +179,10 @@ export class RoundPage implements OnInit {
     const last = entries[lastIndex];
     const result = this.engine.score(last.question, last.selected);
     this.stats.recordResult(this.quizId, result);
+    this.practice.recordAttempt(this.quizId, {
+      conceptIds: last.question.traitIds.filter((id) => this.knowledgeBaseIds().has(id)),
+      count: 1,
+    });
     this.entries.update((current) =>
       current.map((e, i) => (i === lastIndex ? { ...e, result } : e)),
     );

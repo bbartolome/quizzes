@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Concept, KnowledgeBase, ScoredQuestionResult } from '../../core/models/quiz.models';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
+import { PracticeService } from '../../core/services/practice.service';
 import { FlashCard, buildCard } from './card-builder';
 import { applyBump, baseWeights, drawTarget } from './draw-weights';
 import { Feedback, buildFeedback } from './feedback';
@@ -54,6 +55,7 @@ export class FlashCardRoundPage implements OnInit {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly quizData: QuizDataService = inject(QuizDataService);
   private readonly stats: StatsService = inject(StatsService);
+  private readonly practice: PracticeService = inject(PracticeService);
   private readonly router: Router = inject(Router);
   private readonly injector: Injector = inject(Injector);
 
@@ -192,6 +194,7 @@ export class FlashCardRoundPage implements OnInit {
       extra: correct ? [] : [pickedConcept.id],
     };
     this.stats.recordResult(this.kindId, result);
+    this.practice.recordAttempt(this.kindId, { conceptIds: [last.target.id], count: 1 });
     if (pickedConcept.id !== last.target.id) {
       this.bumpedIds.update((ids) => applyBump(ids, last.target, pickedConcept, this.kb));
     }
