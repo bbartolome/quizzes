@@ -6,7 +6,11 @@ export interface CollectionSummary {
   recentlyPlayed: QuizCard | null;
 }
 
-export function summarize(cards: readonly QuizCard[]): CollectionSummary {
+// Red stub: lastPlayedAt is accepted but not yet used by the body.
+export function summarize(
+  cards: readonly QuizCard[],
+  lastPlayedAt: Readonly<Record<string, string>>,
+): CollectionSummary {
   let totalRounds = 0;
   let correct = 0;
   let attempted = 0;

@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Observable, catchError, forkJoin, map, of, shareReplay, switchMap } from 'rxjs';
 import { QuizManifestEntry } from '../../core/models/quiz.models';
+import { PracticeService } from '../../core/services/practice.service';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { CalibrationBankService } from '../calibration/calibration-bank.service';
@@ -26,6 +27,7 @@ export class LibraryPage {
   private readonly stats: StatsService = inject(StatsService);
   private readonly calibration: CalibrationHistoryService = inject(CalibrationHistoryService);
   private readonly bankService: CalibrationBankService = inject(CalibrationBankService);
+  private readonly practice: PracticeService = inject(PracticeService);
 
   protected readonly cards$: Observable<QuizCard[]> = this.quizData.loadManifest().pipe(
     switchMap((manifest) => {
@@ -50,7 +52,9 @@ export class LibraryPage {
     shareReplay(1),
   );
 
-  protected readonly summary$: Observable<CollectionSummary> = this.cards$.pipe(map(summarize));
+  protected readonly summary$: Observable<CollectionSummary> = this.cards$.pipe(
+    map((cards) => summarize(cards, this.practice.lastPlayed())),
+  );
 
   protected readonly routeFor = routeFor;
   protected readonly formatPercent = formatPercent;

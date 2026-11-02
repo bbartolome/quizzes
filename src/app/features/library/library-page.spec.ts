@@ -367,3 +367,51 @@ describe('LibraryPage flash card collections', () => {
     expect(titles).toEqual(['Biases', 'Fallacies', 'Reasoning Traps']);
   });
 });
+
+describe('LibraryPage today panel and reset copy', () => {
+  beforeEach(() => {
+    vi.stubGlobal('localStorage', new MemoryStorage());
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([]),
+        {
+          provide: QuizDataService,
+          useValue: { loadManifest: vi.fn(() => of({ quizzes: [trapsEntry, calibrationEntry] })) },
+        },
+      ],
+    });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  async function render(): Promise<HTMLElement> {
+    const fixture = TestBed.createComponent(LibraryPage);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    return fixture.nativeElement as HTMLElement;
+  }
+
+  it('renders the today panel outside the collections section', async () => {
+    const root = await render();
+    const panel = root.querySelector<HTMLElement>('[data-testid="today-panel"]');
+
+    expect(panel).not.toBeNull();
+    expect(panel!.closest('section')).toBeNull();
+  });
+
+  it('mentions the practice streak in the Reset all progress confirmation', async () => {
+    const ask = vi.fn(() => false);
+    vi.stubGlobal('confirm', ask);
+    const root = await render();
+    const reset = [...root.querySelectorAll('button')].find((b) =>
+      b.textContent!.includes('Reset all progress'),
+    )!;
+
+    reset.click();
+
+    expect(ask).toHaveBeenCalledWith(expect.stringContaining('practice streak'));
+  });
+});
