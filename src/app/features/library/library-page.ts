@@ -13,6 +13,7 @@ import { Card } from '../../shared/ui/card.directive';
 import { PageShell } from '../../shared/ui/page-shell';
 import { LibraryCard } from './library-card';
 import { TodayPanel } from './today-panel';
+import { InsightsList } from './insights-list';
 import {
   QuizCard,
   calibrationCard,
@@ -27,7 +28,7 @@ const RESET_ALL_MESSAGE = 'Reset all quiz progress and practice streak? This can
 
 @Component({
   selector: 'app-library-page',
-  imports: [RouterLink, AsyncPipe, Button, Card, PageShell, LibraryCard, TodayPanel],
+  imports: [RouterLink, AsyncPipe, Button, Card, PageShell, LibraryCard, TodayPanel, InsightsList],
   templateUrl: './library-page.html',
 })
 export class LibraryPage {

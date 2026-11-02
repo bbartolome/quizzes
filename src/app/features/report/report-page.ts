@@ -10,6 +10,7 @@ import {
   summaryLine,
   type OptionStatus,
 } from './report-logic';
+import { BadgeLine } from '../badges/badge-line';
 import { Button } from '../../shared/ui/button.directive';
 import { Callout } from '../../shared/ui/callout';
 import { Card } from '../../shared/ui/card.directive';
@@ -36,7 +37,7 @@ interface ReportHistoryState {
  */
 @Component({
   selector: 'app-report-page',
-  imports: [RouterLink, Button, Callout, Card, EmptyState, PageShell, StatusBadge],
+  imports: [RouterLink, BadgeLine, Button, Callout, Card, EmptyState, PageShell, StatusBadge],
   templateUrl: './report-page.html',
 })
 export class ReportPage implements OnInit {

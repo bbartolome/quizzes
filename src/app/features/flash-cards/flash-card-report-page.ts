@@ -9,6 +9,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Concept } from '../../core/models/quiz.models';
 import { QuizDataService } from '../../core/services/quiz-data.service';
+import { BadgeLine } from '../badges/badge-line';
 import { BACK_LABELS, ReportResult, buildReportSummary, isReportEmpty } from './report-summary';
 import { Button } from '../../shared/ui/button.directive';
 import { Card } from '../../shared/ui/card.directive';
@@ -17,7 +18,7 @@ import { PageShell } from '../../shared/ui/page-shell';
 
 @Component({
   selector: 'app-flash-card-report-page',
-  imports: [Button, Card, EmptyState, PageShell],
+  imports: [BadgeLine, Button, Card, EmptyState, PageShell],
   templateUrl: './flash-card-report-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

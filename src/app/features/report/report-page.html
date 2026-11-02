@@ -5,6 +5,8 @@
         <p class="type-section">{{ summaryLine(results()) }}</p>
       </div>
 
+      <app-badge-line surface="practice" />
+
       <div class="space-y-6">
         @for (result of results(); track result.question.id) {
           <article data-testid="result" uiCard class="space-y-4">

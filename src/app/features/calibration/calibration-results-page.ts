@@ -11,6 +11,7 @@ import { SkillScoreCard } from './skill-score-card';
 import { ConfidenceCard } from './confidence-card';
 import { ReviewList } from './review-list';
 import { BankUnavailable } from './bank-unavailable';
+import { BadgeLine } from '../badges/badge-line';
 import { PageShell } from '../../shared/ui/page-shell';
 import { Button } from '../../shared/ui/button.directive';
 
@@ -19,6 +20,7 @@ import { Button } from '../../shared/ui/button.directive';
   standalone: true,
   templateUrl: './calibration-results-page.html',
   imports: [
+    BadgeLine,
     CalibrationChart,
     SkillScoreCard,
     ConfidenceCard,
