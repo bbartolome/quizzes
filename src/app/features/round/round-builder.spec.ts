@@ -9,8 +9,16 @@ import {
   nextQuestion,
   TEMPLATE_PROBABILITY,
   NextQuestionDeps,
+  trimOptions,
+  isEasyMode,
 } from './round-builder';
-import { Template, Concept, RoundQuestion, Question } from '../../core/models/quiz.models';
+import {
+  Template,
+  Concept,
+  ConfusedPair,
+  RoundQuestion,
+  Question,
+} from '../../core/models/quiz.models';
 import type { QuestionBank, SelectRoundOptions } from '../../core/services/quiz-engine.service';
 
 function makeTemplate(overrides: Partial<Template> & { id: string }): Template {
@@ -390,5 +398,133 @@ describe('kbByName', () => {
 
   it('returns an empty map for an empty kb', () => {
     expect(kbByName([]).size).toBe(0);
+  });
+});
+
+function makeRoundQuestion(overrides: Partial<RoundQuestion> & { id: string }): RoundQuestion {
+  return {
+    prompt: 'Prompt',
+    options: ['A', 'B'],
+    correctAnswers: ['A'],
+    traitIds: [],
+    explanation: 'Explanation',
+    ...overrides,
+  };
+}
+
+function easyDeps(overrides: Partial<NextQuestionDeps>): NextQuestionDeps {
+  return {
+    questions: [],
+    templates: [],
+    kb: [],
+    filters: { weakTraits: false },
+    usedIds: new Set<string>(),
+    selectRound: () => [],
+    renderTemplate: () => makeRoundQuestion({ id: 'rendered' }),
+    serial: 1,
+    rng: () => 0.9,
+    ...overrides,
+  };
+}
+
+describe('trimOptions', () => {
+  const NO_TRAP = 'No trap — sound reasoning';
+  const kb: Concept[] = [
+    makeKbEntry({ id: 'survivorship-bias', name: 'Survivorship bias' }),
+    makeKbEntry({ id: 'base-rate-neglect', name: 'Base-rate neglect' }),
+    makeKbEntry({ id: 'anchoring', name: 'Anchoring' }),
+    makeKbEntry({ id: 'straw-man', name: 'Straw man' }),
+    makeKbEntry({ id: 'ad-hominem', name: 'Ad hominem' }),
+    makeKbEntry({ id: 'hindsight-bias', name: 'Hindsight bias' }),
+    makeKbEntry({ id: 'overconfidence', name: 'Overconfidence' }),
+  ];
+  const pairs: ConfusedPair[] = [
+    { concepts: ['survivorship-bias', 'base-rate-neglect'] },
+    { concepts: ['straw-man', 'ad-hominem'] },
+  ];
+  const question = (correct: string[], options: string[]): RoundQuestion =>
+    makeRoundQuestion({ id: 'q', options, correctAnswers: correct });
+
+  it('keeps 5 options at most and always keeps the correct answers', () => {
+    const q = question(['Survivorship bias'], kb.map((c) => c.name));
+    const out = trimOptions(q, kb, pairs, () => 0.3);
+    expect(out).toHaveLength(5);
+    expect(out).toContain('Survivorship bias');
+  });
+
+  it('puts confused-pair partners in before random concepts', () => {
+    const q = question(['Survivorship bias'], kb.map((c) => c.name));
+    const out = trimOptions(q, kb, pairs, () => 0.99);
+    expect(out).toContain('Base-rate neglect');
+  });
+
+  it('keeps every correct answer even when there are more than 5', () => {
+    const correct = kb.slice(0, 6).map((c) => c.name);
+    const out = trimOptions(question(correct, correct), kb, pairs, () => 0.5);
+    expect(out.sort()).toEqual([...correct].sort());
+  });
+
+  it('always includes "No trap" when it is the correct answer', () => {
+    const q = question([NO_TRAP], [NO_TRAP, 'Anchoring', 'Straw man']);
+    expect(trimOptions(q, kb, pairs, () => 0.2)).toContain(NO_TRAP);
+  });
+
+  it('does not mutate the question', () => {
+    const q = question(['Anchoring'], kb.map((c) => c.name));
+    const before = [...q.options];
+    trimOptions(q, kb, pairs, () => 0.5);
+    expect(q.options).toEqual(before);
+  });
+});
+
+describe('isEasyMode', () => {
+  it('is on for a first round with fewer than 8 answers and no early exit', () => {
+    expect(isEasyMode({ roundsPlayed: 0, answered: 0, correct: 0 })).toBe(true);
+    expect(isEasyMode({ roundsPlayed: 0, answered: 3, correct: 0 })).toBe(true);
+  });
+
+  it('ends after at least 4 answers at 70% or better', () => {
+    expect(isEasyMode({ roundsPlayed: 0, answered: 4, correct: 3 })).toBe(false);
+    expect(isEasyMode({ roundsPlayed: 0, answered: 4, correct: 2 })).toBe(true);
+  });
+
+  it('is off after 8 answers or once a round has been played', () => {
+    expect(isEasyMode({ roundsPlayed: 0, answered: 8, correct: 2 })).toBe(false);
+    expect(isEasyMode({ roundsPlayed: 1, answered: 0, correct: 0 })).toBe(false);
+  });
+});
+
+describe('nextQuestion easy mode', () => {
+  it('draws the fixed question from difficulty 1 and trims its options', () => {
+    const selectRound = vi.fn(
+      (_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => [
+        makeRoundQuestion({
+          id: 'fixed-1',
+          options: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+          correctAnswers: ['A'],
+        }),
+      ],
+    );
+    const questions = [
+      { id: 'easy', difficulty: 1 },
+      { id: 'hard', difficulty: 2 },
+    ] as Question[];
+    const deps = easyDeps({ questions, selectRound, easy: true, pairs: [] });
+    const result = nextQuestion(deps);
+    expect(selectRound.mock.calls[0][0].questions.map((q) => q.id)).toEqual(['easy']);
+    expect(result!.options.length).toBeLessThanOrEqual(5);
+    expect(result!.options).toContain('A');
+  });
+
+  it('leaves options and the question bank alone when easy mode is off', () => {
+    const questions = [{ id: 'hard', difficulty: 2 }] as Question[];
+    const selectRound = vi.fn(
+      (_bank: QuestionBank, _options: SelectRoundOptions): RoundQuestion[] => [
+        makeRoundQuestion({ id: 'fixed-1', options: ['A', 'B', 'C', 'D', 'E', 'F'] }),
+      ],
+    );
+    const result = nextQuestion(easyDeps({ questions, selectRound }));
+    expect(selectRound.mock.calls[0][0].questions).toHaveLength(1);
+    expect(result!.options).toHaveLength(6);
   });
 });
