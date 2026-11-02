@@ -66,6 +66,7 @@ describe('RoundPage', () => {
   let stats: {
     migrateVersion: ReturnType<typeof vi.fn>;
     getWeakTraits: ReturnType<typeof vi.fn>;
+    getStats: ReturnType<typeof vi.fn>;
     recordResult: ReturnType<typeof vi.fn>;
     recordSessionEnd: ReturnType<typeof vi.fn>;
   };
@@ -120,6 +121,7 @@ describe('RoundPage', () => {
     stats = {
       migrateVersion: vi.fn(),
       getWeakTraits: vi.fn(() => []),
+      getStats: vi.fn(() => ({ roundsPlayed: 1 })),
       recordResult: vi.fn(),
       recordSessionEnd: vi.fn(),
     };

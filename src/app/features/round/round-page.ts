@@ -14,6 +14,7 @@ import { QuizEngineService } from '../../core/services/quiz-engine.service';
 import { TemplateGeneratorService } from '../../core/services/template-generator.service';
 import {
   kbByName,
+  isEasyMode,
   nextQuestion,
   parseRoundFilters,
   weakTraitWeights,
@@ -117,6 +118,12 @@ export class RoundPage implements OnInit {
       questions: this.bundle.questions,
       templates: this.bundle.templates,
       kb: this.kb().concepts,
+      pairs: this.kb().pairs,
+      easy: isEasyMode({
+        roundsPlayed: this.stats.getStats(this.quizId).roundsPlayed,
+        answered: this.score().answered,
+        correct: this.score().correct,
+      }),
       filters: this.filters,
       usedIds: this.usedIds,
       weights: this.weights,

@@ -446,14 +446,20 @@ describe('trimOptions', () => {
     makeRoundQuestion({ id: 'q', options, correctAnswers: correct });
 
   it('keeps 5 options at most and always keeps the correct answers', () => {
-    const q = question(['Survivorship bias'], kb.map((c) => c.name));
+    const q = question(
+      ['Survivorship bias'],
+      kb.map((c) => c.name),
+    );
     const out = trimOptions(q, kb, pairs, () => 0.3);
     expect(out).toHaveLength(5);
     expect(out).toContain('Survivorship bias');
   });
 
   it('puts confused-pair partners in before random concepts', () => {
-    const q = question(['Survivorship bias'], kb.map((c) => c.name));
+    const q = question(
+      ['Survivorship bias'],
+      kb.map((c) => c.name),
+    );
     const out = trimOptions(q, kb, pairs, () => 0.99);
     expect(out).toContain('Base-rate neglect');
   });
@@ -470,7 +476,10 @@ describe('trimOptions', () => {
   });
 
   it('does not mutate the question', () => {
-    const q = question(['Anchoring'], kb.map((c) => c.name));
+    const q = question(
+      ['Anchoring'],
+      kb.map((c) => c.name),
+    );
     const before = [...q.options];
     trimOptions(q, kb, pairs, () => 0.5);
     expect(q.options).toEqual(before);
