@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, map, of, switchMap } from 'rxjs';
+import { Observable, catchError, map, of, shareReplay, switchMap } from 'rxjs';
 import { PracticeService } from '../../core/services/practice.service';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
@@ -27,13 +27,27 @@ export class BadgeEvaluator {
   private readonly calibration = inject(CalibrationHistoryService);
   private readonly practice = inject(PracticeService);
 
+  /**
+   * The manifest and knowledge base are static for the session, so they are loaded once and
+   * shared. shareReplay resets on error, so a failed load is retried on the next evaluation.
+   */
+  private loaded?: Observable<{ manifest: QuizManifest; kb: KnowledgeBase }>;
+
   evaluate(): Observable<BadgeEvaluation> {
-    return this.quizData.loadManifest().pipe(
-      switchMap((manifest) =>
-        this.quizData.loadKnowledgeBase().pipe(map((kb) => this.run(manifest, kb))),
-      ),
+    return this.load().pipe(
+      map(({ manifest, kb }) => this.run(manifest, kb)),
       catchError(() => of(this.stored([]))),
     );
+  }
+
+  private load(): Observable<{ manifest: QuizManifest; kb: KnowledgeBase }> {
+    this.loaded ??= this.quizData.loadManifest().pipe(
+      switchMap((manifest) =>
+        this.quizData.loadKnowledgeBase().pipe(map((kb) => ({ manifest, kb }))),
+      ),
+      shareReplay({ bufferSize: 1, refCount: false }),
+    );
+    return this.loaded;
   }
 
   private run(manifest: QuizManifest, kb: KnowledgeBase): BadgeEvaluation {
