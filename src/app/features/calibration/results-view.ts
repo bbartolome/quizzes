@@ -1,6 +1,7 @@
 import { scoreSide, type ScoreSide } from './score-side';
 import { reviewSections, type ReviewSection } from './review-sections';
 import { bucketStats } from './scoring';
+import { frequencyLines, type FrequencyLine } from './frequency-lines';
 import type {
   BucketStat,
   CalibrationAnswer,
@@ -18,6 +19,7 @@ export interface ResultsView {
   roundBuckets: BucketStat[];
   beforeBuckets: BucketStat[];
   sections: ReviewSection[];
+  frequencies: FrequencyLine[];
 }
 
 export function buildResultsView(
@@ -38,5 +40,10 @@ export function buildResultsView(
     roundBuckets: bucketStats(round.answers, format),
     beforeBuckets: bucketStats(before, format),
     sections: reviewSections(bank, round.answers, format),
+    frequencies: frequencyLines(
+      format,
+      bucketStats(round.answers, format),
+      bucketStats([...before, ...round.answers], format),
+    ),
   };
 }
