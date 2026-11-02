@@ -19,6 +19,7 @@ export function homeStats(
   history: CalibrationHistory,
   bank: CalibrationBank,
   format: CalibrationFormat,
+  roundSize: number = ROUND_SIZE,
 ): HomeStats {
   const log = history.log;
   const { brierSum, answerCount, roundsPlayed } = history.summary;
@@ -31,6 +32,6 @@ export function homeStats(
       log.flatMap((r) => r.answers),
       format,
     ),
-    showRepeats: log.length > 0 && unseenCount(bank, log) < Math.min(ROUND_SIZE, bank.items.length),
+    showRepeats: log.length > 0 && unseenCount(bank, log) < Math.min(roundSize, bank.items.length),
   };
 }

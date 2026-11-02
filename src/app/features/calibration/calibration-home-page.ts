@@ -46,7 +46,9 @@ export class CalibrationHomePage {
       .subscribe({
         next: (c) => {
           this.ctx.set(c);
-          this.stats.set(homeStats(this.history.getHistory(c.quizId), c.bank, c.format));
+          this.stats.set(
+            homeStats(this.history.getHistory(c.quizId), c.bank, c.format, c.entry.roundSize),
+          );
         },
         error: () => this.loadError.set(true),
       });

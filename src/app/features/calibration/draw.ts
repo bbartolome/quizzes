@@ -15,6 +15,7 @@ export const CALIBRATION_RNG = new InjectionToken<Rng>('CALIBRATION_RNG', {
   factory: () => Math.random,
 });
 
+/** Default items per round; a manifest entry may set its own `roundSize`. */
 export const ROUND_SIZE = 20;
 
 export function shuffle<T>(items: readonly T[], rng: Rng): T[] {
@@ -49,23 +50,34 @@ export function unseenCount(bank: CalibrationBank, log: CalibrationRound[]): num
   return count;
 }
 
-export function drawRound(bank: CalibrationBank, log: CalibrationRound[], rng: Rng): DrawnItem[] {
-  const size = Math.min(ROUND_SIZE, bank.items.length);
+export function drawRound(
+  bank: CalibrationBank,
+  log: CalibrationRound[],
+  rng: Rng,
+  roundSize: number = ROUND_SIZE,
+): DrawnItem[] {
+  const size = Math.min(roundSize, bank.items.length);
   const seen = seenItemIds(log);
   const itemIds =
-    bank.items.length < ROUND_SIZE
+    bank.items.length < roundSize
       ? bank.items.map((item) => item.id)
       : pickIds(bank, log, seen, size, rng);
   const drawn = itemIds.map((itemId) => ({ itemId, swapped: rng() < 0.5 }));
   return shuffle(drawn, rng);
 }
 
-function quotasFor(rng: Rng): Map<Topic, number> {
-  const extraTopics = shuffle([...TOPICS], rng).slice(0, 2);
-  const extras = new Set(extraTopics);
+/**
+ * Per-topic quotas for a round of `size` items: `floor(size / 6)` per topic,
+ * plus one extra for `size mod 6` topics chosen at random (rng draws: one shuffle).
+ * At size 20 this is 3 per topic and 2 extras, as before.
+ */
+function quotasFor(rng: Rng, size: number): Map<Topic, number> {
+  const base = Math.floor(size / TOPICS.length);
+  const extraCount = size % TOPICS.length;
+  const extras = new Set(shuffle([...TOPICS], rng).slice(0, extraCount));
   const quotas = new Map<Topic, number>();
   for (const topic of TOPICS) {
-    quotas.set(topic, 3 + (extras.has(topic) ? 1 : 0));
+    quotas.set(topic, base + (extras.has(topic) ? 1 : 0));
   }
   return quotas;
 }
@@ -90,7 +102,7 @@ function pickIds(
   size: number,
   rng: Rng,
 ): string[] {
-  const quotas = quotasFor(rng);
+  const quotas = quotasFor(rng, size);
 
   const itemsByTopic = new Map<Topic, CalibrationItem[]>();
   for (const topic of TOPICS) {
