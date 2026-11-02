@@ -27,9 +27,14 @@ const STOP_CONFIDENCES: readonly number[] = [100, 90, 80, 70, 60];
             class="min-h-6 min-w-6 rounded-lg border px-0.5 py-1.5 text-xs font-medium leading-none transition focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
             (click)="answer.emit({ side: stop.side, confidence: stop.confidence })"
           >
-            {{ stop.confidence }}
+            {{ stop.confidence }}%
           </button>
         }
+      </div>
+      <div class="type-caption mt-1 flex items-center justify-between">
+        <span>Certain</span>
+        <span>Guess</span>
+        <span>Certain</span>
       </div>
     </div>
   `,

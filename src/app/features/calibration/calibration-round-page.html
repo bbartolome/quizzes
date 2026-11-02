@@ -4,7 +4,7 @@
   @let e = entry();
   @let p = pending();
   @if (e !== null && p !== null && bank() !== null) {
-    <ui-page-shell [title]="e.title" [eyebrow]="e.format" width="narrow">
+    <ui-page-shell [title]="e.title" [eyebrow]="eyebrowFor(e.format)" width="narrow">
       <div class="flex items-center justify-center">
         <ui-progress-dots
           class="flex flex-wrap items-center justify-center gap-1"
@@ -18,6 +18,13 @@
       @let cur = current();
       @if (cur !== null) {
         <p class="type-section mt-6">{{ cur.item.prompt }}</p>
+        <p class="type-caption mt-1">
+          @if (isFourWay()) {
+            How sure are you? 100 means certain, 0 means certain you're wrong.
+          } @else {
+            How sure are you? 100 means certain, 50 means a coin flip.
+          }
+        </p>
         <div class="mt-4">
           @if (!isFourWay()) {
             <app-bipolar-scale

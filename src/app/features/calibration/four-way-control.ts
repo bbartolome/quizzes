@@ -19,7 +19,8 @@ import { SELECTED_LOOK } from '../../shared/ui/option-row';
       }
     </div>
     @if (choice()) {
-      <div class="mt-3 flex flex-wrap gap-2" aria-label="Confidence">
+      <p class="type-caption mt-3">Confidence</p>
+      <div class="mt-1 flex flex-wrap gap-2" aria-label="Confidence">
         @for (v of stops; track v) {
           <button
             type="button"

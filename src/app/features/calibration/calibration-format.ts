@@ -28,3 +28,8 @@ export const FORMATS: Record<CalibrationFormat, FormatConfig> = {
 export function formatOf(entry: { format?: CalibrationFormat }): CalibrationFormat {
   return entry.format ?? 'two-way';
 }
+
+/** The plain instruction shown in the round header, in place of the format name. */
+export function eyebrowLabel(format: CalibrationFormat | undefined): string {
+  return format === 'four-way' ? 'Judge each option' : 'Pick one';
+}
