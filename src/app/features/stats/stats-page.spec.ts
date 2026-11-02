@@ -144,7 +144,9 @@ describe('StatsPage', () => {
     configure();
     const practice = new FakePracticeService();
     practice.seed({ conceptDays: { strawman: { days: 2, lastDay: '2026-10-30' } } });
-    TestBed.configureTestingModule({ providers: [{ provide: PracticeService, useValue: practice }] });
+    TestBed.configureTestingModule({
+      providers: [{ provide: PracticeService, useValue: practice }],
+    });
     statsService.getStats.mockReturnValue({
       ...populatedStats,
       perTrait: { strawman: { traitId: 'strawman', correct: 8, attempted: 8 } },

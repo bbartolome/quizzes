@@ -64,6 +64,8 @@ describe('statsCard', () => {
       attempted: 8,
       accuracy: 0.375,
       skillScore: null,
+      conceptsPractised: null,
+      conceptsTotal: null,
     });
   });
 
@@ -89,6 +91,8 @@ describe('calibrationCard', () => {
       attempted: 0,
       accuracy: null,
       skillScore: null,
+      conceptsPractised: null,
+      conceptsTotal: null,
     });
   });
 

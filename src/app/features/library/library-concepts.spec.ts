@@ -19,7 +19,13 @@ const biasesEntry: QuizManifestEntry = {
   order: 1,
   kind: 'biases',
 };
-const fallaciesEntry: QuizManifestEntry = { ...biasesEntry, id: 'fallacies', title: 'Fallacies', kind: 'fallacies', order: 2 };
+const fallaciesEntry: QuizManifestEntry = {
+  ...biasesEntry,
+  id: 'fallacies',
+  title: 'Fallacies',
+  kind: 'fallacies',
+  order: 2,
+};
 const trapsEntry: QuizManifestEntry = {
   id: 'reasoning-traps',
   title: 'Reasoning Traps',
@@ -42,7 +48,11 @@ const concept = (id: string, type: Concept['type']): Concept => ({
 
 // The knowledge base decides M: two biases and one fallacy.
 const kb = {
-  concepts: [concept('anchoring', 'bias'), concept('framing', 'bias'), concept('strawman', 'fallacy')],
+  concepts: [
+    concept('anchoring', 'bias'),
+    concept('framing', 'bias'),
+    concept('strawman', 'fallacy'),
+  ],
   pairs: [],
 };
 

@@ -1,4 +1,6 @@
 import { QuizStats, Concept } from '../../core/models/quiz.models';
+import { MasteryState, PracticeState } from '../../core/models/practice.models';
+import { daysFor, masteryOf } from '../../core/utils/mastery';
 
 export interface TraitRow {
   id: string;
@@ -6,9 +8,22 @@ export interface TraitRow {
   correct: number;
   attempted: number;
   accuracy: number;
+  mastery: MasteryState;
 }
 
-export function traitRows(stats: QuizStats, kb: Concept[]): TraitRow[] {
+/** Glyph and word for each mastery state. Colour is never the only signal (practice-layer.md §11). */
+export const MASTERY_LOOK: Record<MasteryState, { glyph: string; label: string }> = {
+  new: { glyph: '○', label: 'New' },
+  learning: { glyph: '◔', label: 'Learning' },
+  practised: { glyph: '◑', label: 'Practised' },
+  mastered: { glyph: '●', label: 'Mastered' },
+};
+
+export function traitRows(
+  stats: QuizStats,
+  kb: Concept[],
+  conceptDays: PracticeState['conceptDays'] = {},
+): TraitRow[] {
   const nameById = new Map<string, string>(kb.map((entry) => [entry.id, entry.name]));
 
   const rows: TraitRow[] = Object.entries(stats.perTrait)
@@ -21,7 +36,14 @@ export function traitRows(stats: QuizStats, kb: Concept[]): TraitRow[] {
         attempted: perTrait.attempted,
         accuracy: Math.round((perTrait.correct / perTrait.attempted) * 100),
       };
-      return baseRow;
+      return {
+        ...baseRow,
+        mastery: masteryOf({
+          attempted: perTrait.attempted,
+          correct: perTrait.correct,
+          days: daysFor(conceptDays[id], perTrait.attempted),
+        }),
+      };
     });
 
   return rows.sort((a, b) => {

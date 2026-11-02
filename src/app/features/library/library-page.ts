@@ -1,8 +1,8 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Observable, catchError, forkJoin, map, of, shareReplay, switchMap } from 'rxjs';
-import { QuizManifestEntry } from '../../core/models/quiz.models';
+import { Observable, catchError, defer, forkJoin, map, of, shareReplay, switchMap } from 'rxjs';
+import { KnowledgeBase, QuizManifestEntry } from '../../core/models/quiz.models';
 import { PracticeService } from '../../core/services/practice.service';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
@@ -13,7 +13,14 @@ import { Card } from '../../shared/ui/card.directive';
 import { PageShell } from '../../shared/ui/page-shell';
 import { LibraryCard } from './library-card';
 import { TodayPanel } from './today-panel';
-import { QuizCard, calibrationCard, formatPercent, routeFor, statsCard } from './library-cards';
+import {
+  QuizCard,
+  calibrationCard,
+  conceptIdsFor,
+  formatPercent,
+  routeFor,
+  statsCard,
+} from './library-cards';
 import { CollectionSummary, summarize } from './library-summary';
 
 const RESET_ALL_MESSAGE = 'Reset all quiz progress and practice streak? This cannot be undone.';
@@ -45,10 +52,11 @@ export class LibraryPage {
         );
       return (loads.length ? forkJoin(loads) : of([])).pipe(map(() => manifest));
     }),
-    map((manifest) =>
+    switchMap((manifest) => this.knowledgeBase().pipe(map((kb) => ({ manifest, kb })))),
+    map(({ manifest, kb }) =>
       [...manifest.quizzes]
         .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id))
-        .map((entry) => this.toCard(entry)),
+        .map((entry) => this.toCard(entry, kb)),
     ),
     shareReplay(1),
   );
@@ -66,9 +74,19 @@ export class LibraryPage {
     }
   }
 
-  private toCard(entry: QuizManifestEntry): QuizCard {
+  /** The shared knowledge base, read once for the "Concepts practised N / M" line. Null if it cannot load. */
+  private knowledgeBase(): Observable<KnowledgeBase | null> {
+    return defer(() => this.quizData.loadKnowledgeBase()).pipe(catchError(() => of(null)));
+  }
+
+  private toCard(entry: QuizManifestEntry, kb: KnowledgeBase | null): QuizCard {
     return entry.kind === 'calibration'
       ? calibrationCard(entry, this.calibration.getSummary(entry.id))
-      : statsCard(entry, this.stats.getStats(entry.id));
+      : statsCard(
+          entry,
+          this.stats.getStats(entry.id),
+          kb ? conceptIdsFor(entry.kind, kb.concepts) : undefined,
+          this.practice.conceptDays(),
+        );
   }
 }

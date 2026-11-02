@@ -30,7 +30,14 @@ describe('traitRows', () => {
     });
     const kb = [makeKbEntry({ id: 'strawman', name: 'Strawman' })];
     expect(traitRows(stats, kb)).toEqual([
-      { id: 'strawman', name: 'Strawman', correct: 3, attempted: 4, accuracy: 75 },
+      {
+        id: 'strawman',
+        name: 'Strawman',
+        correct: 3,
+        attempted: 4,
+        accuracy: 75,
+        mastery: 'practised',
+      },
     ]);
   });
 
@@ -53,7 +60,14 @@ describe('traitRows', () => {
       unknown: { traitId: 'unknown', correct: 1, attempted: 1 },
     });
     expect(traitRows(stats, [])).toEqual([
-      { id: 'unknown', name: 'unknown', correct: 1, attempted: 1, accuracy: 100 },
+      {
+        id: 'unknown',
+        name: 'unknown',
+        correct: 1,
+        attempted: 1,
+        accuracy: 100,
+        mastery: 'learning',
+      },
     ]);
   });
 

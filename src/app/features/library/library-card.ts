@@ -29,6 +29,14 @@ import { QuizCard, formatPercent } from './library-cards';
             <strong>{{ card().streak }}</strong>
           </dd>
         </div>
+        @if (card().conceptsTotal !== null) {
+          <div class="flex justify-between">
+            <dt>Concepts practised</dt>
+            <dd>
+              <strong>{{ card().conceptsPractised }} / {{ card().conceptsTotal }}</strong>
+            </dd>
+          </div>
+        }
       }
       @if (card().kind === 'calibration' && card().skillScore !== null) {
         <div class="flex justify-between">

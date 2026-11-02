@@ -4,7 +4,8 @@ import { EMPTY, map, switchMap } from 'rxjs';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { Concept, QuizStats } from '../../core/models/quiz.models';
-import { overallAccuracy, traitRows, type TraitRow } from './stats-rows';
+import { MASTERY_LOOK, overallAccuracy, traitRows, type TraitRow } from './stats-rows';
+import { PracticeService } from '../../core/services/practice.service';
 import { Button } from '../../shared/ui/button.directive';
 import { Card } from '../../shared/ui/card.directive';
 import { EmptyState } from '../../shared/ui/empty-state';
@@ -38,6 +39,10 @@ export class StatsPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly quizData = inject(QuizDataService);
   private readonly statsService = inject(StatsService);
+  private readonly practice = inject(PracticeService);
+
+  /** Glyph and word per mastery state, for the trait rows. */
+  protected readonly masteryLook = MASTERY_LOOK;
 
   /** Quiz id taken from the route (e.g. "rt" for /quiz/rt/stats). */
   readonly id = this.route.snapshot.paramMap.get('id') ?? '';
@@ -58,7 +63,9 @@ export class StatsPage implements OnInit {
   readonly stats = signal<QuizStats>(this.statsService.getStats(this.id));
 
   /** Per-trait rows (accuracy-sorted), computed from the stats + knowledge base. */
-  readonly rows = computed<TraitRow[]>(() => traitRows(this.stats(), this.kb()));
+  readonly rows = computed<TraitRow[]>(() =>
+    traitRows(this.stats(), this.kb(), this.practice.conceptDays()),
+  );
 
   /** Template-facing derived values. */
   readonly roundsPlayed = computed(() => this.stats().roundsPlayed);

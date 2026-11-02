@@ -37,6 +37,9 @@
                   {{ row.correct }}/{{ row.attempted }} correct ({{ row.accuracy }}%)
                 </span>
               </div>
+              <p data-testid="mastery" class="type-detail">
+                {{ masteryLook[row.mastery].glyph }} {{ masteryLook[row.mastery].label }}
+              </p>
             </div>
           }
         </section>
