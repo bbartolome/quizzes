@@ -41,6 +41,14 @@ describe('SkillScoreCard', () => {
     expect(text(render({ side: side({ skill: 73 }) }))).toContain('73');
   });
 
+  it('keeps the Brier score out of the headline and inside the scoring disclosure', () => {
+    const fixture = render({ side: side({ brier: 0.14 }) });
+    const el = fixture.nativeElement as HTMLElement;
+    const headline = el.querySelector('.type-stat')!.parentElement!;
+    expect(headline.textContent).not.toContain('Brier');
+    expect(el.querySelector('details')!.textContent).toContain('Brier 0.14');
+  });
+
   it('formats Brier with two decimals', () => {
     expect(text(render({ side: side({ brier: 0.14 }) }))).toContain('Brier 0.14');
     expect(text(render({ side: side({ brier: 0.1 }) }))).toContain('Brier 0.10');
