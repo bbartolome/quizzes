@@ -1,4 +1,4 @@
-import { Concept, KnowledgeBase } from '../../core/models/quiz.models';
+import { CardConcept, Concept, ConceptSet } from '../../core/models/quiz.models';
 import { confusedWith } from '../glossary/glossary-search';
 import { shuffle } from '../../core/utils/shuffle';
 
@@ -6,35 +6,45 @@ export type CardDirection = 'definition-to-term' | 'example-to-term' | 'term-to-
 
 export type PromptFormat = 'plain' | 'italic' | 'bold';
 
-export interface FlashCard {
+export interface FlashCard<C extends CardConcept = Concept> {
   direction: CardDirection;
   legend: string;
   prompt: string;
   promptFormat: PromptFormat;
   options: string[];
-  optionConcepts: Concept[];
+  optionConcepts: C[];
   correctIndex: number;
 }
 
-interface OptionRecord {
+interface OptionRecord<C extends CardConcept> {
   text: string;
-  concept: Concept;
+  concept: C;
   isTarget: boolean;
 }
 
-const LEGENDS: Record<CardDirection, Record<Concept['type'], string>> = {
+const LEGENDS: Record<CardDirection, Record<string, string>> = {
   'definition-to-term': {
     fallacy: 'Which fallacy is this?',
     bias: 'Which bias is this?',
+    'game-theory': 'Which idea is this?',
   },
   'example-to-term': {
     fallacy: 'Which fallacy does this example show?',
     bias: 'Which bias does this example show?',
+    'game-theory': 'Which idea does this example show?',
   },
   'term-to-definition': {
     fallacy: 'What does this fallacy mean?',
     bias: 'What does this bias mean?',
+    'game-theory': 'What does this idea mean?',
   },
+};
+
+/** Legend for a concept type with no entry in LEGENDS. */
+const FALLBACK_LEGENDS: Record<CardDirection, string> = {
+  'definition-to-term': 'Which idea is this?',
+  'example-to-term': 'Which idea does this example show?',
+  'term-to-definition': 'What does this idea mean?',
 };
 
 function directionFor(r: number): CardDirection {
@@ -48,7 +58,7 @@ function directionFor(r: number): CardDirection {
 }
 
 function promptFor(
-  target: Concept,
+  target: CardConcept,
   direction: CardDirection,
 ): { prompt: string; promptFormat: PromptFormat } {
   switch (direction) {
@@ -62,12 +72,16 @@ function promptFor(
 }
 
 /** Builds one flash card. Consumes rng in the order documented in the S3 plan. */
-export function buildCard(target: Concept, kb: KnowledgeBase, rng: () => number): FlashCard {
+export function buildCard<C extends CardConcept>(
+  target: C,
+  kb: ConceptSet<C>,
+  rng: () => number,
+): FlashCard<C> {
   // 1. Direction (one rng call).
   const direction = directionFor(rng());
 
   // 2. Legend and prompt (no rng).
-  const legend = LEGENDS[direction][target.type];
+  const legend = LEGENDS[direction][target.type] ?? FALLBACK_LEGENDS[direction];
   const { prompt, promptFormat } = promptFor(target, direction);
 
   // 3. Lures: confused partners first, then fill from both decks.
@@ -82,7 +96,7 @@ export function buildCard(target: Concept, kb: KnowledgeBase, rng: () => number)
 
   // 4. Option records (no rng).
   const isTermToDef = direction === 'term-to-definition';
-  const records: OptionRecord[] = [
+  const records: OptionRecord<C>[] = [
     { text: isTermToDef ? target.shortDefinition : target.name, concept: target, isTarget: true },
     ...lures.map((lure) => ({
       text: isTermToDef ? lure.shortDefinition : lure.name,

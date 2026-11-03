@@ -1,11 +1,11 @@
-import { Concept, KnowledgeBase, QuizStats } from '../../core/models/quiz.models';
+import { CardConcept, ConceptSet, QuizStats } from '../../core/models/quiz.models';
 import { confusedWith } from '../glossary/glossary-search';
 
 const MAX_WEIGHT = 3;
 
 /** Per deck concept: correct and attempted summed over stats:reasoning-traps and stats:<kind>. Missing in both = 0/0. Non-deck keys ignored. */
 export function pooledCounts(
-  deck: readonly Concept[],
+  deck: readonly CardConcept[],
   trapsStats: QuizStats,
   kindStats: QuizStats,
 ): Map<string, { correct: number; attempted: number }> {
@@ -29,7 +29,7 @@ export function drawWeight(correct: number, attempted: number): number {
 
 /** Base weight per deck concept id, computed once at round start. */
 export function baseWeights(
-  deck: readonly Concept[],
+  deck: readonly CardConcept[],
   trapsStats: QuizStats,
   kindStats: QuizStats,
 ): Map<string, number> {
@@ -41,10 +41,10 @@ export function baseWeights(
 }
 
 /** deck minus previousTarget, in deck order. If that is empty, returns the full deck (DECISION). */
-export function candidates(
-  deck: readonly Concept[],
-  previousTarget: Concept | null,
-): readonly Concept[] {
+export function candidates<C extends CardConcept>(
+  deck: readonly C[],
+  previousTarget: C | null,
+): readonly C[] {
   const filtered = deck.filter((concept) => concept.id !== previousTarget?.id);
   return filtered.length > 0 ? filtered : deck;
 }
@@ -55,11 +55,11 @@ export function effectiveWeight(baseWeight: number, bumped: boolean): number {
 }
 
 /** Weighted pick over pool using weights (same length, pool order). Exactly one rng() call. */
-export function pickTarget(
-  pool: readonly Concept[],
+export function pickTarget<C extends CardConcept>(
+  pool: readonly C[],
   weights: readonly number[],
   rng: () => number,
-): Concept {
+): C {
   const total = weights.reduce((sum, w) => sum + w, 0);
   const r = rng() * total;
   let cumulative = 0;
@@ -74,13 +74,13 @@ export function pickTarget(
 }
 
 /** Main entry point for S6. candidates -> effective weights from baseWeightMap and bumpedIds -> pickTarget. */
-export function drawTarget(
-  deck: readonly Concept[],
-  previousTarget: Concept | null,
+export function drawTarget<C extends CardConcept>(
+  deck: readonly C[],
+  previousTarget: C | null,
   baseWeightMap: Map<string, number>,
   bumpedIds: ReadonlySet<string>,
   rng: () => number,
-): Concept {
+): C {
   const pool = candidates(deck, previousTarget);
   const weights = pool.map((concept) => {
     const base = baseWeightMap.get(concept.id);
@@ -93,11 +93,11 @@ export function drawTarget(
 }
 
 /** Returns a new Set. Adds picked.id when picked is a confused partner of target (confusedWith(target, kb)). Does not mutate bumpedIds. Caller decides that the pick was wrong. */
-export function applyBump(
+export function applyBump<C extends CardConcept>(
   bumpedIds: ReadonlySet<string>,
-  target: Concept,
-  picked: Concept,
-  kb: KnowledgeBase,
+  target: C,
+  picked: C,
+  kb: ConceptSet<C>,
 ): ReadonlySet<string> {
   const next = new Set(bumpedIds);
   if (confusedWith(target, kb).some((partner) => partner.id === picked.id)) {

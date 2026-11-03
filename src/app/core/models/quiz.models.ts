@@ -39,14 +39,19 @@ export interface Template {
   explanation: string;
 }
 
-export interface Concept {
+/** The fields every flash-card concept has. Game-theory concepts extend this too. */
+export interface CardConcept {
   id: string;
   name: string;
-  type: 'fallacy' | 'bias';
   shortDefinition: string;
   longExplanation: string;
   example: string;
   spottingTip?: string;
+  type: string;
+}
+
+export interface Concept extends CardConcept {
+  type: 'fallacy' | 'bias';
 }
 
 export interface ConfusedPair {
@@ -54,10 +59,12 @@ export interface ConfusedPair {
   tip?: string;
 }
 
-export interface KnowledgeBase {
-  concepts: Concept[];
+export interface ConceptSet<C extends CardConcept> {
+  concepts: C[];
   pairs: ConfusedPair[];
 }
+
+export type KnowledgeBase = ConceptSet<Concept>;
 
 export interface PerTraitStats {
   traitId: string;

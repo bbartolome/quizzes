@@ -1,4 +1,4 @@
-import { Concept, KnowledgeBase } from '../../core/models/quiz.models';
+import { CardConcept, Concept, ConceptSet } from '../../core/models/quiz.models';
 
 export function filterEntries(kb: Concept[], query: string): Concept[] {
   const q = query.trim().toLowerCase();
@@ -11,8 +11,8 @@ export function filterEntries(kb: Concept[], query: string): Concept[] {
   );
 }
 
-export function confusedWith(entry: Concept, kb: KnowledgeBase): Concept[] {
-  const partners: Concept[] = [];
+export function confusedWith<C extends CardConcept>(entry: C, kb: ConceptSet<C>): C[] {
+  const partners: C[] = [];
   for (const [a, b] of kb.pairs.map((pair) => pair.concepts)) {
     const partnerId = a === entry.id ? b : b === entry.id ? a : undefined;
     const partner = kb.concepts.find((candidate) => candidate.id === partnerId);
@@ -23,6 +23,10 @@ export function confusedWith(entry: Concept, kb: KnowledgeBase): Concept[] {
   return partners;
 }
 
-export function pairTip(a: string, b: string, kb: KnowledgeBase): string | undefined {
+export function pairTip(
+  a: string,
+  b: string,
+  kb: ConceptSet<CardConcept>,
+): string | undefined {
   return kb.pairs.find((pair) => pair.concepts.includes(a) && pair.concepts.includes(b))?.tip;
 }

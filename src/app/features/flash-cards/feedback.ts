@@ -1,8 +1,8 @@
-import { Concept, ConfusedPair, KnowledgeBase } from '../../core/models/quiz.models';
+import { CardConcept, ConceptSet, ConfusedPair } from '../../core/models/quiz.models';
 
 export type Contrast =
   | { kind: 'pair-tip'; target: string; lure: string; tip: string }
-  | { kind: 'side-by-side'; lure: Concept; lureSpottingTip?: string }
+  | { kind: 'side-by-side'; lure: CardConcept; lureSpottingTip?: string }
   | { kind: 'correct-tip'; tip: string }
   | { kind: 'none' };
 
@@ -15,14 +15,18 @@ export interface Feedback {
 }
 
 /** The first pair in kb.pairs that holds both concepts, regardless of stored order. */
-function pairBetween(a: Concept, b: Concept, kb: KnowledgeBase): ConfusedPair | undefined {
+function pairBetween(
+  a: CardConcept,
+  b: CardConcept,
+  kb: ConceptSet<CardConcept>,
+): ConfusedPair | undefined {
   return kb.pairs.find((pair) => pair.concepts.includes(a.id) && pair.concepts.includes(b.id));
 }
 
 function correctContrast(
-  target: Concept,
-  options: readonly Concept[],
-  kb: KnowledgeBase,
+  target: CardConcept,
+  options: readonly CardConcept[],
+  kb: ConceptSet<CardConcept>,
 ): Contrast {
   // First partner in option order whose pair with the target has a tip.
   for (const option of options) {
@@ -44,7 +48,11 @@ function correctContrast(
   return { kind: 'none' };
 }
 
-function wrongContrast(target: Concept, lure: Concept, kb: KnowledgeBase): Contrast {
+function wrongContrast(
+  target: CardConcept,
+  lure: CardConcept,
+  kb: ConceptSet<CardConcept>,
+): Contrast {
   const tip = pairBetween(target, lure, kb)?.tip;
   if (tip) {
     return { kind: 'pair-tip', target: target.name, lure: lure.name, tip };
@@ -59,11 +67,11 @@ function wrongContrast(target: Concept, lure: Concept, kb: KnowledgeBase): Contr
  * Feedback for one answered flash card. `picked` is null when the target was picked.
  * `options` are the option concepts in the order shown (card.optionConcepts). Does not mutate inputs.
  */
-export function buildFeedback(
-  target: Concept,
-  picked: Concept | null,
-  options: readonly Concept[],
-  kb: KnowledgeBase,
+export function buildFeedback<C extends CardConcept>(
+  target: C,
+  picked: C | null,
+  options: readonly C[],
+  kb: ConceptSet<C>,
 ): Feedback {
   const feedback: Feedback = {
     verdict: picked === null ? 'Correct' : 'Incorrect',
