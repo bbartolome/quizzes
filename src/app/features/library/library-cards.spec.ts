@@ -61,21 +61,55 @@ describe('conceptIdsFor', () => {
 });
 
 describe('gameTheoryCard', () => {
-  it('is an inert stub that returns zeros until G1 reads the learn state', () => {
-    const card = gameTheoryCard(
-      entry({ kind: 'game-theory', id: 'game-theory' }),
-      { mastered: 0, introduced: 0, total: 18 },
-      false,
-    );
+  const learn = { mastered: 2, introduced: 5, total: 18 };
+  const hub = entry({ kind: 'game-theory', id: 'game-theory' });
+
+  it('reads rounds, accuracy and mastery from the game-theory stats and the learn summary', () => {
+    const card = gameTheoryCard(hub, learn, {
+      cards: stats({
+        quizId: 'game-theory:cards',
+        roundsPlayed: 3,
+        perTrait: {
+          'dominant-strategy': { traitId: 'dominant-strategy', attempted: 4, correct: 3 },
+        },
+      }),
+      challenges: stats({
+        quizId: 'game-theory:challenges',
+        perTrait: {
+          'nash-equilibrium': { traitId: 'nash-equilibrium', attempted: 2, correct: 1 },
+        },
+      }),
+    });
     expect(card).toMatchObject({
       kind: 'game-theory',
-      roundsPlayed: 0,
-      correct: 0,
-      attempted: 0,
-      accuracy: null,
-      conceptsPractised: 0,
-      conceptsTotal: 0,
+      roundsPlayed: 3,
+      attempted: 6,
+      correct: 4,
+      accuracy: 4 / 6,
+      streak: 0,
+      conceptsPractised: 2,
+      conceptsTotal: 18,
     });
+  });
+
+  it('has no accuracy before the first attempt', () => {
+    const card = gameTheoryCard(hub, learn, {
+      cards: stats({ quizId: 'game-theory:cards' }),
+      challenges: stats({ quizId: 'game-theory:challenges' }),
+    });
+    expect(card.accuracy).toBeNull();
+  });
+
+  it('uses the fixed 18 concepts as the denominator, whatever the summary total says', () => {
+    const card = gameTheoryCard(
+      hub,
+      { mastered: 0, introduced: 0, total: 0 },
+      {
+        cards: stats({ quizId: 'game-theory:cards' }),
+        challenges: stats({ quizId: 'game-theory:challenges' }),
+      },
+    );
+    expect(card.conceptsTotal).toBe(18);
   });
 });
 

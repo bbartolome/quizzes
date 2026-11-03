@@ -44,4 +44,17 @@ describe('GameTheoryHomePage', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelectorAll('[data-slot="modes"] a')).toHaveLength(0);
   });
+
+  it('renders inside the page shell: one h1 titled Game Theory and a back link to the library', () => {
+    const fixture = TestBed.createComponent(GameTheoryHomePage);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('ui-page-shell')).not.toBeNull();
+    const headings = root.querySelectorAll('h1');
+    expect(headings).toHaveLength(1);
+    expect(headings[0].textContent?.trim()).toBe('Game Theory');
+    expect(root.querySelector('[data-testid="back-home"]')?.textContent?.trim()).toBe(
+      'All collections',
+    );
+  });
 });
