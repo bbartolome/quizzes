@@ -1,6 +1,7 @@
 import type { Difficulty, Puzzle, PuzzleAnswer, PuzzleGrade, PuzzleKind } from '../puzzle.types';
 import type { Rng } from '../rng';
 import { drawClassify, gradeClassify } from './classify-puzzle';
+import { drawEliminate, gradeEliminate } from './eliminate-puzzle';
 import { drawEquilibrium, gradeEquilibrium } from './equilibrium';
 import type { PuzzleOptions } from './shared';
 
@@ -21,6 +22,8 @@ export function generatePuzzle(
       return drawEquilibrium(difficulty, rng, opts).puzzle;
     case 'classify':
       return drawClassify(difficulty, rng, opts);
+    case 'eliminate':
+      return drawEliminate(difficulty, rng, opts);
     default:
       throw new Error(`generatePuzzle: no ${kind} generator yet`);
   }
@@ -33,6 +36,9 @@ export function gradePuzzle(p: Puzzle, a: PuzzleAnswer): PuzzleGrade {
   }
   if (p.kind === 'classify' && a.kind === 'classify') {
     return gradeClassify(p, a);
+  }
+  if (p.kind === 'eliminate' && a.kind === 'eliminate') {
+    return gradeEliminate(p, a);
   }
   throw new TypeError(`gradePuzzle: a ${a.kind} answer does not fit a ${p.kind} puzzle`);
 }
