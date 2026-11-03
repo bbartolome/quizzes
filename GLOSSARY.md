@@ -237,3 +237,63 @@ _Avoid_: Explanation, justification
 **Misconception**:
 A common wrong belief that a reason-check option or a line of feedback targets.
 _Avoid_: Mistake, lure (names a flash card option)
+
+**Pareto efficient**:
+A cell that no other cell improves for one player without making the other worse off. An equilibrium need not be Pareto efficient.
+_Avoid_: Best outcome, optimal (bare)
+
+**Mixed strategy**:
+A choice that randomises over the player's options with fixed probabilities.
+_Avoid_: Random move, guess
+
+**Iterated elimination**:
+Removing strictly dominated choices one at a time, in any legal order, until none is left to remove.
+_Avoid_: Pruning, deleting moves
+
+**Game class**:
+One of the five families a two-by-two game can belong to: prisoner's dilemma, stag hunt, chicken, battle of the sexes, or pure coordination.
+_Avoid_: Type (bare, because it names flash-card types), kind
+
+**Relabelling**:
+Swapping rows, columns or players in a payoff matrix. A game keeps its class under every relabelling.
+_Avoid_: Mirror, flip (names one swap)
+
+**Cooperate and defect**:
+The two moves in the repeated prisoner's dilemma. Cooperating keeps the mutual payoff high; defecting gains at the cooperator's expense.
+_Avoid_: Good move, bad move
+
+**Prerequisite**:
+A concept to learn before another. The concept map shows it as "Recommended first"; it never blocks access.
+_Avoid_: Requirement, unlock condition
+
+**Concept map**:
+The hub's map of the game-theory concepts, with their prerequisites and mastery states.
+_Avoid_: Tree, graph (in player-facing text)
+
+**Bid**:
+What a bidder offers to pay if they win an auction.
+_Avoid_: Price (the price is what the winner pays)
+
+**Price**:
+What the winner of an auction pays. It depends on the format: the winner's own bid in a first-price auction, the second-highest bid in a second-price one.
+_Avoid_: Bid
+
+**Private value**:
+An auction where each bidder's value for the item is their own, and no one else's value changes it.
+_Avoid_: Personal value
+
+**Common value**:
+An auction where the item has one true value, and each bidder estimates it with noise.
+_Avoid_: Shared value
+
+**Signal**:
+In a common-value auction, a bidder's noisy private estimate of the item's true value.
+_Avoid_: Hint, tip
+
+**Winner's curse**:
+In a common-value auction, the winner tends to be the bidder with the most optimistic estimate, so bidding one's own estimate usually loses money.
+_Avoid_: Bad luck
+
+**Replicator dynamics**:
+A population view in which strategies that score above the average grow in share over time. It is an optional view of a bot tournament.
+_Avoid_: Evolution (as an alias)
