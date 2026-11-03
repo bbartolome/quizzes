@@ -1,0 +1,71 @@
+<div class="space-y-3">
+  <table class="w-full border-separate border-spacing-2 text-left" data-testid="payoff-matrix">
+    <caption class="sr-only">
+      Payoff matrix. Each cell shows the row player's payoff, then the column player's payoff.
+      Underlined payoffs are best responses.
+    </caption>
+    <thead>
+      <tr>
+        <td></td>
+        @for (head of colHeads(); track head.index) {
+          <th scope="col" class="p-2 align-bottom text-sm font-semibold text-text">
+            <span [class.line-through]="head.note !== null">{{ head.label }}</span>
+            @if (head.note) {
+              <span class="block text-sm font-normal">{{ head.note }}</span>
+            }
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of rows(); track row.line.index) {
+        <tr>
+          <th scope="row" class="p-2 align-middle text-sm font-semibold text-text">
+            <span [class.line-through]="row.line.note !== null">{{ row.line.label }}</span>
+            @if (row.line.note) {
+              <span class="block text-sm font-normal">{{ row.line.note }}</span>
+            }
+          </th>
+          @for (cell of row.cells; track cell.testId) {
+            <td class="p-0.5">
+              <button
+                type="button"
+                [attr.data-testid]="cell.testId"
+                [attr.aria-label]="cell.label"
+                [attr.aria-pressed]="cell.pressed"
+                [class]="cell.classes"
+                (click)="toggleCell(cell.r, cell.c)"
+              >
+                <span class="font-semibold tabular-nums">
+                  <span [class.underline]="cell.rowBest">{{ cell.rowPayoff }}</span
+                  >,
+                  <span [class.underline]="cell.colBest">{{ cell.colPayoff }}</span>
+                </span>
+                @if (cell.status; as status) {
+                  <ui-status [tone]="status.tone" [label]="status.label" />
+                }
+              </button>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <p class="text-sm text-muted">
+    Each cell shows the row payoff, then the column payoff. An underlined payoff is a best response.
+  </p>
+
+  <button
+    type="button"
+    data-testid="payoff-none"
+    [attr.aria-pressed]="noneChosen()"
+    [class]="none().classes"
+    (click)="toggleNone()"
+  >
+    <span class="font-semibold">None of these (no pure equilibrium)</span>
+    @if (none().status; as status) {
+      <ui-status [tone]="status.tone" [label]="status.label" />
+    }
+  </button>
+</div>
