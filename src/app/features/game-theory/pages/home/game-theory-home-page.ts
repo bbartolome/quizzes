@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PageBack, PageShell } from '../../../../shared/ui/page-shell';
 import { GAME_THEORY_MODES } from '../../modes';
 
 /** The game-theory hub. Its mode list comes from GAME_THEORY_MODES; three slots are reserved for later lanes. */
@@ -7,8 +8,9 @@ import { GAME_THEORY_MODES } from '../../modes';
   selector: 'app-game-theory-home-page',
   standalone: true,
   templateUrl: './game-theory-home-page.html',
-  imports: [RouterLink],
+  imports: [RouterLink, PageShell],
 })
 export class GameTheoryHomePage {
   readonly modes = GAME_THEORY_MODES;
+  readonly back: PageBack = { label: 'All collections', link: '/' };
 }

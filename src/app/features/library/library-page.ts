@@ -8,6 +8,7 @@ import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { CalibrationBankService } from '../calibration/calibration-bank.service';
 import { CalibrationHistoryService } from '../calibration/calibration-history.service';
+import { EVIDENCE_QUIZ_IDS, GtLearnService } from '../game-theory/state/gt-learn.service';
 import { Button } from '../../shared/ui/button.directive';
 import { Card } from '../../shared/ui/card.directive';
 import { PageShell } from '../../shared/ui/page-shell';
@@ -19,6 +20,7 @@ import {
   calibrationCard,
   conceptIdsFor,
   formatPercent,
+  gameTheoryCard,
   routeFor,
   statsCard,
 } from './library-cards';
@@ -37,6 +39,7 @@ export class LibraryPage {
   private readonly calibration: CalibrationHistoryService = inject(CalibrationHistoryService);
   private readonly bankService: CalibrationBankService = inject(CalibrationBankService);
   private readonly practice: PracticeService = inject(PracticeService);
+  private readonly gameTheory: GtLearnService = inject(GtLearnService);
 
   protected readonly cards$: Observable<QuizCard[]> = this.quizData.loadManifest().pipe(
     switchMap((manifest) => {
@@ -81,6 +84,12 @@ export class LibraryPage {
   }
 
   private toCard(entry: QuizManifestEntry, kb: KnowledgeBase | null): QuizCard {
+    if (entry.kind === 'game-theory') {
+      return gameTheoryCard(entry, this.gameTheory.read().summary, {
+        cards: this.stats.getStats(EVIDENCE_QUIZ_IDS.cards),
+        challenges: this.stats.getStats(EVIDENCE_QUIZ_IDS.challenges),
+      });
+    }
     return entry.kind === 'calibration'
       ? calibrationCard(entry, this.calibration.getSummary(entry.id))
       : statsCard(

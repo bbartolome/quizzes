@@ -23,15 +23,19 @@ import { QuizCard, formatPercent } from './library-cards';
             }
           </dd>
         </div>
-        <div class="flex justify-between">
-          <dt>Current streak</dt>
-          <dd>
-            <strong>{{ card().streak }}</strong>
-          </dd>
-        </div>
+        @if (card().kind !== 'game-theory') {
+          <div class="flex justify-between">
+            <dt>Current streak</dt>
+            <dd>
+              <strong>{{ card().streak }}</strong>
+            </dd>
+          </div>
+        }
         @if (card().conceptsTotal !== null) {
           <div class="flex justify-between">
-            <dt>Concepts practised</dt>
+            <dt>
+              {{ card().kind === 'game-theory' ? 'Concepts mastered' : 'Concepts practised' }}
+            </dt>
             <dd>
               <strong>{{ card().conceptsPractised }} / {{ card().conceptsTotal }}</strong>
             </dd>

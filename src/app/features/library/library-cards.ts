@@ -56,26 +56,38 @@ export function conceptIdsFor(
   return concepts.filter((c) => type === null || c.type === type).map((c) => c.id);
 }
 
+/** The game-theory deck size (spec §6.2). A fixed denominator, so the card never reads "N / 0" before the hub is opened. */
+const TOTAL_CONCEPTS = 18;
+
 /**
- * Game-theory library card. Inert stub: returns zeros until G1 reads the learn summary
- * and the daily state. Its signature is fixed here so G1 only changes the body.
+ * Game-theory library card (spec §3.1). Rounds come from the cards key. Accuracy pools the cards
+ * and challenges keys (§7.3). Mastery comes from the learn summary, read with no content fetch.
+ * The "Daily puzzle" row is deferred to G27.
  */
 export function gameTheoryCard(
   entry: QuizManifestEntry,
   learnSummary: LearnState['summary'],
-  dailyOpen: boolean,
+  stats: { cards: QuizStats; challenges: QuizStats },
 ): QuizCard {
+  let correct = 0;
+  let attempted = 0;
+  for (const s of [stats.cards, stats.challenges]) {
+    for (const value of Object.values(s.perTrait)) {
+      correct += value.correct;
+      attempted += value.attempted;
+    }
+  }
   return {
     entry,
     kind: 'game-theory',
     streak: 0,
-    roundsPlayed: 0,
-    correct: 0,
-    attempted: 0,
-    accuracy: null,
+    roundsPlayed: stats.cards.roundsPlayed,
+    correct,
+    attempted,
+    accuracy: attempted > 0 ? correct / attempted : null,
     skillScore: null,
-    conceptsPractised: 0,
-    conceptsTotal: 0,
+    conceptsPractised: learnSummary.mastered,
+    conceptsTotal: TOTAL_CONCEPTS,
   };
 }
 
