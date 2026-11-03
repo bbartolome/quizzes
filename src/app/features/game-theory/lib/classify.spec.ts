@@ -3,6 +3,7 @@ import { CANONICAL_GAMES, eightSymmetries } from '../../../../testing/gt-fixture
 import { forSeeds } from '../../../../testing/seeds';
 import { CLASS_TEMPLATES, canonicalSignature, classify2x2 } from './classify';
 import type { GameClass, PayoffMatrix } from './matrix.types';
+import { mulberry32 as prng } from './rng';
 
 type Canonical = Exclude<GameClass, 'other'>;
 
@@ -13,18 +14,6 @@ const CLASSES: Canonical[] = [
   'battle-of-the-sexes',
   'coordination-game',
 ];
-
-// Same algorithm as mulberry32 (spec §4.1). rng.ts lands in G2, so this spec carries its own copy.
-function prng(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 /** A deterministic 2x2 integer game with payoffs in 0..max. */
 function randomGame2x2(seed: number, max: number): PayoffMatrix {

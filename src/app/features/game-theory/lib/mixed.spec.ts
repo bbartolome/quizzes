@@ -3,18 +3,7 @@ import { CANONICAL_GAMES } from '../../../../testing/gt-fixtures';
 import { forSeeds } from '../../../../testing/seeds';
 import { mixedNash2x2 } from './mixed';
 import type { Fraction, MixedNash2x2, PayoffMatrix } from './matrix.types';
-
-// Same algorithm as mulberry32 (spec §4.1). rng.ts lands in G2, so this spec carries its own copy.
-function prng(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+import { mulberry32 as prng } from './rng';
 
 /** A deterministic 2x2 integer game with payoffs in 0..max. */
 function randomGame2x2(seed: number, max: number): PayoffMatrix {
