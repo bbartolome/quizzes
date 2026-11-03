@@ -1,7 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { QuizManifestEntry, QuizStats } from '../../core/models/quiz.models';
 import { skillScore } from '../calibration/scoring';
-import { calibrationCard, formatPercent, routeFor, statsCard } from './library-cards';
+import {
+  calibrationCard,
+  conceptIdsFor,
+  formatPercent,
+  gameTheoryCard,
+  routeFor,
+  statsCard,
+} from './library-cards';
 
 const entry = (over: Partial<QuizManifestEntry> = {}): QuizManifestEntry => ({
   id: 'biases',
@@ -31,6 +38,44 @@ describe('routeFor', () => {
     );
     expect(routeFor(entry({ kind: 'biases', id: 'biases' }))).toBe('/biases/biases');
     expect(routeFor(entry({ kind: 'fallacies', id: 'fallacies' }))).toBe('/fallacies/fallacies');
+  });
+
+  it('gives the game-theory hub one fixed path with no :id segment', () => {
+    expect(routeFor(entry({ kind: 'game-theory', id: 'game-theory' }))).toBe('/game-theory');
+  });
+});
+
+describe('conceptIdsFor', () => {
+  it('returns no flash-card concept ids for game theory', () => {
+    const concepts = [
+      { id: 'anchoring', name: 'Anchoring', type: 'bias' as const },
+      { id: 'ad-hominem', name: 'Ad hominem', type: 'fallacy' as const },
+    ].map((c) => ({
+      ...c,
+      shortDefinition: '',
+      longExplanation: '',
+      example: '',
+    }));
+    expect(conceptIdsFor('game-theory', concepts)).toEqual([]);
+  });
+});
+
+describe('gameTheoryCard', () => {
+  it('is an inert stub that returns zeros until G1 reads the learn state', () => {
+    const card = gameTheoryCard(
+      entry({ kind: 'game-theory', id: 'game-theory' }),
+      { mastered: 0, introduced: 0, total: 18 },
+      false,
+    );
+    expect(card).toMatchObject({
+      kind: 'game-theory',
+      roundsPlayed: 0,
+      correct: 0,
+      attempted: 0,
+      accuracy: null,
+      conceptsPractised: 0,
+      conceptsTotal: 0,
+    });
   });
 });
 

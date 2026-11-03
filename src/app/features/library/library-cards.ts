@@ -4,12 +4,14 @@ import { pooledConceptCounts } from '../../core/utils/concept-counts';
 import { daysFor, masteryOf } from '../../core/utils/mastery';
 import { CalibrationSummary, calibrationCardStats } from '../calibration/calibration-card';
 import { formatOf } from '../calibration/calibration-format';
+import type { LearnState } from '../game-theory/lib/state.types';
 
 /** URL prefix for each collection kind; each kind's pages live under its own prefix. */
 const ROUTE_PREFIX: Record<QuizManifestEntry['kind'], string> = {
   traps: '/quiz',
   calibration: '/calibration',
   biases: '/biases',
+  'game-theory': '/game-theory',
   fallacies: '/fallacies',
 };
 
@@ -29,6 +31,10 @@ export interface QuizCard {
 }
 
 export function routeFor(entry: QuizManifestEntry): string {
+  // The game-theory hub has one fixed path, so it has no :id segment.
+  if (entry.kind === 'game-theory') {
+    return ROUTE_PREFIX['game-theory'];
+  }
   return `${ROUTE_PREFIX[entry.kind]}/${entry.id}`;
 }
 
@@ -41,9 +47,36 @@ export function conceptIdsFor(
   kind: QuizManifestEntry['kind'],
   concepts: readonly Concept[],
 ): string[] {
+  // Game-theory concepts are not flash-card Concepts; their card counts come from gameTheoryCard.
+  if (kind === 'game-theory') {
+    return [];
+  }
   const type: Concept['type'] | null =
     kind === 'biases' ? 'bias' : kind === 'fallacies' ? 'fallacy' : null;
   return concepts.filter((c) => type === null || c.type === type).map((c) => c.id);
+}
+
+/**
+ * Game-theory library card. Inert stub: returns zeros until G1 reads the learn summary
+ * and the daily state. Its signature is fixed here so G1 only changes the body.
+ */
+export function gameTheoryCard(
+  entry: QuizManifestEntry,
+  learnSummary: LearnState['summary'],
+  dailyOpen: boolean,
+): QuizCard {
+  return {
+    entry,
+    kind: 'game-theory',
+    streak: 0,
+    roundsPlayed: 0,
+    correct: 0,
+    attempted: 0,
+    accuracy: null,
+    skillScore: null,
+    conceptsPractised: 0,
+    conceptsTotal: 0,
+  };
 }
 
 export function statsCard(

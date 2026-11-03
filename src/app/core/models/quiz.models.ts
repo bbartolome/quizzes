@@ -1,3 +1,5 @@
+import type { MisconceptionId } from '../../features/game-theory/lib/puzzle.types';
+
 export type CalibrationFormat = 'two-way' | 'four-way';
 
 export interface QuizManifestEntry {
@@ -8,7 +10,7 @@ export interface QuizManifestEntry {
   version: number;
   dataPath?: string;
   order: number;
-  kind: 'traps' | 'calibration' | 'biases' | 'fallacies';
+  kind: 'traps' | 'calibration' | 'biases' | 'fallacies' | 'game-theory';
   format?: CalibrationFormat;
   /** Calibration entries only: items per round (default 20). */
   roundSize?: number;
@@ -65,6 +67,21 @@ export interface ConceptSet<C extends CardConcept> {
 }
 
 export type KnowledgeBase = ConceptSet<Concept>;
+
+export interface GameTheoryConcept extends CardConcept {
+  type: 'game-theory';
+  tier: 1 | 2 | 3 | 4 | 5;
+  prerequisites: string[];
+  misconception?: MisconceptionId;
+  source?: { label: string; url: string };
+  modes: ('cards' | 'equilibrium' | 'classify' | 'eliminate' | 'bots' | 'beauty' | 'auction')[];
+}
+
+export interface GameTheoryContent {
+  version: number;
+  concepts: GameTheoryConcept[];
+  pairs: ConfusedPair[];
+}
 
 export interface PerTraitStats {
   traitId: string;
