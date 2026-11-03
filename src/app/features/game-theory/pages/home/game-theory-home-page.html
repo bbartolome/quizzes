@@ -1,1 +1,16 @@
-<p>Game Theory</p>
+<h1>Game Theory</h1>
+
+<section data-slot="map">
+  <!-- Slot: concept map (G18). -->
+</section>
+
+<section data-slot="modes">
+  <!-- Slot: mode list. Each lane appends one line to GAME_THEORY_MODES (G10, G16, G20, G24). -->
+  @for (mode of modes; track mode.id) {
+    <a [routerLink]="['/', mode.path]">{{ mode.title }}</a>
+  }
+</section>
+
+<section data-slot="today">
+  <!-- Slot: today and daily puzzle panel (G27). -->
+</section>
