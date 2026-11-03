@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { forSeeds } from '../../../../../testing/seeds';
 import { mulberry32 } from '../rng';
 import { drawClassify } from './classify-puzzle';
+import { drawEliminate } from './eliminate-puzzle';
 import { drawEquilibrium } from './equilibrium';
 import { gradePuzzle, generatePuzzle, matrixSignature } from './index';
 import { matrixSignature as signatureFromModule } from './signature';
@@ -22,6 +23,16 @@ describe('generatePuzzle', () => {
       for (const difficulty of [1, 2, 3] as const) {
         expect(generatePuzzle('classify', difficulty, mulberry32(seed))).toEqual(
           drawClassify(difficulty, mulberry32(seed)),
+        );
+      }
+    }, 50);
+  });
+
+  it('returns the elimination puzzle that the elimination generator draws', () => {
+    forSeeds((seed) => {
+      for (const difficulty of [1, 2, 3] as const) {
+        expect(generatePuzzle('eliminate', difficulty, mulberry32(seed))).toEqual(
+          drawEliminate(difficulty, mulberry32(seed)),
         );
       }
     }, 50);
@@ -53,6 +64,17 @@ describe('gradePuzzle', () => {
       throw new Error('expected a classify puzzle');
     }
     const grade = gradePuzzle(puzzle, { kind: 'classify', choice: puzzle.solution });
+    expect(grade.correct).toBe(true);
+    expect(grade.score).toBe(1);
+  });
+
+  it('grades an elimination puzzle against its stored steps', () => {
+    const puzzle = generatePuzzle('eliminate', 2, mulberry32(5));
+    if (puzzle.kind !== 'eliminate') {
+      throw new Error('expected an elimination puzzle');
+    }
+    const moves = puzzle.solution.map((step) => ({ player: step.player, index: step.eliminated }));
+    const grade = gradePuzzle(puzzle, { kind: 'eliminate', moves, done: true });
     expect(grade.correct).toBe(true);
     expect(grade.score).toBe(1);
   });
