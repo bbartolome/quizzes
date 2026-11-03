@@ -1,5 +1,315 @@
 {
   "version": 1,
-  "concepts": [],
-  "pairs": []
+  "concepts": [
+    {
+      "id": "dominant-strategy",
+      "name": "Dominant strategy",
+      "shortDefinition": "A move that gives a player a strictly higher payoff than each of their other moves, whatever the other player does.",
+      "longExplanation": "Look at one player's moves at a time. If one move beats every other move of that player no matter which move the other player picks, it is a dominant strategy. The player does not need to predict the other player to choose it. Dominance is a fact about one player's options. It does not say that the resulting outcome is good for anyone, so a game can give each player a dominant strategy and still leave both worse off than another outcome.",
+      "example": "In a game where one player gets a higher payoff from advertising whichever move the rival makes, advertising is a dominant strategy for that player.",
+      "spottingTip": "Take one player at a time and compare each of their moves against every move the other player could choose. If one move wins every time, it is dominant.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": [],
+      "misconception": "M5",
+      "source": {
+        "label": "Stanford Encyclopedia of Philosophy: Game Theory",
+        "url": "https://plato.stanford.edu/entries/game-theory/"
+      },
+      "modes": ["cards", "eliminate"]
+    },
+    {
+      "id": "iterated-elimination",
+      "name": "Iterated elimination",
+      "shortDefinition": "Repeatedly remove a strictly dominated strategy, one at a time, until none is left to remove.",
+      "longExplanation": "Once one dominated strategy is removed, the game is smaller, and a strategy that was not dominated before can become dominated. Repeating the removal can shrink a large game a great deal. The stepper in this app is strict and pure-strategy only: it removes a strategy only when another single strategy is strictly better against every remaining move. With strict dominance, the set that survives does not depend on the order of removals. Weak dominance, which allows ties, is different: removing weakly dominated strategies can depend on the order, and it can remove equilibria.",
+      "example": "In a 3x3 game, the third row is strictly beaten by the first row. Once it is removed, the third column can be strictly beaten by the first column, and removing it can leave a single cell.",
+      "spottingTip": "Cross out one dominated row or column, then look again at what is left. Only strict dominance is safe to remove in any order.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": ["dominant-strategy"],
+      "misconception": "M14",
+      "modes": ["cards", "eliminate"]
+    },
+    {
+      "id": "best-response",
+      "name": "Best response",
+      "shortDefinition": "The move that gives a player the highest payoff against one specific move by the other player.",
+      "longExplanation": "A best response is always given with respect to a move the other player makes. Fix that move, then find the move that gives the highest payoff for the player in question. There can be ties, which means several best responses. A dominant strategy is a best response to every move of the other player. A best response need only be best against the one move in question.",
+      "example": "If your friend is going to the cinema, your best response is to go too, because you would rather be there together than go alone.",
+      "spottingTip": "Fix the other player's move first, then underline the best move in that column or row. Repeat for each of the other player's moves.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": [],
+      "modes": ["cards", "equilibrium"]
+    },
+    {
+      "id": "nash-equilibrium",
+      "name": "Nash equilibrium",
+      "shortDefinition": "A set of moves, one for each player, in which no player gains by switching alone. Each move is a best response to the others' moves.",
+      "longExplanation": "A Nash equilibrium is a stability property. Once every player is in it, no one can gain by changing their own move alone. It is not the best outcome for everyone, since another outcome can be better for all of them. It is not a prediction of what players will do, since they may miss it or play something else. A game can have one equilibrium, several, or none in pure moves, so the phrase to use is 'an equilibrium' unless uniqueness has been checked.",
+      "example": "Two drivers meet on a road. If both keep left, neither gains by switching alone, and the same holds if both keep right. Both pairs are equilibria.",
+      "spottingTip": "Underline each player's best responses. A cell where both underlines meet is an equilibrium. Stable does not mean best: read it as 'no one gains by switching alone'.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": ["best-response"],
+      "misconception": "M2",
+      "source": {
+        "label": "Stanford Encyclopedia of Philosophy: Game Theory",
+        "url": "https://plato.stanford.edu/entries/game-theory/"
+      },
+      "modes": ["cards", "equilibrium"]
+    },
+    {
+      "id": "pareto-efficiency",
+      "name": "Pareto efficiency",
+      "shortDefinition": "An outcome that no other outcome makes at least as good for every player and strictly better for at least one player.",
+      "longExplanation": "Pareto efficiency is a property of outcomes. A Pareto-efficient outcome has no free improvement: no other outcome helps one player without leaving every other player at least as well off. Many outcomes can be Pareto-efficient, including very unequal ones. Pareto efficiency says nothing about stability, so a Nash equilibrium can be Pareto-dominated by another outcome, and a Pareto-efficient outcome can be unstable.",
+      "example": "Two neighbours share a fence. Both painting it gives each of them a higher payoff than neither painting it, so the neither-paints outcome is not Pareto-efficient.",
+      "spottingTip": "Look for another cell that is at least as good for both players and strictly better for one. If you find one, the cell you started from is not Pareto-efficient.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": [],
+      "modes": ["cards", "equilibrium"]
+    },
+    {
+      "id": "prisoners-dilemma",
+      "name": "Prisoner's dilemma",
+      "shortDefinition": "A game where defecting is each player's dominant strategy, so both defect and both end with a lower payoff than mutual cooperation gives them.",
+      "longExplanation": "Payoffs measure what each player cares about, which may include the other player's outcome. They are not money, and the game does not assume that players are selfish. In the standard game, defecting is dominant for each player, so mutual defection is the only pure equilibrium. Mutual cooperation gives both players a higher payoff, so that equilibrium is Pareto-dominated. Dominance does not make the outcome good. Caring about the other player changes the payoffs, and so the game.",
+      "example": "Two neighbours each decide whether to contribute to a shared yard. Whatever the other does, not contributing gives a player the higher payoff, so both skip, and both end with a worse yard than if both had contributed.",
+      "spottingTip": "Check whether defecting is better for each player whatever the other does. If it is, the game has a dominant strategy. Then check whether mutual cooperation gives both players a higher payoff.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": ["dominant-strategy", "nash-equilibrium", "pareto-efficiency"],
+      "misconception": "M1",
+      "source": {
+        "label": "Wikipedia: Prisoner's dilemma",
+        "url": "https://en.wikipedia.org/wiki/Prisoner%27s_dilemma"
+      },
+      "modes": ["cards", "classify", "bots"]
+    },
+    {
+      "id": "stag-hunt",
+      "name": "Stag hunt",
+      "shortDefinition": "A coordination game with two equilibria: mutual stag, which gives both players more, and mutual hare, which is safer if the other player might not join in.",
+      "longExplanation": "Both players do best by matching the other's move. Mutual stag gives both players a higher payoff than mutual hare, and both pairs are equilibria. Hare is the safer move: it does well enough whatever the other player does, so it is the risk-dominant choice, even though mutual stag pays both more. The game has no dominant strategy, so stability alone does not single out one equilibrium.",
+      "example": "Two hunters can chase a stag together, which pays both more, or each hunt a hare alone, which is safer. A hunter who goes after the stag alone gets nothing.",
+      "spottingTip": "Look for two equilibria on the diagonal. The one that gives both players more is payoff-dominant. The one that is safer if the other player might not match is risk-dominant.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": ["nash-equilibrium", "pareto-efficiency"],
+      "source": {
+        "label": "Wikipedia: Stag hunt",
+        "url": "https://en.wikipedia.org/wiki/Stag_hunt"
+      },
+      "modes": ["cards", "classify"]
+    },
+    {
+      "id": "chicken-game",
+      "name": "Chicken game",
+      "shortDefinition": "A game with two equilibria in which one player holds firm and the other yields, and mutual holding firm is the worst outcome for both.",
+      "longExplanation": "Each player's best response depends on the other's move. If the other holds firm, yielding is the better move; if the other yields, holding firm is. So the two equilibria each have one player yielding and one holding firm. Neither player has a dominant strategy. Mutual holding firm is the worst outcome for both, which is what separates Chicken from the Prisoner's dilemma, where defecting is dominant.",
+      "example": "Two drivers speed toward each other. If one swerves, the other gains and the swerving driver loses. If neither swerves, both suffer the worst outcome.",
+      "spottingTip": "If the two equilibria each have one player yielding and mutual holding firm is the worst cell, you have Chicken. The Prisoner's dilemma has a dominant strategy; Chicken has none.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": ["nash-equilibrium"],
+      "misconception": "M6",
+      "source": {
+        "label": "Wikipedia: Chicken (game)",
+        "url": "https://en.wikipedia.org/wiki/Chicken_(game)"
+      },
+      "modes": ["cards", "classify"]
+    },
+    {
+      "id": "coordination-game",
+      "name": "Coordination game",
+      "shortDefinition": "A game in which both players want to match each other's move, so several matching outcomes are stable.",
+      "longExplanation": "In a pure coordination game, each player does best by matching the other, and every matching cell is an equilibrium. Those equilibria are stable, but the game does not say which one the players will reach. Several equilibria are not a single answer, so the claim to make is 'an equilibrium', and which one is reached is an open question.",
+      "example": "Two people agree to meet and both go to the same place. Each shared meeting place is an equilibrium, since neither gains by moving alone.",
+      "spottingTip": "Look for matching cells. Check each one: if neither player gains by switching alone, it is an equilibrium. More than one means the game has no single answer.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": ["nash-equilibrium"],
+      "misconception": "M3",
+      "modes": ["cards", "classify"]
+    },
+    {
+      "id": "battle-of-the-sexes",
+      "name": "Battle of the sexes",
+      "shortDefinition": "A coordination game in which both players want to match, but each prefers a different matching outcome.",
+      "longExplanation": "Both players prefer matching to not matching, but each prefers a different matching cell. Both matching cells are equilibria, and each player's preferred one gives the other less. Mismatched cells are not equilibria, because a player in one of them would want to switch. Unlike the pure coordination game, the equilibria are not equally good for both players, so the game also raises the question of which one to choose.",
+      "example": "A couple wants to spend the evening together, but one prefers a concert and the other a film. Both prefer going together to going apart, yet each prefers a different event.",
+      "spottingTip": "Compare the two matching cells. In a pure coordination game they are equally good for both players. In Battle of the sexes, each player prefers a different one.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": ["coordination-game"],
+      "modes": ["cards", "classify"]
+    },
+    {
+      "id": "mixed-strategy",
+      "name": "Mixed strategy",
+      "shortDefinition": "A plan that randomises over moves with chosen probabilities, instead of always playing one move.",
+      "longExplanation": "A mixed strategy is a probability distribution over moves. When a game has no pure equilibrium, an equilibrium in mixed strategies still exists. A player's mix is chosen to make the other player indifferent between their moves, so the other player has no reason to prefer one move. Random is not the same as having no strategy: the mix is a considered choice, and it is the other side's indifference that pins it down.",
+      "example": "In a matching game where one player wins by matching and the other wins by mismatching, always showing the same move lets the other side win every time. Each player's best plan is an even mix, which leaves the other indifferent.",
+      "spottingTip": "If no cell is a pure equilibrium, look for a mix. Each player's probabilities are set so that the other player's payoffs are equal across their moves.",
+      "type": "game-theory",
+      "tier": 1,
+      "prerequisites": ["nash-equilibrium"],
+      "misconception": "M10",
+      "modes": ["cards", "equilibrium"]
+    },
+    {
+      "id": "backward-induction",
+      "name": "Backward induction",
+      "shortDefinition": "Solve a sequential game by starting at the last decision and working back to the first, choosing the best move at each step.",
+      "longExplanation": "When one player moves after another, find the best move for the last mover first. Then the earlier mover chooses the move that does best, given that later players will respond with their best moves. The resulting plan is a subgame-perfect equilibrium. Not every Nash equilibrium is subgame-perfect. A threat can be part of a Nash equilibrium while being one that would not be carried out if the game reached that point. Such a threat is empty, and backward induction removes it.",
+      "example": "An entrant decides whether to enter, then an incumbent decides whether to fight. If fighting would leave the incumbent worse off once entry has happened, the incumbent's threat to fight is empty, even if a Nash equilibrium depends on it.",
+      "spottingTip": "Start at the last move. If a threat would not be carried out at its own turn, a Nash equilibrium that depends on it is not subgame-perfect.",
+      "type": "game-theory",
+      "tier": 2,
+      "prerequisites": ["nash-equilibrium"],
+      "misconception": "M7",
+      "modes": ["cards"]
+    },
+    {
+      "id": "repeated-game",
+      "name": "Repeated game",
+      "shortDefinition": "A game played again and again, where what happens later can make cooperation worth more than defecting now.",
+      "longExplanation": "When the same game is played repeatedly, a player's move can respond to earlier moves, and the threat of future punishment can hold cooperation together. Whether it does depends on how likely future meetings are, how much each player values them, and the payoffs. In this app, players are told how likely another round is, not how many rounds there will be. Results such as 'cooperation can hold' apply to particular settings and do not hold for every number of rounds.",
+      "example": "A neighbour cooperates on the first meeting and keeps cooperating while you do. Because you expect to meet again, defecting now could cost more later.",
+      "spottingTip": "In a one-shot game the reasoning is about this move alone. Once meetings repeat, ask what the other player's next move depends on.",
+      "type": "game-theory",
+      "tier": 3,
+      "prerequisites": ["prisoners-dilemma"],
+      "misconception": "M11",
+      "source": {
+        "label": "Axelrod: strategy library and tournaments",
+        "url": "https://axelrod.readthedocs.io/en/stable/"
+      },
+      "modes": ["cards", "bots"]
+    },
+    {
+      "id": "tit-for-tat",
+      "name": "Tit for tat",
+      "shortDefinition": "A strategy that cooperates on the first move and then copies the other player's last move.",
+      "longExplanation": "Tit for tat is simple to state. In a repeated game it cooperates with a cooperative opponent and answers a defection on the next move, so it punishes defection and forgives when cooperation returns. It did well in Axelrod's tournaments, but that result was specific to those tournaments: a different population, different payoffs or different noise can change the ranking. Copycat, the bot in this app with the same rule, shows the same thing. No general claim is made that it wins.",
+      "example": "Against an opponent who always defects, tit for tat cooperates on the first move and defects from then on. Against one who always cooperates, it cooperates throughout.",
+      "spottingTip": "It repeats your last move one turn later. A defection is answered once, and cooperation resumes if you cooperate.",
+      "type": "game-theory",
+      "tier": 3,
+      "prerequisites": ["repeated-game"],
+      "misconception": "M8",
+      "source": {
+        "label": "Axelrod: strategy library and tournaments",
+        "url": "https://axelrod.readthedocs.io/en/stable/"
+      },
+      "modes": ["cards", "bots"]
+    },
+    {
+      "id": "first-price-auction",
+      "name": "First-price auction",
+      "shortDefinition": "An auction in which the highest bidder wins and pays their own bid.",
+      "longExplanation": "When the winner pays their own bid, bidding exactly your value leaves no margin. A bidder who bids a little below their value gives up some chance of winning in return for a better result when they do win. In this setup, with independent private values, risk-neutral bidders and uniform values, an equilibrium has each bidder shade the bid below their value. The amount of shading depends on the number of bidders, and the result does not carry over to other setups.",
+      "example": "With three bidders whose values are uniformly spread, a bidder valued at 90 bids 60 in this setup. With more bidders, the same bidder bids closer to their value.",
+      "spottingTip": "Ask whether the winner pays their own bid. If so, bidding your value does not maximise your gain; shade the bid below it, by an amount that depends on how many bidders there are.",
+      "type": "game-theory",
+      "tier": 4,
+      "prerequisites": ["best-response", "second-price-auction"],
+      "modes": ["cards", "auction"]
+    },
+    {
+      "id": "second-price-auction",
+      "name": "Second-price auction",
+      "shortDefinition": "An auction in which the highest bidder wins and pays the second-highest bid.",
+      "longExplanation": "In a second-price (Vickrey) auction with private values, the winner's price does not depend on their own bid. Your bid decides whether you win, but not the price you pay, so bidding your value never does worse than any other bid. That makes truthful bidding a dominant strategy. It is a result about incentives to bid truthfully. It says nothing about whether the outcome is good for the seller or for everyone.",
+      "example": "Several bidders each value a painting. The highest bid wins, but the winner pays only the second-highest bid, so the winner's own bid never set the price.",
+      "spottingTip": "Check whether the winner's price depends on their own bid. In a second-price auction it does not, so bidding your value is the dominant move.",
+      "type": "game-theory",
+      "tier": 4,
+      "prerequisites": ["dominant-strategy"],
+      "source": {
+        "label": "Wikipedia: Vickrey auction",
+        "url": "https://en.wikipedia.org/wiki/Vickrey_auction"
+      },
+      "modes": ["cards", "auction"]
+    },
+    {
+      "id": "winners-curse",
+      "name": "Winner's curse",
+      "shortDefinition": "In a common-value auction, the winner tends to be the bidder whose estimate was most too high, so the winning bid can exceed the item's true value.",
+      "longExplanation": "When bidders estimate the same value from noisy information, the highest estimate is likely to be the one with the most upward noise. A bidder who bids their raw estimate tends to win in exactly the cases where they overestimated. In this setup, a naive bidder who bids their raw estimate loses on average, while a bidder who shades the bid by the expected overshoot does not. The claim is specific to this setup, with a common value and uniform noise. It is not a fact about every auction.",
+      "example": "Several firms estimate the value of the same oil field from seismic readings. The firm with the most optimistic reading tends to bid highest and win, and that reading is the one most likely to be too high.",
+      "spottingTip": "Ask whether everyone is estimating the same value from noisy signals. If yes, the winner's estimate is biased upward, so bid below the raw estimate.",
+      "type": "game-theory",
+      "tier": 4,
+      "prerequisites": ["first-price-auction"],
+      "misconception": "M12",
+      "source": {
+        "label": "Wikipedia: Winner's curse",
+        "url": "https://en.wikipedia.org/wiki/Winner%27s_curse"
+      },
+      "modes": ["cards", "auction"]
+    },
+    {
+      "id": "level-k-reasoning",
+      "name": "Level-k reasoning",
+      "shortDefinition": "A model in which players reason a fixed number of steps about what others will do, starting from a simple level-0 guess.",
+      "longExplanation": "A level-0 player makes a simple guess without modelling anyone else. A level-1 player best-responds to level-0, a level-2 player best-responds to level-1, and so on. The equilibrium assumes that everyone reasons all the way down. In Nagel's (1995) guessing game, many guesses sat near the first or second step of reasoning rather than at the equilibrium, which is why level-k models are used to describe play. It is a model of players, not a measurement of a real crowd.",
+      "example": "In the 2/3-of-the-average game, the aim is to guess two-thirds of the average of all guesses. A level-0 guess averages about 50, a level-1 guess is about 33, a level-2 guess is about 22, and the equilibrium is 0. In the simulated beauty contest, 0 is the equilibrium but not the winning guess.",
+      "spottingTip": "Ask how many steps of reasoning a guess assumes. Each higher level best-responds to the level below. An equilibrium is not automatically what people will guess.",
+      "type": "game-theory",
+      "tier": 5,
+      "prerequisites": ["iterated-elimination", "best-response"],
+      "misconception": "M4",
+      "source": {
+        "label": "Wikipedia: Guess 2/3 of the average (cites Nagel 1995)",
+        "url": "https://en.wikipedia.org/wiki/Guess_2/3_of_the_average"
+      },
+      "modes": ["cards", "beauty"]
+    }
+  ],
+  "pairs": [
+    {
+      "concepts": ["prisoners-dilemma", "stag-hunt"],
+      "tip": "Prisoner's dilemma: defecting is a dominant strategy, so the game has one equilibrium, and it gives both players less than mutual cooperation. Stag hunt: there is no dominant strategy; there are two equilibria, one that gives both players more, and the choice between them depends on trust in the other player."
+    },
+    {
+      "concepts": ["prisoners-dilemma", "chicken-game"],
+      "tip": "Prisoner's dilemma: defection is dominant, and mutual defection is the equilibrium. Chicken game: there is no dominant strategy, and mutual defection (both holding firm) is the worst outcome for both, while the two equilibria each have one player yielding."
+    },
+    {
+      "concepts": ["nash-equilibrium", "pareto-efficiency"],
+      "tip": "Nash equilibrium is a stability property: no one gains by switching alone. Pareto efficiency is an outcome property: no other outcome is at least as good for everyone and better for someone. A Nash equilibrium can be Pareto-dominated, and a Pareto-efficient outcome can be unstable."
+    },
+    {
+      "concepts": ["stag-hunt", "coordination-game"],
+      "tip": "Stag hunt: a coordination game where one matching outcome gives both players more (payoff-dominant) and the other is safer if the partner might not match (risk-dominant). Coordination game: the general case, where players want to match and the question is which matching outcome they reach."
+    },
+    {
+      "concepts": ["coordination-game", "battle-of-the-sexes"],
+      "tip": "Coordination game: both players agree which matching outcome is better, so the shared preferred equilibrium is the only question. Battle of the sexes: both want to match, but the two matching outcomes favour different players, so their preferred equilibria conflict."
+    },
+    {
+      "concepts": ["dominant-strategy", "best-response"],
+      "tip": "Dominant strategy: best against every move the other player could make. Best response: best against one specific move by the other player. Every dominant strategy is a best response, but a best response need not be dominant."
+    },
+    {
+      "concepts": ["nash-equilibrium", "backward-induction"],
+      "tip": "Nash equilibrium: no one gains by switching alone, and this can rest on an empty threat. Backward induction: solve from the last move back, so only threats that are carried out at their own turn survive. A subgame-perfect equilibrium is a Nash equilibrium that passes this test."
+    },
+    {
+      "concepts": ["first-price-auction", "second-price-auction"],
+      "tip": "First-price auction: the winner pays their own bid, so bidders shade below their value. Second-price auction: the winner pays the second bid, so bidding your value is dominant and bidders bid truthfully."
+    },
+    {
+      "concepts": ["prisoners-dilemma", "repeated-game"],
+      "tip": "Prisoner's dilemma: a one-shot game where defection is dominant. Repeated game: the same game is played again, so future meetings can make cooperation worth more than defecting now, and the result depends on how likely meetings are."
+    },
+    {
+      "concepts": ["nash-equilibrium", "level-k-reasoning"],
+      "tip": "Nash equilibrium: a stable outcome that assumes every player reasons all the way down. Level-k reasoning: a model of how people actually stop after a few steps of reasoning, so their play can differ from the equilibrium."
+    }
+  ]
 }
