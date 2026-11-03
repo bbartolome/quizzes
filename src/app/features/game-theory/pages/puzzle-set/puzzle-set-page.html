@@ -1,0 +1,202 @@
+<ui-page-shell [title]="title()" width="narrow" [back]="back" backTestId="back-hub">
+  @switch (phase()) {
+    @case ('empty') {
+      <ui-empty-state
+        heading="No puzzles yet"
+        message="Start with Best response. Puzzles are drawn from the ideas you have introduced."
+      >
+        <a uiButton variant="link" [routerLink]="startLink" data-testid="puzzles-test-out-link">
+          Test out
+        </a>
+      </ui-empty-state>
+    }
+    @case ('unsupported') {
+      <ui-empty-state
+        heading="No puzzle set here"
+        message="Choose a puzzle set from the Game Theory hub."
+      >
+        <a uiButton variant="link" routerLink="/game-theory" data-testid="puzzles-hub-link">
+          Back to Game Theory
+        </a>
+      </ui-empty-state>
+    }
+    @case ('blocked') {
+      <ui-empty-state heading="Not yet" message="This set uses ideas you have not introduced yet.">
+        <a uiButton variant="link" routerLink="/game-theory" data-testid="puzzles-hub-link">
+          Back to Game Theory
+        </a>
+      </ui-empty-state>
+    }
+    @case ('summary') {
+      <section class="space-y-4">
+        <p class="type-section" data-testid="puzzle-summary">
+          {{ correctCount() }} of {{ itemsPerSet }} correct.
+        </p>
+        <a uiButton variant="link" routerLink="/game-theory" data-testid="puzzles-hub-link">
+          Back to Game Theory
+        </a>
+      </section>
+    }
+    @case ('set') {
+      @if (current(); as item) {
+        <section class="space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <p class="type-detail" data-testid="puzzle-progress">
+              Item {{ item.index + 1 }} of {{ itemsPerSet }}
+            </p>
+            <p class="type-detail" data-testid="puzzle-kind">{{ kindLabels[item.kind] }}</p>
+          </div>
+          <p class="type-detail" data-testid="puzzle-difficulty">
+            Difficulty {{ item.difficulty }}
+          </p>
+          @if (heldBackNote(item); as note) {
+            <ui-callout data-testid="puzzle-held-back">{{ note }}</ui-callout>
+          }
+
+          @switch (item.kind) {
+            @case ('equilibrium') {
+              <p class="type-body">
+                Select each cell that is an equilibrium: a cell where neither player gains by
+                switching alone. If there is none, choose None of these.
+              </p>
+              <div [attr.inert]="item.grade ? '' : null">
+                @if (marks(); as blank) {
+                  <app-payoff-matrix
+                    [matrix]="item.puzzle.game.payoffs"
+                    [rowLabels]="item.puzzle.game.rowLabels"
+                    [colLabels]="item.puzzle.game.colLabels"
+                    [bestResponseMarks]="blank"
+                    [cellGrades]="cellGrades()"
+                    [noneGrade]="noneGrade()"
+                    [(selected)]="selected"
+                    [(noneChosen)]="noneChosen"
+                  />
+                }
+              </div>
+              @if (!item.grade) {
+                <button
+                  type="button"
+                  uiButton
+                  data-testid="puzzle-submit"
+                  [disabled]="!hasAnswer()"
+                  (click)="submitEquilibrium()"
+                >
+                  Submit
+                </button>
+              }
+            }
+            @case ('classify') {
+              <p class="type-body">Which game is this? Choose one.</p>
+              <div class="space-y-2">
+                @for (choice of choices(item); track choice) {
+                  <button
+                    type="button"
+                    [class]="choiceClass(item, choice)"
+                    [attr.data-testid]="'puzzle-choice-' + choice"
+                    [disabled]="item.grade !== null"
+                    (click)="chooseClass(choice)"
+                  >
+                    <span class="type-body flex-1">{{ classLabels[choice] }}</span>
+                    @if (choiceStatus(item, choice); as status) {
+                      <ui-status [tone]="status.tone" [label]="status.label" />
+                    }
+                  </button>
+                }
+              </div>
+            }
+            @case ('eliminate') {
+              <p class="type-body">
+                Remove a strategy that another strategy strictly beats against every opponent
+                choice, one at a time. Stop when none is left to remove.
+              </p>
+              <div inert>
+                @if (marks(); as blank) {
+                  <app-payoff-matrix
+                    [matrix]="item.puzzle.game.payoffs"
+                    [rowLabels]="item.puzzle.game.rowLabels"
+                    [colLabels]="item.puzzle.game.colLabels"
+                    [bestResponseMarks]="blank"
+                    [eliminated]="eliminatedLines()"
+                  />
+                }
+              </div>
+              @if (!item.grade) {
+                <div class="flex flex-wrap gap-2">
+                  @for (move of eliminations(); track move.player + ':' + move.index) {
+                    <button
+                      type="button"
+                      uiButton
+                      variant="secondary"
+                      [attr.data-testid]="'puzzle-eliminate-' + move.player + '-' + move.index"
+                      (click)="eliminate(move)"
+                    >
+                      {{ moveLabel(item, move) }}
+                    </button>
+                  }
+                  <button
+                    type="button"
+                    uiButton
+                    variant="secondary"
+                    data-testid="puzzle-stop"
+                    (click)="stopElimination()"
+                  >
+                    Stop here
+                  </button>
+                </div>
+              }
+            }
+          }
+
+          @if (item.grade; as grade) {
+            <ui-feedback
+              data-testid="puzzle-feedback"
+              [verdict]="grade.correct ? 'correct' : 'incorrect'"
+            >
+              {{ grade.note }}
+            </ui-feedback>
+          }
+
+          @if (item.reason; as reason) {
+            <section class="space-y-3" data-testid="puzzle-reason-check">
+              <p class="type-body">{{ reason.check.prompt }}</p>
+              <div class="space-y-2">
+                @for (option of reason.check.options; track option.id) {
+                  <button
+                    type="button"
+                    [class]="reasonClass(reason, option.id)"
+                    [attr.data-testid]="'puzzle-reason-option-' + option.id"
+                    [disabled]="reason.picked !== null"
+                    (click)="answerReason(option.id)"
+                  >
+                    <span class="type-body flex-1">{{ option.text }}</span>
+                  </button>
+                }
+              </div>
+              @if (reasonPicked(reason); as picked) {
+                <ui-feedback [verdict]="picked.correct ? 'correct' : 'incorrect'">
+                  <p class="type-detail">{{ picked.why }}</p>
+                  <p class="type-detail">Answer: {{ reasonAnswer(reason) }}</p>
+                </ui-feedback>
+              }
+            </section>
+          }
+
+          @if (answered(item)) {
+            <button type="button" uiButton data-testid="puzzle-next" (click)="next()">
+              {{ isLast(item) ? 'See summary' : 'Next item' }}
+            </button>
+          }
+        </section>
+      }
+    }
+  }
+
+  @if (checksFailed()) {
+    <ui-callout data-testid="puzzles-checks-failed">
+      Reason checks couldn't load, so this set won't ask why.
+    </ui-callout>
+  }
+  @if (saveFailed()) {
+    <ui-callout>Progress can't be saved in this browser.</ui-callout>
+  }
+</ui-page-shell>

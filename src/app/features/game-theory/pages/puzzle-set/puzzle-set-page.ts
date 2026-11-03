@@ -1,0 +1,633 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { APP_CLOCK } from '../../../../core/app-clock';
+import type { MasteryState } from '../../../../core/models/practice.models';
+import { PracticeService } from '../../../../core/services/practice.service';
+import { StatsService } from '../../../../core/services/stats.service';
+import { pooledConceptCounts } from '../../../../core/utils/concept-counts';
+import { daysFor, masteryOf } from '../../../../core/utils/mastery';
+import { Button } from '../../../../shared/ui/button.directive';
+import { Callout } from '../../../../shared/ui/callout';
+import { EmptyState } from '../../../../shared/ui/empty-state';
+import { FeedbackPanel } from '../../../../shared/ui/feedback-panel';
+import { OUTCOME_LOOK } from '../../../../shared/ui/outcome-look';
+import type { OptionRowState } from '../../../../shared/ui/option-row';
+import { PageBack, PageShell } from '../../../../shared/ui/page-shell';
+import { StatusBadge, type BadgeTone } from '../../../../shared/ui/status-badge';
+import { GameTheoryDataService } from '../../data/game-theory-data.service';
+import { strictlyDominates } from '../../lib/dominance';
+import type { CellRef, GameClass, PayoffMatrix, Player } from '../../lib/matrix.types';
+import type {
+  Difficulty,
+  Puzzle,
+  PuzzleAnswer,
+  PuzzleGrade,
+  PuzzleKind,
+  ReasonCheck,
+} from '../../lib/puzzle.types';
+import { generatePuzzle, gradePuzzle, matrixSignature } from '../../lib/puzzles';
+import { GtEvidenceService } from '../../state/gt-evidence.service';
+import { EVIDENCE_QUIZ_IDS, GtLearnService, countOf } from '../../state/gt-learn.service';
+import { GAME_THEORY_RNG } from '../../state/gt-tokens';
+import {
+  PayoffMatrixWidget,
+  type BestResponseMarks,
+  type CellGrade,
+  type CellOutcome,
+  type EliminatedLine,
+} from '../../ui/payoff-matrix/payoff-matrix';
+import { reasonCheckFor } from './reason-check';
+
+/** A set is one puzzle kind, or `mixed`, which interleaves all three (spec §5.2, §7.2). */
+type SetKind = PuzzleKind | 'mixed';
+type Phase = 'empty' | 'unsupported' | 'blocked' | 'set' | 'summary';
+type ChoiceOutcome = 'correct' | 'wrong';
+
+/** A row or column the player removes. `index` is the strategy's index in the full game. */
+interface Move {
+  player: Player;
+  index: number;
+}
+
+/** A gate on difficulty: a concept at Practised or Mastered (spec §7.2). */
+interface Gate {
+  conceptId: string;
+  need: 'practised' | 'mastered';
+  label: string;
+}
+
+interface ReasonRound {
+  check: ReasonCheck;
+  picked: string | null;
+}
+
+/** One item on screen: its puzzle, the difficulty it was drawn at, and the answer once graded. */
+interface Item {
+  index: number;
+  puzzle: Puzzle;
+  kind: PuzzleKind;
+  requested: Difficulty;
+  difficulty: Difficulty;
+  heldBack: Gate | null;
+  choice: GameClass | null;
+  grade: PuzzleGrade | null;
+  reason: ReasonRound | null;
+}
+
+const KINDS: readonly PuzzleKind[] = ['equilibrium', 'classify', 'eliminate'];
+const SET_KINDS: readonly SetKind[] = [...KINDS, 'mixed'];
+const SET_TITLE: Record<SetKind, string> = {
+  equilibrium: 'Equilibrium puzzles',
+  classify: 'Classify puzzles',
+  eliminate: 'Eliminate puzzles',
+  mixed: 'Mixed puzzles',
+};
+const KIND_LABEL: Record<PuzzleKind, string> = {
+  equilibrium: 'Equilibrium',
+  classify: 'Classify',
+  eliminate: 'Eliminate',
+};
+/** The five class names, as the spec writes them (§5.1). */
+const CLASS_LABEL: Record<GameClass, string> = {
+  'prisoners-dilemma': "Prisoner's Dilemma",
+  'stag-hunt': 'Stag Hunt',
+  'chicken-game': 'Chicken',
+  'battle-of-the-sexes': 'Battle of the Sexes',
+  'coordination-game': 'Pure coordination',
+  other: 'None of these',
+};
+const CLASS_IDS: readonly GameClass[] = [
+  'prisoners-dilemma',
+  'stag-hunt',
+  'chicken-game',
+  'battle-of-the-sexes',
+  'coordination-game',
+];
+/** The concepts an equilibrium or elimination item credits. A classify item credits one class. */
+const CONCEPTS_NEEDED: Record<'equilibrium' | 'eliminate', readonly string[]> = {
+  equilibrium: ['best-response', 'nash-equilibrium'],
+  eliminate: ['dominant-strategy', 'iterated-elimination'],
+};
+const LEVELS: readonly Difficulty[] = [1, 2, 3];
+const ITEMS_PER_SET = 5;
+/** Generator draws tried per item before the set reports that it cannot draw. */
+const DRAW_TRIES = 100;
+const NASH = 'nash-equilibrium';
+const DOMINANT = 'dominant-strategy';
+const NASH_PRACTISED: Gate = {
+  conceptId: NASH,
+  need: 'practised',
+  label: 'Nash equilibrium Practised',
+};
+const NASH_MASTERED: Gate = {
+  conceptId: NASH,
+  need: 'mastered',
+  label: 'Nash equilibrium Mastered',
+};
+const DOMINANT_PRACTISED: Gate = {
+  conceptId: DOMINANT,
+  need: 'practised',
+  label: 'Dominant strategy Practised (3×3 elimination)',
+};
+const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
+const START_LINK = '/game-theory/test-out/best-response';
+const CELL_OUTCOME: Record<'tp' | 'fp' | 'fn' | 'tn', CellOutcome | null> = {
+  tp: 'correct',
+  fp: 'wrong',
+  fn: 'missed',
+  tn: null,
+};
+const OUTCOME_WORDS: Record<ChoiceOutcome, string> = {
+  correct: 'Correct answer',
+  wrong: 'Your pick',
+};
+const CHOICE_BASE =
+  'flex w-full cursor-pointer items-center gap-3 rounded-lg border p-3 text-left focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface disabled:cursor-default';
+const CHOICE_LOOK: Record<OptionRowState, string> = {
+  idle: 'border-default',
+  neutral: 'border-default',
+  selected: 'border-accent bg-accent-subtle',
+  correct: 'border-success bg-success-subtle',
+  wrong: 'border-danger bg-danger-subtle',
+  missed: 'border-warning bg-warning-subtle',
+};
+
+/**
+ * The gates on an item at a difficulty (spec §7.2). Difficulty 2 needs nash-equilibrium Practised
+ * for an equilibrium item and for any item of a mixed set. Difficulty 3 needs it Mastered, for every
+ * kind. A 3x3 elimination needs dominant-strategy Practised. Difficulty 2 elimination is always 3x3,
+ * and difficulty 3 may be, so the gate covers both levels. Difficulty 1 is never gated.
+ */
+function gatesFor(kind: PuzzleKind, mixed: boolean, difficulty: Difficulty): Gate[] {
+  const gates: Gate[] = [];
+  if (difficulty === 2 && (kind === 'equilibrium' || mixed)) {
+    gates.push(NASH_PRACTISED);
+  }
+  if (difficulty === 3) {
+    gates.push(NASH_MASTERED);
+  }
+  if (difficulty >= 2 && kind === 'eliminate') {
+    gates.push(DOMINANT_PRACTISED);
+  }
+  return gates;
+}
+
+const range = (count: number): number[] => Array.from({ length: count }, (_, i) => i);
+
+/** No best-response underlines. They would give the equilibrium away, so the player finds it alone. */
+function noMarks(payoffs: PayoffMatrix): BestResponseMarks {
+  const grid = () =>
+    Array.from({ length: payoffs.rows }, () => Array.from({ length: payoffs.cols }, () => false));
+  return { row: grid(), col: grid() };
+}
+
+/** Whether strategy a is strictly dominated by another strategy in the reduced game `sub`. */
+function isDominated(sub: PayoffMatrix, player: Player, a: number): boolean {
+  const count = player === 'row' ? sub.rows : sub.cols;
+  return range(count).some((b) => b !== a && strictlyDominates(sub, player, b, a));
+}
+
+/**
+ * Every removal that strict dominance allows now, after the moves already made (spec §5.1, §11
+ * M14). Dominance is judged in the reduced game, as the grader does.
+ */
+function legalEliminations(m: PayoffMatrix, made: readonly Move[]): Move[] {
+  const rows = range(m.rows).filter(
+    (r) => !made.some((mv) => mv.player === 'row' && mv.index === r),
+  );
+  const cols = range(m.cols).filter(
+    (c) => !made.some((mv) => mv.player === 'col' && mv.index === c),
+  );
+  const sub: PayoffMatrix = {
+    rows: rows.length,
+    cols: cols.length,
+    row: rows.map((r) => cols.map((c) => m.row[r][c])),
+    col: rows.map((r) => cols.map((c) => m.col[r][c])),
+  };
+  const rowMoves: Move[] = rows.flatMap((index, a) =>
+    isDominated(sub, 'row', a) ? [{ player: 'row' as const, index }] : [],
+  );
+  const colMoves: Move[] = cols.flatMap((index, a) =>
+    isDominated(sub, 'col', a) ? [{ player: 'col' as const, index }] : [],
+  );
+  return [...rowMoves, ...colMoves];
+}
+
+/**
+ * One puzzle set at `puzzles/:kind` (spec §5.2, §5.3, §7.2, §9.1). Each set has five items. Every
+ * item is drawn from the injected rng, graded by gradePuzzle and recorded under challenges with its
+ * own concept ids. A matching reason check follows the item. Nothing advances on its own.
+ */
+@Component({
+  selector: 'app-puzzle-set-page',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './puzzle-set-page.html',
+  imports: [
+    Button,
+    Callout,
+    EmptyState,
+    FeedbackPanel,
+    PageShell,
+    PayoffMatrixWidget,
+    RouterLink,
+    StatusBadge,
+  ],
+})
+export class PuzzleSetPage {
+  private readonly route = inject(ActivatedRoute);
+  private readonly data = inject(GameTheoryDataService);
+  private readonly rng = inject(GAME_THEORY_RNG);
+  private readonly clock = inject(APP_CLOCK);
+  private readonly stats = inject(StatsService);
+  private readonly practice = inject(PracticeService);
+  private readonly evidence = inject(GtEvidenceService);
+  private readonly learn = inject(GtLearnService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  protected readonly back = BACK;
+  protected readonly startLink = START_LINK;
+  protected readonly itemsPerSet = ITEMS_PER_SET;
+  protected readonly kindLabels = KIND_LABEL;
+  protected readonly classLabels = CLASS_LABEL;
+  protected readonly saveFailed = this.evidence.saveFailed;
+
+  private readonly kindParam = signal('');
+  protected readonly setKind = computed<SetKind | null>(
+    () => SET_KINDS.find((kind) => kind === this.kindParam()) ?? null,
+  );
+  protected readonly title = computed(() => {
+    const kind = this.setKind();
+    return kind ? SET_TITLE[kind] : 'Puzzles';
+  });
+
+  /** How many concepts were introduced when the set started. Zero means nothing to draw from (§7.2). */
+  private readonly introducedCount = signal(0);
+  /** The reason checks from checks.json. Puzzles draw without them, so a failed load only drops the asks. */
+  private readonly checks = signal<readonly ReasonCheck[]>([]);
+  protected readonly checksFailed = signal(false);
+
+  /** The puzzles drawn so far in this set, so a repeat matrix can be avoided. */
+  private drawn: Puzzle[] = [];
+  /** One entry per graded item of this set, true when it was correct. */
+  protected readonly results = signal<boolean[]>([]);
+  protected readonly correctCount = computed(() => this.results().filter(Boolean).length);
+  protected readonly current = signal<Item | null>(null);
+
+  /** The equilibrium answer on screen. The widget two-way binds to these. */
+  protected readonly selected = signal<CellRef[]>([]);
+  protected readonly noneChosen = signal(false);
+  /** The eliminations made so far on the current item, in order. */
+  protected readonly moves = signal<Move[]>([]);
+
+  protected readonly phase = computed<Phase>(() => {
+    if (this.introducedCount() === 0) {
+      return 'empty';
+    }
+    if (this.setKind() === null) {
+      return 'unsupported';
+    }
+    // The fifth item stays on screen until its Next is pressed, so the summary waits for an empty slot.
+    if (this.current()) {
+      return 'set';
+    }
+    return this.results().length >= ITEMS_PER_SET ? 'summary' : 'blocked';
+  });
+
+  protected readonly hasAnswer = computed(() => this.noneChosen() || this.selected().length > 0);
+  protected readonly marks = computed<BestResponseMarks | null>(() => {
+    const item = this.current();
+    return item ? noMarks(item.puzzle.game.payoffs) : null;
+  });
+  protected readonly cellGrades = computed<CellGrade[]>(() => {
+    const grade = this.current()?.grade;
+    if (!grade?.cellVerdicts) {
+      return [];
+    }
+    return Object.entries(grade.cellVerdicts).flatMap(([key, verdict]) => {
+      const outcome = CELL_OUTCOME[verdict];
+      if (!outcome) {
+        return [];
+      }
+      const [r, c] = key.split(',').map(Number);
+      return [{ r, c, outcome }];
+    });
+  });
+  protected readonly noneGrade = computed<CellOutcome | null>(() => {
+    const item = this.current();
+    const grade = item?.grade;
+    if (!item || !grade || item.kind !== 'equilibrium') {
+      return null;
+    }
+    if (this.noneChosen()) {
+      return grade.correct ? 'correct' : 'wrong';
+    }
+    return this.equilibriumSolution(item).length === 0 ? 'missed' : null;
+  });
+  protected readonly eliminatedLines = computed<EliminatedLine[]>(() =>
+    this.moves().map((move, i) => ({ player: move.player, index: move.index, step: i + 1 })),
+  );
+  protected readonly eliminations = computed<Move[]>(() => {
+    const item = this.current();
+    if (!item || item.grade || item.kind !== 'eliminate') {
+      return [];
+    }
+    return legalEliminations(item.puzzle.game.payoffs, this.moves());
+  });
+
+  constructor() {
+    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      this.kindParam.set(params.get('kind') ?? '');
+      this.startSet();
+    });
+    this.data
+      .load()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (loaded) => this.checks.set(loaded.checks.checks),
+        error: () => this.checksFailed.set(true),
+      });
+  }
+
+  /** Grades the equilibrium answer on screen. */
+  protected submitEquilibrium(): void {
+    const item = this.current();
+    if (!item || item.grade || item.kind !== 'equilibrium' || !this.hasAnswer()) {
+      return;
+    }
+    this.gradeWith({ kind: 'equilibrium', cells: this.noneChosen() ? [] : this.selected() });
+  }
+
+  /** A classify item is answered by its button. The choice grades at once. */
+  protected chooseClass(choice: GameClass): void {
+    const item = this.current();
+    if (!item || item.grade || item.kind !== 'classify') {
+      return;
+    }
+    this.current.set({ ...item, choice });
+    this.gradeWith({ kind: 'classify', choice });
+  }
+
+  /** Removes one strategy. When none is left to remove, the item finishes and is graded. */
+  protected eliminate(move: Move): void {
+    const item = this.current();
+    if (!item || item.grade || item.kind !== 'eliminate') {
+      return;
+    }
+    const moves = [...this.moves(), move];
+    this.moves.set(moves);
+    if (legalEliminations(item.puzzle.game.payoffs, moves).length === 0) {
+      this.gradeWith({ kind: 'eliminate', moves, done: true });
+    }
+  }
+
+  /** The player stops while removals are still possible, which grades the item as stopped early. */
+  protected stopElimination(): void {
+    const item = this.current();
+    if (!item || item.grade || item.kind !== 'eliminate') {
+      return;
+    }
+    this.gradeWith({ kind: 'eliminate', moves: this.moves(), done: false });
+  }
+
+  /** Records the reason answer. The option's correctness is what the check's concept is credited with. */
+  protected answerReason(optionId: string): void {
+    const item = this.current();
+    const reason = item?.reason;
+    if (!item || !reason || reason.picked !== null) {
+      return;
+    }
+    const option = reason.check.options.find((o) => o.id === optionId);
+    if (!option) {
+      return;
+    }
+    this.evidence.record(
+      reason.check.conceptId ? [reason.check.conceptId] : [],
+      option.correct,
+      'challenges',
+      this.clock(),
+    );
+    this.current.set({ ...item, reason: { ...reason, picked: optionId } });
+  }
+
+  /** Moves to the next item, or to the summary after the fifth. */
+  protected next(): void {
+    const item = this.current();
+    if (!item || !this.answered(item)) {
+      return;
+    }
+    this.drawItem();
+  }
+
+  protected answered(item: Item): boolean {
+    return item.grade !== null && (item.reason === null || item.reason.picked !== null);
+  }
+
+  protected isLast(item: Item): boolean {
+    return item.index === ITEMS_PER_SET - 1;
+  }
+
+  /** The note for an item held back below the level its set asked for, or null. */
+  protected heldBackNote(item: Item): string | null {
+    if (!item.heldBack) {
+      return null;
+    }
+    return `Held at difficulty ${item.difficulty}: difficulty ${item.requested} needs ${item.heldBack.label}.`;
+  }
+
+  protected choices(item: Item): GameClass[] {
+    return item.puzzle.kind === 'classify' ? item.puzzle.choices : [];
+  }
+
+  protected choiceClass(item: Item, choice: GameClass): string {
+    const outcome = this.choiceOutcome(item, choice);
+    const state: OptionRowState = outcome ? OUTCOME_LOOK[outcome].state : 'idle';
+    return `${CHOICE_BASE} ${CHOICE_LOOK[state]}`;
+  }
+
+  /** The non-colour words for a classify choice once graded: the answer, and the player's pick. */
+  protected choiceStatus(item: Item, choice: GameClass): { tone: BadgeTone; label: string } | null {
+    const outcome = this.choiceOutcome(item, choice);
+    return outcome ? { tone: OUTCOME_LOOK[outcome].tone, label: OUTCOME_WORDS[outcome] } : null;
+  }
+
+  protected moveLabel(item: Item, move: Move): string {
+    const labels = move.player === 'row' ? item.puzzle.game.rowLabels : item.puzzle.game.colLabels;
+    return `${move.player === 'row' ? 'Eliminate row' : 'Eliminate column'} ${labels[move.index]}`;
+  }
+
+  protected reasonClass(reason: ReasonRound, optionId: string): string {
+    const state: OptionRowState = reason.picked === optionId ? 'selected' : 'idle';
+    return `${CHOICE_BASE} ${CHOICE_LOOK[state]}`;
+  }
+
+  protected reasonPicked(reason: ReasonRound): ReasonCheck['options'][number] | null {
+    return reason.check.options.find((option) => option.id === reason.picked) ?? null;
+  }
+
+  protected reasonAnswer(reason: ReasonRound): string {
+    return reason.check.options.find((option) => option.correct)?.text ?? '';
+  }
+
+  private gradeWith(answer: PuzzleAnswer): void {
+    const item = this.current();
+    if (!item) {
+      return;
+    }
+    const grade = gradePuzzle(item.puzzle, answer);
+    this.evidence.record(item.puzzle.conceptIds, grade.correct, 'challenges', this.clock());
+    this.results.update((all) => [...all, grade.correct]);
+    const check = reasonCheckFor(this.checks(), item.kind, item.puzzle.conceptIds);
+    this.current.set({ ...item, grade, reason: check ? { check, picked: null } : null });
+  }
+
+  private startSet(): void {
+    this.drawn = [];
+    this.results.set([]);
+    this.introducedCount.set(this.learn.introduced.size);
+    this.drawItem();
+  }
+
+  /** Draws the next item of the set, or none once the set is complete or nothing can be drawn. */
+  private drawItem(): void {
+    const set = this.setKind();
+    const index = this.results().length;
+    const kinds = set ? this.drawableKinds(set) : [];
+    if (!set || kinds.length === 0 || index >= ITEMS_PER_SET) {
+      this.current.set(null);
+      return;
+    }
+    const kind = kinds[index % kinds.length];
+    const requested = this.requestedLevel();
+    const { difficulty, heldBack } = this.difficultyFor(kind, set === 'mixed', requested);
+    const puzzle = this.drawPuzzle(kind, difficulty);
+    if (!puzzle) {
+      this.current.set(null);
+      return;
+    }
+    this.drawn = [...this.drawn, puzzle];
+    this.selected.set([]);
+    this.noneChosen.set(false);
+    this.moves.set([]);
+    this.current.set({
+      index,
+      puzzle,
+      kind,
+      requested,
+      difficulty,
+      heldBack,
+      choice: null,
+      grade: null,
+      reason: null,
+    });
+  }
+
+  /** The level the set asks for: one more for each correct item so far, from difficulty 1 (§7.2). */
+  private requestedLevel(): Difficulty {
+    const correct = this.correctCount();
+    if (correct >= 2) {
+      return 3;
+    }
+    return correct === 1 ? 2 : 1;
+  }
+
+  /**
+   * The difficulty an item is drawn at. If a gate on the requested level is unmet, the item steps
+   * down to the highest level whose gates are met. The first unmet gate on the requested level is
+   * returned, so the page can say which gate held the item back.
+   */
+  private difficultyFor(
+    kind: PuzzleKind,
+    mixed: boolean,
+    requested: Difficulty,
+  ): { difficulty: Difficulty; heldBack: Gate | null } {
+    const blocker = gatesFor(kind, mixed, requested).find((gate) => !this.gateMet(gate));
+    if (!blocker) {
+      return { difficulty: requested, heldBack: null };
+    }
+    const lower = LEVELS.filter((level) => level < requested).reverse();
+    const difficulty =
+      lower.find((level) => gatesFor(kind, mixed, level).every((gate) => this.gateMet(gate))) ?? 1;
+    return { difficulty, heldBack: blocker };
+  }
+
+  /** Kinds that can draw from the introduced concepts. A mixed set rotates through all of them. */
+  private drawableKinds(set: SetKind): PuzzleKind[] {
+    const candidates: PuzzleKind[] = set === 'mixed' ? [...KINDS] : [set];
+    return candidates.filter((kind) => this.drawableKind(kind));
+  }
+
+  private drawableKind(kind: PuzzleKind): boolean {
+    const introduced = this.learn.introduced;
+    if (kind === 'classify') {
+      return CLASS_IDS.some((id) => introduced.has(id));
+    }
+    return CONCEPTS_NEEDED[kind].every((id) => introduced.has(id));
+  }
+
+  /**
+   * Draws one puzzle of the kind and difficulty, avoiding the matrices already in the set. Only a
+   * puzzle whose concepts are all introduced is kept (§7.2), so a redraw happens for a repeat or an
+   * unintroduced concept. Returns null if no draw in DRAW_TRIES passes.
+   */
+  private drawPuzzle(kind: PuzzleKind, difficulty: Difficulty): Puzzle | null {
+    const introduced = this.learn.introduced;
+    const avoid = this.drawn.map((p) => matrixSignature(p.game));
+    for (let tries = 0; tries < DRAW_TRIES; tries++) {
+      const puzzle = generatePuzzle(kind, difficulty, this.rng, { avoid });
+      if (puzzle.conceptIds.every((id) => introduced.has(id))) {
+        return puzzle;
+      }
+    }
+    return null;
+  }
+
+  private gateMet(gate: Gate): boolean {
+    const state = this.stateOf(gate.conceptId);
+    return gate.need === 'mastered'
+      ? state === 'mastered'
+      : state === 'practised' || state === 'mastered';
+  }
+
+  /**
+   * A concept's mastery state (§7.3): cards and challenges pooled, the challenge attempts and the
+   * practice days. nash-equilibrium has an equilibrium mode in concepts.json, so Mastered needs
+   * challenge evidence, and dominant-strategy is only ever checked at Practised.
+   */
+  private stateOf(conceptId: string): MasteryState {
+    const cards = this.stats.getStats(EVIDENCE_QUIZ_IDS.cards);
+    const challenges = this.stats.getStats(EVIDENCE_QUIZ_IDS.challenges);
+    const pooled = pooledConceptCounts([cards, challenges], new Set([conceptId])).get(
+      conceptId,
+    ) ?? { attempted: 0, correct: 0 };
+    return masteryOf({
+      attempted: pooled.attempted,
+      correct: pooled.correct,
+      days: daysFor(this.practice.conceptDays()[conceptId], pooled.attempted),
+      challengeAttempts: countOf(challenges.perTrait[conceptId])?.attempted ?? 0,
+      requiresChallenge: true,
+    });
+  }
+
+  private equilibriumSolution(item: Item): CellRef[] {
+    return item.puzzle.kind === 'equilibrium' ? item.puzzle.solution : [];
+  }
+
+  private choiceOutcome(item: Item, choice: GameClass): ChoiceOutcome | null {
+    if (!item.grade || item.puzzle.kind !== 'classify') {
+      return null;
+    }
+    if (choice === item.puzzle.solution) {
+      return 'correct';
+    }
+    return item.choice === choice ? 'wrong' : null;
+  }
+}

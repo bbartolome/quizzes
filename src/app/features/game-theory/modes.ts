@@ -13,4 +13,28 @@ export interface GameTheoryMode {
 
 export const GAME_THEORY_MODES: readonly GameTheoryMode[] = [
   { id: 'cards', title: 'Cards', path: 'game-theory/cards', requires: [] },
+  {
+    id: 'puzzles-equilibrium',
+    title: 'Equilibrium puzzles',
+    path: 'game-theory/puzzles/equilibrium',
+    requires: ['nash-equilibrium'],
+  },
+  {
+    id: 'puzzles-classify',
+    title: 'Classify puzzles',
+    path: 'game-theory/puzzles/classify',
+    requires: ['nash-equilibrium'],
+  },
+  {
+    id: 'puzzles-eliminate',
+    title: 'Eliminate puzzles',
+    path: 'game-theory/puzzles/eliminate',
+    requires: ['nash-equilibrium'],
+  },
+  {
+    id: 'puzzles-mixed',
+    title: 'Mixed puzzles',
+    path: 'game-theory/puzzles/mixed',
+    requires: ['nash-equilibrium'],
+  },
 ];
