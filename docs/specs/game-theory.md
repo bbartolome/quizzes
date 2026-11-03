@@ -55,7 +55,7 @@ Out of scope:
 }
 ```
 
-- `QuizManifestEntry.kind` gains `'game-theory'`. `ROUTE_PREFIX` (`library-page.ts:17`) gets an entry, and `routeFor` (`:104`) a singleton special case, because the hub has one fixed path. Without it the card links to `#/game-theory/game-theory`.
+- `QuizManifestEntry.kind` gains `'game-theory'`. `ROUTE_PREFIX` and `routeFor` (both in `features/library/library-cards.ts`) get an entry and a singleton special case, because the hub has one fixed path. Without it the card links to `#/game-theory/game-theory`.
 - **Rejected: one entry per piece** (cards, puzzles, bots, contests). It means four library cards, several new `kind`s each needing a `ROUTE_PREFIX` entry and a `toCard` branch, and splits mastery, the daily puzzle and badges across entries. That is the generalized kinds engine calibration §1 rules out.
 - **Rejected: game theory as a third flash-card kind.** It forks every hard-coded `'bias' | 'fallacy'` assumption: `FLASH_HOME` (`stats-page.ts`), `BACK_LABELS`, `deckForKind`, `LEGENDS` and the route `data.conceptType`.
 - The hub's mode list is a plain array in the hub page, not a plugin registry.
@@ -74,7 +74,7 @@ Out of scope:
 | `game-theory/play/:game`     | `beauty-contest`, `first-price`, `second-price` or `common-value`          | G24      |
 | `game-theory/daily`          | Daily puzzle                                                               | G27      |
 
-`app.routes.spec.ts` goes from 18 routes to 25: 19 (G1), 20 (G10), 21 (G16), 22 (G17), 23 (G20), 24 (G24), 25 (G27).
+The hub's routes sit in one `GAME_THEORY_ROUTES` child table (`game-theory.routes.ts`), mounted once under `game-theory`. `app.routes.spec.ts` goes from 18 routes to 19 a single time, and each slice adds its own row to the child table and to `game-theory.routes.spec.ts`. See `game-theory-prefactor.md` T5.
 
 ### 3.3 Folder layout
 
@@ -785,6 +785,7 @@ TDD-sized, in dependency order. Each is a red commit followed by the implementat
 | G28 | The eight game-theory badges registered in the practice-layer registry _(cut candidate)_                                                                                    | §9.3          | P7, G16, G21, G22, G24, G26 |
 | G29 | Content authoring: remaining tutorials, reason checks, sources, bot blurbs. Content work, guarded by the G8, G15 and G17 tests                                              | §6, §7        | G15, G17                    |
 
+- **Pre-factor.** `docs/specs/game-theory-prefactor.md` (T1–T7) lands first. G7 becomes T1; the library, route and manifest parts of G1, the guards of G2, and the inert service surface of G9 move into T2, T3, T5 and T7. The practice-layer slices P1–P7 this table depends on have landed.
 - **Parallel lanes after G2:** the solver (G3–G6), content (G7–G8, with G1), bots (G19), contests (G24's engine and G25).
 - G11–G13 and G14 are independent of each other once G3–G5 land. G21, G22 and G23 are independent once G20 lands. G24 and G25 are independent.
 - **Cut order for a smaller first drop:** G23, then G28; then G6 and G13; then the common-value half of G25 and G26; then the daily puzzle (G27); then reduce G18's map to a plain list.
