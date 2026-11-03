@@ -6,7 +6,7 @@ import { paretoOptimal } from '../matrix';
 import type { CellRef, PayoffMatrix, Player } from '../matrix.types';
 import type { Difficulty, EliminatePuzzle, PuzzleTag } from '../puzzle.types';
 import { mulberry32 } from '../rng';
-import { drawEliminate, gradeEliminate } from './eliminate-puzzle';
+import { drawEliminate, drawEliminateWithFallback, gradeEliminate } from './eliminate-puzzle';
 import { matrixSignature } from './signature';
 
 type Move = { player: Player; index: number };
@@ -279,7 +279,8 @@ describe('elimination rejection loop and authored fallback', () => {
 
   it.each([1, 2, 3] as const)('the fallback at difficulty %i meets the spec', (d) => {
     // A constant rng gives a constant game, which never eliminates anything, so the fallback is used.
-    const puzzle = drawEliminate(d, () => 0.5);
+    const { puzzle, usedFallback } = drawEliminateWithFallback(d, () => 0.5);
+    expect(usedFallback).toBe(true);
     expect(puzzle.solution).toEqual(eliminationTrace(puzzle.game.payoffs));
     if (d === 1) {
       expect(puzzle.solution).toHaveLength(1);
@@ -297,9 +298,7 @@ describe('elimination rejection loop and authored fallback', () => {
   it('never uses the fallback in 1000 seeds, at any difficulty', () => {
     for (const d of [1, 2, 3] as const) {
       forSeeds((seed) => {
-        const puzzle = drawEliminate(d, mulberry32(seed));
-        expect(puzzle.solution.length).toBeGreaterThan(0);
-        expect(puzzle.solution).toEqual(eliminationTrace(puzzle.game.payoffs));
+        expect(drawEliminateWithFallback(d, mulberry32(seed)).usedFallback).toBe(false);
       }, 1000);
     }
   });
