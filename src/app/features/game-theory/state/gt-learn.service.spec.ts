@@ -1,8 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { GtLearnService } from './gt-learn.service';
+import { EVIDENCE_QUIZ_IDS, GtLearnService } from './gt-learn.service';
 import type { LearnState, TutorialStage } from '../lib/state.types';
 import { addDays } from '../../../core/utils/dates';
+import type { PerTraitStats, QuizStats } from '../../../core/models/quiz.models';
+import { PracticeService } from '../../../core/services/practice.service';
+import { StatsService } from '../../../core/services/stats.service';
 import { provideFixedClock } from '../../../../testing/fixed-clock';
 import { MemoryStorage } from '../../../../testing/memory-storage';
 
@@ -307,6 +310,80 @@ describe('GtLearnService', () => {
       learn.setStage(BEST, 1);
 
       expect(learn.read().summary.introduced).toBe(0);
+    });
+  });
+
+  describe('mastery and the requiresChallenge map', () => {
+    const CARDS_ONLY = 'backward-induction';
+    const NEEDS_CHALLENGE = 'best-response';
+    const TODAY_KEY = '2026-11-03';
+
+    /**
+     * Eight correct card answers on two practice days for each concept. Neither concept has a
+     * challenge attempt, so only the map decides whether a concept can reach Mastered.
+     */
+    function seedEvidence(): void {
+      const stats = TestBed.inject(StatsService);
+      const practice = TestBed.inject(PracticeService);
+      const cardTraits: Record<string, PerTraitStats> = {
+        [CARDS_ONLY]: { traitId: CARDS_ONLY, correct: 8, attempted: 8 },
+        [NEEDS_CHALLENGE]: { traitId: NEEDS_CHALLENGE, correct: 8, attempted: 8 },
+      };
+      vi.spyOn(stats, 'getStats').mockImplementation((quizId: string): QuizStats => ({
+        quizId,
+        version: 1,
+        perTrait: quizId === EVIDENCE_QUIZ_IDS.cards ? cardTraits : {},
+        streak: 0,
+        roundsPlayed: 0,
+      }));
+      vi.spyOn(practice, 'conceptDays').mockReturnValue({
+        [CARDS_ONLY]: { days: 2, lastDay: TODAY_KEY },
+        [NEEDS_CHALLENGE]: { days: 2, lastDay: TODAY_KEY },
+      });
+    }
+
+    it('counts a cards-only concept as Mastered when the map says it needs no challenge', () => {
+      seedEvidence();
+      const learn = service();
+
+      learn.refresh([CARDS_ONLY, NEEDS_CHALLENGE], {
+        [CARDS_ONLY]: false,
+        [NEEDS_CHALLENGE]: true,
+      });
+
+      expect(learn.read().summary.mastered).toBe(1);
+    });
+
+    it('keeps the default, which requires a challenge, when no map is given', () => {
+      seedEvidence();
+      const learn = service();
+
+      learn.refresh([CARDS_ONLY, NEEDS_CHALLENGE]);
+
+      expect(learn.read().summary.mastered).toBe(0);
+    });
+
+    it('requires a challenge for an id that is missing from the map', () => {
+      seedEvidence();
+      const learn = service();
+
+      learn.refresh([CARDS_ONLY, NEEDS_CHALLENGE], { [NEEDS_CHALLENGE]: true });
+
+      expect(learn.read().summary.mastered).toBe(0);
+    });
+
+    it('keeps the map for later writes, so a stage change or a refresh without a map does not undo it', () => {
+      seedEvidence();
+      const learn = service();
+      learn.refresh([CARDS_ONLY, NEEDS_CHALLENGE], {
+        [CARDS_ONLY]: false,
+        [NEEDS_CHALLENGE]: true,
+      });
+
+      learn.setStage(NEEDS_CHALLENGE, 2);
+      learn.refresh();
+
+      expect(learn.read().summary.mastered).toBe(1);
     });
   });
 

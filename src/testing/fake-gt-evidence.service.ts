@@ -1,3 +1,4 @@
+import { signal, Signal } from '@angular/core';
 import { GtFacet } from '../app/features/game-theory/state/gt-evidence.service';
 
 export interface RecordedAttempt {
@@ -15,6 +16,13 @@ export class FakeGtEvidenceService {
   readonly dailyCalls: Date[] = [];
   sessionEnds = 0;
   readonly migrations: { version: number; conceptIds: string[] }[] = [];
+  private readonly failed = signal(false);
+  readonly saveFailed: Signal<boolean> = this.failed.asReadonly();
+
+  /** Sets the flag that saveFailed reports, for a spec of the write-failure message. */
+  setSaveFailed(value: boolean): void {
+    this.failed.set(value);
+  }
 
   record(conceptIds: string[], correct: boolean, facet: GtFacet, _now: Date): void {
     this.records.push({ conceptIds: [...conceptIds], correct, facet });

@@ -40,6 +40,7 @@ describe('GameTheoryHomePage', () => {
   });
 
   it('renders no mode links while the array is empty', () => {
+    (GAME_THEORY_MODES as GameTheoryMode[]).length = 0;
     const fixture = TestBed.createComponent(GameTheoryHomePage);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelectorAll('[data-slot="modes"] a')).toHaveLength(0);
