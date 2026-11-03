@@ -4,6 +4,7 @@ import { GAME_THEORY_MODES } from './modes';
 import { CardsPage } from './pages/cards/cards-page';
 import { GameTheoryHomePage } from './pages/home/game-theory-home-page';
 import { PlayPage } from './pages/play/play-page';
+import { PuzzleSetPage } from './pages/puzzle-set/puzzle-set-page';
 import { TestOutPage } from './pages/test-out/test-out-page';
 
 describe('GAME_THEORY_ROUTES', () => {
@@ -27,6 +28,11 @@ describe('GAME_THEORY_ROUTES', () => {
     expect(cards?.component).toBe(CardsPage);
   });
 
+  it('dispatches puzzles/:kind to PuzzleSetPage', () => {
+    const puzzles = GAME_THEORY_ROUTES.find((r) => r.path === 'puzzles/:kind');
+    expect(puzzles?.component).toBe(PuzzleSetPage);
+  });
+
   it('lists Cards on the hub, at the route path, with no requirement', () => {
     expect(GAME_THEORY_MODES).toContainEqual({
       id: 'cards',
@@ -34,5 +40,22 @@ describe('GAME_THEORY_ROUTES', () => {
       path: 'game-theory/cards',
       requires: [],
     });
+  });
+
+  it('lists one puzzle set per kind on the hub, each requiring nash-equilibrium', () => {
+    const sets = [
+      { id: 'puzzles-equilibrium', title: 'Equilibrium puzzles', kind: 'equilibrium' },
+      { id: 'puzzles-classify', title: 'Classify puzzles', kind: 'classify' },
+      { id: 'puzzles-eliminate', title: 'Eliminate puzzles', kind: 'eliminate' },
+      { id: 'puzzles-mixed', title: 'Mixed puzzles', kind: 'mixed' },
+    ];
+    for (const set of sets) {
+      expect(GAME_THEORY_MODES).toContainEqual({
+        id: set.id,
+        title: set.title,
+        path: `game-theory/puzzles/${set.kind}`,
+        requires: ['nash-equilibrium'],
+      });
+    }
   });
 });
