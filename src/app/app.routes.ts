@@ -11,6 +11,7 @@ import { CalibrationResultsPage } from './features/calibration/calibration-resul
 import { FlashCardHomePage } from './features/flash-cards/flash-card-home-page';
 import { FlashCardRoundPage } from './features/flash-cards/flash-card-round-page';
 import { FlashCardReportPage } from './features/flash-cards/flash-card-report-page';
+import { GAME_THEORY_ROUTES } from './features/game-theory/game-theory.routes';
 
 export const routes: Routes = [
   { path: '', component: LibraryPage },
@@ -34,5 +35,6 @@ export const routes: Routes = [
   { path: 'calibration/:id', component: CalibrationHomePage },
   { path: 'calibration/:id/round', component: CalibrationRoundPage },
   { path: 'calibration/:id/results', component: CalibrationResultsPage },
+  { path: 'game-theory', children: GAME_THEORY_ROUTES },
   { path: '**', redirectTo: '' },
 ];

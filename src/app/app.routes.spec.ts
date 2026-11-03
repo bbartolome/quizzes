@@ -12,10 +12,17 @@ import { CalibrationResultsPage } from './features/calibration/calibration-resul
 import { FlashCardHomePage } from './features/flash-cards/flash-card-home-page';
 import { FlashCardRoundPage } from './features/flash-cards/flash-card-round-page';
 import { FlashCardReportPage } from './features/flash-cards/flash-card-report-page';
+import { GAME_THEORY_ROUTES } from './features/game-theory/game-theory.routes';
 
 describe('routes', () => {
-  it('has exactly 18 route entries', () => {
-    expect(routes.length).toBe(18);
+  it('has exactly 19 route entries', () => {
+    expect(routes.length).toBe(19);
+  });
+
+  it('mounts the game-theory child table once, under "game-theory"', () => {
+    const mounts = routes.filter((r) => r.path === 'game-theory');
+    expect(mounts).toHaveLength(1);
+    expect(mounts[0].children).toBe(GAME_THEORY_ROUTES);
   });
 
   it.each([
