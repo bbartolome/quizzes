@@ -153,13 +153,15 @@ describe('game-theory concepts (G8)', () => {
     const expected = Object.fromEntries(
       Object.entries(PREREQUISITES).map(([id, pre]) => [id, [...pre].sort()]),
     );
-    expect(
-      Object.fromEntries(concepts.map((c) => [c.id, [...c.prerequisites].sort()])),
-    ).toEqual(expected);
+    expect(Object.fromEntries(concepts.map((c) => [c.id, [...c.prerequisites].sort()]))).toEqual(
+      expected,
+    );
   });
 
   it('has the 10 confused pairs of spec §6.3', () => {
-    expect(pairs.map((p) => pairKey(p.concepts)).sort()).toEqual(EXPECTED_PAIRS.map(pairKey).sort());
+    expect(pairs.map((p) => pairKey(p.concepts)).sort()).toEqual(
+      EXPECTED_PAIRS.map(pairKey).sort(),
+    );
   });
 
   it('guard: ids are unique', () => {
@@ -220,9 +222,10 @@ describe('game-theory concepts (G8)', () => {
       for (const prerequisite of c.prerequisites) {
         const pre = byId.get(prerequisite);
         if (!pre) continue;
-        expect(c.tier, `${c.id} (tier ${c.tier}) needs ${pre.id} (tier ${pre.tier})`).toBeGreaterThanOrEqual(
-          pre.tier,
-        );
+        expect(
+          c.tier,
+          `${c.id} (tier ${c.tier}) needs ${pre.id} (tier ${pre.tier})`,
+        ).toBeGreaterThanOrEqual(pre.tier);
       }
     }
   });

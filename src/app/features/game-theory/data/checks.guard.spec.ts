@@ -80,7 +80,8 @@ describe('game-theory reason checks (G15)', () => {
       const optionIds = c.options.map((o) => o.id);
       expect(new Set(optionIds).size, `${c.id} option ids are unique`).toBe(optionIds.length);
       for (const o of c.options) {
-        for (const key of Object.keys(o)) expect(OPTION_KEYS, `${c.id}.${o.id} key ${key}`).toContain(key);
+        for (const key of Object.keys(o))
+          expect(OPTION_KEYS, `${c.id}.${o.id} key ${key}`).toContain(key);
         expect(o.text.trim(), `${c.id}.${o.id} text`).not.toBe('');
         expect(o.why.trim(), `${c.id}.${o.id} why`).not.toBe('');
       }
@@ -97,7 +98,10 @@ describe('game-theory reason checks (G15)', () => {
 
   it('guard: exactly one correct option per check', () => {
     for (const c of checks) {
-      expect(c.options.filter((o) => o.correct), `${c.id} correct options`).toHaveLength(1);
+      expect(
+        c.options.filter((o) => o.correct),
+        `${c.id} correct options`,
+      ).toHaveLength(1);
     }
   });
 
