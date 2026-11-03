@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { GameTheoryHomePage } from './pages/home/game-theory-home-page';
 import { PlayPage } from './pages/play/play-page';
+import { TestOutPage } from './pages/test-out/test-out-page';
 
 /**
  * Child routes under `game-theory`, mounted once in app.routes.ts. Each later slice appends its
@@ -9,4 +10,5 @@ import { PlayPage } from './pages/play/play-page';
 export const GAME_THEORY_ROUTES: Routes = [
   { path: '', component: GameTheoryHomePage },
   { path: 'play/:game', component: PlayPage },
+  { path: 'test-out/:concept', component: TestOutPage },
 ];

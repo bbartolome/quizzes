@@ -1,0 +1,109 @@
+<ui-page-shell
+  [title]="title()"
+  [eyebrow]="eyebrow()"
+  width="narrow"
+  [back]="back"
+  backTestId="back-hub"
+>
+  @switch (phase()) {
+    @case ('loading') {
+      <p class="type-detail" data-testid="test-out-loading">Loading…</p>
+    }
+    @case ('failed') {
+      <ui-empty-state
+        heading="Couldn't load this test"
+        message="The details for this idea didn't load. Check your connection, then try again."
+      >
+        <button type="button" uiButton data-testid="test-out-retry" (click)="retry()">Retry</button>
+      </ui-empty-state>
+    }
+    @case ('unsupported') {
+      <ui-empty-state
+        heading="No test for this idea yet"
+        message="Choose another idea from the Game Theory hub."
+      >
+        <a uiButton variant="link" routerLink="/game-theory" data-testid="test-out-hub-link">
+          Back to Game Theory
+        </a>
+      </ui-empty-state>
+    }
+    @case ('test') {
+      @if (puzzle(); as current) {
+        <section class="space-y-4">
+          <p class="type-detail" data-testid="test-out-progress">Item {{ index() + 1 }} of 3</p>
+          <p class="type-body">
+            Select each cell that is an equilibrium: a cell where neither player gains by switching
+            alone. If there is none, choose None of these.
+          </p>
+
+          <div [attr.inert]="graded() ? '' : null">
+            @if (marks(); as blank) {
+              <app-payoff-matrix
+                [matrix]="current.game.payoffs"
+                [rowLabels]="current.game.rowLabels"
+                [colLabels]="current.game.colLabels"
+                [bestResponseMarks]="blank"
+                [cellGrades]="cellGrades()"
+                [noneGrade]="noneGrade()"
+                [(selected)]="selected"
+                [(noneChosen)]="noneChosen"
+              />
+            }
+          </div>
+
+          @if (graded(); as done) {
+            <ui-feedback
+              [verdict]="done.result.correct ? 'correct' : 'incorrect'"
+              data-testid="test-out-feedback"
+            >
+              {{ done.result.note }}
+            </ui-feedback>
+          }
+
+          @if (!graded()) {
+            <button
+              type="button"
+              uiButton
+              data-testid="test-out-submit"
+              [disabled]="!hasAnswer()"
+              (click)="submit()"
+            >
+              Submit
+            </button>
+          } @else if (!setComplete()) {
+            <button type="button" uiButton data-testid="test-out-next" (click)="next()">
+              Next item
+            </button>
+          }
+
+          @if (setComplete()) {
+            @if (passed()) {
+              @if (passSaved() === false) {
+                <ui-callout>
+                  Progress can't be saved in this browser, so this pass was not kept.
+                </ui-callout>
+              } @else {
+                <p class="type-section" data-testid="test-out-passed">
+                  You have tested out of {{ name() }}.
+                </p>
+                <a
+                  uiButton
+                  variant="link"
+                  routerLink="/game-theory"
+                  data-testid="test-out-hub-link"
+                >
+                  Back to Game Theory
+                </a>
+              }
+            } @else {
+              <p class="type-section" data-testid="test-out-not-yet">Not yet. Try a fresh set.</p>
+              <button type="button" uiButton data-testid="test-out-fresh-set" (click)="startSet()">
+                Start a fresh set
+              </button>
+            }
+          }
+        </section>
+      }
+    }
+  }
+</ui-page-shell>
