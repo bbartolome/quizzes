@@ -1,25 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import type { Signal } from '@angular/core';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { GtLearnService } from './gt-learn.service';
 import type { LearnState, TutorialStage } from '../lib/state.types';
 import { addDays } from '../../../core/utils/dates';
 import { provideFixedClock } from '../../../../testing/fixed-clock';
 import { MemoryStorage } from '../../../../testing/memory-storage';
-
-/**
- * The read and write surface G9 adds to GtLearnService. The stub has none, so the spec declares
- * it here: the red run compiles and fails on the missing methods. The green commit removes this.
- */
-interface LearnSurface {
-  read(): LearnState;
-  readonly introduced: ReadonlySet<string>;
-  setStage(conceptId: string, stage: TutorialStage): boolean;
-  testOut(conceptId: string): boolean;
-  recordDailyAnswer(dateKey: string, entry: LearnState['daily'][string]): boolean;
-  refresh(conceptIds?: readonly string[]): boolean;
-  readonly saveFailed: Signal<boolean>;
-}
 
 const KEY = 'stats:game-theory:learn';
 const BEST = 'best-response';
@@ -55,8 +40,8 @@ describe('GtLearnService', () => {
     store.setItem(KEY, typeof value === 'string' ? value : JSON.stringify(value));
   }
 
-  function service(): LearnSurface {
-    return TestBed.inject(GtLearnService) as LearnSurface;
+  function service(): GtLearnService {
+    return TestBed.inject(GtLearnService);
   }
 
   describe('reads', () => {

@@ -1,29 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import type { Signal } from '@angular/core';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { GtEvidenceService } from './gt-evidence.service';
 import { GtLearnService } from './gt-learn.service';
-import type { LearnState, TutorialStage } from '../lib/state.types';
 import { StatsService } from '../../../core/services/stats.service';
 import { PracticeService } from '../../../core/services/practice.service';
 import { PRACTICE_KEY } from '../../../core/models/practice.models';
 import { provideFixedClock } from '../../../../testing/fixed-clock';
 import { MemoryStorage } from '../../../../testing/memory-storage';
-
-/**
- * Surface G9 adds, declared until the bodies land (see gt-learn.service.spec.ts). The green
- * commit removes these casts.
- */
-interface EvidenceSurface extends GtEvidenceService {
-  readonly saveFailed: Signal<boolean>;
-}
-interface LearnSurface {
-  read(): LearnState;
-  readonly introduced: ReadonlySet<string>;
-  setStage(conceptId: string, stage: TutorialStage): boolean;
-  testOut(conceptId: string): boolean;
-  recordDailyAnswer(dateKey: string, entry: LearnState['daily'][string]): boolean;
-}
 
 const CARDS = 'stats:game-theory:cards';
 const CHALLENGES = 'stats:game-theory:challenges';
@@ -53,8 +36,8 @@ describe('GtEvidenceService', () => {
     vi.unstubAllGlobals();
   });
 
-  function evidence(): EvidenceSurface {
-    return TestBed.inject(GtEvidenceService) as EvidenceSurface;
+  function evidence(): GtEvidenceService {
+    return TestBed.inject(GtEvidenceService);
   }
 
   function stats(): StatsService {
@@ -65,8 +48,8 @@ describe('GtEvidenceService', () => {
     return TestBed.inject(PracticeService);
   }
 
-  function learn(): LearnSurface {
-    return TestBed.inject(GtLearnService) as LearnSurface;
+  function learn(): GtLearnService {
+    return TestBed.inject(GtLearnService);
   }
 
   describe('record', () => {
