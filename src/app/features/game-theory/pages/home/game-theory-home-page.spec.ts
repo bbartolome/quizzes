@@ -5,6 +5,11 @@ import { GameTheoryHomePage } from './game-theory-home-page';
 import { GAME_THEORY_MODES, GameTheoryMode } from '../../modes';
 
 describe('GameTheoryHomePage', () => {
+  // The mode list is one module-level array that other specs read, so each test puts back what
+  // the app ships, rather than leaving it empty for the next file.
+  const modes = GAME_THEORY_MODES as GameTheoryMode[];
+  const shipped = [...modes];
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [GameTheoryHomePage],
@@ -13,7 +18,7 @@ describe('GameTheoryHomePage', () => {
   });
 
   afterEach(() => {
-    (GAME_THEORY_MODES as GameTheoryMode[]).length = 0;
+    modes.splice(0, modes.length, ...shipped);
   });
 
   it('reserves the three named slots: map, modes and today', () => {
@@ -30,7 +35,7 @@ describe('GameTheoryHomePage', () => {
       { id: 'cards', title: 'Cards', path: 'game-theory/cards', requires: [] },
       { id: 'bots', title: 'Bots', path: 'game-theory/bots/play', requires: [] },
     ];
-    (GAME_THEORY_MODES as GameTheoryMode[]).push(...entries);
+    modes.splice(0, modes.length, ...entries);
     const fixture = TestBed.createComponent(GameTheoryHomePage);
     fixture.detectChanges();
     const links = fixture.nativeElement.querySelectorAll(
@@ -40,7 +45,7 @@ describe('GameTheoryHomePage', () => {
   });
 
   it('renders no mode links while the array is empty', () => {
-    (GAME_THEORY_MODES as GameTheoryMode[]).length = 0;
+    modes.length = 0;
     const fixture = TestBed.createComponent(GameTheoryHomePage);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelectorAll('[data-slot="modes"] a')).toHaveLength(0);

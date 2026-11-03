@@ -157,6 +157,8 @@ export class GtLearnService {
   private readonly practice = inject(PracticeService);
   private readonly failed = signal(false);
   readonly saveFailed: Signal<boolean> = this.failed.asReadonly();
+  /** The last requiresChallenge map given to refresh. Empty until one is, so every concept requires a challenge. */
+  private requiresChallengeMap: Record<string, boolean> = {};
 
   /** The sanitised learn state. Never throws. */
   read(): LearnState {
@@ -211,8 +213,14 @@ export class GtLearnService {
   /**
    * Recomputes the summary from stats and practice. With a concept list, it also prunes entries
    * for ids that are no longer in the content, and sets `total` to the number of distinct ids.
+   * With a requiresChallenge map (§7.3: false for a concept whose modes are only 'cards'), it
+   * replaces the map that Mastered uses. The map is kept for later writes, so a card check's own
+   * refresh does not undo it. Without a map, the last one given still applies.
    */
-  refresh(conceptIds?: readonly string[]): boolean {
+  refresh(conceptIds?: readonly string[], requiresChallenge?: Record<string, boolean>): boolean {
+    if (requiresChallenge) {
+      this.requiresChallengeMap = { ...requiresChallenge };
+    }
     const state = this.read();
     if (conceptIds) {
       const valid = new Set(conceptIds);
@@ -244,10 +252,17 @@ export class GtLearnService {
     }
   }
 
+  /** Whether a concept needs challenge evidence to reach Mastered. An id missing from the map does. */
+  private requiresChallengeFor(conceptId: string): boolean {
+    return Object.hasOwn(this.requiresChallengeMap, conceptId)
+      ? this.requiresChallengeMap[conceptId]
+      : true;
+  }
+
   /**
-   * Concepts at Mastered (§7.3), from the pooled cards and challenges counts. The service has no
-   * concept modes, so it sets requiresChallenge for every concept. That rule can only under-count
-   * a cards-only concept, and it never over-claims a concept that needs challenge evidence.
+   * Concepts at Mastered (§7.3), from the pooled cards and challenges counts. Without a map every
+   * concept requires a challenge, which can only under-count a cards-only concept. It never
+   * over-claims a concept that needs challenge evidence.
    */
   private masteredCount(): number {
     const cards = this.stats.getStats(EVIDENCE_QUIZ_IDS.cards).perTrait;
@@ -264,7 +279,7 @@ export class GtLearnService {
         correct: (card?.correct ?? 0) + (challenge?.correct ?? 0),
         days: daysFor(conceptDays[id], attempted),
         challengeAttempts: challenge?.attempted ?? 0,
-        requiresChallenge: true,
+        requiresChallenge: this.requiresChallengeFor(id),
       });
       if (state === 'mastered') {
         mastered += 1;

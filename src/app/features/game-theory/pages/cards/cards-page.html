@@ -1,0 +1,139 @@
+<ui-page-shell title="Cards" width="narrow" [back]="back" backTestId="back-hub">
+  @switch (phase()) {
+    @case ('loading') {
+      <p class="type-detail" data-testid="cards-loading">Loading…</p>
+    }
+    @case ('failed') {
+      <ui-empty-state
+        heading="Couldn't load the cards"
+        message="The ideas didn't load. Check your connection, then try again."
+      >
+        <button type="button" uiButton data-testid="cards-retry" (click)="retry()">Retry</button>
+      </ui-empty-state>
+    }
+    @case ('empty') {
+      <ui-empty-state
+        heading="No cards yet"
+        message="Start with Best response. Cards are drawn from the ideas you have introduced."
+      >
+        <a uiButton variant="link" [routerLink]="startLink" data-testid="cards-test-out-link">
+          Test out
+        </a>
+      </ui-empty-state>
+    }
+    @case ('summary') {
+      <section class="space-y-4">
+        <p class="type-section" data-testid="cards-summary">
+          {{ answeredCount() }} answered, {{ correctCount() }} correct.
+        </p>
+        <a uiButton variant="link" routerLink="/game-theory" data-testid="cards-hub-link">
+          Back to Game Theory
+        </a>
+      </section>
+    }
+    @case ('cards') {
+      @if (round(); as current) {
+        <section class="space-y-4">
+          <fieldset class="space-y-4" data-testid="cards-round">
+            <legend class="type-card">{{ current.card.legend }}</legend>
+
+            <div class="rounded-lg bg-sunken p-3">
+              @switch (current.card.promptFormat) {
+                @case ('italic') {
+                  <p class="type-body italic">{{ current.card.prompt }}</p>
+                }
+                @case ('bold') {
+                  <p class="type-body font-bold">{{ current.card.prompt }}</p>
+                }
+                @default {
+                  <p class="type-body">{{ current.card.prompt }}</p>
+                }
+              }
+            </div>
+
+            <div class="space-y-2">
+              @for (option of current.card.options; track $index; let o = $index) {
+                @let outcome = outcomeOf(current, o);
+                <button
+                  type="button"
+                  [class]="optionClass(current, o)"
+                  [attr.aria-pressed]="current.picked === o"
+                  [attr.data-concept]="current.card.optionConcepts[o].id"
+                  [attr.data-testid]="'cards-option-' + o"
+                  [disabled]="current.feedback !== null"
+                  (click)="pick(o)"
+                >
+                  <span class="type-body flex-1">{{ option }}</span>
+                  @if (outcome && outcomeLabels[outcome]; as statusText) {
+                    <ui-status [tone]="outcomeLook[outcome].tone" [label]="statusText" />
+                  }
+                </button>
+              }
+            </div>
+          </fieldset>
+
+          @if (current.feedback; as fb) {
+            <ui-feedback
+              data-testid="cards-feedback"
+              [verdict]="fb.verdict === 'Correct' ? 'correct' : 'incorrect'"
+            >
+              <p class="type-detail">Answer: {{ fb.answer }}</p>
+              <p class="type-detail">{{ fb.explanation }}</p>
+              @if (fb.spottingTip) {
+                <ui-callout label="Tip">{{ fb.spottingTip }}</ui-callout>
+              }
+              @let contrast = fb.contrast;
+              @if (contrast.kind === 'pair-tip') {
+                <ui-callout [label]="contrast.target + ' vs ' + contrast.lure">
+                  {{ contrast.tip }}
+                </ui-callout>
+              }
+              @if (contrast.kind === 'side-by-side') {
+                <p class="type-detail">
+                  {{ contrast.lure.name }}: {{ contrast.lure.shortDefinition }}
+                </p>
+                @if (contrast.lureSpottingTip) {
+                  <ui-callout label="Tip">{{ contrast.lureSpottingTip }}</ui-callout>
+                }
+              }
+              @if (contrast.kind === 'correct-tip') {
+                <ui-callout>{{ contrast.tip }}</ui-callout>
+              }
+            </ui-feedback>
+          }
+
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            @if (!current.feedback) {
+              <button
+                type="button"
+                uiButton
+                data-testid="cards-check"
+                [disabled]="current.picked === null"
+                (click)="check()"
+              >
+                Check answer
+              </button>
+            } @else {
+              <button type="button" uiButton data-testid="cards-next" (click)="next()">
+                Next card
+              </button>
+            }
+            <button
+              type="button"
+              uiButton
+              variant="secondary"
+              data-testid="cards-end"
+              (click)="end()"
+            >
+              End session
+            </button>
+          </div>
+        </section>
+      }
+    }
+  }
+
+  @if (saveFailed()) {
+    <ui-callout>Progress can't be saved in this browser.</ui-callout>
+  }
+</ui-page-shell>

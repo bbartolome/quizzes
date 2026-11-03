@@ -11,4 +11,6 @@ export interface GameTheoryMode {
   requires: string[];
 }
 
-export const GAME_THEORY_MODES: readonly GameTheoryMode[] = [];
+export const GAME_THEORY_MODES: readonly GameTheoryMode[] = [
+  { id: 'cards', title: 'Cards', path: 'game-theory/cards', requires: [] },
+];
