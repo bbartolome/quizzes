@@ -257,7 +257,7 @@ Generators use integer payoffs 0–9 and rejection sampling capped at 500 tries,
 | Classify    | All five classes, interleaved    | Adds random relabelling and swapped players (always applied)                  | Adds cover-story variety                           |
 | Eliminate   | 3×3 with one step                | Two alternating steps                                                         | Three or four steps down to a single cell          |
 
-- Classify generators emit strict-ordinal games except for the coordination class. They draw four increasing integers per player for the ranks, then relabel at random.
+- Classify generators emit strict-ordinal games except for the coordination and Battle of the Sexes classes, whose templates tie the off-diagonal cells (classify2x2 cannot recognise a strict opposed-preference game as either). Otherwise they draw four increasing integers per player for the ranks, then relabel at random.
 - Elimination grading accepts **any legal order** and reports the first illegal move, stopping early and over-stepping. The stepper claims only "dominated by another strategy".
 - Cover-story labels come from neutral, varied pools (firms, neighbours, countries, drivers). They avoid money framing (§11, rule 1).
 - `matrixSignature` is used to avoid repeating a recently seen matrix, so spaced practice doesn't memorise one matrix.
