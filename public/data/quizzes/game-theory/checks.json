@@ -1,4 +1,210 @@
 {
   "version": 1,
-  "checks": []
+  "checks": [
+    {
+      "id": "equilibrium-stable-not-best",
+      "conceptId": "nash-equilibrium",
+      "context": "equilibrium",
+      "prompt": "The highlighted cell is a Nash equilibrium. Which reason is correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Neither player can gain by switching their own move alone, given the other player's move.",
+          "correct": true,
+          "why": "That is the definition: an equilibrium is stable, and it does not have to be the best outcome for either player."
+        },
+        {
+          "id": "b",
+          "text": "Both players get the highest payoff available in the whole matrix.",
+          "correct": false,
+          "misconceptionId": "M2",
+          "why": "An equilibrium is only a stable cell. Another cell can pay both players more, so stability is not the same as being the best outcome."
+        },
+        {
+          "id": "c",
+          "text": "Both players are certain to choose it, so it is what they will do.",
+          "correct": false,
+          "misconceptionId": "M4",
+          "why": "An equilibrium describes stability, not a prediction. Players may miss it or play another cell."
+        },
+        {
+          "id": "d",
+          "text": "Each player's move is a dominant strategy, so the other player's choice does not matter.",
+          "correct": false,
+          "why": "An equilibrium only needs each move to be a best response to the other's move. That is weaker than dominance."
+        }
+      ]
+    },
+    {
+      "id": "pd-dominant-defection",
+      "conceptId": "prisoners-dilemma",
+      "context": "classify",
+      "prompt": "This game is a Prisoner's dilemma. Which feature makes it one?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Defecting is a dominant strategy for each player, and mutual cooperation gives both players a higher payoff than mutual defection.",
+          "correct": true,
+          "why": "Dominance makes defection each player's move, and mutual cooperation is still better for both, so the equilibrium is Pareto-dominated."
+        },
+        {
+          "id": "b",
+          "text": "Both players are selfish and only want more money, so each defects.",
+          "correct": false,
+          "misconceptionId": "M1",
+          "why": "Payoffs measure what each player cares about, not money, and the game does not assume selfishness. The feature that defines the game is dominance."
+        },
+        {
+          "id": "c",
+          "text": "Mutual defection is the worst outcome for both players, so the game is a Chicken game.",
+          "correct": false,
+          "misconceptionId": "M6",
+          "why": "In Chicken, mutual defection is the worst outcome and there is no dominant strategy. This game has a dominant strategy, which is what separates it."
+        },
+        {
+          "id": "d",
+          "text": "Each player has a dominant strategy to cooperate, so the outcome is good for both.",
+          "correct": false,
+          "misconceptionId": "M5",
+          "why": "Cooperation is not dominant here, and even a dominant strategy does not make the outcome good."
+        }
+      ]
+    },
+    {
+      "id": "elimination-strict-order",
+      "conceptId": "iterated-elimination",
+      "context": "eliminate",
+      "prompt": "The stepper removes only strictly dominated strategies. Why does the order of its removals not change the set that survives?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Removing other strategies cannot rescue a strictly dominated one, so every order removes the same strategies.",
+          "correct": true,
+          "why": "A strategy that loses to another strategy keeps losing after other strategies are removed, so the order does not change the result."
+        },
+        {
+          "id": "b",
+          "text": "Weakly dominated strategies can be removed in any order, because removing them never removes an equilibrium.",
+          "correct": false,
+          "misconceptionId": "M14",
+          "why": "Weak elimination is order-dependent and can remove equilibria. The stepper is strict and pure-strategy only for this reason."
+        },
+        {
+          "id": "c",
+          "text": "Any row can be removed, because every row is dominated by some other row.",
+          "correct": false,
+          "why": "A strategy can be removed only if another strategy is strictly better against every remaining move. Not every row is dominated."
+        }
+      ]
+    },
+    {
+      "id": "tft-ranking-depends-on-field",
+      "conceptId": "tit-for-tat",
+      "context": "bots",
+      "prompt": "Tit for tat ranks near the top of this round robin. Why could a different population or noise level change the ranking?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The ranking is relative to the other strategies, and noise changes the moves they see, so the result belongs to this tournament.",
+          "correct": true,
+          "why": "Tit for tat's rank depends on the field and on the played moves. Axelrod's results are specific to his tournaments, and this app computes its own ranking live."
+        },
+        {
+          "id": "b",
+          "text": "Tit for tat wins every tournament, so its rank cannot change.",
+          "correct": false,
+          "misconceptionId": "M8",
+          "why": "No single tournament makes this a general rule. Tit for tat did well in Axelrod's tournaments, but a different population or noise level can change the order."
+        },
+        {
+          "id": "c",
+          "text": "Noise does not matter, because tit for tat copies the opponent's last move exactly.",
+          "correct": false,
+          "why": "Noise flips played moves, and tit for tat responds to played moves, so noise changes the sequence of play."
+        }
+      ]
+    },
+    {
+      "id": "beauty-simulated-model",
+      "conceptId": "level-k-reasoning",
+      "context": "beauty",
+      "prompt": "The players in the reveal are labelled 'Simulated players (a model, not real people)'. What does the level histogram show?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The level counts follow the mix assumed in the model, so they show the model's assumptions, not measurements of real people.",
+          "correct": true,
+          "why": "The players are generated from assumed level mixes. The histogram follows from those assumptions and is not data about a crowd."
+        },
+        {
+          "id": "b",
+          "text": "The level counts are what a real crowd of people guessed in a survey.",
+          "correct": false,
+          "misconceptionId": "M13",
+          "why": "This game has no real crowd. Real figures appear only with a source link, and this histogram is not one of them."
+        },
+        {
+          "id": "c",
+          "text": "0 is the equilibrium, so the histogram shows that the crowd will guess 0.",
+          "correct": false,
+          "misconceptionId": "M4",
+          "why": "0 is the equilibrium, which is a stability property, not a forecast of what anyone guesses. The reveal says 0 is not the winning guess."
+        }
+      ]
+    },
+    {
+      "id": "second-price-truthful-dominant",
+      "conceptId": "second-price-auction",
+      "context": "auction-second",
+      "prompt": "In a second-price auction with private values, why is bidding your value a dominant strategy?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Your bid decides whether you win, but not the price you pay, so no other bid does better than bidding your value.",
+          "correct": true,
+          "why": "Bidding your value wins exactly when winning pays less than your value, and loses when winning would cost more. Any other bid can do worse, never better."
+        },
+        {
+          "id": "b",
+          "text": "The price is the second bid, so the winner pays less and the outcome is good for everyone.",
+          "correct": false,
+          "misconceptionId": "M5",
+          "why": "Truthful bidding is dominant, but dominance does not imply a good outcome for the seller or for everyone."
+        },
+        {
+          "id": "c",
+          "text": "The second bid sets the price, so every bidder gains by bidding as high as possible.",
+          "correct": false,
+          "why": "Bidding as high as possible can win at a price above your value, so it is not dominant."
+        }
+      ]
+    },
+    {
+      "id": "common-value-overestimate",
+      "conceptId": "winners-curse",
+      "context": "auction-common",
+      "prompt": "In a common-value auction with noisy estimates, why does the winning bidder often overpay?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The winner is likely the bidder whose estimate was most too high, so in this setup the winning bid tends to exceed the true value.",
+          "correct": true,
+          "why": "With one common value and independent noisy estimates, the highest estimate is the most likely to be an overestimate. In this setup, bidders who ignore that lose on average."
+        },
+        {
+          "id": "b",
+          "text": "Winners always overpay in every auction, whatever the format or information.",
+          "correct": false,
+          "misconceptionId": "M12",
+          "why": "The result is specific to this setup, with a common value and uniform noise. It is not a fact about all auctions."
+        },
+        {
+          "id": "c",
+          "text": "The winner is always the bidder who values the item most.",
+          "correct": false,
+          "why": "In a common-value auction everyone is estimating the same value from noisy signals. The highest estimate need not be the most accurate one."
+        }
+      ]
+    }
+  ]
 }
