@@ -160,7 +160,9 @@ describe('PayoffMatrixWidget (G14, §12)', () => {
     const target = cell(root(fixture), 1, 2);
     target.click();
     fixture.detectChanges();
-    expect(target.classList).toEqual(expect.arrayContaining(['border-accent', 'bg-accent-subtle']));
+    expect([...target.classList]).toEqual(
+      expect.arrayContaining(['border-accent', 'bg-accent-subtle']),
+    );
     expect(target.textContent).toContain('Selected');
   });
 
