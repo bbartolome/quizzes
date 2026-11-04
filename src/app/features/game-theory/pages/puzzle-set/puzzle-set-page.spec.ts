@@ -672,7 +672,7 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       });
 
       expect(text(fixture, '[data-testid="puzzle-solo-result"]')).toContain('not passed');
-      expect(learn.read().concepts['best-response']).toBeUndefined();
+      expect(learn.read().concepts['best-response']?.stage).toBe(2);
       expect(fixture.nativeElement.querySelector('[data-testid="puzzle-fresh-set"]')).not.toBeNull();
     });
 

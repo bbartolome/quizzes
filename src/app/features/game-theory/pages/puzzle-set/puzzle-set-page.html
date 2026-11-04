@@ -30,8 +30,23 @@
     @case ('summary') {
       <section class="space-y-4">
         <p class="type-section" data-testid="puzzle-summary">
-          {{ correctCount() }} of {{ itemsPerSet }} correct.
+          {{ correctCount() }} of {{ itemCount() }} correct.
         </p>
+        @if (isSolo()) {
+          @if (soloPassed()) {
+            <p class="type-body" data-testid="puzzle-solo-result">
+              You passed.
+            </p>
+            <a uiButton data-testid="puzzle-solo-back" [routerLink]="soloBack()">Back to the lesson</a>
+          } @else {
+            <p class="type-body" data-testid="puzzle-solo-result">
+              This set is not passed yet. Start a fresh set to try again.
+            </p>
+            <button type="button" uiButton data-testid="puzzle-fresh-set" (click)="startFresh()">
+              Fresh set
+            </button>
+          }
+        }
         <a uiButton variant="link" routerLink="/game-theory" data-testid="puzzles-hub-link">
           Back to Game Theory
         </a>
@@ -42,7 +57,7 @@
         <section class="space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <p class="type-detail" data-testid="puzzle-progress">
-              Item {{ item.index + 1 }} of {{ itemsPerSet }}
+              Item {{ item.index + 1 }} of {{ itemCount() }}
             </p>
             <p class="type-detail" data-testid="puzzle-kind">{{ kindLabels[item.kind] }}</p>
           </div>

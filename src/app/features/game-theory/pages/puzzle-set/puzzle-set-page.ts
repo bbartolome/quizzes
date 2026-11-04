@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { APP_CLOCK } from '../../../../core/app-clock';
 import type { MasteryState } from '../../../../core/models/practice.models';
 import { PracticeService } from '../../../../core/services/practice.service';
@@ -118,6 +118,29 @@ const CONCEPTS_NEEDED: Record<'equilibrium' | 'eliminate', readonly string[]> = 
 };
 const LEVELS: readonly Difficulty[] = [1, 2, 3];
 const ITEMS_PER_SET = 5;
+/** A solo or test-out set has three items (spec §7.1, §7.2). */
+const SOLO_ITEMS = 3;
+/** A tutorial's Solo passes at two right; a test-out needs all three (spec §7.1, §7.2). */
+const SOLO_PASS: Record<SoloMode, number> = { tutorial: 2, test: SOLO_ITEMS };
+
+/** Solo mode, from the query: the concept, its level, and whether it feeds the lesson or a test-out. */
+type SoloMode = 'tutorial' | 'test';
+interface SoloParams {
+  conceptId: string;
+  level: Difficulty;
+  mode: SoloMode;
+}
+
+function soloFrom(query: ParamMap): SoloParams | null {
+  const conceptId = query.get('solo');
+  if (!conceptId) return null;
+  const level = Number(query.get('level') ?? 1);
+  return {
+    conceptId,
+    level: (level === 2 || level === 3 ? level : 1) as Difficulty,
+    mode: query.get('mode') === 'test' ? 'test' : 'tutorial',
+  };
+}
 /** Generator draws tried per item before the set reports that it cannot draw. */
 const DRAW_TRIES = 100;
 const NASH = 'nash-equilibrium';
@@ -255,15 +278,25 @@ export class PuzzleSetPage {
 
   protected readonly back = BACK;
   protected readonly startLink = START_LINK;
-  protected readonly itemsPerSet = ITEMS_PER_SET;
   protected readonly kindLabels = KIND_LABEL;
   protected readonly classLabels = CLASS_LABEL;
   protected readonly saveFailed = this.evidence.saveFailed;
 
   private readonly kindParam = signal('');
-  protected readonly setKind = computed<SetKind | null>(
-    () => SET_KINDS.find((kind) => kind === this.kindParam()) ?? null,
-  );
+  protected readonly setKind = computed<SetKind | null>(() => {
+    const kind = SET_KINDS.find((k) => k === this.kindParam()) ?? null;
+    return this.isSolo() && kind === 'mixed' ? null : kind;
+  });
+  /** Solo mode reads its concept, level and mode from the query, and draws three items with no gate. */
+  private readonly soloParams = signal<SoloParams | null>(null);
+  protected readonly isSolo = computed(() => this.soloParams() !== null);
+  protected readonly itemCount = computed(() => (this.isSolo() ? SOLO_ITEMS : ITEMS_PER_SET));
+  /** Null until a solo set is finished. Then whether the pass rule for its mode was met. */
+  protected readonly soloPassed = signal<boolean | null>(null);
+  protected readonly soloBack = computed(() => {
+    const params = this.soloParams();
+    return params?.mode === 'test' ? '/game-theory' : `/game-theory/learn/${params?.conceptId ?? ''}`;
+  });
   protected readonly title = computed(() => {
     const kind = this.setKind();
     return kind ? SET_TITLE[kind] : 'Puzzles';
@@ -289,7 +322,7 @@ export class PuzzleSetPage {
   protected readonly moves = signal<Move[]>([]);
 
   protected readonly phase = computed<Phase>(() => {
-    if (this.introducedCount() === 0) {
+    if (!this.isSolo() && this.introducedCount() === 0) {
       return 'empty';
     }
     if (this.setKind() === null) {
@@ -299,7 +332,7 @@ export class PuzzleSetPage {
     if (this.current()) {
       return 'set';
     }
-    return this.results().length >= ITEMS_PER_SET ? 'summary' : 'blocked';
+    return this.results().length >= this.itemCount() ? 'summary' : 'blocked';
   });
 
   protected readonly hasAnswer = computed(() => this.noneChosen() || this.selected().length > 0);
@@ -344,6 +377,9 @@ export class PuzzleSetPage {
   });
 
   constructor() {
+    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((query) => {
+      this.soloParams.set(soloFrom(query));
+    });
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.kindParam.set(params.get('kind') ?? '');
       this.startSet();
@@ -432,7 +468,7 @@ export class PuzzleSetPage {
   }
 
   protected isLast(item: Item): boolean {
-    return item.index === ITEMS_PER_SET - 1;
+    return item.index === this.itemCount() - 1;
   }
 
   /** The note for an item held back below the level its set asked for, or null. */
@@ -485,13 +521,23 @@ export class PuzzleSetPage {
     const grade = gradePuzzle(item.puzzle, answer);
     this.evidence.record(item.puzzle.conceptIds, grade.correct, 'challenges', this.clock());
     this.results.update((all) => [...all, grade.correct]);
-    const check = reasonCheckFor(this.checks(), item.kind, item.puzzle.conceptIds);
+    // Solo items ask no reason check (spec §7.1).
+    const check = this.isSolo() ? null : reasonCheckFor(this.checks(), item.kind, item.puzzle.conceptIds);
     this.current.set({ ...item, grade, reason: check ? { check, picked: null } : null });
+    if (this.isSolo() && this.results().length === SOLO_ITEMS) {
+      this.finishSolo();
+    }
+  }
+
+  /** Starts the set again, from its first item, with the same kind and level. */
+  protected startFresh(): void {
+    this.startSet();
   }
 
   private startSet(): void {
     this.drawn = [];
     this.results.set([]);
+    this.soloPassed.set(null);
     this.introducedCount.set(this.learn.introduced.size);
     this.drawItem();
   }
@@ -501,13 +547,16 @@ export class PuzzleSetPage {
     const set = this.setKind();
     const index = this.results().length;
     const kinds = set ? this.drawableKinds(set) : [];
-    if (!set || kinds.length === 0 || index >= ITEMS_PER_SET) {
+    if (!set || kinds.length === 0 || index >= this.itemCount()) {
       this.current.set(null);
       return;
     }
     const kind = kinds[index % kinds.length];
-    const requested = this.requestedLevel();
-    const { difficulty, heldBack } = this.difficultyFor(kind, set === 'mixed', requested);
+    const requested = this.soloParams()?.level ?? this.requestedLevel();
+    // A solo set is drawn at its given level, with no gate (spec §7.1).
+    const { difficulty, heldBack } = this.isSolo()
+      ? { difficulty: requested, heldBack: null }
+      : this.difficultyFor(kind, set === 'mixed', requested);
     const puzzle = this.drawPuzzle(kind, difficulty);
     if (!puzzle) {
       this.current.set(null);
@@ -561,6 +610,7 @@ export class PuzzleSetPage {
 
   /** Kinds that can draw from the introduced concepts. A mixed set rotates through all of them. */
   private drawableKinds(set: SetKind): PuzzleKind[] {
+    if (this.isSolo()) return set === 'mixed' ? [] : [set];
     const candidates: PuzzleKind[] = set === 'mixed' ? [...KINDS] : [set];
     return candidates.filter((kind) => this.drawableKind(kind));
   }
@@ -583,7 +633,8 @@ export class PuzzleSetPage {
     const avoid = this.drawn.map((p) => matrixSignature(p.game));
     for (let tries = 0; tries < DRAW_TRIES; tries++) {
       const puzzle = generatePuzzle(kind, difficulty, this.rng, { avoid });
-      if (puzzle.conceptIds.every((id) => introduced.has(id))) {
+      // A solo set draws without the introduced gate, since a test-out is what introduces its concept.
+      if (this.isSolo() || puzzle.conceptIds.every((id) => introduced.has(id))) {
         return puzzle;
       }
     }
@@ -615,6 +666,20 @@ export class PuzzleSetPage {
       challengeAttempts: countOf(challenges.perTrait[conceptId])?.attempted ?? 0,
       requiresChallenge: true,
     });
+  }
+
+  /** Decides a finished solo set against its mode's pass rule, and records the result (spec §7.1, §7.2). */
+  private finishSolo(): void {
+    const params = this.soloParams();
+    if (!params) return;
+    const passed = this.correctCount() >= SOLO_PASS[params.mode];
+    this.soloPassed.set(passed);
+    if (!passed) return;
+    if (params.mode === 'test') {
+      this.learn.testOut(params.conceptId);
+    } else {
+      this.learn.setStage(params.conceptId, 3);
+    }
   }
 
   private equilibriumSolution(item: Item): CellRef[] {
