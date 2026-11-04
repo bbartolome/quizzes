@@ -1,6 +1,37 @@
 <ui-page-shell title="Game Theory" width="wide" [back]="back">
-  <section data-slot="map">
-    <!-- Slot: concept map (G18). -->
+  <section data-slot="map" class="space-y-4">
+    @if (status() === 'loading') {
+      <p class="type-detail" data-testid="map-loading">Loading the concept map…</p>
+    } @else if (status() === 'failed') {
+      <div class="space-y-2" data-testid="map-failed">
+        <p class="type-body">Couldn't load the concept map.</p>
+        <button type="button" uiButton data-testid="map-retry" (click)="retry()">Retry</button>
+      </div>
+    } @else {
+      @for (tier of tiers(); track tier.tier) {
+        <h2 class="type-section">Tier {{ tier.tier }}</h2>
+        <ul class="grid gap-2 sm:grid-cols-2">
+          @for (node of tier.nodes; track node.id) {
+            <li>
+              <a
+                class="flex min-h-12 flex-col rounded-lg border border-default p-3 focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
+                [routerLink]="['/game-theory/learn', node.id]"
+                [attr.data-testid]="'map-node-' + node.id"
+              >
+                <span class="type-body">
+                  <span aria-hidden="true">{{ node.glyph }}</span>
+                  {{ node.name }}
+                </span>
+                <span class="type-detail">{{ node.word }}</span>
+                @if (node.recommendedFirst) {
+                  <span class="type-detail">Recommended first: {{ node.recommendedFirst }}</span>
+                }
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    }
   </section>
 
   <section data-slot="modes">

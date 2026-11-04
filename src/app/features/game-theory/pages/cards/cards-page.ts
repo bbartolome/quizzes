@@ -27,6 +27,7 @@ import type { OptionRowState } from '../../../../shared/ui/option-row';
 import { PageBack, PageShell } from '../../../../shared/ui/page-shell';
 import { StatusBadge } from '../../../../shared/ui/status-badge';
 import { GameTheoryDataService } from '../../data/game-theory-data.service';
+import { requiresChallengeMap } from '../../lib/requires-challenge';
 import { GtEvidenceService } from '../../state/gt-evidence.service';
 import { EVIDENCE_QUIZ_IDS, GtLearnService } from '../../state/gt-learn.service';
 import { GAME_THEORY_RNG } from '../../state/gt-tokens';
@@ -71,16 +72,6 @@ const OPTION_LOOK: Record<OptionRowState, string> = {
   wrong: 'border-danger bg-danger-subtle',
   missed: 'border-warning bg-warning-subtle',
 };
-
-/** §7.3: a concept needs challenge evidence for Mastered unless every one of its modes is 'cards'. */
-function requiresChallengeMap(concepts: readonly GameTheoryConcept[]): Record<string, boolean> {
-  return Object.fromEntries(
-    concepts.map((concept): [string, boolean] => [
-      concept.id,
-      concept.modes.some((mode) => mode !== 'cards'),
-    ]),
-  );
-}
 
 /**
  * The flash-card round for game theory (spec §7.2, §9.1). Each card's target is drawn only from
