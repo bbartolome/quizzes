@@ -11,6 +11,9 @@ import type { GameTheoryConcept } from '../../../../core/models/quiz.models';
 import type { MasteryState } from '../../../../core/models/practice.models';
 import { FakeGtEvidenceService } from '../../../../../testing/fake-gt-evidence.service';
 import { FakeGtLearnService } from '../../../../../testing/fake-gt-learn.service';
+import { APP_CLOCK } from '../../../../core/app-clock';
+import { MemoryStorage } from '../../../../../testing/memory-storage';
+import { dateKeyOf } from '../../../../core/utils/dates';
 
 function concept(
   id: string,
@@ -30,6 +33,9 @@ function concept(
     modes: ['cards', 'equilibrium'],
   };
 }
+
+const NOW = new Date('2026-11-04T12:00:00Z');
+const TODAY = dateKeyOf(NOW);
 
 const CONCEPTS: GameTheoryConcept[] = [
   concept('best-response', 'Best response', 1),
@@ -62,6 +68,7 @@ describe('GameTheoryHomePage', () => {
       contentFails?: boolean;
       mastery?: Record<string, MasteryState>;
       introduced?: string[];
+      daily?: Record<string, { kind: 'equilibrium' | 'classify' | 'eliminate'; correct: boolean; reasonCorrect: boolean }>;
     } = {},
   ) {
     evidence = new FakeGtEvidenceService();
@@ -69,6 +76,9 @@ describe('GameTheoryHomePage', () => {
     learn.seedIntroduced(options.introduced ?? []);
     for (const [id, state] of Object.entries(options.mastery ?? {})) {
       learn.setMastery(id, state);
+    }
+    for (const [date, entry] of Object.entries(options.daily ?? {})) {
+      learn.recordDailyAnswer(date, entry);
     }
     data = {
       load: vi.fn((): Observable<GameTheoryData> =>
@@ -83,6 +93,7 @@ describe('GameTheoryHomePage', () => {
         { provide: GameTheoryDataService, useValue: data },
         { provide: GtEvidenceService, useValue: evidence },
         { provide: GtLearnService, useValue: learn },
+        { provide: APP_CLOCK, useValue: () => NOW },
       ],
     });
     const fixture = TestBed.createComponent(GameTheoryHomePage);
@@ -144,6 +155,57 @@ describe('GameTheoryHomePage', () => {
     expect(root.querySelector('[data-testid="back-home"]')?.textContent?.trim()).toBe(
       'All collections',
     );
+  });
+
+  describe('today panel and reset (spec §9.2, §10)', () => {
+    it('says the daily unlocks after the first tutorial while nash-equilibrium is not introduced', () => {
+      const root = create({ introduced: [] }).nativeElement as HTMLElement;
+
+      expect(root.querySelector('[data-slot="today"]')?.textContent).toContain('Unlocks after your first tutorial.');
+    });
+
+    it('links to an open daily when nash-equilibrium is introduced and today is not answered', () => {
+      const root = create({ introduced: ['nash-equilibrium'] }).nativeElement as HTMLElement;
+
+      expect(root.querySelector<HTMLAnchorElement>('[data-testid="today-open"]')?.getAttribute('href')).toBe(
+        '/game-theory/daily',
+      );
+    });
+
+    it('shows today as done with its mark, and a strip of the last fourteen days', () => {
+      const root = create({
+        introduced: ['nash-equilibrium'],
+        daily: { [TODAY]: { kind: 'equilibrium', correct: true, reasonCorrect: false } },
+      }).nativeElement as HTMLElement;
+
+      expect(root.querySelector('[data-testid="today-status"]')?.textContent).toContain('✓');
+      const strip = root.querySelector('[data-testid="today-strip"]')?.textContent?.trim() ?? '';
+      expect(strip).toHaveLength(14);
+      expect(strip.endsWith('✓')).toBe(true);
+    });
+
+    it('resets every game-theory key after one confirmation, and keeps other keys', () => {
+      const store = new MemoryStorage();
+      vi.stubGlobal('localStorage', store);
+      store.setItem('stats:game-theory:cards', '{}');
+      store.setItem('stats:game-theory:plan', '{}');
+      store.setItem('stats:app:practice', '{}');
+      try {
+        const fixture = create({ introduced: ['nash-equilibrium'] });
+        const root = fixture.nativeElement as HTMLElement;
+        (root.querySelector('[data-testid="hub-reset"]') as HTMLButtonElement).click();
+        fixture.detectChanges();
+        expect(root.textContent).toContain('Are you sure');
+        (root.querySelector('[data-testid="hub-reset-confirm"]') as HTMLButtonElement).click();
+        fixture.detectChanges();
+
+        expect(store.getItem('stats:game-theory:cards')).toBeNull();
+        expect(store.getItem('stats:game-theory:plan')).toBeNull();
+        expect(store.getItem('stats:app:practice')).toBe('{}');
+      } finally {
+        vi.unstubAllGlobals();
+      }
+    });
   });
 
   describe('concept map (G18)', () => {
