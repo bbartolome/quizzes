@@ -67,7 +67,7 @@
       "title": "Game Theory",
       "description": "Learn how people and bots make choices when outcomes depend on each other.",
       "icon": "icons/game-theory.svg",
-      "version": 1,
+      "version": 2,
       "dataPath": "data/quizzes/game-theory/",
       "order": 7,
       "kind": "game-theory"

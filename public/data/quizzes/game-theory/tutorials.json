@@ -1,4 +1,426 @@
 {
-  "version": 1,
-  "tutorials": []
+  "version": 2,
+  "tutorials": [
+    {
+      "conceptId": "best-response",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "A best response is the move that does best for you against one specific move by the other player.",
+            "So it is always a question about one column or one row at a time: which of your moves pays most if they play this?"
+          ],
+          "callout": "Best response is about one specific move by the other player. A dominant strategy is best against every move."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Top", "Bottom"],
+            "colLabels": ["Left", "Right"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [1, 3]], "col": [[2, 1], [0, 3]] }
+          },
+          "annotations": [
+            { "text": "If the column player picks Left, Top pays the row player 2 and Bottom pays 1. So Top is the best response to Left.", "mark": "best-response-row", "at": { "r": 0, "c": 0 } },
+            { "text": "If the column player picks Right, Bottom pays 3 and Top pays 0. So Bottom is the best response to Right.", "mark": "best-response-row", "at": { "r": 1, "c": 1 } }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Top", "Bottom"],
+            "colLabels": ["Left", "Right"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [1, 3]], "col": [[2, 1], [0, 3]] }
+          },
+          "task": "underline-best-responses",
+          "given": [{ "r": 0, "c": 0 }],
+          "hints": [
+            "Take one column at a time. In that column, which row gives the row player the larger number?",
+            "Top against Left is already underlined. Underline the row player's other best response."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "equilibrium", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "nash-equilibrium",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "A Nash equilibrium is a cell where each player is already at a best response to the other's move.",
+            "It is stable in one sense: no one gains by switching alone. It is not a claim that this is the best outcome, or what people will pick."
+          ],
+          "callout": "Stable means no one gains by switching alone. It does not mean best for everyone."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Top", "Bottom"],
+            "colLabels": ["Left", "Right"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [1, 3]], "col": [[2, 1], [0, 3]] }
+          },
+          "annotations": [
+            { "text": "Top and Left: each is a best response to the other, so neither gains by switching alone.", "mark": "equilibrium", "at": { "r": 0, "c": 0 } },
+            { "text": "Bottom and Right is also stable. A game can have more than one equilibrium.", "mark": "equilibrium", "at": { "r": 1, "c": 1 } }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Top", "Bottom"],
+            "colLabels": ["Left", "Right"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [1, 3]], "col": [[2, 1], [0, 3]] }
+          },
+          "task": "find-equilibrium",
+          "hints": [
+            "A cell is an equilibrium when the row player's number is the largest in its column and the column player's number is the largest in its row.",
+            "Check each of the four cells. Two of them pass both checks."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "equilibrium", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "pareto-efficiency",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "An outcome is Pareto efficient when no other outcome makes one player better off and no one worse off.",
+            "Pareto efficiency is about the outcome alone. It says nothing about whether the outcome is stable."
+          ],
+          "callout": "Stable (Nash) and efficient (Pareto) are different tests. An outcome can pass one and fail the other."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Cooperate", "Defect"],
+            "colLabels": ["Cooperate", "Defect"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+          },
+          "annotations": [
+            { "text": "Defect and Defect is stable: neither player gains by switching alone.", "mark": "equilibrium", "at": { "r": 1, "c": 1 } },
+            { "text": "Cooperate and Cooperate pays both players more. Defect and Defect is not Pareto efficient, because this cell is better for both.", "mark": "pareto", "at": { "r": 0, "c": 0 } }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Cooperate", "Defect"],
+            "colLabels": ["Cooperate", "Defect"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+          },
+          "task": "find-equilibrium",
+          "hints": [
+            "Find the stable cells first. Those are the equilibria, and they may not be efficient.",
+            "Defect and Defect is the only stable cell here."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "equilibrium", "difficulty": 2 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "dominant-strategy",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "A strategy is strictly dominant when it pays more than each alternative against every move the other player could make.",
+            "Dominance is about your own options. It does not say the result is good for anyone."
+          ],
+          "callout": "Dominant means best against every move. Best response means best against one move."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Cooperate", "Defect"],
+            "colLabels": ["Cooperate", "Defect"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+          },
+          "annotations": [
+            { "text": "Against Cooperate, Defect pays the row player 5, and Cooperate pays 3. Against Defect, Defect pays 1 and Cooperate pays 0.", "mark": "dominated" },
+            { "text": "Defect is better in both columns, so Cooperate is strictly dominated. It can be removed from the row player's options." , "mark": "dominated" }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Cooperate", "Defect"],
+            "colLabels": ["Cooperate", "Defect"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+          },
+          "task": "eliminate-next",
+          "hints": [
+            "Compare the two rows column by column. Is one strategy better in every column?",
+            "Cooperate is worse for the row player in both columns, so it can go."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "eliminate", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "iterated-elimination",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "Iterated elimination removes a strictly dominated strategy, then looks again at the smaller game.",
+            "A strategy that was not dominated before can become dominated once another one is gone."
+          ],
+          "callout": "Remove one dominated strategy at a time, then check the smaller game again."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Hold", "Push"],
+            "colLabels": ["Left", "Right"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[0, 1], [2, 3]], "col": [[0, 1], [1, 0]] }
+          },
+          "annotations": [
+            { "text": "Push pays the row player more in both columns, so Hold is strictly dominated and goes first.", "mark": "dominated" },
+            { "text": "With Hold gone, the column player only has Left and Right against Push. Left pays 1 and Right pays 0, so Right goes next.", "mark": "dominated" }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Hold", "Push"],
+            "colLabels": ["Left", "Right"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[0, 1], [2, 3]], "col": [[0, 1], [1, 0]] }
+          },
+          "task": "eliminate-next",
+          "hints": [
+            "Look for a row that is better than another in every column.",
+            "Hold is beaten by Push in both columns."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "eliminate", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "prisoners-dilemma",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "In a Prisoner's Dilemma, each player is better off defecting whatever the other does, yet both do better when both cooperate.",
+            "The payoffs are what the players care about. If a player cares about the other's outcome, the payoffs change, and so does the game."
+          ],
+          "callout": "Defecting is dominant, and mutual defection is still stable but not Pareto efficient."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Cooperate", "Defect"],
+            "colLabels": ["Cooperate", "Defect"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+          },
+          "annotations": [
+            { "text": "Defect and Defect is the only stable cell. Neither player gains by switching alone.", "mark": "equilibrium", "at": { "r": 1, "c": 1 } },
+            { "text": "Cooperate and Cooperate pays both more. The game is a dilemma because the stable cell is not the efficient one.", "mark": "pareto", "at": { "r": 0, "c": 0 } }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Cooperate", "Defect"],
+            "colLabels": ["Cooperate", "Defect"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+          },
+          "task": "find-equilibrium",
+          "hints": [
+            "For each cell, ask whether either player would gain by switching alone.",
+            "Only one cell has no profitable switch."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "classify", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "stag-hunt",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "In a Stag Hunt, both players do best by matching each other, and there are two stable matches.",
+            "One match pays both players more. The other is safer, because it does not depend on the other player joining in."
+          ],
+          "callout": "Stag Hunt has two stable cells, and one of them pays more to both. Prisoner's Dilemma has one."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Stag", "Hare"],
+            "colLabels": ["Stag", "Hare"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[4, 1], [3, 2]], "col": [[4, 3], [1, 2]] }
+          },
+          "annotations": [
+            { "text": "Stag and Stag is stable, and it pays both players the most.", "mark": "equilibrium", "at": { "r": 0, "c": 0 } },
+            { "text": "Hare and Hare is also stable. It pays less, but it does not need the other player to join in.", "mark": "equilibrium", "at": { "r": 1, "c": 1 } }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Stag", "Hare"],
+            "colLabels": ["Stag", "Hare"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[4, 1], [3, 2]], "col": [[4, 3], [1, 2]] }
+          },
+          "task": "find-equilibrium",
+          "hints": [
+            "A stable cell has each player at a best response to the other.",
+            "Two cells pass the test. Find both."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "classify", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "chicken-game",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "In Chicken, each player does best by going straight when the other swerves, and swerving when the other goes straight.",
+            "If both go straight, both get the worst payoff, so the stable outcomes are the two where one swerves."
+          ],
+          "callout": "In Chicken, mutual straight is the worst outcome, and there is no dominant strategy."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Swerve", "Straight"],
+            "colLabels": ["Swerve", "Straight"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 2], [4, 1]], "col": [[3, 4], [2, 1]] }
+          },
+          "annotations": [
+            { "text": "Swerve against Straight: the row player swerves, and the column player goes straight. Neither gains by switching alone.", "mark": "equilibrium", "at": { "r": 0, "c": 1 } },
+            { "text": "The mirror cell, Straight against Swerve, is stable too.", "mark": "equilibrium", "at": { "r": 1, "c": 0 } }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Swerve", "Straight"],
+            "colLabels": ["Swerve", "Straight"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 2], [4, 1]], "col": [[3, 4], [2, 1]] }
+          },
+          "task": "find-equilibrium",
+          "hints": [
+            "Straight and Straight is the worst cell for both. Is it stable?",
+            "Check the two cells where one player swerves and the other goes straight."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "classify", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "coordination-game",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "In a pure coordination game, both players get the same payoff whenever they match, and nothing when they do not.",
+            "There are two stable matches. The problem is choosing which one to aim for, not which one pays more."
+          ],
+          "callout": "In pure coordination, the players agree on what matters. Only the matching counts."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Option A", "Option B"],
+            "colLabels": ["Option A", "Option B"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[1, 0], [0, 1]], "col": [[1, 0], [0, 1]] }
+          },
+          "annotations": [
+            { "text": "Option A and Option A pay both players 1, and neither gains by switching alone.", "mark": "equilibrium", "at": { "r": 0, "c": 0 } },
+            { "text": "Option B and Option B is also stable, and pays the same. Only the matching matters.", "mark": "equilibrium", "at": { "r": 1, "c": 1 } }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Option A", "Option B"],
+            "colLabels": ["Option A", "Option B"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[1, 0], [0, 1]], "col": [[1, 0], [0, 1]] }
+          },
+          "task": "find-equilibrium",
+          "hints": [
+            "Look at the matching cells first.",
+            "Both matching cells pass the test."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "classify", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    },
+    {
+      "conceptId": "battle-of-the-sexes",
+      "steps": [
+        {
+          "stage": 1,
+          "kind": "text",
+          "blocks": [
+            "In Battle of the Sexes, both players prefer to match, but they disagree about which match.",
+            "Each stable match favours one player, so the game is a coordination problem with a conflict in it."
+          ],
+          "callout": "Battle of the Sexes has two stable matches, and the players disagree about which one they prefer."
+        },
+        {
+          "stage": 1,
+          "kind": "worked",
+          "game": {
+            "rowLabels": ["Opera", "Football"],
+            "colLabels": ["Opera", "Football"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [0, 1]], "col": [[1, 0], [0, 2]] }
+          },
+          "annotations": [
+            { "text": "Opera and Opera is stable. The row player gets 2 there, and the column player gets 1.", "mark": "equilibrium", "at": { "r": 0, "c": 0 } },
+            { "text": "Football and Football is also stable, and the payoffs flip in favour of the column player.", "mark": "equilibrium", "at": { "r": 1, "c": 1 } }
+          ]
+        },
+        {
+          "stage": 2,
+          "kind": "faded",
+          "game": {
+            "rowLabels": ["Opera", "Football"],
+            "colLabels": ["Opera", "Football"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [0, 1]], "col": [[1, 0], [0, 2]] }
+          },
+          "task": "find-equilibrium",
+          "hints": [
+            "Both matching cells are stable here, and the mismatched cells are not.",
+            "Find both matching cells."
+          ]
+        },
+        { "stage": 3, "kind": "solo", "source": { "puzzle": "classify", "difficulty": 1 }, "count": 3, "passAt": 2 }
+      ]
+    }
+  ]
 }

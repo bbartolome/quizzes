@@ -12,7 +12,14 @@ export type TutorialStep =
       game: MatrixGame;
       annotations: { text: string; mark?: MarkName; at?: CellRef }[];
     }
-  | { stage: 2; kind: 'faded'; game: MatrixGame; task: FadedTask; hints: string[] }
+  | {
+      stage: 2;
+      kind: 'faded';
+      game: MatrixGame;
+      task: FadedTask;
+      given?: CellRef[]; // cells already shown, for underline-best-responses
+      hints: string[];
+    }
   | { stage: 2; kind: 'card'; hints: string[] }
   | { stage: 3; kind: 'solo'; source: SoloSource; count: 3; passAt: 2 };
 export interface TutorialScript {
