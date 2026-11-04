@@ -9,6 +9,7 @@ import { defaultBeautyConfig, runBeautyContest } from '../../../lib/beauty';
 import type { BeautyResult, LevelLabel } from '../../../lib/beauty.types';
 import type { ReasonCheck } from '../../../lib/puzzle.types';
 import { GtEvidenceService } from '../../../state/gt-evidence.service';
+import { GtGamesService } from '../../../state/gt-games.service';
 
 const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
 const LEVELS: readonly LevelLabel[] = ['L0', 'L1', 'L2', 'L3', 'L4+'];
@@ -45,10 +46,12 @@ export class BeautyContestPage {
   private readonly clock = inject(APP_CLOCK);
   private readonly data = inject(GameTheoryDataService);
   private readonly evidence = inject(GtEvidenceService);
+  private readonly games = inject(GtGamesService);
   /** Seeded from the clock once per page load, so a reload plays a fresh set of simulated players. */
   private readonly config = defaultBeautyConfig(this.clock().toISOString());
 
   readonly back = BACK;
+  readonly saveFailed = this.games.saveFailed;
   readonly levels = LEVELS;
   readonly guessText = signal('');
   readonly invalid = signal(false);
@@ -96,7 +99,20 @@ export class BeautyContestPage {
     }
     this.invalid.set(false);
     this.picked.set(null);
-    this.result.set(runBeautyContest(this.config, value));
+    const result = runBeautyContest(this.config, value);
+    this.result.set(result);
+    this.games.record({
+      kind: 'beauty-contest',
+      at: this.clock().toISOString(),
+      seed: this.config.seed,
+      summary: {
+        guess: value,
+        mean: result.mean,
+        target: result.target,
+        humanWon: result.winnerIndex === -1,
+        simulated: this.config.simulated,
+      },
+    });
   }
 
   /** Records the reason answer as challenge evidence on its concept. Only the first pick counts. */

@@ -30,6 +30,11 @@
         Submit guess
       </button>
     </div>
+    @if (saveFailed()) {
+      <p class="type-detail" data-testid="beauty-save-failed">
+        Progress can't be saved in this browser.
+      </p>
+    }
     @if (invalid()) {
       <p class="type-detail" data-testid="beauty-invalid">Enter a number from 0 to 100.</p>
     }
