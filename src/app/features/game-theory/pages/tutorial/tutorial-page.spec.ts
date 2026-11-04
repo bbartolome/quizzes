@@ -11,9 +11,9 @@ import { mulberry32 } from '../../lib/rng';
 import type { GameTheoryContent } from '../../../../core/models/quiz.models';
 import { FakeGtEvidenceService } from '../../../../../testing/fake-gt-evidence.service';
 import { FakeGtLearnService } from '../../../../../testing/fake-gt-learn.service';
-import conceptsJson from '../../../../../public/data/quizzes/game-theory/concepts.json';
-import tutorialsJson from '../../../../../public/data/quizzes/game-theory/tutorials.json';
-import checksJson from '../../../../../public/data/quizzes/game-theory/checks.json';
+import conceptsJson from '../../../../../../public/data/quizzes/game-theory/concepts.json';
+import tutorialsJson from '../../../../../../public/data/quizzes/game-theory/tutorials.json';
+import checksJson from '../../../../../../public/data/quizzes/game-theory/checks.json';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 // The tutorial page runs the shipped scripts (spec §7.1). These specs use the real content, so

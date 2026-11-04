@@ -1,0 +1,187 @@
+<ui-page-shell [title]="title()" eyebrow="Tutorial" width="narrow" [back]="back" backTestId="back-hub">
+  @switch (phase()) {
+    @case ('loading') {
+      <p class="type-detail" data-testid="tutorial-loading">Loading…</p>
+    }
+    @case ('failed') {
+      <div class="space-y-2" data-testid="tutorial-failed">
+        <p class="type-body">Couldn't load this tutorial.</p>
+        <button type="button" uiButton data-testid="tutorial-retry" (click)="retry()">Retry</button>
+      </div>
+    }
+    @case ('unsupported') {
+      <ui-empty-state heading="No tutorial for this idea yet" message="Choose another idea from the Game Theory hub.">
+        <a uiButton variant="link" routerLink="/game-theory">Back to Game Theory</a>
+      </ui-empty-state>
+    }
+    @case ('lesson') {
+      @if (step(); as current) {
+        <section class="space-y-4">
+          @switch (current.kind) {
+            @case ('text') {
+              <div class="space-y-2" data-testid="tutorial-explore">
+                @for (block of current.blocks; track $index) {
+                  <p class="type-body">{{ block }}</p>
+                }
+                @if (current.callout) {
+                  <ui-callout data-testid="tutorial-callout">{{ current.callout }}</ui-callout>
+                }
+              </div>
+              <button type="button" uiButton data-testid="tutorial-next" (click)="next()">Next</button>
+            }
+
+            @case ('worked') {
+              @if (workedMarks(); as view) {
+                <app-payoff-matrix
+                  [matrix]="current.game.payoffs"
+                  [rowLabels]="current.game.rowLabels"
+                  [colLabels]="current.game.colLabels"
+                  [bestResponseMarks]="view.marks"
+                  [eliminated]="view.eliminated"
+                  [selected]="view.selected"
+                />
+              }
+              <ol class="space-y-2">
+                @for (note of shownNotes(); track $index) {
+                  <li class="type-body" data-testid="tutorial-annotation">{{ note.text }}</li>
+                }
+              </ol>
+              <button type="button" uiButton data-testid="tutorial-next" (click)="next()">
+                {{ revealed() < annotations().length ? 'Show the next note' : 'Next' }}
+              </button>
+            }
+
+            @case ('faded') {
+              <p class="type-body" data-testid="tutorial-task">
+                @switch (current.task) {
+                  @case ('underline-best-responses') {
+                    Underline the row player's best response in each column that is not already underlined.
+                  }
+                  @case ('find-equilibrium') {
+                    Select each cell that is an equilibrium, or choose None of these.
+                  }
+                  @case ('eliminate-next') {
+                    Choose a strategy that is strictly dominated now.
+                  }
+                }
+              </p>
+              @if (current.task === 'eliminate-next') {
+                <div class="flex flex-wrap gap-2">
+                  @for (s of strategies(); track s.player + s.index) {
+                    <button
+                      type="button"
+                      uiButton
+                      [attr.aria-pressed]="strategy()?.player === s.player && strategy()?.index === s.index"
+                      (click)="pickStrategy(s)"
+                    >
+                      {{ s.player === 'row' ? current.game.rowLabels[s.index] : current.game.colLabels[s.index] }}
+                      ({{ s.player === 'row' ? 'row' : 'column' }} player)
+                    </button>
+                  }
+                </div>
+              } @else if (givenMarks(); as blank) {
+                <app-payoff-matrix
+                  [matrix]="current.game.payoffs"
+                  [rowLabels]="current.game.rowLabels"
+                  [colLabels]="current.game.colLabels"
+                  [bestResponseMarks]="blank"
+                  [(selected)]="answer"
+                  [(noneChosen)]="noneChosen"
+                />
+              }
+
+              @if (verdict(); as v) {
+                <ui-feedback [verdict]="v" data-testid="tutorial-feedback">
+                  @if (v === 'correct') {
+                    Right. Continue to the next step.
+                  } @else {
+                    Not quite. Try again, or ask for a hint.
+                  }
+                </ui-feedback>
+              }
+
+              <ul class="space-y-1">
+                @for (hint of visibleHints(); track $index) {
+                  <li class="type-detail" data-testid="tutorial-hint">Hint: {{ hint }}</li>
+                }
+              </ul>
+
+              <div class="flex flex-wrap gap-2">
+                @if (verdict() === 'correct') {
+                  <button type="button" uiButton data-testid="tutorial-next" (click)="next()">Continue</button>
+                } @else {
+                  <button type="button" uiButton data-testid="tutorial-check" (click)="check()">Check</button>
+                }
+                @if (hintsLeft()) {
+                  <button type="button" uiButton variant="link" data-testid="tutorial-hint-button" (click)="revealHint()">
+                    Show a hint
+                  </button>
+                }
+              </div>
+            }
+
+            @case ('card') {
+              @if (round(); as r) {
+                <section class="space-y-3" data-testid="tutorial-card">
+                  <p class="type-body">Which idea does this describe?</p>
+                  <p class="type-body">{{ r.card.prompt }}</p>
+                  @for (option of r.card.options; track $index; let i = $index) {
+                    <button type="button" uiButton [attr.aria-pressed]="r.picked === i" (click)="pickCard(i)">
+                      {{ option }}
+                    </button>
+                  }
+                  @if (r.feedback; as fb) {
+                    <ui-feedback [verdict]="fb.verdict === 'Correct' ? 'correct' : 'incorrect'" data-testid="tutorial-feedback">
+                      {{ fb.explanation }}
+                    </ui-feedback>
+                  } @else {
+                    <button type="button" uiButton data-testid="tutorial-check" (click)="checkCard()">Check</button>
+                  }
+                  @if (hintsLeft()) {
+                    <button type="button" uiButton variant="link" data-testid="tutorial-hint-button" (click)="revealHint()">
+                      Show a hint
+                    </button>
+                  }
+                  @for (hint of visibleHints(); track $index) {
+                    <p class="type-detail" data-testid="tutorial-hint">Hint: {{ hint }}</p>
+                  }
+                </section>
+              }
+              @if (round()?.feedback) {
+                <button type="button" uiButton data-testid="tutorial-next" (click)="next()">Continue</button>
+              }
+            }
+
+            @case ('solo') {
+              <section class="space-y-3">
+                <p class="type-body">
+                  Three fresh items with no hints. Two right passes this idea.
+                  @if (passed()) {
+                    You have already passed it.
+                  }
+                </p>
+                @if (solo(); as route) {
+                  <a
+                    uiButton
+                    data-testid="tutorial-solo-link"
+                    [routerLink]="route.commands"
+                    [queryParams]="route.query"
+                  >Start the solo set</a>
+                }
+                @if (testOut(); as route) {
+                  <a
+                    uiButton
+                    variant="link"
+                    data-testid="tutorial-test-out-link"
+                    [routerLink]="route.commands"
+                    [queryParams]="route.query"
+                  >Test out instead: three right in a row skips the lesson</a>
+                }
+              </section>
+            }
+          }
+        </section>
+      }
+    }
+  }
+</ui-page-shell>
