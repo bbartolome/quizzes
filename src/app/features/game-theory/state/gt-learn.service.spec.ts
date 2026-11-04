@@ -402,6 +402,48 @@ describe('GtLearnService', () => {
     });
   });
 
+  describe('daily plan (spec §9.2, §10)', () => {
+    const PLAN_KEY = 'stats:game-theory:plan';
+    const PLAN = {
+      version: 1 as const,
+      dateKey: TODAY,
+      kind: 'classify' as const,
+      difficulty: 2 as const,
+      seedKey: 'gt-daily/v1/' + TODAY,
+    };
+
+    it('reads no plan when none is stored', () => {
+      expect(service().plan()).toBeNull();
+    });
+
+    it('stores the plan under its own key and reads the same plan back', () => {
+      expect(service().setPlan(PLAN)).toBe(true);
+
+      expect(JSON.parse(store.getItem(PLAN_KEY) ?? 'null')).toEqual(PLAN);
+      expect(service().plan()).toEqual(PLAN);
+    });
+
+    it('treats a plan of another version, or a malformed one, as none', () => {
+      store.setItem(PLAN_KEY, JSON.stringify({ ...PLAN, version: 2 }));
+      expect(service().plan()).toBeNull();
+      store.setItem(PLAN_KEY, JSON.stringify({ ...PLAN, kind: 'mixed' }));
+      expect(service().plan()).toBeNull();
+      store.setItem(PLAN_KEY, JSON.stringify({ ...PLAN, difficulty: 3 }));
+      expect(service().plan()).toBeNull();
+      store.setItem(PLAN_KEY, 'not json');
+      expect(service().plan()).toBeNull();
+    });
+
+    it('keeps the plan apart from the learn state, so a stage change does not touch it', () => {
+      const learn = service();
+      learn.setPlan(PLAN);
+
+      learn.setStage(BEST, 2);
+
+      expect(learn.plan()).toEqual(PLAN);
+    });
+  });
+
   describe('write failures', () => {
     it('returns false, reports it through saveFailed, and recovers on the next good write', () => {
       const learn = service();
