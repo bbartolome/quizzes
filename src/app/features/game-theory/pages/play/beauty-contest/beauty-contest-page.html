@@ -1,0 +1,55 @@
+<ui-page-shell
+  title="Beauty contest"
+  eyebrow="Game Theory"
+  width="narrow"
+  [back]="back"
+  backTestId="back-hub"
+>
+  <section class="space-y-4">
+    <p class="type-body">
+      Pick a number from 0 to 100. The winner is the guess closest to two thirds of the average of
+      all guesses, including yours.
+    </p>
+    <p class="type-detail" data-testid="beauty-model-label">
+      Simulated players (a model, not real people)
+    </p>
+
+    <div class="flex items-end gap-2">
+      <label class="type-detail" for="beauty-guess">Your guess</label>
+      <input
+        id="beauty-guess"
+        data-testid="beauty-guess"
+        type="number"
+        min="0"
+        max="100"
+        step="any"
+        [value]="guessText()"
+        (input)="setGuess($event)"
+      />
+      <button type="button" uiButton data-testid="beauty-submit" (click)="submit()">
+        Submit guess
+      </button>
+    </div>
+    @if (invalid()) {
+      <p class="type-detail" data-testid="beauty-invalid">Enter a number from 0 to 100.</p>
+    }
+
+    @if (reveal(); as r) {
+      <section class="space-y-3" data-testid="beauty-reveal">
+        <p class="type-body">
+          The average of all guesses, including yours, was {{ r.mean }}. Two thirds of it is
+          {{ r.target }}.
+        </p>
+        <p class="type-body" data-testid="beauty-winner">{{ r.winner }}</p>
+        <ul class="space-y-1">
+          @for (row of r.counts; track row.label) {
+            <li class="type-body" [attr.data-testid]="'beauty-level-' + row.label">
+              {{ row.label }}: {{ row.count }} simulated players
+            </li>
+          }
+        </ul>
+        <p class="type-body">0 is the equilibrium but not the winning guess.</p>
+      </section>
+    }
+  </section>
+</ui-page-shell>

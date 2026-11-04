@@ -38,4 +38,10 @@ export const GAME_THEORY_MODES: readonly GameTheoryMode[] = [
     requires: ['nash-equilibrium'],
   },
   { id: 'bots-play', title: 'Bots', path: 'game-theory/bots/play', requires: [] },
+  {
+    id: 'beauty-contest',
+    title: 'Beauty contest',
+    path: 'game-theory/play/beauty-contest',
+    requires: [],
+  },
 ];
