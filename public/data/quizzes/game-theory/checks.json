@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "checks": [
     {
       "id": "equilibrium-stable-not-best",
@@ -203,6 +203,27 @@
           "text": "The winner is always the bidder who values the item most.",
           "correct": false,
           "why": "In a common-value auction everyone is estimating the same value from noisy signals. The highest estimate need not be the most accurate one."
+        }
+      ]
+    },
+    {
+      "id": "first-price-shading",
+      "conceptId": "first-price-auction",
+      "context": "auction-first",
+      "prompt": "In a first-price auction, why does a bidder bid below its value?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A first-price winner pays its own bid, so bidding its full value would leave no profit when it wins",
+          "correct": true,
+          "why": "Shading keeps some surplus when the bidder wins. That is why bidding below value is the equilibrium in this setup."
+        },
+        {
+          "id": "b",
+          "text": "First-price auctions work the same way as second-price ones, so bidding the full value is best",
+          "correct": false,
+          "misconceptionId": "M12",
+          "why": "In a second-price auction the price is set by the other bids, so truthful bidding is dominant. The first-price rule is different, so the best bid changes."
         }
       ]
     }
