@@ -16,5 +16,6 @@ export const GAME_THEORY_ROUTES: Routes = [
   { path: 'learn/:concept', component: TutorialPage },
   { path: 'play/:game', component: PlayPage },
   { path: 'puzzles/:kind', component: PuzzleSetPage },
+  { path: 'daily', component: PuzzleSetPage, data: { daily: true } },
   { path: 'bots/:mode', component: BotsPage },
 ];

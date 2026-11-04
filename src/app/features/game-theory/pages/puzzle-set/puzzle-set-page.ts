@@ -6,8 +6,9 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
+import { map } from 'rxjs';
 import { APP_CLOCK } from '../../../../core/app-clock';
 import type { MasteryState } from '../../../../core/models/practice.models';
 import { PracticeService } from '../../../../core/services/practice.service';
@@ -45,10 +46,13 @@ import {
   type EliminatedLine,
 } from '../../ui/payoff-matrix/payoff-matrix';
 import { reasonCheckFor } from '../../lib/reason-check';
+import { dailyPlanOf, dailyRng, type DailyPlan } from '../../lib/daily';
+import type { Rng } from '../../lib/rng';
+import { dateKeyOf } from '../../../../core/utils/dates';
 
 /** A set is one puzzle kind, or `mixed`, which interleaves all three (spec §5.2, §7.2). */
 type SetKind = PuzzleKind | 'mixed';
-type Phase = 'empty' | 'unsupported' | 'blocked' | 'set' | 'summary';
+type Phase = 'empty' | 'unsupported' | 'blocked' | 'locked' | 'set' | 'summary';
 type ChoiceOutcome = 'correct' | 'wrong';
 
 /** A row or column the player removes. `index` is the strategy's index in the full game. */
@@ -286,14 +290,29 @@ export class PuzzleSetPage {
   protected readonly saveFailed = this.evidence.saveFailed;
 
   private readonly kindParam = signal('');
+  /** The daily puzzle: one item, from the day's plan (spec §9.2). Its route has no kind parameter. */
+  private readonly dataDaily = toSignal(
+    this.route.data.pipe(map((data) => data['daily'] === true)),
+    { initialValue: false },
+  );
+  protected readonly isDaily = computed(() => this.dataDaily());
+  private readonly dailyPlan = signal<DailyPlan | null>(null);
+  /** Locked until nash-equilibrium is introduced (spec §9.2). */
+  private readonly lockedDaily = signal(false);
+  private dailyStream: Rng | null = null;
+
   protected readonly setKind = computed<SetKind | null>(() => {
+    if (this.isDaily()) return this.dailyPlan()?.kind ?? null;
     const kind = SET_KINDS.find((k) => k === this.kindParam()) ?? null;
     return this.isSolo() && kind === 'mixed' ? null : kind;
   });
   /** Solo mode reads its concept, level and mode from the query, and draws three items with no gate. */
   private readonly soloParams = signal<SoloParams | null>(null);
   protected readonly isSolo = computed(() => this.soloParams() !== null);
-  protected readonly itemCount = computed(() => (this.isSolo() ? SOLO_ITEMS : ITEMS_PER_SET));
+  protected readonly itemCount = computed(() => {
+    if (this.isDaily()) return 1;
+    return this.isSolo() ? SOLO_ITEMS : ITEMS_PER_SET;
+  });
   /** Null until a solo set is finished. Then whether the pass rule for its mode was met. */
   protected readonly soloPassed = signal<boolean | null>(null);
   protected readonly soloBack = computed(() => {
@@ -301,6 +320,7 @@ export class PuzzleSetPage {
     return params?.mode === 'test' ? '/game-theory' : `/game-theory/learn/${params?.conceptId ?? ''}`;
   });
   protected readonly title = computed(() => {
+    if (this.isDaily()) return 'Daily puzzle';
     const kind = this.setKind();
     return kind ? SET_TITLE[kind] : 'Puzzles';
   });
@@ -325,7 +345,10 @@ export class PuzzleSetPage {
   protected readonly moves = signal<Move[]>([]);
 
   protected readonly phase = computed<Phase>(() => {
-    if (!this.isSolo() && this.introducedCount() === 0) {
+    if (this.isDaily() && this.lockedDaily()) {
+      return 'locked';
+    }
+    if (!this.isSolo() && !this.isDaily() && this.introducedCount() === 0) {
       return 'empty';
     }
     if (this.setKind() === null) {
@@ -448,12 +471,21 @@ export class PuzzleSetPage {
     if (!option) {
       return;
     }
-    this.evidence.record(
-      reason.check.conceptId ? [reason.check.conceptId] : [],
-      option.correct,
-      'challenges',
-      this.clock(),
-    );
+    if (this.isDaily()) {
+      // The daily’s reason is information only, so it is kept with the day’s answer and not scored (spec §9.2).
+      this.learn.recordDailyAnswer(dateKeyOf(this.clock()), {
+        kind: item.kind,
+        correct: item.grade?.correct ?? false,
+        reasonCorrect: option.correct,
+      });
+    } else {
+      this.evidence.record(
+        reason.check.conceptId ? [reason.check.conceptId] : [],
+        option.correct,
+        'challenges',
+        this.clock(),
+      );
+    }
     this.current.set({ ...item, reason: { ...reason, picked: optionId } });
   }
 
@@ -524,6 +556,15 @@ export class PuzzleSetPage {
     const grade = gradePuzzle(item.puzzle, answer);
     this.evidence.record(item.puzzle.conceptIds, grade.correct, 'challenges', this.clock());
     this.results.update((all) => [...all, grade.correct]);
+    if (this.isDaily()) {
+      // The day's one answer is kept, and the reason is added later as information only (spec §9.2).
+      this.learn.recordDailyAnswer(dateKeyOf(this.clock()), {
+        kind: item.kind,
+        correct: grade.correct,
+        reasonCorrect: false,
+      });
+      this.evidence.recordDaily(this.clock());
+    }
     // Solo items ask no reason check (spec §7.1).
     const check = this.isSolo() ? null : reasonCheckFor(this.checks(), item.kind, item.puzzle.conceptIds);
     this.current.set({ ...item, grade, reason: check ? { check, picked: null } : null });
@@ -542,7 +583,39 @@ export class PuzzleSetPage {
     this.results.set([]);
     this.soloPassed.set(null);
     this.introducedCount.set(this.learn.introduced.size);
+    if (this.isDaily()) {
+      this.startDaily();
+      return;
+    }
     this.drawItem();
+  }
+
+  /**
+   * Plans today's daily on its first open and stores the plan, so it stays fixed for the day (spec
+   * §9.2). A plan from an earlier day is replaced. Nothing is drawn while the daily is locked.
+   */
+  private startDaily(): void {
+    if (!this.learn.introduced.has(NASH)) {
+      this.lockedDaily.set(true);
+      this.dailyPlan.set(null);
+      this.current.set(null);
+      return;
+    }
+    this.lockedDaily.set(false);
+    const today = dateKeyOf(this.clock());
+    let plan = this.learn.plan();
+    if (plan?.dateKey !== today) {
+      plan = dailyPlanOf(today, KINDS.filter((kind) => this.drawableKind(kind)), (id) => this.isPractised(id));
+      if (plan) this.learn.setPlan(plan);
+    }
+    this.dailyPlan.set(plan);
+    this.dailyStream = dailyRng(today);
+    this.drawItem();
+  }
+
+  private isPractised(conceptId: string): boolean {
+    const state = this.stateOf(conceptId);
+    return state === 'practised' || state === 'mastered';
   }
 
   /** Draws the next item of the set, or none once the set is complete or nothing can be drawn. */
@@ -555,11 +628,13 @@ export class PuzzleSetPage {
       return;
     }
     const kind = kinds[index % kinds.length];
-    const requested = this.soloParams()?.level ?? this.requestedLevel();
-    // A solo set is drawn at its given level, with no gate (spec §7.1).
-    const { difficulty, heldBack } = this.isSolo()
-      ? { difficulty: requested, heldBack: null }
-      : this.difficultyFor(kind, set === 'mixed', requested);
+    // A solo set and the daily are drawn at their fixed level, with no gate (spec §7.1, §9.2).
+    const fixed = this.isDaily() ? this.dailyPlan()?.difficulty : this.soloParams()?.level;
+    const requested = fixed ?? this.requestedLevel();
+    const { difficulty, heldBack } =
+      fixed !== undefined
+        ? { difficulty: requested, heldBack: null }
+        : this.difficultyFor(kind, set === 'mixed', requested);
     const puzzle = this.drawPuzzle(kind, difficulty);
     if (!puzzle) {
       this.current.set(null);
@@ -613,7 +688,7 @@ export class PuzzleSetPage {
 
   /** Kinds that can draw from the introduced concepts. A mixed set rotates through all of them. */
   private drawableKinds(set: SetKind): PuzzleKind[] {
-    if (this.isSolo()) return set === 'mixed' ? [] : [set];
+    if (this.isSolo() || this.isDaily()) return set === 'mixed' ? [] : [set];
     const candidates: PuzzleKind[] = set === 'mixed' ? [...KINDS] : [set];
     return candidates.filter((kind) => this.drawableKind(kind));
   }
@@ -635,7 +710,8 @@ export class PuzzleSetPage {
     const introduced = this.learn.introduced;
     const avoid = this.drawn.map((p) => matrixSignature(p.game));
     for (let tries = 0; tries < DRAW_TRIES; tries++) {
-      const puzzle = generatePuzzle(kind, difficulty, this.rng, { avoid });
+      const stream = this.isDaily() && this.dailyStream ? this.dailyStream : this.rng;
+      const puzzle = generatePuzzle(kind, difficulty, stream, { avoid });
       // A solo set draws without the introduced gate, since a test-out is what introduces its concept.
       if (this.isSolo() || puzzle.conceptIds.every((id) => introduced.has(id))) {
         return puzzle;

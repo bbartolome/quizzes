@@ -27,11 +27,19 @@
         </a>
       </ui-empty-state>
     }
+    @case ('locked') {
+      <ui-empty-state heading="Daily puzzle" message="Unlocks after your first tutorial.">
+        <a uiButton variant="link" routerLink="/game-theory/learn/nash-equilibrium">Start with Nash equilibrium</a>
+      </ui-empty-state>
+    }
     @case ('summary') {
       <section class="space-y-4">
         <p class="type-section" data-testid="puzzle-summary">
           {{ correctCount() }} of {{ itemCount() }} correct.
         </p>
+        @if (isDaily()) {
+          <p class="type-body" data-testid="puzzle-daily-done">Come back tomorrow for a new puzzle.</p>
+        }
         @if (isSolo()) {
           @if (soloPassed()) {
             <p class="type-body" data-testid="puzzle-solo-result">
