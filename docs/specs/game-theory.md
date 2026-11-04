@@ -70,6 +70,7 @@ Out of scope:
 | `game-theory/cards`          | Cards round                                                                | G10      |
 | `game-theory/puzzles/:kind`  | `equilibrium`, `classify`, `eliminate` or `mixed` (interleaved), sets of 5 | G16      |
 | `game-theory/learn/:concept` | Tutorial                                                                   | G17      |
+| `game-theory/test-out/:concept` | Test out: three items, all three must pass                              | G17      |
 | `game-theory/bots/:mode`     | `play`, `name` or `tournament`                                             | G20      |
 | `game-theory/play/:game`     | `beauty-contest`, `first-price`, `second-price` or `common-value`          | G24      |
 | `game-theory/daily`          | Daily puzzle                                                               | G27      |
@@ -401,7 +402,8 @@ Spec tests over the JSON imports (the `bank-version.spec.ts` pattern):
 - Concept ids are unique, kebab-case and disjoint from knowledge-base ids; required fields are present; `tier` is 1–5; every prerequisite exists; there is no cycle; `tier ≥` each prerequisite's tier; `modes` values are valid.
 - Pairs have known ids, no self-pair and no duplicate in either order, and every pair has a tip.
 - `concepts.json`, `tutorials.json` and `checks.json` each have a `version` equal to the manifest entry's `version`.
-- Every concept with an interactive mode has a tutorial script.
+- Every concept whose `modes` include `equilibrium`, `classify` or `eliminate` has a hand-written tutorial script. Every other concept gets the default card script (§7.1).
+- Every concept whose `requiresChallenge` is true has at least one challenge source: a puzzle credit (§9.1), a bot's `conceptIds`, or a reason check.
 - Reason checks: exactly one correct option and at least one misconception-tagged option; `conceptId` exists.
 - Every in-scope misconception (M1–M8, M10–M14) is referenced by at least one concept or check option, so §11's list isn't decorative.
 - Every tutorial annotation's marks agree with the solver (§7.1).
@@ -422,6 +424,7 @@ type TutorialStep =
       annotations: { text: string; mark?: MarkName; at?: CellRef }[];
     }
   | { stage: 2; kind: 'faded'; game: MatrixGame; task: FadedTask; hints: string[] }
+  | { stage: 2; kind: 'card'; hints: string[] }
   | { stage: 3; kind: 'solo'; source: SoloSource; count: 3; passAt: 2 };
 interface TutorialScript {
   conceptId: string;
@@ -442,9 +445,9 @@ type SoloSource =
 - **Marks come from the solver, never from authored text** (`MarkName` selects which solver output to draw), so tutorial text can't contradict the solver. A guard checks every annotated game.
 - Progressive disclosure: one idea per screen, and payoffs are revealed gradually (first only the row player's, then both).
 - A hint-assisted item never records evidence.
-- **Test out.** A 3-item check using the Solo generators. A 3 of 3 pass sets `testedOut` and `stage = 3`, and skips to practice.
-- Tutorials are first-class only for concepts that have an interactive mode. The others get a short text Explore, a faded classify or card, and a Solo cards set.
-- Mechanism slices ship with two seed tutorials (`best-response`, `nash-equilibrium`). The rest are content work (G29).
+- **Test out.** A 3-item check using the Solo generators. A 3 of 3 pass sets `testedOut` and `stage = 3`, and skips to practice. Its source comes from the concept: `{equilibrium, 1}` for `best-response` and `nash-equilibrium`, `{equilibrium, 2}` for `pareto-efficiency` (so `ne-not-pareto` items come up), `{eliminate, 1}` for `dominant-strategy` and `iterated-elimination`, `{classify, 1}` for the five classes, and `cards` for the default-script concepts. Name-the-bot and reason checks are not test sources in v1.
+- Hand-written tutorials cover the ten concepts whose `modes` include `equilibrium`, `classify` or `eliminate`. The other eight get a **default script** built in code from their `concepts.json` entry: a text Explore, one card Try with a hint, and a Solo cards set.
+- G17 ships two seed tutorials (`best-response`, `nash-equilibrium`). G29 writes the other eight hand-written ones.
 
 ### 7.2 Introduced and gating
 
@@ -638,13 +641,13 @@ export interface AuctionOutcome {
 | Explore and Try steps, hint-assisted items                             | no              | —                                                                                 |
 | Free-play bot turns, tournament runs, beauty-contest and auction plays | no              | — (only their reason checks count)                                                |
 
-Lures get no counts. A two-concept puzzle credits both concepts.
+Lures get no counts. A two-concept puzzle credits both concepts. The 'did the winner change?' check after a tournament is unscored: it is computed from the two runs and stored in the tournament summary.
 
 ### 9.2 Daily puzzle
 
 - **Seed:** `mulberry32(hashSeed('gt-daily/v1/' + dateKey))`. No backend.
-- **Kind** is chosen from the puzzle kinds the player has unlocked by `dayNumber(dateKey) % kinds.length`. Difficulty is capped at 2, so it is always solvable.
-- **Plan lock-in.** The first open of the day stores `{ kind, difficulty, seedKey }`, so mastering a concept mid-day can't change today's puzzle.
+- **Kind** is chosen from the kinds the puzzle-set page can draw (§7.2, the same drawable-kind rule) by `dayNumber(dateKey) % kinds.length`. Difficulty is `min(2, the highest level whose gates are met)`, so it is always solvable.
+- **Plan lock-in.** The first open of the day stores `{ kind, difficulty, seedKey }` in `stats:game-theory:plan`, so mastering a concept mid-day can't change today's puzzle.
 - **Availability.** It unlocks once `nash-equilibrium` is introduced. Before then the hub says "Unlocks after your first tutorial."
 - **Grading.** One attempt through `gradePuzzle`, then a reason check. The answer's correctness is the recorded result; the reason is shown separately and informationally.
 - **Storage.** `stats:game-theory:learn` holds the last 60 dates' `{ kind, correct, reasonCorrect }`. The Today panel shows the last 14 days as glyphs (✓ ✗ ·).
@@ -671,8 +674,9 @@ All keys sit under `stats:game-theory:`, so `StatsService.resetAll()` clears the
 
 | Key                            | Owner                                  | Shape                                                                | Written when                                                                |
 | ------------------------------ | -------------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `stats:game-theory:cards`      | `StatsService` via `GtEvidenceService` | `QuizStats`, trait = concept id                                      | each card check; `recordSessionEnd` at End if at least one card was checked |
-| `stats:game-theory:challenges` | `StatsService` via `GtEvidenceService` | `QuizStats`, trait = concept ids                                     | puzzles, Solo and Test-out items, name-the-bot, reason checks, the daily    |
+| `stats:game-theory:cards`      | `StatsService` via `GtEvidenceService` | `QuizStats`, trait = concept id                                      | each card check and each Solo or Test-out card item; `recordSessionEnd` at End if at least one card was checked |
+| `stats:game-theory:plan`       | `GtLearnService`                       | today's `{ kind, difficulty, seedKey }`, one record, rebuilt when the date changes | first open of the day |
+| `stats:game-theory:challenges` | `StatsService` via `GtEvidenceService` | `QuizStats`, trait = concept ids                                     | puzzles, Solo and Test-out items whose source is a puzzle, name-the-bot, reason checks, the daily |
 | `stats:game-theory:learn`      | `GtLearnService`                       | tutorial stage and `testedOut` per concept, `summary`, daily history | stage changes and evidence                                                  |
 | `stats:game-theory:games`      | `GtGamesService`                       | `GamesLog`: per-kind counts and up to 100 match summaries            | a completed match, tournament, contest or auction                           |
 
@@ -788,6 +792,7 @@ TDD-sized, in dependency order. Each is a red commit followed by the implementat
 - **Pre-factor.** `docs/specs/game-theory-prefactor.md` (T1–T7) lands first. G7 becomes T1; the library, route and manifest parts of G1, the guards of G2, and the inert service surface of G9 move into T2, T3, T5 and T7. The practice-layer slices P1–P7 this table depends on have landed.
 - **Parallel lanes after G2:** the solver (G3–G6), content (G7–G8, with G1), bots (G19), contests (G24's engine and G25).
 - G11–G13 and G14 are independent of each other once G3–G5 land. G21, G22 and G23 are independent once G20 lands. G24 and G25 are independent.
+- **v1 ships without G23 and G28.** Badges are cut: `contingent-winner` is the only one answerable from the games log, and the others need per-puzzle history that no §10 key stores.
 - **Cut order for a smaller first drop:** G23, then G28; then G6 and G13; then the common-value half of G25 and G26; then the daily puzzle (G27); then reduce G18's map to a plain list.
 - **Smallest meaningful drop:** G1–G5, G7–G12, G14–G17 (learn and practise). Bots and contests ship later.
 - **Critical path:** content volume (18 concepts, 10 pairs, about 8 tutorials, about 15 reason checks) makes G29 likely the longest slice here.
@@ -805,6 +810,8 @@ Author defaults, change before building:
 7. Real-world figures appear in the UI only with a source link (otherwise none).
 8. No sync: clearing browser data loses progress, and travelling across timezones can break a practice streak.
 9. Time pressure is out of scope for v1, because game theory needs reflection.
+10. The daily plan has its own key, so `LearnState` stays at version 1 and an old build cannot zero tutorial stages.
+11. The hub reset button (§10) is built in G18, because no slice owned it.
 
 ## 15. Sources
 
