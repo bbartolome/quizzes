@@ -17,6 +17,9 @@ import { PracticeService } from '../../../../core/services/practice.service';
 import type { PerTraitStats, QuizStats } from '../../../../core/models/quiz.models';
 import { FakeGtEvidenceService } from '../../../../../testing/fake-gt-evidence.service';
 import { FakeGtLearnService } from '../../../../../testing/fake-gt-learn.service';
+import type { DailyPlan } from '../../lib/daily';
+import { dailyRng } from '../../lib/daily';
+import { dateKeyOf } from '../../../../core/utils/dates';
 
 // A fixed seed makes every item deterministic. expectedSet() replays the page's draw order, so a
 // test knows each item's puzzle, and can answer it right or wrong.
@@ -93,6 +96,10 @@ interface OpenOptions {
   saveFails?: boolean;
   /** Route query params, for the solo and test-out modes (spec §7.1, §7.2). */
   query?: Record<string, string>;
+  /** Opens the daily puzzle route (spec §9.2). */
+  daily?: boolean;
+  /** A daily plan already stored before the page opens. */
+  plan?: DailyPlan;
 }
 
 let evidence: FakeGtEvidenceService;
@@ -111,6 +118,9 @@ function open(options: OpenOptions = {}): ComponentFixture<PuzzleSetPage> {
   evidence = new FakeGtEvidenceService();
   learn = new FakeGtLearnService();
   learn.seedIntroduced(options.introduced ?? []);
+  if (options.plan) {
+    learn.setPlan(options.plan);
+  }
   if (options.saveFails) {
     evidence.setSaveFailed(true);
   }
@@ -135,6 +145,7 @@ function open(options: OpenOptions = {}): ComponentFixture<PuzzleSetPage> {
             convertToParamMap({ kind: options.kind ?? 'equilibrium' }),
           ).asObservable(),
           queryParamMap: new BehaviorSubject(convertToParamMap(options.query ?? {})).asObservable(),
+          data: of(options.daily ? { daily: true } : {}),
         },
       },
       { provide: GAME_THEORY_RNG, useValue: mulberry32(SEED) },
@@ -688,6 +699,78 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
 
       expect(learn.read().concepts['best-response']).toBeUndefined();
       expect(text(fixture, '[data-testid="puzzle-solo-result"]')).toContain('not passed');
+    });
+  });
+
+  describe('daily puzzle (spec §9.2)', () => {
+    const TODAY = dateKeyOf(NOW);
+    const BOTH = ['best-response', 'nash-equilibrium'];
+
+    /** The first puzzle the daily draws from its day stream that credits only introduced concepts. */
+    function firstIntroduced(difficulty: Difficulty, introduced: string[]): Puzzle {
+      const rng = dailyRng(TODAY);
+      for (let i = 0; i < 100; i++) {
+        const puzzle = generatePuzzle('equilibrium', difficulty, rng);
+        if (puzzle.conceptIds.every((id) => introduced.includes(id))) return puzzle;
+      }
+      throw new Error('no introduced puzzle in 100 draws');
+    }
+
+    it('is one item of the kind the plan gives, drawn from the day stream', () => {
+      const fixture = open({ daily: true, introduced: BOTH });
+
+      expect(text(fixture, '[data-testid="puzzle-progress"]')).toBe('Item 1 of 1');
+      expect(learn.plan()).toMatchObject({ kind: 'equilibrium', difficulty: 1, dateKey: TODAY });
+      expect(readout(fixture.nativeElement)).toEqual(expectedReadout(firstIntroduced(1, BOTH)));
+    });
+
+    it('keeps the stored plan when mastery changes later in the day', () => {
+      const plan: DailyPlan = {
+        version: 1,
+        dateKey: TODAY,
+        kind: 'equilibrium',
+        difficulty: 1,
+        seedKey: 'gt-daily/v1/' + TODAY,
+      };
+      const fixture = open({
+        daily: true,
+        introduced: BOTH,
+        plan,
+        challenges: { 'nash-equilibrium': { attempted: 8, correct: 8 } },
+        days: { 'nash-equilibrium': { days: 2, lastDay: TODAY } },
+      });
+
+      expect(learn.plan()?.difficulty).toBe(1);
+      expect(readout(fixture.nativeElement)).toEqual(expectedReadout(firstIntroduced(1, BOTH)));
+    });
+
+    it('scores the answer, records it as the day answer, and makes the day a practice day', () => {
+      const fixture = open({ daily: true, introduced: BOTH });
+      solveItem(fixture, firstIntroduced(1, BOTH), true);
+
+      expect(evidence.records.map((r) => r.facet)).toEqual(['challenges']);
+      expect(evidence.dailyCalls).toHaveLength(1);
+      expect(learn.read().daily[TODAY]).toEqual({
+        kind: 'equilibrium',
+        correct: true,
+        reasonCorrect: false,
+      });
+    });
+
+    it('shows that the daily is done, and that another comes tomorrow', () => {
+      const fixture = open({ daily: true, introduced: BOTH });
+      solveItem(fixture, firstIntroduced(1, BOTH), true);
+      tap(fixture, '[data-testid="puzzle-next"]');
+
+      expect(text(fixture, '[data-testid="puzzle-summary"]')).toContain('1 of 1 correct');
+      expect(fixture.nativeElement.textContent).toContain('Come back tomorrow');
+    });
+
+    it('is locked until nash-equilibrium is introduced', () => {
+      const fixture = open({ daily: true, introduced: [] });
+
+      expect(fixture.nativeElement.textContent).toContain('Unlocks after your first tutorial.');
+      expect(fixture.nativeElement.querySelector('[data-testid="puzzle-progress"]')).toBeNull();
     });
   });
 

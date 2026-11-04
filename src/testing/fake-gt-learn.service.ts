@@ -6,6 +6,7 @@ import type {
 } from '../app/features/game-theory/lib/state.types';
 import type { DateKey } from '../app/core/utils/dates';
 import type { MasteryState } from '../app/core/models/practice.models';
+import type { DailyPlan } from '../app/features/game-theory/lib/daily';
 
 type DailyEntry = LearnState['daily'][string];
 
@@ -28,7 +29,18 @@ export class FakeGtLearnService {
   private readonly daily: Record<string, DailyEntry> = {};
   private readonly failed = signal(false);
   private readonly masteries: Record<string, MasteryState> = {};
+  private storedPlan: DailyPlan | null = null;
   readonly saveFailed: Signal<boolean> = this.failed.asReadonly();
+
+  /** The stored daily plan, as the real service keeps it. */
+  plan(): DailyPlan | null {
+    return this.storedPlan;
+  }
+
+  setPlan(plan: DailyPlan): boolean {
+    this.storedPlan = plan;
+    return true;
+  }
 
   /** Sets the mastery state masteryByConcept reports for a concept. Unset concepts are New. */
   setMastery(conceptId: string, state: MasteryState): void {
