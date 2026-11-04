@@ -49,6 +49,32 @@
           }
         </ul>
         <p class="type-body">0 is the equilibrium but not the winning guess.</p>
+
+        @if (reasonCheck(); as check) {
+          <section class="space-y-3" data-testid="beauty-reason-check">
+            <p class="type-body">{{ check.prompt }}</p>
+            @for (option of check.options; track option.id) {
+              <button
+                type="button"
+                uiButton
+                variant="secondary"
+                [attr.data-testid]="'beauty-reason-' + option.id"
+                [disabled]="pickedOption() !== null"
+                (click)="pick(option.id)"
+              >
+                {{ option.text }}
+              </button>
+            }
+            @if (pickedOption(); as answer) {
+              <ui-feedback
+                [verdict]="answer.correct ? 'correct' : 'incorrect'"
+                data-testid="beauty-reason-feedback"
+              >
+                {{ answer.why }}
+              </ui-feedback>
+            }
+          </section>
+        }
       </section>
     }
   </section>

@@ -1,9 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { APP_CLOCK } from '../../../../../core/app-clock';
 import { Button } from '../../../../../shared/ui/button.directive';
+import { FeedbackPanel } from '../../../../../shared/ui/feedback-panel';
 import { PageBack, PageShell } from '../../../../../shared/ui/page-shell';
+import { GameTheoryDataService } from '../../../data/game-theory-data.service';
 import { defaultBeautyConfig, runBeautyContest } from '../../../lib/beauty';
 import type { BeautyResult, LevelLabel } from '../../../lib/beauty.types';
+import type { ReasonCheck } from '../../../lib/puzzle.types';
+import { GtEvidenceService } from '../../../state/gt-evidence.service';
 
 const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
 const LEVELS: readonly LevelLabel[] = ['L0', 'L1', 'L2', 'L3', 'L4+'];
@@ -34,10 +39,12 @@ function toReveal(result: BeautyResult): Reveal {
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './beauty-contest-page.html',
-  imports: [Button, PageShell],
+  imports: [Button, FeedbackPanel, PageShell],
 })
 export class BeautyContestPage {
   private readonly clock = inject(APP_CLOCK);
+  private readonly data = inject(GameTheoryDataService);
+  private readonly evidence = inject(GtEvidenceService);
   /** Seeded from the clock once per page load, so a reload plays a fresh set of simulated players. */
   private readonly config = defaultBeautyConfig(this.clock().toISOString());
 
@@ -50,6 +57,30 @@ export class BeautyContestPage {
     const result = this.result();
     return result ? toReveal(result) : null;
   });
+
+  /** The reason checks from checks.json. A failed load drops the reason check; the reveal stays. */
+  private readonly checks = signal<readonly ReasonCheck[]>([]);
+  /** The beauty reason check (spec §5.3, §9.1), asked after the reveal. */
+  readonly reasonCheck = computed(
+    () => this.checks().find((check) => check.context === 'beauty') ?? null,
+  );
+  /** The option the player picked. The check is answered once per reveal. */
+  private readonly picked = signal<string | null>(null);
+  readonly pickedOption = computed(() => {
+    const check = this.reasonCheck();
+    const id = this.picked();
+    return check && id ? (check.options.find((option) => option.id === id) ?? null) : null;
+  });
+
+  constructor() {
+    this.data
+      .load()
+      .pipe(takeUntilDestroyed())
+      .subscribe({
+        next: (loaded) => this.checks.set(loaded.checks.checks),
+        error: () => this.checks.set([]),
+      });
+  }
 
   setGuess(event: Event): void {
     this.guessText.set((event.target as HTMLInputElement).value);
@@ -64,6 +95,21 @@ export class BeautyContestPage {
       return;
     }
     this.invalid.set(false);
+    this.picked.set(null);
     this.result.set(runBeautyContest(this.config, value));
+  }
+
+  /** Records the reason answer as challenge evidence on its concept. Only the first pick counts. */
+  pick(optionId: string): void {
+    const check = this.reasonCheck();
+    if (!check || this.picked() !== null) {
+      return;
+    }
+    const option = check.options.find((candidate) => candidate.id === optionId);
+    if (!option) {
+      return;
+    }
+    this.picked.set(optionId);
+    this.evidence.record([check.conceptId], option.correct, 'challenges', this.clock());
   }
 }
