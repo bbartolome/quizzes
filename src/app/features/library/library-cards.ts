@@ -28,6 +28,8 @@ export interface QuizCard {
   conceptsPractised?: number | null;
   /** Knowledge-base concepts for this quiz (M); null when the knowledge base is not known. */
   conceptsTotal?: number | null;
+  /** The game-theory daily line: open or done. Null when locked or for other quizzes (spec §3.1). */
+  dailyLabel?: string | null;
 }
 
 export function routeFor(entry: QuizManifestEntry): string {
@@ -68,6 +70,7 @@ export function gameTheoryCard(
   entry: QuizManifestEntry,
   learnSummary: LearnState['summary'],
   stats: { cards: QuizStats; challenges: QuizStats },
+  daily: { unlocked: boolean; done: boolean } = { unlocked: false, done: false },
 ): QuizCard {
   let correct = 0;
   let attempted = 0;
@@ -87,6 +90,7 @@ export function gameTheoryCard(
     accuracy: attempted > 0 ? correct / attempted : null,
     skillScore: null,
     conceptsPractised: learnSummary.mastered,
+    dailyLabel: daily.unlocked ? (daily.done ? 'done' : 'open') : null,
     conceptsTotal: TOTAL_CONCEPTS,
   };
 }

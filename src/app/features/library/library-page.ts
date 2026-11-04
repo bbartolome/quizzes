@@ -4,6 +4,8 @@ import { RouterLink } from '@angular/router';
 import { Observable, catchError, defer, forkJoin, map, of, shareReplay, switchMap } from 'rxjs';
 import { KnowledgeBase, QuizManifestEntry } from '../../core/models/quiz.models';
 import { PracticeService } from '../../core/services/practice.service';
+import { APP_CLOCK } from '../../core/app-clock';
+import { dateKeyOf } from '../../core/utils/dates';
 import { QuizDataService } from '../../core/services/quiz-data.service';
 import { StatsService } from '../../core/services/stats.service';
 import { CalibrationBankService } from '../calibration/calibration-bank.service';
@@ -40,6 +42,7 @@ export class LibraryPage {
   private readonly bankService: CalibrationBankService = inject(CalibrationBankService);
   private readonly practice: PracticeService = inject(PracticeService);
   private readonly gameTheory: GtLearnService = inject(GtLearnService);
+  private readonly clock = inject(APP_CLOCK);
 
   protected readonly cards$: Observable<QuizCard[]> = this.quizData.loadManifest().pipe(
     switchMap((manifest) => {
@@ -85,10 +88,19 @@ export class LibraryPage {
 
   private toCard(entry: QuizManifestEntry, kb: KnowledgeBase | null): QuizCard {
     if (entry.kind === 'game-theory') {
-      return gameTheoryCard(entry, this.gameTheory.read().summary, {
-        cards: this.stats.getStats(EVIDENCE_QUIZ_IDS.cards),
-        challenges: this.stats.getStats(EVIDENCE_QUIZ_IDS.challenges),
-      });
+      const learn = this.gameTheory.read();
+      return gameTheoryCard(
+        entry,
+        learn.summary,
+        {
+          cards: this.stats.getStats(EVIDENCE_QUIZ_IDS.cards),
+          challenges: this.stats.getStats(EVIDENCE_QUIZ_IDS.challenges),
+        },
+        {
+          unlocked: this.gameTheory.introduced.has('nash-equilibrium'),
+          done: learn.daily[dateKeyOf(this.clock())] !== undefined,
+        },
+      );
     }
     return entry.kind === 'calibration'
       ? calibrationCard(entry, this.calibration.getSummary(entry.id))

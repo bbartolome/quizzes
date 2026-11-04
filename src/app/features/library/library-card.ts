@@ -31,6 +31,14 @@ import { QuizCard, formatPercent } from './library-cards';
             </dd>
           </div>
         }
+        @if (card().kind === 'game-theory' && card().dailyLabel) {
+          <div class="flex justify-between">
+            <dt>Daily puzzle</dt>
+            <dd>
+              <strong>{{ card().dailyLabel }}</strong>
+            </dd>
+          </div>
+        }
         @if (card().conceptsTotal !== null) {
           <div class="flex justify-between">
             <dt>
