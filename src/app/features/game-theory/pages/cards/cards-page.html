@@ -26,6 +26,15 @@
         <p class="type-section" data-testid="cards-summary">
           {{ answeredCount() }} answered, {{ correctCount() }} correct.
         </p>
+        @if (isSolo()) {
+          @if (soloPassed()) {
+            <p class="type-body" data-testid="cards-solo-result">You passed.</p>
+            <a uiButton data-testid="cards-solo-back" [routerLink]="soloBack()">Back to the lesson</a>
+          } @else {
+            <p class="type-body" data-testid="cards-solo-result">This set is not passed yet.</p>
+            <button type="button" uiButton data-testid="cards-fresh-set" (click)="startFresh()">Fresh set</button>
+          }
+        }
         <a uiButton variant="link" routerLink="/game-theory" data-testid="cards-hub-link">
           Back to Game Theory
         </a>

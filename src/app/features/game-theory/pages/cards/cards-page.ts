@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { APP_CLOCK } from '../../../../core/app-clock';
 import type {
   GameTheoryConcept,
@@ -44,6 +44,22 @@ interface Round {
 }
 
 const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
+/** A solo set has three cards. A tutorial's passes at two right; a test-out needs all three (spec §7.1, §7.2). */
+const SOLO_ITEMS = 3;
+const SOLO_PASS: Record<SoloMode, number> = { tutorial: 2, test: SOLO_ITEMS };
+
+/** Solo mode, from the query: one concept, and whether it feeds the lesson or a test-out. */
+type SoloMode = 'tutorial' | 'test';
+interface SoloParams {
+  conceptId: string;
+  mode: SoloMode;
+}
+
+function soloFrom(query: ParamMap): SoloParams | null {
+  const conceptId = query.get('solo');
+  if (!conceptId) return null;
+  return { conceptId, mode: query.get('mode') === 'test' ? 'test' : 'tutorial' };
+}
 /** Every card set starts from the seed concept's test (spec §7.2). */
 const START_LINK = '/game-theory/test-out/best-response';
 /** Game theory keeps no reasoning-traps stats, so the trap half of the pooled draw weight is empty. */
@@ -93,8 +109,18 @@ export class CardsPage {
   private readonly evidence = inject(GtEvidenceService);
   private readonly learn = inject(GtLearnService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly route = inject(ActivatedRoute);
 
   protected readonly back = BACK;
+  /** Solo mode: one concept, three cards, and a pass rule by mode (spec §7.1). */
+  private readonly soloParams = signal<SoloParams | null>(null);
+  protected readonly isSolo = computed(() => this.soloParams() !== null);
+  /** Null until a solo set ends. Then whether the pass rule for its mode was met. */
+  protected readonly soloPassed = signal<boolean | null>(null);
+  protected readonly soloBack = computed(() => {
+    const params = this.soloParams();
+    return params?.mode === 'test' ? '/game-theory' : `/game-theory/learn/${params?.conceptId ?? ''}`;
+  });
   protected readonly startLink = START_LINK;
   protected readonly outcomeLook = OUTCOME_LOOK;
   protected readonly outcomeLabels = OUTCOME_LABELS;
@@ -126,6 +152,9 @@ export class CardsPage {
   });
 
   constructor() {
+    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((query) => {
+      this.soloParams.set(soloFrom(query));
+    });
     this.loadContent(false);
   }
 
@@ -162,8 +191,36 @@ export class CardsPage {
   }
 
   protected next(): void {
-    if (this.round()?.feedback) {
-      this.drawRound();
+    if (!this.round()?.feedback) return;
+    if (this.isSolo() && this.answeredCount() === SOLO_ITEMS) {
+      this.finishSolo();
+      this.end();
+      return;
+    }
+    this.drawRound();
+  }
+
+  /** Starts a fresh solo set with the same concept and mode. */
+  protected startFresh(): void {
+    this.answeredCount.set(0);
+    this.correctCount.set(0);
+    this.ended.set(false);
+    this.soloPassed.set(null);
+    this.lastTarget = null;
+    this.drawRound();
+  }
+
+  /** Decides a finished solo set against its mode's pass rule, and records the result. */
+  private finishSolo(): void {
+    const params = this.soloParams();
+    if (!params) return;
+    const passed = this.correctCount() >= SOLO_PASS[params.mode];
+    this.soloPassed.set(passed);
+    if (!passed) return;
+    if (params.mode === 'test') {
+      this.learn.testOut(params.conceptId);
+    } else {
+      this.learn.setStage(params.conceptId, 3);
     }
   }
 
@@ -231,7 +288,13 @@ export class CardsPage {
     this.learn.refresh(ids, requiresChallengeMap(content.concepts));
     const introduced = this.learn.introduced;
     this.kb = content;
-    this.deck.set(content.concepts.filter((concept) => introduced.has(concept.id)));
+    const solo = this.soloParams();
+    // A solo set draws only its own concept, so the rest of the deck is lures alone (spec §7.1).
+    this.deck.set(
+      solo
+        ? content.concepts.filter((concept) => concept.id === solo.conceptId)
+        : content.concepts.filter((concept) => introduced.has(concept.id)),
+    );
     this.status.set('ready');
     if (this.deck().length > 0) {
       this.drawRound();
