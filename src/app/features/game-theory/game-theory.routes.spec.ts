@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { GAME_THEORY_ROUTES } from './game-theory.routes';
 import { GAME_THEORY_MODES } from './modes';
+import { BotsPage } from './pages/bots/bots-page';
 import { CardsPage } from './pages/cards/cards-page';
 import { GameTheoryHomePage } from './pages/home/game-theory-home-page';
 import { PlayPage } from './pages/play/play-page';
@@ -31,6 +32,20 @@ describe('GAME_THEORY_ROUTES', () => {
   it('dispatches puzzles/:kind to PuzzleSetPage', () => {
     const puzzles = GAME_THEORY_ROUTES.find((r) => r.path === 'puzzles/:kind');
     expect(puzzles?.component).toBe(PuzzleSetPage);
+  });
+
+  it('dispatches bots/:mode to BotsPage', () => {
+    const bots = GAME_THEORY_ROUTES.find((r) => r.path === 'bots/:mode');
+    expect(bots?.component).toBe(BotsPage);
+  });
+
+  it('lists the Bots play mode on the hub, at the route path, with no requirement', () => {
+    expect(GAME_THEORY_MODES).toContainEqual({
+      id: 'bots-play',
+      title: 'Bots',
+      path: 'game-theory/bots/play',
+      requires: [],
+    });
   });
 
   it('lists Cards on the hub, at the route path, with no requirement', () => {
