@@ -44,6 +44,20 @@ describe('GameTheoryHomePage', () => {
     expect(Array.from(links).map((a) => a.textContent?.trim())).toEqual(['Cards', 'Bots']);
   });
 
+  it('links each mode to its route, with the slashes of its path kept as route separators', () => {
+    const entries: GameTheoryMode[] = [
+      { id: 'cards', title: 'Cards', path: 'game-theory/cards', requires: [] },
+      { id: 'bots', title: 'Bots', path: 'game-theory/bots/play', requires: [] },
+    ];
+    modes.splice(0, modes.length, ...entries);
+    const fixture = TestBed.createComponent(GameTheoryHomePage);
+    fixture.detectChanges();
+    const hrefs = Array.from(
+      fixture.nativeElement.querySelectorAll('[data-slot="modes"] a') as NodeListOf<HTMLAnchorElement>,
+    ).map((a) => a.getAttribute('href'));
+    expect(hrefs).toEqual(['/game-theory/cards', '/game-theory/bots/play']);
+  });
+
   it('renders no mode links while the array is empty', () => {
     modes.length = 0;
     const fixture = TestBed.createComponent(GameTheoryHomePage);
