@@ -41,7 +41,47 @@
     }
   </section>
 
-  <section data-slot="today">
-    <!-- Slot: today and daily puzzle panel (G27). -->
+  <section data-slot="today" class="space-y-2">
+    @if (status() === 'ready') {
+      @switch (today().kind) {
+        @case ('locked') {
+          <p class="type-body" data-testid="today-locked">Unlocks after your first tutorial.</p>
+        }
+        @case ('open') {
+          <a uiButton variant="link" routerLink="/game-theory/daily" data-testid="today-open">
+            Open today's puzzle
+          </a>
+        }
+        @case ('done') {
+          @if (doneToday(); as d) {
+            <p class="type-body" data-testid="today-status">
+              Today's puzzle:
+              <span aria-hidden="true">{{ d.correct ? '✓' : '✗' }}</span>
+              {{ d.correct ? 'Correct' : 'Not this time' }}
+            </p>
+          }
+        }
+      }
+      <p class="type-detail" data-testid="today-strip" aria-label="Daily history, last fourteen days">{{ strip() }}</p>
+    }
+  </section>
+
+  <section class="space-y-2">
+    @if (confirming()) {
+      <p class="type-body">
+        Are you sure? This clears every Game Theory score, tutorial stage and daily answer in this
+        browser. Your practice streak is kept.
+      </p>
+      <div class="flex gap-2">
+        <button type="button" uiButton data-testid="hub-reset-confirm" (click)="reset()">Reset</button>
+        <button type="button" uiButton variant="link" data-testid="hub-reset-cancel" (click)="cancelReset()">
+          Cancel
+        </button>
+      </div>
+    } @else {
+      <button type="button" uiButton variant="link" data-testid="hub-reset" (click)="confirming.set(true)">
+        Reset Game Theory progress
+      </button>
+    }
   </section>
 </ui-page-shell>
