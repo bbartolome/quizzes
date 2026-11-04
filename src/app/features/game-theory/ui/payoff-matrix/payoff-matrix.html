@@ -52,10 +52,13 @@
     </tbody>
   </table>
 
-  <p class="text-sm text-muted">
-    Each cell shows the row payoff, then the column payoff. An underlined payoff is a best response.
-  </p>
+  @if (showCaption()) {
+    <p class="text-sm text-muted">
+      Each cell shows the row payoff, then the column payoff. An underlined payoff is a best response.
+    </p>
+  }
 
+  @if (showNone()) {
   <button
     type="button"
     data-testid="payoff-none"
@@ -68,4 +71,5 @@
       <ui-status [tone]="status.tone" [label]="status.label" />
     }
   </button>
+  }
 </div>

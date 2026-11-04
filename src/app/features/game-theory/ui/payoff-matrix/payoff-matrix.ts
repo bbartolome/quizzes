@@ -153,6 +153,9 @@ export class PayoffMatrixWidget {
   readonly eliminated = input<EliminatedLine[]>([]);
   readonly cellGrades = input<CellGrade[]>([]);
   readonly noneGrade = input<CellOutcome | null>(null);
+  /** Equilibrium items show the none button and the best-response caption. Classify and eliminate do not. */
+  readonly showNone = input(true);
+  readonly showCaption = input(true);
 
   /** The cells the player has picked. Picking a cell clears "None". */
   readonly selected = model<CellRef[]>([]);
