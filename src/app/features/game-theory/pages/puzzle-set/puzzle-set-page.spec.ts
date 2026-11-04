@@ -422,6 +422,15 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       });
     });
 
+    it('classify: shows the payoff matrix read-only, with how to read a cell', () => {
+      const fixture = open({ kind: 'classify', introduced: CLASSIFY_IDS });
+      const root: HTMLElement = fixture.nativeElement;
+
+      expect(root.querySelectorAll('[data-testid^="payoff-cell-"]')).toHaveLength(4);
+      expect(must<HTMLElement>(root, '[data-testid="puzzle-matrix-readonly"]').hasAttribute('inert')).toBe(true);
+      expect(root.textContent).toContain("Each cell shows the row player's payoff, then the column player's");
+    });
+
     it('eliminate: offers the legal eliminations as buttons, and finishing grades it correct', () => {
       const fixture = open({ kind: 'eliminate', introduced: ELIMINATE_IDS });
       const [puzzle] = expectedSet([{ kind: 'eliminate', difficulty: 1 }]);
@@ -638,6 +647,18 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
   describe('solo mode (spec §7.1, §7.2)', () => {
     const SOLO = { solo: 'best-response', level: '2', mode: 'tutorial' };
     const TEST = { solo: 'best-response', level: '1', mode: 'test' };
+
+    it('says what passing a tutorial solo takes', () => {
+      const fixture = open({ introduced: ['best-response'], query: SOLO });
+
+      expect(text(fixture, '[data-testid="puzzle-solo-note"]')).toContain('two right of three passes this idea');
+    });
+
+    it('says what a test-out takes', () => {
+      const fixture = open({ query: TEST });
+
+      expect(text(fixture, '[data-testid="puzzle-solo-note"]')).toContain('all three right tests this idea out');
+    });
 
     it('draws three items at the level it is given, with no gate and no reason check', () => {
       const fixture = open({ introduced: [], query: SOLO });
