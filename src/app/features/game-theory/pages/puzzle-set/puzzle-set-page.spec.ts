@@ -286,7 +286,7 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(root.textContent).toContain('Start with Best response');
       expect(
         must<HTMLAnchorElement>(root, '[data-testid="puzzles-test-out-link"]').getAttribute('href'),
-      ).toBe('/game-theory/test-out/best-response');
+      ).toBe('/game-theory/puzzles/equilibrium?solo=best-response&level=1&mode=test');
       expect(root.querySelector('[data-testid="puzzle-submit"]')).toBeNull();
       expect(root.querySelector('[data-testid="payoff-matrix"]')).toBeNull();
       expect(evidence.records).toHaveLength(0);

@@ -6,7 +6,7 @@ import { CardsPage } from './pages/cards/cards-page';
 import { GameTheoryHomePage } from './pages/home/game-theory-home-page';
 import { PlayPage } from './pages/play/play-page';
 import { PuzzleSetPage } from './pages/puzzle-set/puzzle-set-page';
-import { TestOutPage } from './pages/test-out/test-out-page';
+import { TutorialPage } from './pages/tutorial/tutorial-page';
 
 describe('GAME_THEORY_ROUTES', () => {
   it('registers the hub at the empty path', () => {
@@ -19,9 +19,9 @@ describe('GAME_THEORY_ROUTES', () => {
     expect(play?.component).toBe(PlayPage);
   });
 
-  it('dispatches test-out/:concept to TestOutPage', () => {
-    const testOut = GAME_THEORY_ROUTES.find((r) => r.path === 'test-out/:concept');
-    expect(testOut?.component).toBe(TestOutPage);
+  it('dispatches learn/:concept to TutorialPage', () => {
+    const learn = GAME_THEORY_ROUTES.find((r) => r.path === 'learn/:concept');
+    expect(learn?.component).toBe(TutorialPage);
   });
 
   it('dispatches cards to CardsPage', () => {

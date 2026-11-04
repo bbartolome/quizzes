@@ -61,7 +61,9 @@ function soloFrom(query: ParamMap): SoloParams | null {
   return { conceptId, mode: query.get('mode') === 'test' ? 'test' : 'tutorial' };
 }
 /** Every card set starts from the seed concept's test (spec §7.2). */
-const START_LINK = '/game-theory/test-out/best-response';
+/** The test-out for the first concept: a solo equilibrium set that needs all three to pass. */
+const START_LINK = '/game-theory/puzzles/equilibrium';
+const START_QUERY = { solo: 'best-response', level: 1, mode: 'test' } as const;
 /** Game theory keeps no reasoning-traps stats, so the trap half of the pooled draw weight is empty. */
 const NO_TRAP_STATS: QuizStats = {
   quizId: 'reasoning-traps',
@@ -122,6 +124,7 @@ export class CardsPage {
     return params?.mode === 'test' ? '/game-theory' : `/game-theory/learn/${params?.conceptId ?? ''}`;
   });
   protected readonly startLink = START_LINK;
+  protected readonly startQuery = START_QUERY;
   protected readonly outcomeLook = OUTCOME_LOOK;
   protected readonly outcomeLabels = OUTCOME_LABELS;
   protected readonly saveFailed = this.evidence.saveFailed;

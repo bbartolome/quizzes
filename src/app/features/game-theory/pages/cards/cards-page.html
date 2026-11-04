@@ -16,7 +16,7 @@
         heading="No cards yet"
         message="Start with Best response. Cards are drawn from the ideas you have introduced."
       >
-        <a uiButton variant="link" [routerLink]="startLink" data-testid="cards-test-out-link">
+        <a uiButton variant="link" [routerLink]="startLink" [queryParams]="startQuery" data-testid="cards-test-out-link">
           Test out
         </a>
       </ui-empty-state>

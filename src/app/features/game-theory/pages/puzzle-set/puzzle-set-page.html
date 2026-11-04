@@ -5,7 +5,7 @@
         heading="No puzzles yet"
         message="Start with Best response. Puzzles are drawn from the ideas you have introduced."
       >
-        <a uiButton variant="link" [routerLink]="startLink" data-testid="puzzles-test-out-link">
+        <a uiButton variant="link" [routerLink]="startLink" [queryParams]="startQuery" data-testid="puzzles-test-out-link">
           Test out
         </a>
       </ui-empty-state>

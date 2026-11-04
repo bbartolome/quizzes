@@ -149,7 +149,7 @@ describe('CardsPage (cards, §7.2, §9.1)', () => {
     expect(root.textContent).toContain('Start with Best response');
     const link = must<HTMLAnchorElement>(root, '[data-testid="cards-test-out-link"]');
     expect(link.textContent?.trim()).toBe('Test out');
-    expect(link.getAttribute('href')).toBe('/game-theory/test-out/best-response');
+    expect(link.getAttribute('href')).toBe('/game-theory/puzzles/equilibrium?solo=best-response&level=1&mode=test');
     expect(root.querySelector('[data-testid^="cards-option-"]')).toBeNull();
     expect(root.querySelector('[data-testid="cards-check"]')).toBeNull();
   });

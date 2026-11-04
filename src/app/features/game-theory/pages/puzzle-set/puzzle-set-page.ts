@@ -161,7 +161,9 @@ const DOMINANT_PRACTISED: Gate = {
   label: 'Dominant strategy Practised (3×3 elimination)',
 };
 const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
-const START_LINK = '/game-theory/test-out/best-response';
+/** The test-out for the first concept: a solo equilibrium set that needs all three to pass. */
+const START_LINK = '/game-theory/puzzles/equilibrium';
+const START_QUERY = { solo: 'best-response', level: 1, mode: 'test' } as const;
 const CELL_OUTCOME: Record<'tp' | 'fp' | 'fn' | 'tn', CellOutcome | null> = {
   tp: 'correct',
   fp: 'wrong',
@@ -278,6 +280,7 @@ export class PuzzleSetPage {
 
   protected readonly back = BACK;
   protected readonly startLink = START_LINK;
+  protected readonly startQuery = START_QUERY;
   protected readonly kindLabels = KIND_LABEL;
   protected readonly classLabels = CLASS_LABEL;
   protected readonly saveFailed = this.evidence.saveFailed;
