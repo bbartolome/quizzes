@@ -19,10 +19,13 @@ describe('routes', () => {
     expect(routes.length).toBe(19);
   });
 
-  it('mounts the game-theory child table once, under "game-theory"', () => {
+  it('mounts the game-theory child table once, lazily, under "game-theory"', async () => {
+    // Lazy, so the game-theory pages stay out of the initial bundle (its budget is 500 kB).
     const mounts = routes.filter((r) => r.path === 'game-theory');
     expect(mounts).toHaveLength(1);
-    expect(mounts[0].children).toBe(GAME_THEORY_ROUTES);
+    expect(mounts[0].children).toBeUndefined();
+    const load = mounts[0].loadChildren as () => Promise<unknown>;
+    await expect(load()).resolves.toBe(GAME_THEORY_ROUTES);
   });
 
   it.each([
