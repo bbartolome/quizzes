@@ -385,6 +385,21 @@ describe('GtLearnService', () => {
 
       expect(learn.read().summary.mastered).toBe(1);
     });
+
+    it('reports each listed concept state with the same map, and New for a concept with no evidence', () => {
+      seedEvidence();
+      const learn = service();
+      learn.refresh([CARDS_ONLY, NEEDS_CHALLENGE, PARETO], {
+        [CARDS_ONLY]: false,
+        [NEEDS_CHALLENGE]: true,
+      });
+
+      expect(learn.masteryByConcept([CARDS_ONLY, NEEDS_CHALLENGE, PARETO])).toEqual({
+        [CARDS_ONLY]: 'mastered',
+        [NEEDS_CHALLENGE]: 'practised',
+        [PARETO]: 'new',
+      });
+    });
   });
 
   describe('write failures', () => {
