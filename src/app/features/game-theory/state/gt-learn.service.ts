@@ -1,6 +1,7 @@
 import { inject, Injectable, Signal, signal } from '@angular/core';
 import type { ConceptLearn, LearnState, TutorialStage } from '../lib/state.types';
 import type { PuzzleKind } from '../lib/puzzle.types';
+import type { DailyPlan } from '../lib/daily';
 import { DateKey } from '../../../core/utils/dates';
 import { daysFor, masteryOf } from '../../../core/utils/mastery';
 import type { MasteryState } from '../../../core/models/practice.models';
@@ -8,6 +9,8 @@ import { PracticeService } from '../../../core/services/practice.service';
 import { StatsService } from '../../../core/services/stats.service';
 
 const LEARN_KEY = 'stats:game-theory:learn';
+/** Today's daily plan, kept apart from the learn state so a learn write cannot change it (spec §9.2). */
+const PLAN_KEY = 'stats:game-theory:plan';
 const DAILY_LIMIT = 60;
 const DATE_KEY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const PUZZLE_KINDS: readonly PuzzleKind[] = ['equilibrium', 'classify', 'eliminate'];
@@ -124,6 +127,20 @@ function readDaily(value: unknown): LearnState['daily'] {
   );
 }
 
+/** A plan with the right version, date, kind and difficulty, or null if any field is wrong. */
+function sanitizePlan(raw: unknown): DailyPlan | null {
+  if (!isRecord(raw) || raw['version'] !== 1) return null;
+  const dateKey = raw['dateKey'];
+  const kind = raw['kind'];
+  const difficulty = raw['difficulty'];
+  const seedKey = raw['seedKey'];
+  if (typeof dateKey !== 'string' || !DATE_KEY_PATTERN.test(dateKey)) return null;
+  if (!isKind(kind)) return null;
+  if (difficulty !== 1 && difficulty !== 2) return null;
+  if (typeof seedKey !== 'string') return null;
+  return { version: 1, dateKey, kind, difficulty, seedKey };
+}
+
 /** Field-by-field guard. An unknown or future version reads as zeroed. */
 function sanitize(raw: unknown): LearnState {
   if (!isRecord(raw) || raw['version'] !== 1) {
@@ -175,6 +192,28 @@ export class GtLearnService {
       return raw === null ? zeroed() : sanitize(JSON.parse(raw));
     } catch {
       return zeroed();
+    }
+  }
+
+  /** The stored daily plan, or null when none is stored or it is malformed. Never throws. */
+  plan(): DailyPlan | null {
+    try {
+      const raw = storage().getItem(PLAN_KEY);
+      return raw === null ? null : sanitizePlan(JSON.parse(raw));
+    } catch {
+      return null;
+    }
+  }
+
+  /** Stores the daily plan. A failed write returns false and sets saveFailed. */
+  setPlan(plan: DailyPlan): boolean {
+    try {
+      storage().setItem(PLAN_KEY, JSON.stringify(plan));
+      this.failed.set(false);
+      return true;
+    } catch {
+      this.failed.set(true);
+      return false;
     }
   }
 
