@@ -3,6 +3,7 @@ import type { ConceptLearn, LearnState, TutorialStage } from '../lib/state.types
 import type { PuzzleKind } from '../lib/puzzle.types';
 import { DateKey } from '../../../core/utils/dates';
 import { daysFor, masteryOf } from '../../../core/utils/mastery';
+import type { MasteryState } from '../../../core/models/practice.models';
 import { PracticeService } from '../../../core/services/practice.service';
 import { StatsService } from '../../../core/services/stats.service';
 
@@ -136,6 +137,13 @@ function sanitize(raw: unknown): LearnState {
   };
 }
 
+/** The per-concept evidence read once per mastery pass: both stats keys and the practice days. */
+interface EvidenceSnapshot {
+  cards: Record<string, unknown>;
+  challenges: Record<string, unknown>;
+  conceptDays: ReturnType<PracticeService['conceptDays']>;
+}
+
 /** Introduced (§7.2): tutorial stage at least 2 (Try), or tested out. */
 function introducedIn(state: LearnState): Set<string> {
   return new Set(
@@ -260,31 +268,52 @@ export class GtLearnService {
   }
 
   /**
-   * Concepts at Mastered (§7.3), from the pooled cards and challenges counts. Without a map every
-   * concept requires a challenge, which can only under-count a cards-only concept. It never
-   * over-claims a concept that needs challenge evidence.
+   * The mastery state (§7.3) of each listed concept, from the pooled cards and challenges counts
+   * and the requiresChallenge map last given. A concept with no evidence is New. Pages use this for
+   * the hub map, so the map and the summary can never disagree.
+   */
+  masteryByConcept(conceptIds: readonly string[]): Record<string, MasteryState> {
+    const evidence = this.evidence();
+    return Object.fromEntries(
+      conceptIds.map((id): [string, MasteryState] => [id, this.stateOf(id, evidence)]),
+    );
+  }
+
+  /**
+   * Concepts at Mastered (§7.3). Without a map every concept requires a challenge, which can only
+   * under-count a cards-only concept. It never over-claims a concept that needs challenge evidence.
    */
   private masteredCount(): number {
-    const cards = this.stats.getStats(EVIDENCE_QUIZ_IDS.cards).perTrait;
-    const challenges = this.stats.getStats(EVIDENCE_QUIZ_IDS.challenges).perTrait;
-    const conceptDays = this.practice.conceptDays();
-    const ids = new Set([...Object.keys(cards), ...Object.keys(challenges)]);
+    const evidence = this.evidence();
+    const ids = new Set([...Object.keys(evidence.cards), ...Object.keys(evidence.challenges)]);
     let mastered = 0;
     for (const id of ids) {
-      const card = countOf(cards[id]);
-      const challenge = countOf(challenges[id]);
-      const attempted = (card?.attempted ?? 0) + (challenge?.attempted ?? 0);
-      const state = masteryOf({
-        attempted,
-        correct: (card?.correct ?? 0) + (challenge?.correct ?? 0),
-        days: daysFor(conceptDays[id], attempted),
-        challengeAttempts: challenge?.attempted ?? 0,
-        requiresChallenge: this.requiresChallengeFor(id),
-      });
-      if (state === 'mastered') {
+      if (this.stateOf(id, evidence) === 'mastered') {
         mastered += 1;
       }
     }
     return mastered;
+  }
+
+  /** The per-concept counts of both evidence keys, and the practice-day entries. */
+  private evidence(): EvidenceSnapshot {
+    return {
+      cards: this.stats.getStats(EVIDENCE_QUIZ_IDS.cards).perTrait,
+      challenges: this.stats.getStats(EVIDENCE_QUIZ_IDS.challenges).perTrait,
+      conceptDays: this.practice.conceptDays(),
+    };
+  }
+
+  private stateOf(id: string, evidence: EvidenceSnapshot): MasteryState {
+    const card = countOf(evidence.cards[id]);
+    const challenge = countOf(evidence.challenges[id]);
+    const attempted = (card?.attempted ?? 0) + (challenge?.attempted ?? 0);
+    return masteryOf({
+      attempted,
+      correct: (card?.correct ?? 0) + (challenge?.correct ?? 0),
+      days: daysFor(evidence.conceptDays[id], attempted),
+      challengeAttempts: challenge?.attempted ?? 0,
+      requiresChallenge: this.requiresChallengeFor(id),
+    });
   }
 }
