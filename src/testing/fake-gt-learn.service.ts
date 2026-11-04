@@ -5,6 +5,7 @@ import type {
   TutorialStage,
 } from '../app/features/game-theory/lib/state.types';
 import type { DateKey } from '../app/core/utils/dates';
+import type { MasteryState } from '../app/core/models/practice.models';
 
 type DailyEntry = LearnState['daily'][string];
 
@@ -26,7 +27,17 @@ export class FakeGtLearnService {
   private readonly concepts: Record<string, ConceptLearn> = {};
   private readonly daily: Record<string, DailyEntry> = {};
   private readonly failed = signal(false);
+  private readonly masteries: Record<string, MasteryState> = {};
   readonly saveFailed: Signal<boolean> = this.failed.asReadonly();
+
+  /** Sets the mastery state masteryByConcept reports for a concept. Unset concepts are New. */
+  setMastery(conceptId: string, state: MasteryState): void {
+    this.masteries[conceptId] = state;
+  }
+
+  masteryByConcept(conceptIds: readonly string[]): Record<string, MasteryState> {
+    return Object.fromEntries(conceptIds.map((id) => [id, this.masteries[id] ?? 'new']));
+  }
 
   seedIntroduced(conceptIds: readonly string[]): void {
     for (const id of conceptIds) {

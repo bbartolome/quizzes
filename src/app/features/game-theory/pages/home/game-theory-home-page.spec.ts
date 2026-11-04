@@ -1,8 +1,47 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { Observable, of, throwError } from 'rxjs';
 import { GameTheoryHomePage } from './game-theory-home-page';
 import { GAME_THEORY_MODES, GameTheoryMode } from '../../modes';
+import { GameTheoryData, GameTheoryDataService } from '../../data/game-theory-data.service';
+import { GtEvidenceService } from '../../state/gt-evidence.service';
+import { GtLearnService } from '../../state/gt-learn.service';
+import type { GameTheoryConcept } from '../../../../core/models/quiz.models';
+import type { MasteryState } from '../../../../core/models/practice.models';
+import { FakeGtEvidenceService } from '../../../../../testing/fake-gt-evidence.service';
+import { FakeGtLearnService } from '../../../../../testing/fake-gt-learn.service';
+
+function concept(
+  id: string,
+  name: string,
+  tier: GameTheoryConcept['tier'],
+  prerequisites: string[] = [],
+): GameTheoryConcept {
+  return {
+    id,
+    name,
+    type: 'game-theory',
+    shortDefinition: `${name}, in one line.`,
+    longExplanation: `${name}, explained.`,
+    example: `An example of ${name}.`,
+    tier,
+    prerequisites,
+    modes: ['cards', 'equilibrium'],
+  };
+}
+
+const CONCEPTS: GameTheoryConcept[] = [
+  concept('best-response', 'Best response', 1),
+  concept('nash-equilibrium', 'Nash equilibrium', 1, ['best-response']),
+  concept('backward-induction', 'Backward induction', 2, ['nash-equilibrium']),
+];
+
+const DATA: GameTheoryData = {
+  concepts: { version: 1, concepts: CONCEPTS, pairs: [] },
+  tutorials: { version: 1, tutorials: [] },
+  checks: { version: 1, checks: [] },
+};
 
 describe('GameTheoryHomePage', () => {
   // The mode list is one module-level array that other specs read, so each test puts back what
@@ -10,20 +49,53 @@ describe('GameTheoryHomePage', () => {
   const modes = GAME_THEORY_MODES as GameTheoryMode[];
   const shipped = [...modes];
 
-  beforeEach(() => {
+  let evidence: FakeGtEvidenceService;
+  let learn: FakeGtLearnService;
+  let data: { load: ReturnType<typeof vi.fn>; retry: ReturnType<typeof vi.fn> };
+
+  /**
+   * The page with content that loads (or fails on the first load, when contentFails is set). Mastery
+   * states and introduced concepts are set on the learn fake before the page opens.
+   */
+  function create(
+    options: {
+      contentFails?: boolean;
+      mastery?: Record<string, MasteryState>;
+      introduced?: string[];
+    } = {},
+  ) {
+    evidence = new FakeGtEvidenceService();
+    learn = new FakeGtLearnService();
+    learn.seedIntroduced(options.introduced ?? []);
+    for (const [id, state] of Object.entries(options.mastery ?? {})) {
+      learn.setMastery(id, state);
+    }
+    data = {
+      load: vi.fn((): Observable<GameTheoryData> =>
+        options.contentFails ? throwError(() => new Error('content down')) : of(DATA),
+      ),
+      retry: vi.fn((): Observable<GameTheoryData> => of(DATA)),
+    };
     TestBed.configureTestingModule({
       imports: [GameTheoryHomePage],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        { provide: GameTheoryDataService, useValue: data },
+        { provide: GtEvidenceService, useValue: evidence },
+        { provide: GtLearnService, useValue: learn },
+      ],
     });
-  });
+    const fixture = TestBed.createComponent(GameTheoryHomePage);
+    fixture.detectChanges();
+    return fixture;
+  }
 
   afterEach(() => {
     modes.splice(0, modes.length, ...shipped);
   });
 
   it('reserves the three named slots: map, modes and today', () => {
-    const fixture = TestBed.createComponent(GameTheoryHomePage);
-    fixture.detectChanges();
+    const fixture = create();
     const slots = Array.from(
       fixture.nativeElement.querySelectorAll('[data-slot]') as NodeListOf<HTMLElement>,
     ).map((el) => el.dataset['slot']);
@@ -36,8 +108,7 @@ describe('GameTheoryHomePage', () => {
       { id: 'bots', title: 'Bots', path: 'game-theory/bots/play', requires: [] },
     ];
     modes.splice(0, modes.length, ...entries);
-    const fixture = TestBed.createComponent(GameTheoryHomePage);
-    fixture.detectChanges();
+    const fixture = create();
     const links = fixture.nativeElement.querySelectorAll(
       '[data-slot="modes"] a',
     ) as NodeListOf<HTMLAnchorElement>;
@@ -50,8 +121,7 @@ describe('GameTheoryHomePage', () => {
       { id: 'bots', title: 'Bots', path: 'game-theory/bots/play', requires: [] },
     ];
     modes.splice(0, modes.length, ...entries);
-    const fixture = TestBed.createComponent(GameTheoryHomePage);
-    fixture.detectChanges();
+    const fixture = create();
     const hrefs = Array.from(
       fixture.nativeElement.querySelectorAll('[data-slot="modes"] a') as NodeListOf<HTMLAnchorElement>,
     ).map((a) => a.getAttribute('href'));
@@ -60,14 +130,12 @@ describe('GameTheoryHomePage', () => {
 
   it('renders no mode links while the array is empty', () => {
     modes.length = 0;
-    const fixture = TestBed.createComponent(GameTheoryHomePage);
-    fixture.detectChanges();
+    const fixture = create();
     expect(fixture.nativeElement.querySelectorAll('[data-slot="modes"] a')).toHaveLength(0);
   });
 
   it('renders inside the page shell: one h1 titled Game Theory and a back link to the library', () => {
-    const fixture = TestBed.createComponent(GameTheoryHomePage);
-    fixture.detectChanges();
+    const fixture = create();
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelector('ui-page-shell')).not.toBeNull();
     const headings = root.querySelectorAll('h1');
@@ -76,5 +144,81 @@ describe('GameTheoryHomePage', () => {
     expect(root.querySelector('[data-testid="back-home"]')?.textContent?.trim()).toBe(
       'All collections',
     );
+  });
+
+  describe('concept map (G18)', () => {
+    const nodes = (root: HTMLElement) =>
+      Array.from(root.querySelectorAll('[data-slot="map"] [data-testid^="map-node-"]')) as HTMLElement[];
+
+    it('shows one heading per tier and one node per concept, each with its glyph and word', () => {
+      const fixture = create({ mastery: { 'best-response': 'mastered' } });
+      const root = fixture.nativeElement as HTMLElement;
+      const headings = Array.from(root.querySelectorAll('[data-slot="map"] h2')).map((h) =>
+        h.textContent?.trim(),
+      );
+
+      expect(headings).toEqual(['Tier 1', 'Tier 2']);
+      const bestResponse = root.querySelector('[data-testid="map-node-best-response"]');
+      expect(bestResponse?.textContent).toContain('●');
+      expect(bestResponse?.textContent).toContain('Mastered');
+      expect(nodes(root)).toHaveLength(3);
+    });
+
+    it('links each node to its tutorial', () => {
+      const fixture = create();
+      const href = (fixture.nativeElement as HTMLElement).querySelector<HTMLAnchorElement>(
+        '[data-testid="map-node-nash-equilibrium"]',
+      )?.getAttribute('href');
+
+      expect(href).toBe('/game-theory/learn/nash-equilibrium');
+    });
+
+    it('names the first unmet prerequisite as Recommended first', () => {
+      const root = create().nativeElement as HTMLElement;
+
+      expect(
+        root.querySelector('[data-testid="map-node-nash-equilibrium"]')?.textContent,
+      ).toContain('Recommended first: Best response');
+    });
+
+    it('drops the Recommended first note once the prerequisite is introduced', () => {
+      const root = create({ introduced: ['best-response'] }).nativeElement as HTMLElement;
+
+      expect(
+        root.querySelector('[data-testid="map-node-nash-equilibrium"]')?.textContent,
+      ).not.toContain('Recommended first');
+    });
+
+    it('shows a retry state when the content fails, and loads the content again on Retry', () => {
+      const fixture = create({ contentFails: true });
+      const root = fixture.nativeElement as HTMLElement;
+      expect(root.querySelector('[data-testid="map-failed"]')?.textContent).toContain(
+        "Couldn't load",
+      );
+
+      (root.querySelector('[data-testid="map-retry"]') as HTMLButtonElement).click();
+      fixture.detectChanges();
+
+      expect(data.retry).toHaveBeenCalledTimes(1);
+      expect(nodes(root)).toHaveLength(3);
+    });
+
+    it('migrates the stored evidence and refreshes the summary once the content has loaded', () => {
+      create();
+
+      expect(evidence.migrations).toEqual([
+        { version: 1, conceptIds: ['best-response', 'nash-equilibrium', 'backward-induction'] },
+      ]);
+      expect(learn.refreshCalls).toEqual([
+        {
+          conceptIds: ['best-response', 'nash-equilibrium', 'backward-induction'],
+          requiresChallenge: {
+            'best-response': true,
+            'nash-equilibrium': true,
+            'backward-induction': true,
+          },
+        },
+      ]);
+    });
   });
 });
