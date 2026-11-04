@@ -34,10 +34,13 @@
     }
   </section>
 
-  <section data-slot="modes">
+  <section data-slot="modes" class="flex flex-wrap gap-2">
     <!-- Slot: mode list. Each lane appends one line to GAME_THEORY_MODES (G10, G16, G20, G24). -->
     @for (mode of modes; track mode.id) {
-      <a [routerLink]="'/' + mode.path">{{ mode.title }}</a>
+      <a
+        class="inline-flex min-h-12 items-center rounded-lg border border-default px-3 type-body focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
+        [routerLink]="'/' + mode.path"
+      >{{ mode.title }}</a>
     }
   </section>
 
