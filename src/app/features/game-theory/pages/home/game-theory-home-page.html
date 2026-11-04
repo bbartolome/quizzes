@@ -6,7 +6,7 @@
   <section data-slot="modes">
     <!-- Slot: mode list. Each lane appends one line to GAME_THEORY_MODES (G10, G16, G20, G24). -->
     @for (mode of modes; track mode.id) {
-      <a [routerLink]="['/', mode.path]">{{ mode.title }}</a>
+      <a [routerLink]="'/' + mode.path">{{ mode.title }}</a>
     }
   </section>
 
