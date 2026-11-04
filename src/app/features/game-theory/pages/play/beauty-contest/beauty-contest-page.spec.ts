@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import { signal, type Signal, type WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -6,6 +7,7 @@ import { BeautyContestPage } from './beauty-contest-page';
 import { APP_CLOCK } from '../../../../../core/app-clock';
 import { GameTheoryData, GameTheoryDataService } from '../../../data/game-theory-data.service';
 import { GtEvidenceService } from '../../../state/gt-evidence.service';
+import { GtGamesService } from '../../../state/gt-games.service';
 import { defaultBeautyConfig, runBeautyContest } from '../../../lib/beauty';
 import type { ReasonCheck } from '../../../lib/puzzle.types';
 
@@ -46,18 +48,25 @@ const DATA: GameTheoryData = {
 
 let evidence: { record: ReturnType<typeof vi.fn> };
 let data: { load: ReturnType<typeof vi.fn> };
+let failed: WritableSignal<boolean>;
+let games: { record: ReturnType<typeof vi.fn>; saveFailed: Signal<boolean> };
 
 /** The engine result the page must show for this guess. The page seeds from the clock. */
 function expectedFor(guess: number) {
   return runBeautyContest(defaultBeautyConfig(NOW.toISOString()), guess);
 }
 
-/** Opens the page. With checksFail, the checks file fails to load and the reason check is not asked. */
-function open(checksFail = false): ComponentFixture<BeautyContestPage> {
+/**
+ * Opens the page. With checksFail, the checks file fails to load and the reason check is not asked.
+ * With saveFailed, the games log write reports a failure, so the page says progress can't be saved.
+ */
+function open(checksFail = false, saveFailed = false): ComponentFixture<BeautyContestPage> {
   evidence = { record: vi.fn() };
   data = {
     load: vi.fn(() => (checksFail ? throwError(() => new Error('checks down')) : of(DATA))),
   };
+  failed = signal(saveFailed);
+  games = { record: vi.fn(() => true), saveFailed: failed.asReadonly() };
   TestBed.configureTestingModule({
     imports: [BeautyContestPage],
     providers: [
@@ -65,6 +74,7 @@ function open(checksFail = false): ComponentFixture<BeautyContestPage> {
       { provide: APP_CLOCK, useValue: () => NOW },
       { provide: GameTheoryDataService, useValue: data },
       { provide: GtEvidenceService, useValue: evidence },
+      { provide: GtGamesService, useValue: games },
     ],
   });
   const fixture = TestBed.createComponent(BeautyContestPage);
@@ -198,5 +208,40 @@ describe('BeautyContestPage', () => {
     expect(el(fixture, 'beauty-reveal')).not.toBeNull();
     expect(el(fixture, 'beauty-reason-check')).toBeNull();
     expect(evidence.record).not.toHaveBeenCalled();
+  });
+
+  it('records each completed reveal to the games log as a beauty-contest play (spec §10)', () => {
+    const fixture = open();
+
+    guess(fixture, '50');
+
+    const expected = expectedFor(50);
+    expect(games.record).toHaveBeenCalledTimes(1);
+    expect(games.record).toHaveBeenCalledWith({
+      kind: 'beauty-contest',
+      at: NOW.toISOString(),
+      seed: NOW.toISOString(),
+      summary: {
+        guess: 50,
+        mean: expected.mean,
+        target: expected.target,
+        humanWon: expected.winnerIndex === -1,
+        simulated: defaultBeautyConfig(NOW.toISOString()).simulated,
+      },
+    });
+  });
+
+  it('does not record a guess that is outside 0 to 100', () => {
+    const fixture = open();
+
+    guess(fixture, '150');
+
+    expect(games.record).not.toHaveBeenCalled();
+  });
+
+  it("says progress can't be saved when the games log write fails", () => {
+    const fixture = open(false, true);
+
+    expect(text(fixture)).toContain("Progress can't be saved in this browser");
   });
 });
