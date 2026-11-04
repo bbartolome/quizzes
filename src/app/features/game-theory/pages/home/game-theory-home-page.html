@@ -34,7 +34,7 @@
     }
   </section>
 
-  <section data-slot="modes" class="flex flex-wrap gap-2">
+  <section data-slot="modes" class="mt-6 flex flex-wrap gap-2">
     <!-- Slot: mode list. Each lane appends one line to GAME_THEORY_MODES (G10, G16, G20, G24). -->
     @for (mode of modes; track mode.id) {
       <a
@@ -44,7 +44,7 @@
     }
   </section>
 
-  <section data-slot="today" class="space-y-2">
+  <section data-slot="today" class="mt-6 space-y-2">
     @if (status() === 'ready') {
       @switch (today().kind) {
         @case ('locked') {
@@ -69,7 +69,7 @@
     }
   </section>
 
-  <section class="space-y-2">
+  <section class="mt-6 space-y-2">
     @if (confirming()) {
       <p class="type-body">
         Are you sure? This clears every Game Theory score, tutorial stage and daily answer in this
