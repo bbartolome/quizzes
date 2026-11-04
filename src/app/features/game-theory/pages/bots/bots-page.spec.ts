@@ -5,6 +5,7 @@ import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/route
 import { BehaviorSubject } from 'rxjs';
 import { BotsPage } from './bots-page';
 import { BOT_IDS, ROSTER } from '../../lib/bots';
+import type { BotId } from '../../lib/bots.types';
 import { mulberry32 } from '../../lib/rng';
 import { GAME_THEORY_RNG } from '../../state/gt-tokens';
 import { GtGamesService } from '../../state/gt-games.service';
@@ -184,7 +185,7 @@ describe('BotsPage (play mode)', () => {
 });
 
 /** The hidden bot a page draws first from a fresh seeded rng, as the name-the-bot page does. */
-function hiddenBotOf(seed: number): string {
+function hiddenBotOf(seed: number): BotId {
   return pickHiddenBot(mulberry32(seed));
 }
 
@@ -205,7 +206,7 @@ describe('BotsPage name-the-bot mode (spec §8.1)', () => {
     expect(options).toHaveLength(4);
   });
 
-  it('does not reveal the bot's name while the match is going', () => {
+  it("does not reveal the bot's name while the match is going", () => {
     const fixture = open('name');
     click(fixture, 'bots-start');
     click(fixture, 'bots-move-C');
@@ -215,7 +216,7 @@ describe('BotsPage name-the-bot mode (spec §8.1)', () => {
     }
   });
 
-  it('a right name is marked correct, recorded as a challenge for the bot's concept, and the tell is shown', () => {
+  it("a right name is marked correct, recorded as a challenge for the bot's concept, and the tell is shown", () => {
     const fixture = open('name');
     click(fixture, 'bots-start');
     tenTurns(fixture);
@@ -230,7 +231,7 @@ describe('BotsPage name-the-bot mode (spec §8.1)', () => {
     expect(games.record).toHaveBeenCalledWith(expect.objectContaining({ kind: 'name-the-bot' }));
   });
 
-  it('a wrong name is marked wrong, and the bot's name is revealed', () => {
+  it("a wrong name is marked wrong, and the bot's name is revealed", () => {
     const fixture = open('name');
     click(fixture, 'bots-start');
     tenTurns(fixture);
@@ -253,7 +254,7 @@ describe('BotsPage tournament mode (spec §8.1)', () => {
     const rows = fixture.nativeElement.querySelectorAll('[data-testid="tournament-row"]');
     expect(rows).toHaveLength(8);
     expect(el(fixture, 'tournament-winner')?.textContent).toContain(
-      (rows[0] as HTMLElement).textContent?.trim().split(/\s+/)[0] ?? '',
+      (rows[0] as HTMLElement).textContent?.trim().split(':')[0] ?? '',
     );
   });
 

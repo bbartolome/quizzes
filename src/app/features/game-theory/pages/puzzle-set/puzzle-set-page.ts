@@ -44,7 +44,7 @@ import {
   type CellOutcome,
   type EliminatedLine,
 } from '../../ui/payoff-matrix/payoff-matrix';
-import { reasonCheckFor } from './reason-check';
+import { reasonCheckFor } from '../../lib/reason-check';
 
 /** A set is one puzzle kind, or `mixed`, which interleaves all three (spec §5.2, §7.2). */
 type SetKind = PuzzleKind | 'mixed';

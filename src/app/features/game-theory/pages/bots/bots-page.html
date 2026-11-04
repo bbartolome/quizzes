@@ -21,6 +21,7 @@
       </p>
     }
 
+    @if (mode() === 'play') {
     @if (!match()) {
       <section class="space-y-4">
         <p class="type-body">
@@ -111,6 +112,141 @@
               Play again
             </button>
           </section>
+        }
+      </section>
+    }
+    }
+
+    @if (mode() === 'name') {
+      <section class="space-y-4" data-testid="name-section">
+        @if (!nameMatch()) {
+          <p class="type-body">
+            A bot is hidden. You play ten turns against it, then name it from four options. Its
+            name is not shown until you have answered.
+          </p>
+          <button type="button" uiButton data-testid="bots-start" (click)="nameStart()">
+            Start a hidden match
+          </button>
+        } @else {
+          @if (!nameDone()) {
+            <p class="type-detail" data-testid="name-progress">
+              Turn {{ nameTurns().length + 1 }} of {{ nameTurnCount }}. The bot is hidden.
+            </p>
+            <div class="flex gap-2">
+              <button type="button" uiButton data-testid="bots-move-C" (click)="namePlay('C')">
+                Cooperate
+              </button>
+              <button type="button" uiButton data-testid="bots-move-D" (click)="namePlay('D')">
+                Defect
+              </button>
+            </div>
+          } @else if (nameGuess() === null) {
+            <p class="type-body">Which bot was it?</p>
+            <div class="flex flex-col gap-2">
+              @for (id of nameChoices(); track id) {
+                <button type="button" uiButton [attr.data-testid]="'bots-name-' + id" (click)="nameChoose(id)">
+                  {{ nameOf(id) }}
+                </button>
+              }
+            </div>
+          } @else {
+            <p class="type-body" data-testid="name-verdict">
+              {{ nameGuess() === nameHidden() ? 'Correct.' : 'Not this time.' }}
+              It was {{ nameOf(nameHidden()) }}.
+            </p>
+            <p class="type-body">The tell: {{ tellOf(nameHidden()) }}</p>
+            <button type="button" uiButton data-testid="name-again" (click)="nameAgain()">
+              Name another bot
+            </button>
+          }
+        }
+      </section>
+    }
+
+    @if (mode() === 'tournament') {
+      <section class="space-y-4" data-testid="tournament-section">
+        <fieldset class="space-y-2">
+          <legend class="type-detail">Choose a population</legend>
+          @for (p of presets; track p.id) {
+            <button
+              type="button"
+              uiButton
+              [attr.data-testid]="'preset-' + p.id"
+              [attr.aria-pressed]="preset() === p.id"
+              (click)="setPreset(p.id)"
+            >
+              {{ p.label }}
+            </button>
+          }
+        </fieldset>
+
+        <div class="space-y-2">
+          <label class="type-detail" for="tournament-noise">Noise: {{ tournamentNoiseLabel() }}</label>
+          <input
+            id="tournament-noise"
+            data-testid="tournament-noise"
+            type="range"
+            min="0"
+            max="0.1"
+            step="0.01"
+            [value]="tournamentNoise()"
+            (input)="setTournamentNoise($event)"
+          />
+        </div>
+
+        <button type="button" uiButton data-testid="tournament-run" (click)="runTournament()">
+          Run the round robin
+        </button>
+
+        @if (lastRun(); as run) {
+          <p class="type-section" data-testid="tournament-winner">
+            Winner in this run: {{ nameOf(run.result.ranking[0]) }}
+          </p>
+          <ol class="space-y-1">
+            @for (id of run.result.ranking; track id) {
+              <li class="type-body" data-testid="tournament-row">
+                {{ nameOf(id) }}: {{ meanOf(run, id) }} per turn
+              </li>
+            }
+          </ol>
+
+          @if (pending()) {
+            <div class="space-y-2" data-testid="tournament-change">
+              <p class="type-body">Did the winner change?</p>
+              <div class="flex gap-2">
+                <button type="button" uiButton data-testid="tournament-changed-yes" (click)="answerChange(true)">
+                  Yes
+                </button>
+                <button type="button" uiButton data-testid="tournament-changed-no" (click)="answerChange(false)">
+                  No
+                </button>
+              </div>
+            </div>
+          }
+          @if (changeNote(); as note) {
+            <p class="type-body" data-testid="tournament-change-note">{{ note }}</p>
+          }
+
+          @if (reasonCheck(); as check) {
+            <fieldset class="space-y-2" data-testid="tournament-reason">
+              <legend class="type-body">{{ check.prompt }}</legend>
+              @for (option of check.options; track option.id) {
+                <button
+                  type="button"
+                  uiButton
+                  [attr.data-testid]="'check-' + option.id"
+                  (click)="answerCheck(option.id)"
+                >
+                  {{ option.text }}
+                </button>
+              }
+              @if (reasonPicked(); as picked) {
+                <p class="type-detail" data-testid="tournament-reason-why">
+                  {{ whyOf(check, picked) }}
+                </p>
+              }
+            </fieldset>
+          }
         }
       </section>
     }
