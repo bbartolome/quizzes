@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { BotsPage } from './pages/bots/bots-page';
 import { CardsPage } from './pages/cards/cards-page';
 import { GameTheoryHomePage } from './pages/home/game-theory-home-page';
 import { PlayPage } from './pages/play/play-page';
@@ -15,4 +16,5 @@ export const GAME_THEORY_ROUTES: Routes = [
   { path: 'play/:game', component: PlayPage },
   { path: 'test-out/:concept', component: TestOutPage },
   { path: 'puzzles/:kind', component: PuzzleSetPage },
+  { path: 'bots/:mode', component: BotsPage },
 ];

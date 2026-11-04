@@ -37,4 +37,5 @@ export const GAME_THEORY_MODES: readonly GameTheoryMode[] = [
     path: 'game-theory/puzzles/mixed',
     requires: ['nash-equilibrium'],
   },
+  { id: 'bots-play', title: 'Bots', path: 'game-theory/bots/play', requires: [] },
 ];

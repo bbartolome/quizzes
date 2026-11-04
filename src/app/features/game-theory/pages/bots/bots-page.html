@@ -1,0 +1,118 @@
+<ui-page-shell
+  title="Bots"
+  eyebrow="Game Theory"
+  width="narrow"
+  [back]="back"
+  backTestId="back-hub"
+>
+  @if (!supported()) {
+    <div data-testid="bots-unavailable">
+      <ui-empty-state
+        heading="This mode isn't available yet"
+        message="Choose another mode from the Game Theory hub."
+      >
+        <a uiButton variant="link" routerLink="/game-theory">Back to Game Theory</a>
+      </ui-empty-state>
+    </div>
+  } @else {
+    @if (saveFailed()) {
+      <p class="type-detail" data-testid="bots-save-failed">
+        Progress can't be saved in this browser.
+      </p>
+    }
+
+    @if (!match()) {
+      <section class="space-y-4">
+        <p class="type-body">
+          You play a repeated Prisoner's dilemma against one bot. After each turn the match
+          continues with a {{ continuePercent }}% chance, so its length is not fixed.
+        </p>
+
+        <fieldset class="space-y-2">
+          <legend class="type-detail">Choose a bot</legend>
+          @for (bot of bots; track bot.id) {
+            <button
+              type="button"
+              uiButton
+              [attr.data-testid]="'bot-' + bot.id"
+              [attr.aria-pressed]="selected() === bot.id"
+              (click)="choose(bot.id)"
+            >
+              {{ bot.name }}
+            </button>
+          }
+        </fieldset>
+
+        <div class="space-y-2">
+          <label class="type-detail" for="bots-noise">Noise: {{ noiseLabel() }}</label>
+          <input
+            id="bots-noise"
+            data-testid="bots-noise"
+            type="range"
+            min="0"
+            max="0.1"
+            step="0.01"
+            [value]="noise()"
+            (input)="setNoise($event)"
+          />
+          <p class="type-detail">
+            Noise flips only the bot's moves. Your own moves are never flipped.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          uiButton
+          data-testid="bots-start"
+          [disabled]="!selected()"
+          (click)="start()"
+        >
+          Start the match
+        </button>
+      </section>
+    } @else {
+      <section class="space-y-4">
+        @if (!finished()) {
+          <p class="type-detail" data-testid="bots-progress">
+            Against {{ activeName() }}. Choose your move for this turn.
+          </p>
+          <div class="flex gap-2">
+            <button type="button" uiButton data-testid="bots-move-C" (click)="play('C')">
+              Cooperate
+            </button>
+            <button type="button" uiButton data-testid="bots-move-D" (click)="play('D')">
+              Defect
+            </button>
+          </div>
+        }
+
+        <ol class="space-y-1">
+          @for (turn of turns(); track turn.index) {
+            <li
+              class="type-body"
+              data-testid="bots-turn"
+              [attr.data-human-move]="turn.playedA"
+              [attr.data-bot-move]="turn.playedB"
+            >
+              Turn {{ turn.index + 1 }}: you {{ turn.playedA }}, {{ activeName() }}
+              {{ turn.playedB }}
+            </li>
+          }
+        </ol>
+
+        @if (summary(); as result) {
+          <section class="space-y-2" data-testid="bots-summary">
+            <p class="type-body">
+              The match is over. You scored {{ result.you }} and {{ activeName() }} scored
+              {{ result.bot }}. You both cooperated on {{ result.mutual }} turns.
+            </p>
+            <p class="type-body">The tell: {{ activeTell() }}</p>
+            <button type="button" uiButton data-testid="bots-again" (click)="again()">
+              Play again
+            </button>
+          </section>
+        }
+      </section>
+    }
+  }
+</ui-page-shell>
