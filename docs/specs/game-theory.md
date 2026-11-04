@@ -70,7 +70,7 @@ Out of scope:
 | `game-theory/cards`          | Cards round                                                                | G10      |
 | `game-theory/puzzles/:kind`  | `equilibrium`, `classify`, `eliminate` or `mixed` (interleaved), sets of 5 | G16      |
 | `game-theory/learn/:concept` | Tutorial                                                                   | G17      |
-| `game-theory/test-out/:concept` | Test out: three items, all three must pass                              | G17      |
+| `game-theory/puzzles/:kind?solo=…&mode=test` | Test out, a three-item solo set (§7.2). It has no route of its own | G17      |
 | `game-theory/bots/:mode`     | `play`, `name` or `tournament`                                             | G20      |
 | `game-theory/play/:game`     | `beauty-contest`, `first-price`, `second-price` or `common-value`          | G24      |
 | `game-theory/daily`          | Daily puzzle                                                               | G27      |
@@ -558,9 +558,9 @@ export interface TournamentResult {
 - Confusable sets (used to choose lures in name-the-bot): `copycat` ↔ `copykitten` ↔ `grudger` ↔ `simpleton`, and `detective` ↔ `copycat`.
 - A test asserts that for every pair of bots a short probe script (for example defect at turn 2, then cooperate) yields different move sequences, so name-the-bot is always answerable.
 
-**Name-the-bot.** The player plays 10 turns against a hidden bot, then picks its name from four options (the bot and three lures from its confusable set). It is graded and recorded as one scored attempt crediting the bot's `conceptIds`.
+**Name-the-bot.** The player plays 10 turns against a hidden bot, then picks its name from four options (the bot and three lures from its confusable set). It is graded and recorded as one scored attempt crediting the bot's `conceptIds`. Only the four bots with three or more confusable partners are named in v1 (`copycat`, `grudger`, `copykitten`, `simpleton`); see §14.
 
-**Tournament.** Every bot in a chosen population plays every other for 100 turns, with a noise slider and population presets. The ranking is computed live. A follow-up check asks "Did the winner change?" after the player changes the population or noise.
+**Tournament.** Every bot in a chosen population plays every other for 100 turns, with a noise slider and population presets. The presets are *everyone* (all eight), *cooperative* (`always-cooperate`, `copycat`, `copykitten`, `simpleton`) and *hostile* (`always-cheat`, `detective`, `random`, `grudger`). The ranking is computed live. A follow-up check asks "Did the winner change?" after the player changes the population or noise.
 
 ### 8.2 Beauty contest
 
@@ -789,6 +789,7 @@ TDD-sized, in dependency order. Each is a red commit followed by the implementat
 | G28 | The eight game-theory badges registered in the practice-layer registry _(cut candidate)_                                                                                    | §9.3          | P7, G16, G21, G22, G24, G26 |
 | G29 | Content authoring: remaining tutorials, reason checks, sources, bot blurbs. Content work, guarded by the G8, G15 and G17 tests                                              | §6, §7        | G15, G17                    |
 
+- **Status.** G23 and G28 are cut for v1 (above). Every other slice has landed on main. The deviations from this table are recorded in §14, items 12 to 14.
 - **Pre-factor.** `docs/specs/game-theory-prefactor.md` (T1–T7) lands first. G7 becomes T1; the library, route and manifest parts of G1, the guards of G2, and the inert service surface of G9 move into T2, T3, T5 and T7. The practice-layer slices P1–P7 this table depends on have landed.
 - **Parallel lanes after G2:** the solver (G3–G6), content (G7–G8, with G1), bots (G19), contests (G24's engine and G25).
 - G11–G13 and G14 are independent of each other once G3–G5 land. G21, G22 and G23 are independent once G20 lands. G24 and G25 are independent.
@@ -812,6 +813,9 @@ Author defaults, change before building:
 9. Time pressure is out of scope for v1, because game theory needs reflection.
 10. The daily plan has its own key, so `LearnState` stays at version 1 and an old build cannot zero tutorial stages.
 11. The hub reset button (§10) is built in G18, because no slice owned it.
+12. Name-the-bot names only the four bots with three or more confusable partners. The other four have no confusable set in §8.1, and G28 is cut, so no badge needs five names.
+13. Test-out is a solo set on the puzzle or cards page (`?solo=…&mode=test`), not a page of its own. A test-out needs all three items, and a tutorial's Solo passes at two.
+14. The bots reason check after a tournament is scored under `tit-for-tat`. The daily puzzle's reason check is information only, and its answer is kept with the day's record.
 
 ## 15. Sources
 
