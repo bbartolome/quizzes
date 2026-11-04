@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
+import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { CardsPage } from './cards-page';
 import { GameTheoryData, GameTheoryDataService } from '../../data/game-theory-data.service';
 import { mulberry32 } from '../../lib/rng';
@@ -70,7 +70,7 @@ let data: { load: ReturnType<typeof vi.fn>; retry: ReturnType<typeof vi.fn> };
 
 /** Opens the page with the given concepts introduced. With contentFails, the first load errors. */
 function open(
-  options: { introduced?: string[]; contentFails?: boolean } = {},
+  options: { introduced?: string[]; contentFails?: boolean; query?: Record<string, string> } = {},
 ): ComponentFixture<CardsPage> {
   evidence = new FakeGtEvidenceService();
   learn = new FakeGtLearnService();
@@ -85,6 +85,12 @@ function open(
     imports: [CardsPage],
     providers: [
       provideRouter([]),
+      {
+        provide: ActivatedRoute,
+        useValue: {
+          queryParamMap: new BehaviorSubject(convertToParamMap(options.query ?? {})).asObservable(),
+        },
+      },
       { provide: GAME_THEORY_RNG, useValue: mulberry32(SEED) },
       { provide: APP_CLOCK, useValue: () => NOW },
       { provide: StatsService, useValue: { getStats: () => NO_STATS } },
@@ -272,5 +278,56 @@ describe('CardsPage (cards, §7.2, §9.1)', () => {
     fixture.detectChanges();
 
     expect(root.textContent).toContain("Progress can't be saved in this browser");
+  });
+});
+
+describe('CardsPage solo mode (spec §7.1, §7.2)', () => {
+  const SOLO = { solo: TARGET, mode: 'tutorial' };
+  const TEST = { solo: TARGET, mode: 'test' };
+
+  it('a solo set asks three cards about its one concept, even with nothing introduced', () => {
+    const fixture = open({ query: SOLO });
+    const root: HTMLElement = fixture.nativeElement;
+
+    expect(root.querySelector('[data-testid="cards-round"]')).not.toBeNull();
+    answerRight(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+    answerRight(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+    answerRight(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+
+    expect(must<HTMLElement>(root, '[data-testid="cards-summary"]').textContent).toContain('3 answered, 3 correct');
+    expect(evidence.records.map((r) => r.conceptIds)).toEqual([[TARGET], [TARGET], [TARGET]]);
+  });
+
+  it('a tutorial solo that passes at two records stage 3', () => {
+    const fixture = open({ query: SOLO });
+    const root: HTMLElement = fixture.nativeElement;
+
+    answerRight(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+    answerRight(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+    answerWrong(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+
+    expect(must<HTMLElement>(root, '[data-testid="cards-solo-result"]').textContent).toContain('passed');
+    expect(learn.read().concepts[TARGET]?.stage).toBe(3);
+  });
+
+  it('a test-out records the concept as tested out only when all three pass', () => {
+    const fixture = open({ query: TEST });
+    const root: HTMLElement = fixture.nativeElement;
+
+    answerRight(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+    answerRight(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+    answerWrong(fixture, TARGET);
+    tap(fixture, '[data-testid="cards-next"]');
+
+    expect(must<HTMLElement>(root, '[data-testid="cards-solo-result"]').textContent).toContain('not passed');
+    expect(learn.read().concepts[TARGET]?.testedOut).not.toBe(true);
   });
 });
