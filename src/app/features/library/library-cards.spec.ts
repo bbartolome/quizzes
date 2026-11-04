@@ -60,6 +60,27 @@ describe('conceptIdsFor', () => {
   });
 });
 
+describe('gameTheoryCard daily line (spec §3.1, §9.2)', () => {
+  const learn = { mastered: 0, introduced: 1, total: 18 };
+  const hub = entry({ kind: 'game-theory', id: 'game-theory' });
+  const noStats = {
+    cards: stats({ quizId: 'game-theory:cards' }),
+    challenges: stats({ quizId: 'game-theory:challenges' }),
+  };
+
+  it('shows the daily as open when it is unlocked and today is not answered', () => {
+    expect(gameTheoryCard(hub, learn, noStats, { unlocked: true, done: false }).dailyLabel).toBe('open');
+  });
+
+  it('shows the daily as done once today is answered', () => {
+    expect(gameTheoryCard(hub, learn, noStats, { unlocked: true, done: true }).dailyLabel).toBe('done');
+  });
+
+  it('shows no daily line while the daily is locked', () => {
+    expect(gameTheoryCard(hub, learn, noStats, { unlocked: false, done: false }).dailyLabel).toBeNull();
+  });
+});
+
 describe('gameTheoryCard', () => {
   const learn = { mastered: 2, introduced: 5, total: 18 };
   const hub = entry({ kind: 'game-theory', id: 'game-theory' });
