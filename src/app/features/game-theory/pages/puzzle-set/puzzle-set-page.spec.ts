@@ -429,6 +429,9 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(root.querySelectorAll('[data-testid^="payoff-cell-"]')).toHaveLength(4);
       expect(must<HTMLElement>(root, '[data-testid="puzzle-matrix-readonly"]').hasAttribute('inert')).toBe(true);
       expect(root.textContent).toContain("Each cell shows the row player's payoff, then the column player's");
+      // The equilibrium-only controls do not belong to a classify item.
+      expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+      expect(root.querySelectorAll('[data-testid="puzzle-matrix-readonly"] p')).toHaveLength(0);
     });
 
     it('eliminate: offers the legal eliminations as buttons, and finishing grades it correct', () => {
