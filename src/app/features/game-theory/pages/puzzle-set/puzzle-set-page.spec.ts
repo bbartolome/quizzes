@@ -91,6 +91,8 @@ interface OpenOptions {
   checks?: ReasonCheck[];
   checksFail?: boolean;
   saveFails?: boolean;
+  /** Route query params, for the solo and test-out modes (spec §7.1, §7.2). */
+  query?: Record<string, string>;
 }
 
 let evidence: FakeGtEvidenceService;
@@ -132,6 +134,7 @@ function open(options: OpenOptions = {}): ComponentFixture<PuzzleSetPage> {
           paramMap: new BehaviorSubject(
             convertToParamMap({ kind: options.kind ?? 'equilibrium' }),
           ).asObservable(),
+          queryParamMap: new BehaviorSubject(convertToParamMap(options.query ?? {})).asObservable(),
         },
       },
       { provide: GAME_THEORY_RNG, useValue: mulberry32(SEED) },
@@ -618,6 +621,73 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       equilibriumAnswer(fixture, puzzle, true);
       expect(fixture.nativeElement.querySelector('[data-testid="puzzle-reason-check"]')).toBeNull();
       expect(fixture.nativeElement.textContent).toContain("Reason checks couldn't load");
+    });
+  });
+
+  describe('solo mode (spec §7.1, §7.2)', () => {
+    const SOLO = { solo: 'best-response', level: '2', mode: 'tutorial' };
+    const TEST = { solo: 'best-response', level: '1', mode: 'test' };
+
+    it('draws three items at the level it is given, with no gate and no reason check', () => {
+      const fixture = open({ introduced: [], query: SOLO });
+      const items = expectedSet(
+        Array.from({ length: 3 }, () => ({ kind: 'equilibrium' as const, difficulty: 2 as const })),
+      );
+
+      expect(text(fixture, '[data-testid="puzzle-progress"]')).toBe('Item 1 of 3');
+      expect(readout(fixture.nativeElement)).toEqual(expectedReadout(items[0]));
+      expect(fixture.nativeElement.querySelector('[data-testid="puzzle-reason"]')).toBeNull();
+    });
+
+    it('draws a test-out set even though its concept is not introduced yet', () => {
+      const fixture = open({ introduced: [], query: TEST });
+
+      expect(fixture.nativeElement.querySelector('[data-testid="puzzle-empty"]')).toBeNull();
+      expect(text(fixture, '[data-testid="puzzle-progress"]')).toBe('Item 1 of 3');
+    });
+
+    it('a tutorial solo that passes at two records stage 3', () => {
+      const fixture = open({ introduced: ['best-response'], query: SOLO });
+      const items = expectedSet(
+        Array.from({ length: 3 }, () => ({ kind: 'equilibrium' as const, difficulty: 2 as const })),
+      );
+      items.forEach((puzzle, index) => {
+        solveItem(fixture, puzzle, index !== 2);
+        tap(fixture, '[data-testid="puzzle-next"]');
+      });
+
+      expect(text(fixture, '[data-testid="puzzle-solo-result"]')).toContain('passed');
+      expect(learn.read().concepts['best-response']?.stage).toBe(3);
+      expect(learn.read().concepts['best-response']?.testedOut).toBe(false);
+    });
+
+    it('a tutorial solo under two does not record stage 3, and offers a fresh set', () => {
+      const fixture = open({ introduced: ['best-response'], query: SOLO });
+      const items = expectedSet(
+        Array.from({ length: 3 }, () => ({ kind: 'equilibrium' as const, difficulty: 2 as const })),
+      );
+      items.forEach((puzzle, index) => {
+        solveItem(fixture, puzzle, index === 0);
+        tap(fixture, '[data-testid="puzzle-next"]');
+      });
+
+      expect(text(fixture, '[data-testid="puzzle-solo-result"]')).toContain('not passed');
+      expect(learn.read().concepts['best-response']).toBeUndefined();
+      expect(fixture.nativeElement.querySelector('[data-testid="puzzle-fresh-set"]')).not.toBeNull();
+    });
+
+    it('a test-out records the concept as tested out only when all three pass', () => {
+      const fixture = open({ introduced: [], query: TEST });
+      const items = expectedSet(
+        Array.from({ length: 3 }, () => ({ kind: 'equilibrium' as const, difficulty: 1 as const })),
+      );
+      items.forEach((puzzle, index) => {
+        solveItem(fixture, puzzle, index !== 1);
+        tap(fixture, '[data-testid="puzzle-next"]');
+      });
+
+      expect(learn.read().concepts['best-response']).toBeUndefined();
+      expect(text(fixture, '[data-testid="puzzle-solo-result"]')).toContain('not passed');
     });
   });
 
