@@ -11,9 +11,9 @@ import { GAME_THEORY_RNG } from '../../../state/gt-tokens';
 import { mulberry32 } from '../../../lib/rng';
 import type { GameTheoryContent } from '../../../../../core/models/quiz.models';
 import { FakeGtEvidenceService } from '../../../../../../testing/fake-gt-evidence.service';
-import conceptsJson from '../../../../../../public/data/quizzes/game-theory/concepts.json';
-import tutorialsJson from '../../../../../../public/data/quizzes/game-theory/tutorials.json';
-import checksJson from '../../../../../../public/data/quizzes/game-theory/checks.json';
+import conceptsJson from '../../../../../../../public/data/quizzes/game-theory/concepts.json';
+import tutorialsJson from '../../../../../../../public/data/quizzes/game-theory/tutorials.json';
+import checksJson from '../../../../../../../public/data/quizzes/game-theory/checks.json';
 
 const SEED = 20260101;
 const NOW = new Date('2026-11-03T12:00:00Z');

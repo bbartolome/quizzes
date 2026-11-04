@@ -1,0 +1,123 @@
+<ui-page-shell [title]="title()" eyebrow="Game Theory" width="narrow" [back]="back" backTestId="back-hub">
+  @if (info(); as g) {
+    <section class="space-y-4">
+      <p class="type-body">
+        You are bidder 1 of {{ bidders() }}. The other bidders follow a fixed rule:
+        {{ otherPolicyLabel() }}. Results are in this setup only.
+      </p>
+
+      @if (drawn()) {
+        <p class="type-body" data-testid="auction-value">
+          @if (g.model === 'private') {
+            Your value: {{ own() }}. In this setup, values are whole numbers from 0 to 100.
+          } @else {
+            Your signal: {{ own() }}. The true value is not known to anyone. In this setup, each
+            signal is within 20 of it.
+          }
+        </p>
+      }
+
+      <div class="space-y-2">
+        <label class="type-detail" for="auction-bidders">Bidders: {{ bidders() }}</label>
+        <input
+          id="auction-bidders"
+          data-testid="auction-bidders"
+          type="range"
+          min="3"
+          max="8"
+          step="1"
+          [value]="bidders()"
+          (input)="setBidders($event)"
+        />
+      </div>
+      <button type="button" uiButton data-testid="auction-draw" (click)="draw()">New auction</button>
+
+      <div class="space-y-2">
+        <label class="type-detail" for="auction-bid">Your bid: {{ bid() }}</label>
+        <input
+          id="auction-bid"
+          data-testid="auction-bid"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          [value]="bid()"
+          [disabled]="outcome() !== null"
+          (input)="setBid($event)"
+        />
+      </div>
+      <button
+        type="button"
+        uiButton
+        data-testid="auction-submit"
+        [disabled]="outcome() !== null"
+        (click)="submit()"
+      >
+        Submit your bid
+      </button>
+
+      @if (outcome(); as o) {
+        <p class="type-section" data-testid="auction-outcome">
+          @if (o.winner === 0) {
+            You won at a price of {{ o.price }}. Your profit: {{ o.payoffs[0] }}.
+          } @else {
+            You lost. The price was {{ o.price }}, set by another bid.
+          }
+        </p>
+
+        @if (reason(); as r) {
+          <fieldset class="space-y-2" data-testid="auction-reason">
+            <legend class="type-body">{{ r.check.prompt }}</legend>
+            @for (option of r.check.options; track option.id) {
+              <button
+                type="button"
+                uiButton
+                [attr.data-testid]="'auction-reason-' + option.id"
+                [attr.aria-pressed]="r.picked === option.id"
+                (click)="answerReason(option.id)"
+              >
+                {{ option.text }}
+              </button>
+              @if (r.picked === option.id) {
+                <p class="type-detail">{{ option.why }}</p>
+              }
+            }
+          </fieldset>
+        }
+      }
+
+      <section class="space-y-2 border-t border-default pt-4">
+        <p class="type-body">Simulate 1000 auctions with one policy for you, in this setup.</p>
+        <div class="flex flex-wrap gap-2">
+          @for (p of policies(); track p) {
+            <button
+              type="button"
+              uiButton
+              [attr.data-testid]="'auction-policy-' + p"
+              [attr.aria-pressed]="policy() === p"
+              (click)="setPolicy(p)"
+            >
+              {{ policyLabel(p) }}
+            </button>
+          }
+        </div>
+        <button type="button" uiButton data-testid="auction-simulate" (click)="simulate()">
+          Simulate 1000 auctions
+        </button>
+        @if (simulated(); as s) {
+          <p class="type-body" data-testid="auction-simulated">
+            Over 1000 auctions with {{ bidders() }} bidders, bidding {{ policyLabel(s.policy) }} gives
+            you a mean profit of {{ s.summary.meanProfit.toFixed(1) }}. You won at a loss
+            {{ s.summary.lossWins }} times. The winners' mean profit was
+            {{ s.summary.meanWinnerProfit.toFixed(1) }}. These are results in this setup, not a
+            general rule.
+          </p>
+        }
+      </section>
+    </section>
+  } @else {
+    <ui-empty-state heading="No such auction" message="Choose an auction from the Game Theory hub.">
+      <a uiButton variant="link" routerLink="/game-theory">Back to Game Theory</a>
+    </ui-empty-state>
+  }
+</ui-page-shell>
