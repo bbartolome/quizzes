@@ -315,6 +315,15 @@ export class PuzzleSetPage {
   });
   /** Null until a solo set is finished. Then whether the pass rule for its mode was met. */
   protected readonly soloPassed = signal<boolean | null>(null);
+  /** Says what the set is for, and what passing takes. Null for an ordinary puzzle set (spec §7.1, §9.2). */
+  protected readonly modeNote = computed<string | null>(() => {
+    if (this.isDaily()) return 'Today\u2019s puzzle. One item a day, and your answer is kept for today.';
+    const params = this.soloParams();
+    if (!params) return null;
+    return params.mode === 'test'
+      ? 'Test-out: all three right tests this idea out.'
+      : 'Solo check: two right of three passes this idea.';
+  });
   protected readonly soloBack = computed(() => {
     const params = this.soloParams();
     return params?.mode === 'test' ? '/game-theory' : `/game-theory/learn/${params?.conceptId ?? ''}`;

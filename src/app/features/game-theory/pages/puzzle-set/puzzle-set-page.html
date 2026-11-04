@@ -72,6 +72,9 @@
           <p class="type-detail" data-testid="puzzle-difficulty">
             Difficulty {{ item.difficulty }}
           </p>
+          @if (modeNote(); as note) {
+            <p class="type-detail" data-testid="puzzle-solo-note">{{ note }}</p>
+          }
           @if (heldBackNote(item); as note) {
             <ui-callout data-testid="puzzle-held-back">{{ note }}</ui-callout>
           }
@@ -109,7 +112,18 @@
               }
             }
             @case ('classify') {
-              <p class="type-body">Which game is this? Choose one.</p>
+              <p class="type-body">Look at the payoffs. Which game is this? Choose one.</p>
+              <p class="type-detail">Each cell shows the row player's payoff, then the column player's.</p>
+              @if (marks(); as blank) {
+                <div inert data-testid="puzzle-matrix-readonly">
+                  <app-payoff-matrix
+                    [matrix]="item.puzzle.game.payoffs"
+                    [rowLabels]="item.puzzle.game.rowLabels"
+                    [colLabels]="item.puzzle.game.colLabels"
+                    [bestResponseMarks]="blank"
+                  />
+                </div>
+              }
               <div class="space-y-2">
                 @for (choice of choices(item); track choice) {
                   <button
