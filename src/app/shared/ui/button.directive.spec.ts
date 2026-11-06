@@ -66,4 +66,23 @@ describe('Button (S2, §7.1)', () => {
     const classes = classesOf(render(), 'Check');
     expect(classes).toEqual(expect.arrayContaining(['disabled:opacity-50', 'disabled:cursor-not-allowed']));
   });
+
+  it('gives every variant a pressed style, under aria-pressed, so a chosen option shows', () => {
+    const root = render();
+    for (const text of ['Start', 'Back', 'Reset', 'Stats']) {
+      const classes = classesOf(root, text);
+      expect(classes.some((name) => name.startsWith('aria-pressed:')), text).toBe(true);
+    }
+  });
+
+  it('gives a pressed secondary the selected look: accent border and accent-subtle fill (spec §12)', () => {
+    const classes = classesOf(render(), 'Back');
+    expect(classes).toEqual(expect.arrayContaining(['aria-pressed:border-accent', 'aria-pressed:bg-accent-subtle']));
+  });
+
+  it('adds no pressed colour outside aria-pressed, so an unpressed button looks as before', () => {
+    const root = render();
+    expect(classesOf(root, 'Start')).not.toContain('bg-accent-subtle');
+    expect(classesOf(root, 'Back')).not.toContain('border-accent');
+  });
 });
