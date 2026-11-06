@@ -239,6 +239,15 @@ describe('BeautyContestPage', () => {
     expect(games.record).not.toHaveBeenCalled();
   });
 
+  it('draws the guess field with a visible border and background, like the other form controls', () => {
+    const fixture = open();
+    const field = el(fixture, 'beauty-guess') as HTMLInputElement;
+
+    expect(field.classList).toContain('border');
+    expect(field.classList).toContain('border-strong');
+    expect(field.classList).toContain('bg-raised');
+  });
+
   it("says progress can't be saved when the games log write fails", () => {
     const fixture = open(false, true);
 
