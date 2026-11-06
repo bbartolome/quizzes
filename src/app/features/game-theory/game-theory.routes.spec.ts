@@ -48,6 +48,24 @@ describe('GAME_THEORY_ROUTES', () => {
     });
   });
 
+  it('lists Name the bot on the hub, at the route path, with no requirement', () => {
+    expect(GAME_THEORY_MODES).toContainEqual({
+      id: 'bots-name',
+      title: 'Name the bot',
+      path: 'game-theory/bots/name',
+      requires: [],
+    });
+  });
+
+  it('lists Tournament on the hub, at the route path, with no requirement', () => {
+    expect(GAME_THEORY_MODES).toContainEqual({
+      id: 'bots-tournament',
+      title: 'Tournament',
+      path: 'game-theory/bots/tournament',
+      requires: [],
+    });
+  });
+
   it('lists Cards on the hub, at the route path, with no requirement', () => {
     expect(GAME_THEORY_MODES).toContainEqual({
       id: 'cards',
