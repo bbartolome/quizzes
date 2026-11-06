@@ -72,6 +72,7 @@
               <button
                 type="button"
                 uiButton
+                variant="secondary"
                 [attr.data-testid]="'auction-reason-' + option.id"
                 [attr.aria-pressed]="r.picked === option.id"
                 (click)="answerReason(option.id)"
@@ -93,6 +94,7 @@
             <button
               type="button"
               uiButton
+              variant="secondary"
               [attr.data-testid]="'auction-policy-' + p"
               [attr.aria-pressed]="policy() === p"
               (click)="setPolicy(p)"
