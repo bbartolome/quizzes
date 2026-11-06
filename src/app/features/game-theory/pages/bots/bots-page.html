@@ -35,6 +35,7 @@
             <button
               type="button"
               uiButton
+              variant="secondary"
               [attr.data-testid]="'bot-' + bot.id"
               [attr.aria-pressed]="selected() === bot.id"
               (click)="choose(bot.id)"
@@ -171,6 +172,7 @@
             <button
               type="button"
               uiButton
+              variant="secondary"
               [attr.data-testid]="'preset-' + p.id"
               [attr.aria-pressed]="preset() === p.id"
               (click)="setPreset(p.id)"
