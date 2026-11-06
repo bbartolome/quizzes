@@ -127,7 +127,7 @@
             @case ('card') {
               @if (round(); as r) {
                 <section class="space-y-3" data-testid="tutorial-card">
-                  <p class="type-body">Which idea does this describe?</p>
+                  <p class="type-body">{{ r.card.legend }}</p>
                   <p class="type-body">{{ r.card.prompt }}</p>
                   @for (option of r.card.options; track $index; let i = $index) {
                     <button type="button" uiButton [attr.aria-pressed]="r.picked === i" (click)="pickCard(i)">
