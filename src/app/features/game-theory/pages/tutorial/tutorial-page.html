@@ -66,6 +66,18 @@
                   }
                 }
               </p>
+              @if (givenMarks(); as blank) {
+                <app-payoff-matrix
+                  [matrix]="current.game.payoffs"
+                  [rowLabels]="current.game.rowLabels"
+                  [colLabels]="current.game.colLabels"
+                  [bestResponseMarks]="blank"
+                  [showNone]="current.task === 'find-equilibrium'"
+                  [showCaption]="current.task !== 'eliminate-next'"
+                  [(selected)]="answer"
+                  [(noneChosen)]="noneChosen"
+                />
+              }
               @if (current.task === 'eliminate-next') {
                 <div class="flex flex-wrap gap-2">
                   @for (s of strategies(); track s.player + s.index) {
@@ -80,16 +92,6 @@
                     </button>
                   }
                 </div>
-              } @else if (givenMarks(); as blank) {
-                <app-payoff-matrix
-                  [matrix]="current.game.payoffs"
-                  [rowLabels]="current.game.rowLabels"
-                  [colLabels]="current.game.colLabels"
-                  [bestResponseMarks]="blank"
-                  [showNone]="current.task === 'find-equilibrium'"
-                  [(selected)]="answer"
-                  [(noneChosen)]="noneChosen"
-                />
               }
 
               @if (verdict(); as v) {
