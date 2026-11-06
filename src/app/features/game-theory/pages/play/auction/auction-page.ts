@@ -234,6 +234,11 @@ export class AuctionPage {
     this.simulated.set({ policy, summary: summarize(outcomes) });
   }
 
+  /** A value, price or profit rounded to the nearest whole number for display. */
+  protected whole(value: number): number {
+    return Math.round(value);
+  }
+
   protected otherPolicyLabel(): string {
     const s = this.setup();
     return s ? POLICY_LABEL[otherPolicy(s)] : '';
