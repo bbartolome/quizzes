@@ -149,8 +149,8 @@
             "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
           },
           "annotations": [
-            { "text": "Against Cooperate, Defect pays the row player 5, and Cooperate pays 3. Against Defect, Defect pays 1 and Cooperate pays 0.", "mark": "dominated" },
-            { "text": "Defect is better in both columns, so Cooperate is strictly dominated. It can be removed from the row player's options." , "mark": "dominated" }
+            { "text": "Against Cooperate, Defect pays the row player 5, and Cooperate pays 3. Against Defect, Defect pays 1 and Cooperate pays 0.", "mark": "dominated", "strategy": { "player": "row", "index": 0 } },
+            { "text": "Defect is better in both columns, so Cooperate is strictly dominated. It can be removed from the row player's options." , "mark": "dominated", "strategy": { "player": "row", "index": 0 } }
           ]
         },
         {
@@ -191,8 +191,8 @@
             "payoffs": { "rows": 2, "cols": 2, "row": [[0, 1], [2, 3]], "col": [[0, 1], [1, 0]] }
           },
           "annotations": [
-            { "text": "Push pays the row player more in both columns, so Hold is strictly dominated and goes first.", "mark": "dominated" },
-            { "text": "With Hold gone, the column player only has Left and Right against Push. Left pays 1 and Right pays 0, so Right goes next.", "mark": "dominated" }
+            { "text": "Push pays the row player more in both columns, so Hold is strictly dominated and goes first.", "mark": "dominated", "strategy": { "player": "row", "index": 0 } },
+            { "text": "With Hold gone, the column player only has Left and Right against Push. Left pays 1 and Right pays 0, so Right goes next.", "mark": "dominated", "strategy": { "player": "col", "index": 1 } }
           ]
         },
         {
