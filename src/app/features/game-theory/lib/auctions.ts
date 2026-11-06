@@ -41,6 +41,19 @@ export const CURSE_MARGIN = 2;
 /** The default noise amplitude for noisy-shade, when the setup gives none. */
 export const DEFAULT_NOISE = 5;
 
+/** The common-value true value V is drawn uniformly from this range (spec §8.3). */
+export const TRUE_VALUE_RANGE = { min: 50, max: 150 } as const;
+
+/** Every common-value signal lies in V ± ε, for some V in TRUE_VALUE_RANGE. */
+export function signalRange(eps = CURSE_EPS): { min: number; max: number } {
+  return { min: TRUE_VALUE_RANGE.min - eps, max: TRUE_VALUE_RANGE.max + eps };
+}
+
+/** The whole-number range of bids for a value model: 0 to 100 for private values, the signal range for common. */
+export function bidRange(model: ValueModel): { min: number; max: number } {
+  return model === 'private' ? { min: 0, max: 100 } : signalRange();
+}
+
 export interface BidContext {
   format: AuctionFormat;
   model: ValueModel;
@@ -121,7 +134,9 @@ export function runAuction(setup: AuctionSetup, policy: BidPolicyId, rng: Rng): 
     valueOrTruth = setup.values ?? Array.from({ length: n }, () => Math.floor(101 * rng()));
     own = valueOrTruth;
   } else {
-    const trueValue = setup.trueValue ?? 50 + 100 * rng();
+    const trueValue =
+      setup.trueValue ??
+      TRUE_VALUE_RANGE.min + (TRUE_VALUE_RANGE.max - TRUE_VALUE_RANGE.min) * rng();
     own = setup.signals ?? Array.from({ length: n }, () => trueValue + (2 * rng() - 1) * CURSE_EPS);
     valueOrTruth = Array.from({ length: n }, () => trueValue);
   }

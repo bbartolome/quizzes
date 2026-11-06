@@ -100,6 +100,54 @@ describe('AuctionPage (play/:game, §8.3)', () => {
     ]);
   });
 
+  it('spans the bid slider over every common-value signal, from 30 to 170', () => {
+    const fixture = open('common-value');
+    const slider = el(fixture, 'auction-bid') as HTMLInputElement;
+
+    expect(slider.min).toBe('30');
+    expect(slider.max).toBe('170');
+  });
+
+  it('lets a common-value bidder bid above 100, near a signal of 142', () => {
+    const fixture = open('common-value');
+    const slider = el(fixture, 'auction-bid') as HTMLInputElement;
+    slider.value = '143';
+    slider.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    const label = fixture.nativeElement.querySelector('label[for="auction-bid"]') as HTMLElement;
+    expect(label.textContent).toContain('Your bid: 143');
+  });
+
+  it('shows the common-value signal, price and profit as whole numbers', () => {
+    const fixture = open('common-value');
+    const signal = el(fixture, 'auction-value')?.textContent ?? '';
+    click(fixture, 'auction-submit');
+    const outcome = el(fixture, 'auction-outcome')?.textContent ?? '';
+
+    expect(signal).toMatch(/Your signal: \d+\. /);
+    expect(outcome).not.toMatch(/\d\.\d/);
+  });
+
+  it('draws the chosen policy as a secondary button, so the selected look shows', () => {
+    const fixture = open('common-value');
+    click(fixture, 'auction-policy-curse-aware');
+
+    const chosen = el(fixture, 'auction-policy-curse-aware')?.classList;
+    expect(chosen).toContain('border-strong');
+    expect(chosen).not.toContain('bg-accent');
+  });
+
+  it('draws the chosen reason answer as a secondary button, so the selected look shows', () => {
+    const fixture = open('first-price');
+    click(fixture, 'auction-submit');
+    click(fixture, 'auction-reason-a');
+
+    const chosen = el(fixture, 'auction-reason-a')?.classList;
+    expect(chosen).toContain('border-strong');
+    expect(chosen).not.toContain('bg-accent');
+  });
+
   it('simulates a thousand auctions with a chosen policy, and says the result is in this setup', () => {
     const fixture = open('first-price');
     click(fixture, 'auction-simulate');

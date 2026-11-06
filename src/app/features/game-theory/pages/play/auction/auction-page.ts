@@ -15,7 +15,7 @@ import { EmptyState } from '../../../../../shared/ui/empty-state';
 import { PageBack, PageShell } from '../../../../../shared/ui/page-shell';
 import { GameTheoryDataService } from '../../../data/game-theory-data.service';
 import type { AuctionOutcome, AuctionSetup, BidPolicyId, ValueModel } from '../../../lib/auctions.types';
-import { simulateAuctions } from '../../../lib/auctions';
+import { bidRange, simulateAuctions } from '../../../lib/auctions';
 import { drawValues, otherPolicy, resolveWithBid, summarize, type DrawnAuction, type AuctionSummary } from '../../../lib/auction-play';
 import type { AuctionFormat } from '../../../lib/auctions.types';
 import { reasonCheckFor } from '../../../lib/reason-check';
@@ -130,6 +130,8 @@ export class AuctionPage {
     return { format: info.format, model: info.model, bidders: this.bidders(), seed: '' };
   });
   protected readonly own = computed(() => this.drawn()?.own[0] ?? 0);
+  /** The bid slider's range: the signal range for common values, so every signal can be bid near (spec §8.3). */
+  protected readonly bidBounds = computed(() => bidRange(this.info()?.model ?? 'private'));
   protected readonly policies = computed<BidPolicyId[]>(() => {
     const s = this.setup();
     return s ? policiesFor(s) : [];
@@ -170,8 +172,9 @@ export class AuctionPage {
   }
 
   protected setBid(event: Event): void {
+    const { min, max } = this.bidBounds();
     const value = Math.round(Number((event.target as HTMLInputElement).value));
-    this.bid.set(Math.min(100, Math.max(0, value)));
+    this.bid.set(Math.min(max, Math.max(min, value)));
   }
 
   /** Settles the auction with the player's bid. The result is recorded, and the reason check follows. */
@@ -229,6 +232,11 @@ export class AuctionPage {
       SIMULATIONS,
     );
     this.simulated.set({ policy, summary: summarize(outcomes) });
+  }
+
+  /** A value, price or profit rounded to the nearest whole number for display. */
+  protected whole(value: number): number {
+    return Math.round(value);
   }
 
   protected otherPolicyLabel(): string {

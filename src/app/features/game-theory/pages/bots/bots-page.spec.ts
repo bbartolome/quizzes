@@ -115,6 +115,15 @@ describe('BotsPage (play mode)', () => {
     }
   });
 
+  it('draws the chosen bot as a secondary button, so the selected look shows', () => {
+    const fixture = open();
+    click(fixture, 'bot-copycat');
+
+    const chosen = el(fixture, 'bot-copycat')?.classList;
+    expect(chosen).toContain('border-strong');
+    expect(chosen).not.toContain('bg-accent');
+  });
+
   it('tells the player the continuation chance, and never the number of turns', () => {
     const fixture = open();
 
@@ -246,6 +255,15 @@ describe('BotsPage name-the-bot mode (spec §8.1)', () => {
 });
 
 describe('BotsPage tournament mode (spec §8.1)', () => {
+  it('draws the chosen population as a secondary button, so the selected look shows', () => {
+    const fixture = open('tournament');
+    click(fixture, 'preset-hostile');
+
+    const chosen = el(fixture, 'preset-hostile')?.classList;
+    expect(chosen).toContain('border-strong');
+    expect(chosen).not.toContain('bg-accent');
+  });
+
   it('ranks a preset population, one row per bot, with the winner named first', () => {
     const fixture = open('tournament');
     click(fixture, 'preset-everyone');

@@ -9,9 +9,9 @@
       @if (drawn()) {
         <p class="type-body" data-testid="auction-value">
           @if (g.model === 'private') {
-            Your value: {{ own() }}. In this setup, values are whole numbers from 0 to 100.
+            Your value: {{ whole(own()) }}. In this setup, values are whole numbers from 0 to 100.
           } @else {
-            Your signal: {{ own() }}. The true value is not known to anyone. In this setup, each
+            Your signal: {{ whole(own()) }}. The true value is not known to anyone. In this setup, each
             signal is within 20 of it.
           }
         </p>
@@ -38,9 +38,9 @@
           id="auction-bid"
           data-testid="auction-bid"
           type="range"
-          min="0"
-          max="100"
           step="1"
+          [min]="bidBounds().min"
+          [max]="bidBounds().max"
           [value]="bid()"
           [disabled]="outcome() !== null"
           (input)="setBid($event)"
@@ -59,9 +59,9 @@
       @if (outcome(); as o) {
         <p class="type-section" data-testid="auction-outcome">
           @if (o.winner === 0) {
-            You won at a price of {{ o.price }}. Your profit: {{ o.payoffs[0] }}.
+            You won at a price of {{ whole(o.price) }}. Your profit: {{ whole(o.payoffs[0]) }}.
           } @else {
-            You lost. The price was {{ o.price }}, set by another bid.
+            You lost. The price was {{ whole(o.price) }}, set by another bid.
           }
         </p>
 
@@ -72,6 +72,7 @@
               <button
                 type="button"
                 uiButton
+                variant="secondary"
                 [attr.data-testid]="'auction-reason-' + option.id"
                 [attr.aria-pressed]="r.picked === option.id"
                 (click)="answerReason(option.id)"
@@ -93,6 +94,7 @@
             <button
               type="button"
               uiButton
+              variant="secondary"
               [attr.data-testid]="'auction-policy-' + p"
               [attr.aria-pressed]="policy() === p"
               (click)="setPolicy(p)"
