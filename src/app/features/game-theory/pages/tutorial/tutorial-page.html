@@ -84,6 +84,7 @@
                     <button
                       type="button"
                       uiButton
+                      variant="secondary"
                       [attr.aria-pressed]="strategy()?.player === s.player && strategy()?.index === s.index"
                       (click)="pickStrategy(s)"
                     >
@@ -130,7 +131,7 @@
                   <p class="type-body">{{ r.card.legend }}</p>
                   <p class="type-body">{{ r.card.prompt }}</p>
                   @for (option of r.card.options; track $index; let i = $index) {
-                    <button type="button" uiButton [attr.aria-pressed]="r.picked === i" (click)="pickCard(i)">
+                    <button type="button" uiButton variant="secondary" [attr.aria-pressed]="r.picked === i" (click)="pickCard(i)">
                       {{ option }}
                     </button>
                   }
