@@ -67,6 +67,16 @@ describe('resolveMark (spec §7.1: marks come from the solver, never from text)'
     expect(resolveMark('equilibrium', PENNIES).cells).toEqual([]);
   });
 
+  it('draws only the cell a note names, when it names one (spec §7.1: at)', () => {
+    expect(resolveMark('best-response-row', PD, { r: 1, c: 0 }).cells).toEqual([{ r: 1, c: 0 }]);
+    expect(resolveMark('pareto', PD, { r: 0, c: 1 }).cells).toEqual([{ r: 0, c: 1 }]);
+    expect(resolveMark('equilibrium', PD, { r: 1, c: 1 }).cells).toEqual([{ r: 1, c: 1 }]);
+  });
+
+  it('draws nothing for a named cell the solver does not mark', () => {
+    expect(resolveMark('equilibrium', PD, { r: 0, c: 0 }).cells).toEqual([]);
+  });
+
   it('marks Pareto-optimal cells, which leaves out the equilibrium that everyone prefers to escape', () => {
     const cells = resolveMark('pareto', PD).cells;
 
