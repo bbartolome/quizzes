@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "checks": [
     {
       "id": "equilibrium-stable-not-best",
@@ -101,7 +101,7 @@
       "id": "tft-ranking-depends-on-field",
       "conceptId": "tit-for-tat",
       "context": "bots",
-      "prompt": "Tit for tat ranks near the top of this round robin. Why could a different population or noise level change the ranking?",
+      "prompt": "The ranking above comes from this round robin. Why could a different population or noise level change that ranking?",
       "options": [
         {
           "id": "a",
