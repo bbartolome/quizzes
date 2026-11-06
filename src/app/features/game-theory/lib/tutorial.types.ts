@@ -1,7 +1,7 @@
 // Type-only. Copied verbatim from docs/specs/game-theory.md §7.1.
 // The tutorial runner and guard are implemented by G17.
 
-import type { CellRef, MatrixGame } from './matrix.types';
+import type { CellRef, MatrixGame, Player } from './matrix.types';
 import type { Difficulty, PuzzleKind } from './puzzle.types';
 
 export type TutorialStep =
@@ -10,7 +10,7 @@ export type TutorialStep =
       stage: 1;
       kind: 'worked';
       game: MatrixGame;
-      annotations: { text: string; mark?: MarkName; at?: CellRef }[];
+      annotations: { text: string; mark?: MarkName; at?: CellRef; strategy?: { player: Player; index: number } }[];
     }
   | {
       stage: 2;
