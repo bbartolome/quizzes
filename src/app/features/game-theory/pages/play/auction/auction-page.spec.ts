@@ -119,6 +119,16 @@ describe('AuctionPage (play/:game, §8.3)', () => {
     expect(label.textContent).toContain('Your bid: 143');
   });
 
+  it('shows the common-value signal, price and profit as whole numbers', () => {
+    const fixture = open('common-value');
+    const signal = el(fixture, 'auction-value')?.textContent ?? '';
+    click(fixture, 'auction-submit');
+    const outcome = el(fixture, 'auction-outcome')?.textContent ?? '';
+
+    expect(signal).toMatch(/Your signal: \d+\. /);
+    expect(outcome).not.toMatch(/\d\.\d/);
+  });
+
   it('simulates a thousand auctions with a chosen policy, and says the result is in this setup', () => {
     const fixture = open('first-price');
     click(fixture, 'auction-simulate');
