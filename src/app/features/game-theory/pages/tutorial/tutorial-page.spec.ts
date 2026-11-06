@@ -149,6 +149,43 @@ describe('TutorialPage', () => {
     expect(pressedCells(root)).toEqual(['payoff-cell-0-0', 'payoff-cell-1-1']);
   });
 
+  it('shows no None button on a worked example, which asks no equilibrium question', () => {
+    const fixture = open('nash-equilibrium');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done: the worked example
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="payoff-matrix"]')).not.toBeNull();
+    expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+  });
+
+  it('shows no None button on the best-response try-it, which underlines best responses', () => {
+    const fixture = open('best-response');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done
+    fixture.detectChanges();
+    next(root); // reveal annotation 2
+    fixture.detectChanges();
+    next(root); // worked done, the underline try-it starts
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="payoff-matrix"]')).not.toBeNull();
+    expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+  });
+
+  it('keeps the None button on the find-equilibrium try-it', () => {
+    const fixture = open('nash-equilibrium');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root);
+    fixture.detectChanges();
+    next(root);
+    fixture.detectChanges();
+    next(root); // worked done, the find-equilibrium try-it starts
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="payoff-none"]')).not.toBeNull();
+  });
+
   it('reveals the next hint after a wrong answer, and does not record the Try as evidence', () => {
     const fixture = open('nash-equilibrium');
     const root = fixture.nativeElement as HTMLElement;
