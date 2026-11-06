@@ -793,7 +793,8 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
     it('is locked until nash-equilibrium is introduced', () => {
       const fixture = open({ daily: true, introduced: [] });
 
-      expect(fixture.nativeElement.textContent).toContain('Unlocks after your first tutorial.');
+      expect(fixture.nativeElement.textContent).toContain('Unlocks after Nash equilibrium.');
+      expect(fixture.nativeElement.textContent).not.toContain('Unlocks after your first tutorial.');
       expect(fixture.nativeElement.querySelector('[data-testid="puzzle-progress"]')).toBeNull();
     });
   });
