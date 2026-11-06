@@ -129,6 +129,19 @@
             Start a hidden match
           </button>
         } @else {
+          <ol class="space-y-1">
+            @for (turn of nameTurns(); track turn.index) {
+              <li
+                class="type-body"
+                data-testid="name-turn"
+                [attr.data-human-move]="turn.playedA"
+                [attr.data-bot-move]="turn.playedB"
+              >
+                Turn {{ turn.index + 1 }}: you {{ turn.playedA }}, the bot {{ turn.playedB }}
+              </li>
+            }
+          </ol>
+
           @if (!nameDone()) {
             <p class="type-detail" data-testid="name-progress">
               Turn {{ nameTurns().length + 1 }} of {{ nameTurnCount }}. The bot is hidden.
