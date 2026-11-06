@@ -17,21 +17,29 @@ function cellsWhere(flags: boolean[][]): CellRef[] {
   return flags.flatMap((row, r) => row.flatMap((on, c) => (on ? [{ r, c }] : [])));
 }
 
+/** The solver's cells, narrowed to the one cell a note names when it names one. */
+function namedCell(cells: CellRef[], at: CellRef | undefined): CellRef[] {
+  if (!at) return cells;
+  return cells.filter((cell) => cell.r === at.r && cell.c === at.c);
+}
+
 /**
- * The solver output for one mark. `dominated` is the first step of the elimination trace, in
- * canonical order, so it shows one strategy at a time.
+ * The solver output for one mark. For the matrix marks, `at` is the cell the note is about, and
+ * only that cell is drawn if the solver marks it. Without `at`, every cell the solver marks is
+ * returned. `dominated` is the first step of the elimination trace, in canonical order, so it
+ * shows one strategy at a time; `at` does not apply to it.
  */
-export function resolveMark(mark: MarkName, game: MatrixGame): ResolvedMarks {
+export function resolveMark(mark: MarkName, game: MatrixGame, at?: CellRef): ResolvedMarks {
   const m = game.payoffs;
   switch (mark) {
     case 'best-response-row':
-      return { cells: cellsWhere(bestResponseMarks(m).row), strategies: [] };
+      return { cells: namedCell(cellsWhere(bestResponseMarks(m).row), at), strategies: [] };
     case 'best-response-col':
-      return { cells: cellsWhere(bestResponseMarks(m).col), strategies: [] };
+      return { cells: namedCell(cellsWhere(bestResponseMarks(m).col), at), strategies: [] };
     case 'equilibrium':
-      return { cells: pureNash(m), strategies: [] };
+      return { cells: namedCell(pureNash(m), at), strategies: [] };
     case 'pareto':
-      return { cells: paretoOptimal(m), strategies: [] };
+      return { cells: namedCell(paretoOptimal(m), at), strategies: [] };
     case 'dominated': {
       const [first] = eliminationTrace(m);
       return {
