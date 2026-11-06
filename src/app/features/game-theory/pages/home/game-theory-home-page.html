@@ -48,7 +48,7 @@
     @if (status() === 'ready') {
       @switch (today().kind) {
         @case ('locked') {
-          <p class="type-body" data-testid="today-locked">Unlocks after your first tutorial.</p>
+          <p class="type-body" data-testid="today-locked">Unlocks after Nash equilibrium.</p>
         }
         @case ('open') {
           <a uiButton variant="link" routerLink="/game-theory/daily" data-testid="today-open">
