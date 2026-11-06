@@ -78,7 +78,7 @@ describe('tutorials.json (spec §6.5, §7.1)', () => {
         if (step.kind !== 'worked') continue;
         for (const note of step.annotations) {
           if (!note.mark) continue;
-          checkAnnotation(tutorial.conceptId, step.game, note.mark, note.at);
+          checkAnnotation(tutorial.conceptId, step.game, note.mark, note.at, note.strategy);
         }
       }
     }
@@ -123,16 +123,16 @@ function checkAnnotation(
   game: MatrixGame,
   mark: MarkName,
   at: CellRef | undefined,
+  strategy: Strategy | undefined,
 ): void {
-  const marks = resolveMark(mark, game);
-  if (CELL_MARKS.includes(mark)) {
-    expect(at, `${conceptId}: ${mark} needs a cell`).toBeDefined();
-    if (!at) return;
-    const marked = new Set(marks.cells.map(cellKey));
-    expect(marked.has(cellKey(at)), `${conceptId}: ${mark} at ${cellKey(at)} is not marked by the solver`).toBe(true);
-  } else {
-    expect(marks.strategies.length, `${conceptId}: dominated names no strategy`).toBeGreaterThan(0);
+  if (!CELL_MARKS.includes(mark)) {
+    checkDominatedNote(conceptId, game, strategy);
+    return;
   }
+  expect(at, `${conceptId}: ${mark} needs a cell`).toBeDefined();
+  if (!at) return;
+  const marked = new Set(resolveMark(mark, game).cells.map(cellKey));
+  expect(marked.has(cellKey(at)), `${conceptId}: ${mark} at ${cellKey(at)} is not marked by the solver`).toBe(true);
 }
 
 /** The game of one concept's worked example. */

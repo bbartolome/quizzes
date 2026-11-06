@@ -103,8 +103,15 @@ describe('resolveMark (spec §7.1: marks come from the solver, never from text)'
     expect(cells).not.toContainEqual({ r: 1, c: 1 });
   });
 
-  it('marks the first elimination step as dominated, row before column, lowest index first', () => {
+  it('strikes nothing for a dominated mark that names no strategy', () => {
     const marks = resolveMark('dominated', PD);
+
+    expect(marks.strategies).toEqual([]);
+    expect(marks.cells).toEqual([]);
+  });
+
+  it('strikes the strategy the note names, which the trace strikes in the prisoner dilemma', () => {
+    const marks = resolveMark('dominated', PD, { strategy: { player: 'row', index: 0 } });
 
     expect(marks.strategies).toEqual([{ player: 'row', index: 0 }]);
     expect(marks.cells).toEqual([]);

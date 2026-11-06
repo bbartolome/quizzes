@@ -421,7 +421,7 @@ type TutorialStep =
       stage: 1;
       kind: 'worked';
       game: MatrixGame;
-      annotations: { text: string; mark?: MarkName; at?: CellRef }[];
+      annotations: { text: string; mark?: MarkName; at?: CellRef; strategy?: { player: Player; index: number } }[];
     }
   | { stage: 2; kind: 'faded'; game: MatrixGame; task: FadedTask; hints: string[] }
   | { stage: 2; kind: 'card'; hints: string[] }
