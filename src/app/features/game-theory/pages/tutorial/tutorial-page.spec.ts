@@ -33,7 +33,7 @@ describe('TutorialPage', () => {
   /** Opens the tutorial for one concept. A failed first load is shown when contentFails is set. */
   function open(
     id: string,
-    options: { introduced?: string[]; stage?: 0 | 1 | 2 | 3; contentFails?: boolean } = {},
+    options: { introduced?: string[]; stage?: 0 | 1 | 2 | 3; contentFails?: boolean; rng?: () => number } = {},
   ): ComponentFixture<TutorialPage> {
     learn = new FakeGtLearnService();
     learn.seedIntroduced(options.introduced ?? []);
@@ -52,7 +52,7 @@ describe('TutorialPage', () => {
         { provide: GameTheoryDataService, useValue: data },
         { provide: GtLearnService, useValue: learn },
         { provide: GtEvidenceService, useValue: evidence },
-        { provide: GAME_THEORY_RNG, useValue: mulberry32(7) },
+        { provide: GAME_THEORY_RNG, useValue: options.rng ?? mulberry32(7) },
       ],
     });
     const fixture = TestBed.createComponent(TutorialPage);
@@ -238,6 +238,22 @@ describe('TutorialPage', () => {
 
     expect(text(root)).toContain('Select each cell that is Pareto efficient');
     expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+  });
+
+  // The card's direction (set by the rng draw) decides the question: a name prompt asks what the
+  // idea means, a definition prompt asks which idea it is (spec §7.1, card-builder legends).
+  it.each([
+    { direction: 'definition-to-term', rng: 0.1, heading: 'Which idea is this?' },
+    { direction: 'example-to-term', rng: 0.5, heading: 'Which idea does this example show?' },
+    { direction: 'term-to-definition', rng: 0.9, heading: 'What does this idea mean?' },
+  ])('asks the question its card direction calls for ($direction)', ({ rng, heading }) => {
+    const fixture = open('repeated-game', { rng: () => rng });
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done, the card Try starts
+    fixture.detectChanges();
+
+    const card = root.querySelector('[data-testid="tutorial-card"]');
+    expect(card?.querySelector('p')?.textContent?.trim()).toBe(heading);
   });
 
   it('uses the default card script for a concept with no hand-written tutorial', () => {
