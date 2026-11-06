@@ -186,6 +186,26 @@ describe('TutorialPage', () => {
     expect(root.querySelector('[data-testid="payoff-none"]')).not.toBeNull();
   });
 
+  it.each(['dominant-strategy', 'iterated-elimination'])(
+    'shows the payoff matrix with the eliminate-next try-it of %s, and no marks on it',
+    (id) => {
+      const fixture = open(id);
+      const root = fixture.nativeElement as HTMLElement;
+      next(root); // text done
+      fixture.detectChanges();
+      next(root); // reveal annotation 2
+      fixture.detectChanges();
+      next(root); // worked done, the eliminate-next try-it starts
+      fixture.detectChanges();
+
+      expect(text(root)).toContain('Choose a strategy that is strictly dominated now.');
+      expect(root.querySelectorAll('[data-testid^="payoff-cell-"]')).toHaveLength(4);
+      expect(pressedCells(root)).toEqual([]);
+      expect(underlinedCells(root)).toEqual([]);
+      expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+    },
+  );
+
   it('reveals the next hint after a wrong answer, and does not record the Try as evidence', () => {
     const fixture = open('nash-equilibrium');
     const root = fixture.nativeElement as HTMLElement;
