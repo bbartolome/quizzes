@@ -206,6 +206,38 @@ describe('TutorialPage', () => {
     },
   );
 
+  it('draws the strategy toggles of the eliminate-next try-it with the secondary button', () => {
+    const fixture = open('dominant-strategy');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done
+    fixture.detectChanges();
+    next(root); // reveal annotation 2
+    fixture.detectChanges();
+    next(root); // worked done, the eliminate-next try-it starts
+    fixture.detectChanges();
+
+    const toggles = [...root.querySelectorAll<HTMLButtonElement>('button[aria-pressed]')].filter((button) =>
+      /\((row|column) player\)/.test(button.textContent ?? ''),
+    );
+    expect(toggles).toHaveLength(4);
+    for (const toggle of toggles) {
+      expect(toggle.classList).toContain('border-strong');
+    }
+  });
+
+  it('draws the card picks with the secondary button', () => {
+    const fixture = open('repeated-game');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done, the card Try starts
+    fixture.detectChanges();
+
+    const picks = root.querySelectorAll<HTMLButtonElement>('[data-testid="tutorial-card"] button[aria-pressed]');
+    expect(picks).toHaveLength(4);
+    for (const pick of picks) {
+      expect(pick.classList).toContain('border-strong');
+    }
+  });
+
   it('reveals the next hint after a wrong answer, and does not record the Try as evidence', () => {
     const fixture = open('nash-equilibrium');
     const root = fixture.nativeElement as HTMLElement;
