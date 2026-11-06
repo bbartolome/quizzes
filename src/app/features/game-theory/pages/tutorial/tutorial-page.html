@@ -39,6 +39,7 @@
                   [bestResponseMarks]="view.marks"
                   [eliminated]="view.eliminated"
                   [selected]="view.selected"
+                  [showNone]="false"
                 />
               }
               <ol class="space-y-2">
@@ -88,7 +89,7 @@
                   [rowLabels]="current.game.rowLabels"
                   [colLabels]="current.game.colLabels"
                   [bestResponseMarks]="blank"
-                  [showNone]="current.task !== 'find-pareto'"
+                  [showNone]="current.task === 'find-equilibrium'"
                   [(selected)]="answer"
                   [(noneChosen)]="noneChosen"
                 />
