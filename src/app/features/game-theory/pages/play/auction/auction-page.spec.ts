@@ -100,6 +100,25 @@ describe('AuctionPage (play/:game, §8.3)', () => {
     ]);
   });
 
+  it('spans the bid slider over every common-value signal, from 30 to 170', () => {
+    const fixture = open('common-value');
+    const slider = el(fixture, 'auction-bid') as HTMLInputElement;
+
+    expect(slider.min).toBe('30');
+    expect(slider.max).toBe('170');
+  });
+
+  it('lets a common-value bidder bid above 100, near a signal of 142', () => {
+    const fixture = open('common-value');
+    const slider = el(fixture, 'auction-bid') as HTMLInputElement;
+    slider.value = '143';
+    slider.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    const label = fixture.nativeElement.querySelector('label[for="auction-bid"]') as HTMLElement;
+    expect(label.textContent).toContain('Your bid: 143');
+  });
+
   it('simulates a thousand auctions with a chosen policy, and says the result is in this setup', () => {
     const fixture = open('first-price');
     click(fixture, 'auction-simulate');
