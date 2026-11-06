@@ -334,4 +334,23 @@ describe('BotsPage tournament mode (spec §8.1)', () => {
       { conceptIds: ['tit-for-tat'], correct: true, facet: 'challenges' },
     ]);
   });
+
+  it('its reason check names no bot that the round robin does not play, and not tit for tat, under any preset', () => {
+    const fixture = open('tournament');
+    for (const preset of ['everyone', 'cooperative', 'hostile']) {
+      click(fixture, `preset-${preset}`);
+      click(fixture, 'tournament-run');
+      const prompt = el(fixture, 'tournament-reason')?.querySelector('legend')?.textContent ?? '';
+      const population = fixture.componentInstance.lastRun()?.result.population ?? [];
+
+      expect(prompt.trim(), `${preset} prompt`).not.toBe('');
+      expect(prompt, `${preset} prompt`).not.toMatch(/tit for tat/i);
+      for (const id of BOT_IDS) {
+        const name = ROSTER[id].name;
+        if (new RegExp(`\\b${name}\\b`, 'i').test(prompt)) {
+          expect(population, `${preset} prompt names ${name}`).toContain(id);
+        }
+      }
+    }
+  });
 });
