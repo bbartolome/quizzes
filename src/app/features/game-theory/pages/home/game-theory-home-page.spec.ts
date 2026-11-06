@@ -158,10 +158,12 @@ describe('GameTheoryHomePage', () => {
   });
 
   describe('today panel and reset (spec §9.2, §10)', () => {
-    it('says the daily unlocks after the first tutorial while nash-equilibrium is not introduced', () => {
+    it('says the daily unlocks after Nash equilibrium while it is not introduced, and no longer after the first tutorial', () => {
       const root = create({ introduced: [] }).nativeElement as HTMLElement;
+      const today = root.querySelector('[data-slot="today"]')?.textContent ?? '';
 
-      expect(root.querySelector('[data-slot="today"]')?.textContent).toContain('Unlocks after your first tutorial.');
+      expect(today).toContain('Unlocks after Nash equilibrium.');
+      expect(today).not.toContain('Unlocks after your first tutorial.');
     });
 
     it('links to an open daily when nash-equilibrium is introduced and today is not answered', () => {

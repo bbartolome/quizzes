@@ -648,7 +648,7 @@ Lures get no counts. A two-concept puzzle credits both concepts. The 'did the wi
 - **Seed:** `mulberry32(hashSeed('gt-daily/v1/' + dateKey))`. No backend.
 - **Kind** is chosen from the kinds the puzzle-set page can draw (§7.2, the same drawable-kind rule) by `dayNumber(dateKey) % kinds.length`. Difficulty is `min(2, the highest level whose gates are met)`, so it is always solvable.
 - **Plan lock-in.** The first open of the day stores `{ kind, difficulty, seedKey }` in `stats:game-theory:plan`, so mastering a concept mid-day can't change today's puzzle.
-- **Availability.** It unlocks once `nash-equilibrium` is introduced. Before then the hub says "Unlocks after your first tutorial."
+- **Availability.** It unlocks once `nash-equilibrium` is introduced. Before then the hub says "Unlocks after Nash equilibrium."
 - **Grading.** One attempt through `gradePuzzle`, then a reason check. The answer's correctness is the recorded result; the reason is shown separately and informationally.
 - **Storage.** `stats:game-theory:learn` holds the last 60 dates' `{ kind, correct, reasonCorrect }`. The Today panel shows the last 14 days as glyphs (✓ ✗ ·).
 - The daily puzzle differs by timezone because it is keyed to the local date. That is acceptable, since nothing is shared and there is no leaderboard.

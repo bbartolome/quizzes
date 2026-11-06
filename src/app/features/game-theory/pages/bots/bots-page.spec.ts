@@ -97,6 +97,15 @@ function turnRows(fixture: ComponentFixture<BotsPage>): HTMLElement[] {
   return Array.from(fixture.nativeElement.querySelectorAll('[data-testid="bots-turn"]'));
 }
 
+function nameTurnRows(fixture: ComponentFixture<BotsPage>): HTMLElement[] {
+  return Array.from(fixture.nativeElement.querySelectorAll('[data-testid="name-turn"]'));
+}
+
+/** The text of a node with its whitespace collapsed, so template line breaks do not count. */
+function normalised(node: HTMLElement): string {
+  return (node.textContent ?? '').replace(/\s+/g, ' ').trim();
+}
+
 describe('BotsPage (play mode)', () => {
   it('has one heading, Bots', () => {
     const fixture = open();
@@ -225,6 +234,27 @@ describe('BotsPage name-the-bot mode (spec §8.1)', () => {
     }
   });
 
+  it("shows each turn of the hidden match, your move and the bot's, before the guess, without naming the bot", () => {
+    const fixture = open('name');
+    click(fixture, 'bots-start');
+    click(fixture, 'bots-move-C');
+    click(fixture, 'bots-move-D');
+
+    const turns = fixture.componentInstance.nameMatch()?.turns ?? [];
+    const rows = nameTurnRows(fixture);
+    expect(turns).toHaveLength(2);
+    expect(rows).toHaveLength(2);
+    rows.forEach((row, i) => {
+      const turn = turns[i];
+      expect(row.getAttribute('data-human-move')).toBe(turn?.playedA);
+      expect(row.getAttribute('data-bot-move')).toBe(turn?.playedB);
+      expect(normalised(row)).toBe(`Turn ${i + 1}: you ${turn?.playedA}, the bot ${turn?.playedB}`);
+    });
+    for (const id of NAMEABLE) {
+      expect(text(fixture)).not.toContain(ROSTER[id].name);
+    }
+  });
+
   it("a right name is marked correct, recorded as a challenge for the bot's concept, and the tell is shown", () => {
     const fixture = open('name');
     click(fixture, 'bots-start');
@@ -303,5 +333,24 @@ describe('BotsPage tournament mode (spec §8.1)', () => {
     expect(evidence.records).toEqual([
       { conceptIds: ['tit-for-tat'], correct: true, facet: 'challenges' },
     ]);
+  });
+
+  it('its reason check names no bot that the round robin does not play, and not tit for tat, under any preset', () => {
+    const fixture = open('tournament');
+    for (const preset of ['everyone', 'cooperative', 'hostile']) {
+      click(fixture, `preset-${preset}`);
+      click(fixture, 'tournament-run');
+      const prompt = el(fixture, 'tournament-reason')?.querySelector('legend')?.textContent ?? '';
+      const population = fixture.componentInstance.lastRun()?.result.population ?? [];
+
+      expect(prompt.trim(), `${preset} prompt`).not.toBe('');
+      expect(prompt, `${preset} prompt`).not.toMatch(/tit for tat/i);
+      for (const id of BOT_IDS) {
+        const name = ROSTER[id].name;
+        if (new RegExp(`\\b${name}\\b`, 'i').test(prompt)) {
+          expect(population, `${preset} prompt names ${name}`).toContain(id);
+        }
+      }
+    }
   });
 });
