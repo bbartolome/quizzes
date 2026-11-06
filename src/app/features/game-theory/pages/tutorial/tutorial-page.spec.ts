@@ -206,6 +206,18 @@ describe('TutorialPage', () => {
     },
   );
 
+  it('strikes the strategy the second dominated note names: Right, after Hold', () => {
+    const fixture = open('iterated-elimination');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done
+    fixture.detectChanges();
+    next(root); // reveal annotation 2: with Hold gone, Right goes next
+    fixture.detectChanges();
+
+    expect(root.querySelectorAll('th[scope="row"]')[0].textContent).toContain('Eliminated (step 1)');
+    expect(root.querySelectorAll('th[scope="col"]')[1].textContent).toContain('Eliminated (step 2)');
+  });
+
   it('draws the strategy toggles of the eliminate-next try-it with the secondary button', () => {
     const fixture = open('dominant-strategy');
     const root = fixture.nativeElement as HTMLElement;

@@ -17,6 +17,12 @@ function cellsWhere(flags: boolean[][]): CellRef[] {
   return flags.flatMap((row, r) => row.flatMap((on, c) => (on ? [{ r, c }] : [])));
 }
 
+/** What a note names: the cell a matrix mark draws, or the strategy `dominated` strikes. */
+export interface NoteRef {
+  at?: CellRef;
+  strategy?: { player: Player; index: number };
+}
+
 /** The solver's cells, narrowed to the one cell a note names when it names one. */
 function namedCell(cells: CellRef[], at: CellRef | undefined): CellRef[] {
   if (!at) return cells;
@@ -24,22 +30,22 @@ function namedCell(cells: CellRef[], at: CellRef | undefined): CellRef[] {
 }
 
 /**
- * The solver output for one mark. For the matrix marks, `at` is the cell the note is about, and
+ * The solver output for one mark. For the matrix marks, `ref.at` is the cell the note is about, and
  * only that cell is drawn if the solver marks it. Without `at`, every cell the solver marks is
  * returned. `dominated` is the first step of the elimination trace, in canonical order, so it
  * shows one strategy at a time; `at` does not apply to it.
  */
-export function resolveMark(mark: MarkName, game: MatrixGame, at?: CellRef): ResolvedMarks {
+export function resolveMark(mark: MarkName, game: MatrixGame, ref: NoteRef = {}): ResolvedMarks {
   const m = game.payoffs;
   switch (mark) {
     case 'best-response-row':
-      return { cells: namedCell(cellsWhere(bestResponseMarks(m).row), at), strategies: [] };
+      return { cells: namedCell(cellsWhere(bestResponseMarks(m).row), ref.at), strategies: [] };
     case 'best-response-col':
-      return { cells: namedCell(cellsWhere(bestResponseMarks(m).col), at), strategies: [] };
+      return { cells: namedCell(cellsWhere(bestResponseMarks(m).col), ref.at), strategies: [] };
     case 'equilibrium':
-      return { cells: namedCell(pureNash(m), at), strategies: [] };
+      return { cells: namedCell(pureNash(m), ref.at), strategies: [] };
     case 'pareto':
-      return { cells: namedCell(paretoOptimal(m), at), strategies: [] };
+      return { cells: namedCell(paretoOptimal(m), ref.at), strategies: [] };
     case 'dominated': {
       const [first] = eliminationTrace(m);
       return {
