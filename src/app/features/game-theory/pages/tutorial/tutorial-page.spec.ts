@@ -64,6 +64,16 @@ describe('TutorialPage', () => {
   const next = (root: HTMLElement) => {
     (root.querySelector('[data-testid="tutorial-next"]') as HTMLButtonElement).click();
   };
+  /** The matrix cells drawn as picked, in matrix order. */
+  const pressedCells = (root: HTMLElement) =>
+    [...root.querySelectorAll('[data-testid^="payoff-cell-"][aria-pressed="true"]')].map((cell) =>
+      cell.getAttribute('data-testid'),
+    );
+  /** The matrix cells with an underlined best-response payoff, in matrix order. */
+  const underlinedCells = (root: HTMLElement) =>
+    [...root.querySelectorAll('[data-testid^="payoff-cell-"]')]
+      .filter((cell) => cell.querySelector('.underline') !== null)
+      .map((cell) => cell.getAttribute('data-testid'));
 
   beforeEach(() => {
     TestBed.resetTestingModule();
@@ -101,6 +111,42 @@ describe('TutorialPage', () => {
     next(root);
     fixture.detectChanges();
     expect(root.querySelectorAll('[data-testid="tutorial-annotation"]')).toHaveLength(2);
+  });
+
+  it('underlines only the best response that the note names', () => {
+    const fixture = open('best-response');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done: the first note names Top against Left
+    fixture.detectChanges();
+    expect(underlinedCells(root)).toEqual(['payoff-cell-0-0']);
+
+    next(root); // the second note names Bottom against Right
+    fixture.detectChanges();
+    expect(underlinedCells(root)).toEqual(['payoff-cell-0-0', 'payoff-cell-1-1']);
+  });
+
+  it('selects only the cell the Nash note names, not every equilibrium', () => {
+    const fixture = open('nash-equilibrium');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done: the first note names Top and Left
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual(['payoff-cell-0-0']);
+
+    next(root); // the second note names Bottom and Right
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual(['payoff-cell-0-0', 'payoff-cell-1-1']);
+  });
+
+  it('selects only the cell the Pareto note names, not every Pareto-optimal cell', () => {
+    const fixture = open('pareto-efficiency');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done: the first note names Defect and Defect
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual(['payoff-cell-1-1']);
+
+    next(root); // the Pareto note names Cooperate and Cooperate only
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual(['payoff-cell-0-0', 'payoff-cell-1-1']);
   });
 
   it('reveals the next hint after a wrong answer, and does not record the Try as evidence', () => {
