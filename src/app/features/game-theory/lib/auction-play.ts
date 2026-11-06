@@ -1,4 +1,4 @@
-import { CURSE_EPS, DEFAULT_NOISE, bidFor, settle } from './auctions';
+import { CURSE_EPS, DEFAULT_NOISE, TRUE_VALUE_RANGE, bidFor, settle } from './auctions';
 import type { AuctionOutcome, AuctionSetup, BidPolicyId } from './auctions.types';
 import type { Rng } from './rng';
 
@@ -18,7 +18,8 @@ export function drawValues(setup: AuctionSetup, rng: Rng): DrawnAuction {
     const values = setup.values ?? Array.from({ length: n }, () => Math.floor(101 * rng()));
     return { valueOrTruth: values, own: values };
   }
-  const trueValue = setup.trueValue ?? 50 + 100 * rng();
+  const trueValue =
+    setup.trueValue ?? TRUE_VALUE_RANGE.min + (TRUE_VALUE_RANGE.max - TRUE_VALUE_RANGE.min) * rng();
   const own =
     setup.signals ?? Array.from({ length: n }, () => trueValue + (2 * rng() - 1) * CURSE_EPS);
   return { valueOrTruth: Array.from({ length: n }, () => trueValue), own };
