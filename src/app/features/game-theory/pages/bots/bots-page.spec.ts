@@ -97,6 +97,15 @@ function turnRows(fixture: ComponentFixture<BotsPage>): HTMLElement[] {
   return Array.from(fixture.nativeElement.querySelectorAll('[data-testid="bots-turn"]'));
 }
 
+function nameTurnRows(fixture: ComponentFixture<BotsPage>): HTMLElement[] {
+  return Array.from(fixture.nativeElement.querySelectorAll('[data-testid="name-turn"]'));
+}
+
+/** The text of a node with its whitespace collapsed, so template line breaks do not count. */
+function normalised(node: HTMLElement): string {
+  return (node.textContent ?? '').replace(/\s+/g, ' ').trim();
+}
+
 describe('BotsPage (play mode)', () => {
   it('has one heading, Bots', () => {
     const fixture = open();
@@ -220,6 +229,27 @@ describe('BotsPage name-the-bot mode (spec §8.1)', () => {
     click(fixture, 'bots-start');
     click(fixture, 'bots-move-C');
 
+    for (const id of NAMEABLE) {
+      expect(text(fixture)).not.toContain(ROSTER[id].name);
+    }
+  });
+
+  it("shows each turn of the hidden match, your move and the bot's, before the guess, without naming the bot", () => {
+    const fixture = open('name');
+    click(fixture, 'bots-start');
+    click(fixture, 'bots-move-C');
+    click(fixture, 'bots-move-D');
+
+    const turns = fixture.componentInstance.nameMatch()?.turns ?? [];
+    const rows = nameTurnRows(fixture);
+    expect(turns).toHaveLength(2);
+    expect(rows).toHaveLength(2);
+    rows.forEach((row, i) => {
+      const turn = turns[i];
+      expect(row.getAttribute('data-human-move')).toBe(turn?.playedA);
+      expect(row.getAttribute('data-bot-move')).toBe(turn?.playedB);
+      expect(normalised(row)).toBe(`Turn ${i + 1}: you ${turn?.playedA}, the bot ${turn?.playedB}`);
+    });
     for (const id of NAMEABLE) {
       expect(text(fixture)).not.toContain(ROSTER[id].name);
     }
