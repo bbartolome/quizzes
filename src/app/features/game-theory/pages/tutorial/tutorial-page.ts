@@ -129,7 +129,7 @@ export class TutorialPage {
     const eliminated: EliminatedLine[] = [];
     for (const note of this.shownNotes()) {
       if (!note.mark) continue;
-      const resolved = resolveMark(note.mark, current.game);
+      const resolved = resolveMark(note.mark, current.game, note);
       if (note.mark === 'best-response-row') {
         resolved.cells.forEach(({ r, c }) => (blank.row[r][c] = true));
       } else if (note.mark === 'best-response-col') {

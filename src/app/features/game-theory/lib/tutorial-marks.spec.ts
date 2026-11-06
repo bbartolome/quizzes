@@ -39,6 +39,25 @@ const PENNIES: MatrixGame = {
   },
 };
 
+// Iterated elimination: Hold is strictly dominated by Push, then Right is dominated by Left for the
+// column player. The trace is [row Hold, col Right].
+const ITERATED: MatrixGame = {
+  rowLabels: ['Hold', 'Push'],
+  colLabels: ['Left', 'Right'],
+  payoffs: {
+    rows: 2,
+    cols: 2,
+    row: [
+      [0, 1],
+      [2, 3],
+    ],
+    col: [
+      [0, 1],
+      [1, 0],
+    ],
+  },
+};
+
 const sorted = (cells: { r: number; c: number }[]) =>
   [...cells].sort((a, b) => a.r - b.r || a.c - b.c);
 
@@ -67,6 +86,16 @@ describe('resolveMark (spec §7.1: marks come from the solver, never from text)'
     expect(resolveMark('equilibrium', PENNIES).cells).toEqual([]);
   });
 
+  it('draws only the cell a note names, when it names one (spec §7.1: at)', () => {
+    expect(resolveMark('best-response-row', PD, { at: { r: 1, c: 0 } }).cells).toEqual([{ r: 1, c: 0 }]);
+    expect(resolveMark('pareto', PD, { at: { r: 0, c: 1 } }).cells).toEqual([{ r: 0, c: 1 }]);
+    expect(resolveMark('equilibrium', PD, { at: { r: 1, c: 1 } }).cells).toEqual([{ r: 1, c: 1 }]);
+  });
+
+  it('draws nothing for a named cell the solver does not mark', () => {
+    expect(resolveMark('equilibrium', PD, { at: { r: 0, c: 0 } }).cells).toEqual([]);
+  });
+
   it('marks Pareto-optimal cells, which leaves out the equilibrium that everyone prefers to escape', () => {
     const cells = resolveMark('pareto', PD).cells;
 
@@ -74,8 +103,15 @@ describe('resolveMark (spec §7.1: marks come from the solver, never from text)'
     expect(cells).not.toContainEqual({ r: 1, c: 1 });
   });
 
-  it('marks the first elimination step as dominated, row before column, lowest index first', () => {
+  it('strikes nothing for a dominated mark that names no strategy', () => {
     const marks = resolveMark('dominated', PD);
+
+    expect(marks.strategies).toEqual([]);
+    expect(marks.cells).toEqual([]);
+  });
+
+  it('strikes the strategy the note names, which the trace strikes in the prisoner dilemma', () => {
+    const marks = resolveMark('dominated', PD, { strategy: { player: 'row', index: 0 } });
 
     expect(marks.strategies).toEqual([{ player: 'row', index: 0 }]);
     expect(marks.cells).toEqual([]);
@@ -83,5 +119,17 @@ describe('resolveMark (spec §7.1: marks come from the solver, never from text)'
 
   it('marks no strategy as dominated when no strategy is strictly dominated', () => {
     expect(resolveMark('dominated', PENNIES).strategies).toEqual([]);
+  });
+
+  it('strikes the strategy a dominated note names (spec §7.1: strategy)', () => {
+    // The second note of iterated elimination names Right for the column player.
+    expect(resolveMark('dominated', ITERATED, { strategy: { player: 'col', index: 1 } }).strategies).toEqual([
+      { player: 'col', index: 1 },
+    ]);
+  });
+
+  it('strikes nothing for a named strategy the elimination trace never strikes', () => {
+    // Push is never eliminated: the trace only strikes Hold and Right.
+    expect(resolveMark('dominated', ITERATED, { strategy: { player: 'row', index: 1 } }).strategies).toEqual([]);
   });
 });

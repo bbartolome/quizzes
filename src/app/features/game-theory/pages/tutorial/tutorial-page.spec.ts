@@ -33,7 +33,7 @@ describe('TutorialPage', () => {
   /** Opens the tutorial for one concept. A failed first load is shown when contentFails is set. */
   function open(
     id: string,
-    options: { introduced?: string[]; stage?: 0 | 1 | 2 | 3; contentFails?: boolean } = {},
+    options: { introduced?: string[]; stage?: 0 | 1 | 2 | 3; contentFails?: boolean; rng?: () => number } = {},
   ): ComponentFixture<TutorialPage> {
     learn = new FakeGtLearnService();
     learn.seedIntroduced(options.introduced ?? []);
@@ -52,7 +52,7 @@ describe('TutorialPage', () => {
         { provide: GameTheoryDataService, useValue: data },
         { provide: GtLearnService, useValue: learn },
         { provide: GtEvidenceService, useValue: evidence },
-        { provide: GAME_THEORY_RNG, useValue: mulberry32(7) },
+        { provide: GAME_THEORY_RNG, useValue: options.rng ?? mulberry32(7) },
       ],
     });
     const fixture = TestBed.createComponent(TutorialPage);
@@ -64,6 +64,16 @@ describe('TutorialPage', () => {
   const next = (root: HTMLElement) => {
     (root.querySelector('[data-testid="tutorial-next"]') as HTMLButtonElement).click();
   };
+  /** The matrix cells drawn as picked, in matrix order. */
+  const pressedCells = (root: HTMLElement) =>
+    [...root.querySelectorAll('[data-testid^="payoff-cell-"][aria-pressed="true"]')].map((cell) =>
+      cell.getAttribute('data-testid'),
+    );
+  /** The matrix cells with an underlined best-response payoff, in matrix order. */
+  const underlinedCells = (root: HTMLElement) =>
+    [...root.querySelectorAll('[data-testid^="payoff-cell-"]')]
+      .filter((cell) => cell.querySelector('.underline') !== null)
+      .map((cell) => cell.getAttribute('data-testid'));
 
   beforeEach(() => {
     TestBed.resetTestingModule();
@@ -103,6 +113,143 @@ describe('TutorialPage', () => {
     expect(root.querySelectorAll('[data-testid="tutorial-annotation"]')).toHaveLength(2);
   });
 
+  it('underlines only the best response that the note names', () => {
+    const fixture = open('best-response');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done: the first note names Top against Left
+    fixture.detectChanges();
+    expect(underlinedCells(root)).toEqual(['payoff-cell-0-0']);
+
+    next(root); // the second note names Bottom against Right
+    fixture.detectChanges();
+    expect(underlinedCells(root)).toEqual(['payoff-cell-0-0', 'payoff-cell-1-1']);
+  });
+
+  it('selects only the cell the Nash note names, not every equilibrium', () => {
+    const fixture = open('nash-equilibrium');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done: the first note names Top and Left
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual(['payoff-cell-0-0']);
+
+    next(root); // the second note names Bottom and Right
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual(['payoff-cell-0-0', 'payoff-cell-1-1']);
+  });
+
+  it('selects only the cell the Pareto note names, not every Pareto-optimal cell', () => {
+    const fixture = open('pareto-efficiency');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done: the first note names Defect and Defect
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual(['payoff-cell-1-1']);
+
+    next(root); // the Pareto note names Cooperate and Cooperate only
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual(['payoff-cell-0-0', 'payoff-cell-1-1']);
+  });
+
+  it('shows no None button on a worked example, which asks no equilibrium question', () => {
+    const fixture = open('nash-equilibrium');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done: the worked example
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="payoff-matrix"]')).not.toBeNull();
+    expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+  });
+
+  it('shows no None button on the best-response try-it, which underlines best responses', () => {
+    const fixture = open('best-response');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done
+    fixture.detectChanges();
+    next(root); // reveal annotation 2
+    fixture.detectChanges();
+    next(root); // worked done, the underline try-it starts
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="payoff-matrix"]')).not.toBeNull();
+    expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+  });
+
+  it('keeps the None button on the find-equilibrium try-it', () => {
+    const fixture = open('nash-equilibrium');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root);
+    fixture.detectChanges();
+    next(root);
+    fixture.detectChanges();
+    next(root); // worked done, the find-equilibrium try-it starts
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="payoff-none"]')).not.toBeNull();
+  });
+
+  it.each(['dominant-strategy', 'iterated-elimination'])(
+    'shows the payoff matrix with the eliminate-next try-it of %s, and no marks on it',
+    (id) => {
+      const fixture = open(id);
+      const root = fixture.nativeElement as HTMLElement;
+      next(root); // text done
+      fixture.detectChanges();
+      next(root); // reveal annotation 2
+      fixture.detectChanges();
+      next(root); // worked done, the eliminate-next try-it starts
+      fixture.detectChanges();
+
+      expect(text(root)).toContain('Choose a strategy that is strictly dominated now.');
+      expect(root.querySelectorAll('[data-testid^="payoff-cell-"]')).toHaveLength(4);
+      expect(pressedCells(root)).toEqual([]);
+      expect(underlinedCells(root)).toEqual([]);
+      expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+    },
+  );
+
+  it('strikes the strategy the second dominated note names: Right, after Hold', () => {
+    const fixture = open('iterated-elimination');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done
+    fixture.detectChanges();
+    next(root); // reveal annotation 2: with Hold gone, Right goes next
+    fixture.detectChanges();
+
+    expect(root.querySelectorAll('th[scope="row"]')[0].textContent).toContain('Eliminated (step 1)');
+    expect(root.querySelectorAll('th[scope="col"]')[1].textContent).toContain('Eliminated (step 2)');
+  });
+
+  it('draws the strategy toggles of the eliminate-next try-it with the secondary button', () => {
+    const fixture = open('dominant-strategy');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done
+    fixture.detectChanges();
+    next(root); // reveal annotation 2
+    fixture.detectChanges();
+    next(root); // worked done, the eliminate-next try-it starts
+    fixture.detectChanges();
+
+    const toggles = [...root.querySelectorAll<HTMLButtonElement>('button[aria-pressed]')].filter((button) =>
+      /\((row|column) player\)/.test(button.textContent ?? ''),
+    );
+    expect(toggles).toHaveLength(4);
+    for (const toggle of toggles) {
+      expect(toggle.classList).toContain('border-strong');
+    }
+  });
+
+  it('draws the card picks with the secondary button', () => {
+    const fixture = open('repeated-game');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done, the card Try starts
+    fixture.detectChanges();
+
+    const picks = root.querySelectorAll<HTMLButtonElement>('[data-testid="tutorial-card"] button[aria-pressed]');
+    expect(picks).toHaveLength(4);
+    for (const pick of picks) {
+      expect(pick.classList).toContain('border-strong');
+    }
+  });
+
   it('reveals the next hint after a wrong answer, and does not record the Try as evidence', () => {
     const fixture = open('nash-equilibrium');
     const root = fixture.nativeElement as HTMLElement;
@@ -123,6 +270,22 @@ describe('TutorialPage', () => {
       'A cell is an equilibrium',
     );
     expect(evidence.records).toEqual([]);
+  });
+
+  // The card's direction (set by the rng draw) decides the question: a name prompt asks what the
+  // idea means, a definition prompt asks which idea it is (spec §7.1, card-builder legends).
+  it.each([
+    { direction: 'definition-to-term', rng: 0.1, heading: 'Which idea is this?' },
+    { direction: 'example-to-term', rng: 0.5, heading: 'Which idea does this example show?' },
+    { direction: 'term-to-definition', rng: 0.9, heading: 'What does this idea mean?' },
+  ])('asks the question its card direction calls for ($direction)', ({ rng, heading }) => {
+    const fixture = open('repeated-game', { rng: () => rng });
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done, the card Try starts
+    fixture.detectChanges();
+
+    const card = root.querySelector('[data-testid="tutorial-card"]');
+    expect(card?.querySelector('p')?.textContent?.trim()).toBe(heading);
   });
 
   it('uses the default card script for a concept with no hand-written tutorial', () => {

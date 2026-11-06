@@ -39,6 +39,7 @@
                   [bestResponseMarks]="view.marks"
                   [eliminated]="view.eliminated"
                   [selected]="view.selected"
+                  [showNone]="false"
                 />
               }
               <ol class="space-y-2">
@@ -65,12 +66,25 @@
                   }
                 }
               </p>
+              @if (givenMarks(); as blank) {
+                <app-payoff-matrix
+                  [matrix]="current.game.payoffs"
+                  [rowLabels]="current.game.rowLabels"
+                  [colLabels]="current.game.colLabels"
+                  [bestResponseMarks]="blank"
+                  [showNone]="current.task === 'find-equilibrium'"
+                  [showCaption]="current.task !== 'eliminate-next'"
+                  [(selected)]="answer"
+                  [(noneChosen)]="noneChosen"
+                />
+              }
               @if (current.task === 'eliminate-next') {
                 <div class="flex flex-wrap gap-2">
                   @for (s of strategies(); track s.player + s.index) {
                     <button
                       type="button"
                       uiButton
+                      variant="secondary"
                       [attr.aria-pressed]="strategy()?.player === s.player && strategy()?.index === s.index"
                       (click)="pickStrategy(s)"
                     >
@@ -79,15 +93,6 @@
                     </button>
                   }
                 </div>
-              } @else if (givenMarks(); as blank) {
-                <app-payoff-matrix
-                  [matrix]="current.game.payoffs"
-                  [rowLabels]="current.game.rowLabels"
-                  [colLabels]="current.game.colLabels"
-                  [bestResponseMarks]="blank"
-                  [(selected)]="answer"
-                  [(noneChosen)]="noneChosen"
-                />
               }
 
               @if (verdict(); as v) {
@@ -123,10 +128,10 @@
             @case ('card') {
               @if (round(); as r) {
                 <section class="space-y-3" data-testid="tutorial-card">
-                  <p class="type-body">Which idea does this describe?</p>
+                  <p class="type-body">{{ r.card.legend }}</p>
                   <p class="type-body">{{ r.card.prompt }}</p>
                   @for (option of r.card.options; track $index; let i = $index) {
-                    <button type="button" uiButton [attr.aria-pressed]="r.picked === i" (click)="pickCard(i)">
+                    <button type="button" uiButton variant="secondary" [attr.aria-pressed]="r.picked === i" (click)="pickCard(i)">
                       {{ option }}
                     </button>
                   }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { GameTheoryConcept, GameTheoryContent } from '../../../core/models/quiz.models';
 import type { CellRef, MatrixGame } from '../lib/matrix.types';
-import { testSourceFor } from '../lib/tutorial';
+import { testSourceFor, type Strategy } from '../lib/tutorial';
 import type { MarkName, TutorialScript, TutorialStep } from '../lib/tutorial.types';
 import { resolveMark } from '../lib/tutorial-marks';
 import conceptsJson from '../../../../../public/data/quizzes/game-theory/concepts.json';
@@ -78,10 +78,29 @@ describe('tutorials.json (spec §6.5, §7.1)', () => {
         if (step.kind !== 'worked') continue;
         for (const note of step.annotations) {
           if (!note.mark) continue;
-          checkAnnotation(tutorial.conceptId, step.game, note.mark, note.at);
+          checkAnnotation(tutorial.conceptId, step.game, note.mark, note.at, note.strategy);
         }
       }
     }
+  });
+
+  it('names, for each dominated note, a strategy the elimination trace strikes (spec §7.1: strategy)', () => {
+    for (const tutorial of file.tutorials) {
+      for (const step of tutorial.steps) {
+        if (step.kind !== 'worked') continue;
+        for (const note of step.annotations) {
+          if (note.mark !== 'dominated') continue;
+          checkDominatedNote(tutorial.conceptId, step.game, note.strategy);
+        }
+      }
+    }
+  });
+
+  it('accepts a dominated note that names a strategy the trace strikes, and rejects one it never strikes', () => {
+    const game = workedGame('iterated-elimination');
+
+    expect(() => checkDominatedNote('iterated-elimination', game, { player: 'col', index: 1 })).not.toThrow();
+    expect(() => checkDominatedNote('iterated-elimination', game, { player: 'row', index: 1 })).toThrow();
   });
 
   it('gives each text Explore at least one block, and each Try at least one hint', () => {
@@ -104,16 +123,37 @@ function checkAnnotation(
   game: MatrixGame,
   mark: MarkName,
   at: CellRef | undefined,
+  strategy: Strategy | undefined,
 ): void {
-  const marks = resolveMark(mark, game);
-  if (CELL_MARKS.includes(mark)) {
-    expect(at, `${conceptId}: ${mark} needs a cell`).toBeDefined();
-    if (!at) return;
-    const marked = new Set(marks.cells.map(cellKey));
-    expect(marked.has(cellKey(at)), `${conceptId}: ${mark} at ${cellKey(at)} is not marked by the solver`).toBe(true);
-  } else {
-    expect(marks.strategies.length, `${conceptId}: dominated names no strategy`).toBeGreaterThan(0);
+  if (!CELL_MARKS.includes(mark)) {
+    checkDominatedNote(conceptId, game, strategy);
+    return;
   }
+  expect(at, `${conceptId}: ${mark} needs a cell`).toBeDefined();
+  if (!at) return;
+  const marked = new Set(resolveMark(mark, game).cells.map(cellKey));
+  expect(marked.has(cellKey(at)), `${conceptId}: ${mark} at ${cellKey(at)} is not marked by the solver`).toBe(true);
+}
+
+/** The game of one concept's worked example. */
+function workedGame(conceptId: string): MatrixGame {
+  const tutorial = file.tutorials.find((t) => t.conceptId === conceptId);
+  const step = tutorial?.steps.find((s) => s.kind === 'worked');
+  if (step?.kind !== 'worked') throw new Error(`no worked example for ${conceptId}`);
+  return step.game;
+}
+
+/**
+ * One dominated note: it must name a strategy, and the elimination trace of its game must strike
+ * that strategy. The solver's marks decide, so a note cannot strike a strategy the solver keeps.
+ */
+function checkDominatedNote(conceptId: string, game: MatrixGame, strategy: Strategy | undefined): void {
+  expect(strategy, `${conceptId}: dominated names no strategy`).toBeDefined();
+  if (!strategy) return;
+  const struck = resolveMark('dominated', game, { strategy }).strategies;
+  expect(struck, `${conceptId}: dominated names a strategy the elimination trace does not strike`).toEqual([
+    strategy,
+  ]);
 }
 
 function checkGivenCells(conceptId: string, step: Extract<TutorialStep, { kind: 'faded' }>): void {
