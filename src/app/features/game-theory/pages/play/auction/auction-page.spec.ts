@@ -148,6 +148,27 @@ describe('AuctionPage (play/:game, §8.3)', () => {
     expect(chosen).not.toContain('bg-accent');
   });
 
+  it.each([
+    ['first-price', 'with the equilibrium shade'],
+    ['second-price', 'truthfully'],
+    ['common-value', 'at their own signal'],
+  ])('names the other bidders\' rule as a full sentence, for %s', (game, rule) => {
+    const fixture = open(game);
+    const setup = fixture.nativeElement.textContent ?? '';
+
+    expect(setup).toContain(`The other bidders bid ${rule}.`);
+    expect(setup).not.toContain('fixed rule');
+  });
+
+  it('says how many simulated auctions the player won at a loss, not a bare count of times', () => {
+    const fixture = open('first-price');
+    click(fixture, 'auction-simulate');
+
+    const result = el(fixture, 'auction-simulated')?.textContent ?? '';
+    expect(result).toMatch(/You (never won at a loss \(0 of 1000 auctions\)|won at a loss in \d+ of 1000 auctions)\./);
+    expect(result).not.toContain(' times.');
+  });
+
   it('simulates a thousand auctions with a chosen policy, and says the result is in this setup', () => {
     const fixture = open('first-price');
     click(fixture, 'auction-simulate');
