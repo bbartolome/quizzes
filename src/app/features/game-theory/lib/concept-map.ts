@@ -51,7 +51,11 @@ export function buildConceptMap(
     nodes: concepts
       .filter((concept) => concept.tier === tier)
       .map((concept) => {
-        const state: MasteryState = states[concept.id] ?? 'new';
+        const evidence: MasteryState = states[concept.id] ?? 'new';
+        // An introduced concept (§7.2) has started its tutorial, so with no evidence yet it reads
+        // Learning, not New. Evidence that already says more is kept.
+        const state: MasteryState =
+          evidence === 'new' && introduced.has(concept.id) ? 'learning' : evidence;
         const missing = concept.prerequisites.find((id) => !introduced.has(id));
         return {
           id: concept.id,

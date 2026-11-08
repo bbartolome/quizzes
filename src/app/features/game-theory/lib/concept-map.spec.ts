@@ -60,7 +60,9 @@ describe('buildConceptMap (spec §7.3, §3.1 hub map)', () => {
 
   it('shows an introduced concept with no evidence yet as Learning, not New', () => {
     const map = buildConceptMap(CONCEPTS, {}, new Set(['best-response']));
-    const byId = Object.fromEntries(map.flatMap((tier) => tier.nodes).map((node) => [node.id, node]));
+    const byId = Object.fromEntries(
+      map.flatMap((tier) => tier.nodes).map((node) => [node.id, node]),
+    );
 
     expect(byId['best-response']).toMatchObject({
       state: 'learning',
@@ -71,7 +73,11 @@ describe('buildConceptMap (spec §7.3, §3.1 hub map)', () => {
   });
 
   it('keeps the evidence state of an introduced concept that already has evidence', () => {
-    const map = buildConceptMap(CONCEPTS, { 'best-response': 'practised' }, new Set(['best-response']));
+    const map = buildConceptMap(
+      CONCEPTS,
+      { 'best-response': 'practised' },
+      new Set(['best-response']),
+    );
     const best = map.flatMap((tier) => tier.nodes).find((node) => node.id === 'best-response');
 
     expect(best).toMatchObject({ state: 'practised', word: 'Practised' });
