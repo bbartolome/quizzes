@@ -458,6 +458,43 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(text(fixture, '[data-testid="puzzle-story"]')).toBe(puzzle.game.story);
     });
 
+    it('classify: after a wrong pick, the true class reads "Correct answer" as a warning, not a pass', () => {
+      const fixture = open({ kind: 'classify', introduced: CLASSIFY_IDS });
+      const [puzzle] = expectedSet([{ kind: 'classify', difficulty: 1 }]);
+      if (puzzle.kind !== 'classify') {
+        throw new Error('expected a classify puzzle');
+      }
+      const wrong = puzzle.choices.find((choice) => choice !== puzzle.solution) ?? puzzle.solution;
+      solveItem(fixture, puzzle, false);
+
+      const root: HTMLElement = fixture.nativeElement;
+      const revealed = must<HTMLElement>(root, `[data-testid="puzzle-choice-${puzzle.solution}"]`);
+      const revealedBadge = must<HTMLElement>(revealed, 'ui-status span');
+      expect(revealedBadge.textContent).toContain('Correct answer');
+      expect(revealedBadge.className).toContain('text-warning');
+      expect(revealedBadge.className).not.toContain('text-success');
+
+      const picked = must<HTMLElement>(root, `[data-testid="puzzle-choice-${wrong}"]`);
+      expect(must<HTMLElement>(picked, 'ui-status span').textContent).toContain('Your pick');
+    });
+
+    it('classify: a right pick reads "Correct answer" as a pass', () => {
+      const fixture = open({ kind: 'classify', introduced: CLASSIFY_IDS });
+      const [puzzle] = expectedSet([{ kind: 'classify', difficulty: 1 }]);
+      if (puzzle.kind !== 'classify') {
+        throw new Error('expected a classify puzzle');
+      }
+      solveItem(fixture, puzzle, true);
+
+      const root: HTMLElement = fixture.nativeElement;
+      const badge = must<HTMLElement>(
+        must<HTMLElement>(root, `[data-testid="puzzle-choice-${puzzle.solution}"]`),
+        'ui-status span',
+      );
+      expect(badge.textContent).toContain('Correct answer');
+      expect(badge.className).toContain('text-success');
+    });
+
     it('eliminate: offers the legal eliminations as buttons, and finishing grades it correct', () => {
       const fixture = open({ kind: 'eliminate', introduced: ELIMINATE_IDS });
       const [puzzle] = expectedSet([{ kind: 'eliminate', difficulty: 1 }]);
