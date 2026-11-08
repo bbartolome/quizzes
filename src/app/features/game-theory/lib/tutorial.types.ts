@@ -27,6 +27,6 @@ export interface TutorialScript {
   steps: TutorialStep[];
 }
 export type MarkName = 'best-response-row' | 'best-response-col' | 'equilibrium' | 'dominated' | 'pareto';
-export type FadedTask = 'underline-best-responses' | 'find-equilibrium' | 'eliminate-next';
+export type FadedTask = 'underline-best-responses' | 'find-equilibrium' | 'find-pareto' | 'eliminate-next';
 export type SoloSource =
   { puzzle: PuzzleKind; difficulty: Difficulty } | 'cards' | 'name-bot' | 'reason-check';

@@ -99,6 +99,8 @@ export function checkFaded(
   switch (task) {
     case 'find-equilibrium':
       return Array.isArray(answer) && sameCells(answer, resolveMark('equilibrium', game).cells);
+    case 'find-pareto':
+      return false;
     case 'underline-best-responses': {
       if (!Array.isArray(answer)) return false;
       const already = new Set(given.map(cellKey));

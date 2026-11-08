@@ -117,6 +117,16 @@ describe('checkFaded (spec §7.1 faded tasks, graded by the solver)', () => {
     ).toBe(false);
   });
 
+  it('find-pareto: right when the chosen cells are the Pareto-efficient cells, not the equilibria', () => {
+    // In the prisoner's dilemma, Defect and Defect (1,1) is beaten for both players by (0,0). The
+    // other three cells are efficient, and only (1,1) is the equilibrium.
+    expect(checkFaded('find-pareto', PD, [{ r: 0, c: 0 }, { r: 0, c: 1 }, { r: 1, c: 0 }])).toBe(
+      true,
+    );
+    expect(checkFaded('find-pareto', PD, [{ r: 1, c: 1 }])).toBe(false);
+    expect(checkFaded('find-pareto', PD, [{ r: 0, c: 0 }])).toBe(false);
+  });
+
   it('eliminate-next: right when the strategy chosen is strictly dominated now', () => {
     // Row Cooperate (index 0) is strictly dominated by Defect. Column player has no dominated strategy
     // here, because it is the other player's payoffs that decide the column dominance.

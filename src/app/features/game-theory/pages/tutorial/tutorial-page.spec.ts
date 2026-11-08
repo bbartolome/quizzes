@@ -125,6 +125,18 @@ describe('TutorialPage', () => {
     expect(evidence.records).toEqual([]);
   });
 
+  it('asks a Pareto try-it for the efficient cells, with no None button, since one cell is always efficient', () => {
+    const fixture = open('pareto-efficiency');
+    const root = fixture.nativeElement as HTMLElement;
+    for (let i = 0; i < 10 && !root.querySelector('[data-testid="tutorial-task"]'); i++) {
+      next(root);
+      fixture.detectChanges();
+    }
+
+    expect(text(root)).toContain('Select each cell that is Pareto efficient');
+    expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
+  });
+
   it('uses the default card script for a concept with no hand-written tutorial', () => {
     const fixture = open('repeated-game');
     const root = fixture.nativeElement as HTMLElement;
