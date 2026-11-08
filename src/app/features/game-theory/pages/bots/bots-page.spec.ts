@@ -306,6 +306,25 @@ describe('BotsPage tournament mode (spec §8.1)', () => {
     );
   });
 
+  it('reports a tie for first as a tie, not as a single winner, and marks each tied row', () => {
+    // Cooperative four: every bot cooperates every turn at noise 0, so all four score 3.00 per turn.
+    const fixture = open('tournament');
+    click(fixture, 'preset-cooperative');
+    click(fixture, 'tournament-run');
+
+    const winner = el(fixture, 'tournament-winner')?.textContent ?? '';
+    expect(winner).toContain('Tie for first');
+    expect(winner).not.toContain('Winner in this run');
+    for (const id of ['copycat', 'always-cooperate', 'copykitten', 'simpleton'] as const) {
+      expect(winner).toContain(ROSTER[id].name);
+    }
+    const rows = Array.from(fixture.nativeElement.querySelectorAll('[data-testid="tournament-row"]')) as HTMLElement[];
+    expect(rows).toHaveLength(4);
+    for (const row of rows) {
+      expect(normalised(row)).toContain('tied for first');
+    }
+  });
+
   it('asks whether the winner changed after a second run, and records the answer in the games log', () => {
     const fixture = open('tournament');
     click(fixture, 'preset-everyone');

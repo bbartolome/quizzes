@@ -2,10 +2,25 @@ import { describe, expect, it } from 'vitest';
 import { BOT_IDS } from './bots';
 import type { BotId } from './bots.types';
 import { PD_DEFAULT } from './match';
-import { roundRobin } from './tournament';
+import { leadersOf, roundRobin } from './tournament';
 import { hashSeed, mulberry32 } from './rng';
 
 const CFG = { noise: 0, payoffs: PD_DEFAULT, reps: 1 };
+
+describe('leadersOf (the bots tied for first)', () => {
+  it('is the one bot on top when no two bots tie for first', () => {
+    const result = roundRobin(['always-cooperate', 'always-cheat'], CFG, mulberry32(8));
+
+    expect(leadersOf(result)).toEqual(['always-cheat']);
+  });
+
+  it('is every bot tied for first, in roster order', () => {
+    // Three bots that cooperate every turn against each other each earn R = 3 per turn, so they tie.
+    const result = roundRobin(['simpleton', 'always-cooperate', 'copycat'], CFG, mulberry32(9));
+
+    expect(leadersOf(result)).toEqual(['copycat', 'always-cooperate', 'simpleton']);
+  });
+});
 
 describe('roundRobin (spec §8.1 tournament)', () => {
   it('ranks by mean payoff per turn: always-cheat beats always-cooperate at noise 0', () => {
