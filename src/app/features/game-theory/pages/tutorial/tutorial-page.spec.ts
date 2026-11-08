@@ -173,6 +173,30 @@ describe('TutorialPage', () => {
     expect(root.querySelector('[data-testid="payoff-none"]')).toBeNull();
   });
 
+  it('locks the given best response: clicking it selects nothing, and the other one alone checks correct', () => {
+    const fixture = open('best-response');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done
+    fixture.detectChanges();
+    next(root); // reveal annotation 2
+    fixture.detectChanges();
+    next(root); // worked done, the underline try-it starts, with Top against Left given
+    fixture.detectChanges();
+
+    (root.querySelector('[data-testid="payoff-cell-0-0"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(pressedCells(root)).toEqual([]);
+
+    (root.querySelector('[data-testid="payoff-cell-1-1"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    (root.querySelector('[data-testid="tutorial-check"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    const feedback = root.querySelector('[data-testid="tutorial-feedback"]')?.textContent ?? '';
+    expect(feedback).toContain('Correct');
+    expect(feedback).not.toContain('Incorrect');
+  });
+
   it('keeps the None button on the find-equilibrium try-it', () => {
     const fixture = open('nash-equilibrium');
     const root = fixture.nativeElement as HTMLElement;

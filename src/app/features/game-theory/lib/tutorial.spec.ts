@@ -112,9 +112,14 @@ describe('checkFaded (spec §7.1 faded tasks, graded by the solver)', () => {
   it('underline-best-responses: right when the chosen cells are the row best responses not already given', () => {
     // Row best responses are (1,0) and (1,1). With (1,0) given, the player should underline (1,1) only.
     expect(checkFaded('underline-best-responses', PD, [{ r: 1, c: 1 }], [{ r: 1, c: 0 }])).toBe(true);
+    expect(checkFaded('underline-best-responses', PD, [{ r: 1, c: 0 }], [{ r: 1, c: 0 }])).toBe(false);
+  });
+
+  it('underline-best-responses: grading ignores a given cell, so picking it as well is still right', () => {
+    // The widget locks given cells, but a grader that counted them would mark a correct answer wrong.
     expect(
       checkFaded('underline-best-responses', PD, [{ r: 1, c: 1 }, { r: 1, c: 0 }], [{ r: 1, c: 0 }]),
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it('find-pareto: right when the chosen cells are the Pareto-efficient cells, not the equilibria', () => {

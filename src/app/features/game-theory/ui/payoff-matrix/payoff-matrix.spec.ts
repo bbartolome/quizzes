@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { describe, expect, it } from 'vitest';
-import type { PayoffMatrix } from '../../lib/matrix.types';
+import type { CellRef, PayoffMatrix } from '../../lib/matrix.types';
 import {
   PayoffMatrixWidget,
   type BestResponseMarks,
@@ -47,6 +47,7 @@ interface RenderOptions {
   eliminated?: EliminatedLine[];
   cellGrades?: CellGrade[];
   noneGrade?: CellOutcome | null;
+  locked?: CellRef[];
 }
 
 function render(options: RenderOptions = {}) {
@@ -59,6 +60,9 @@ function render(options: RenderOptions = {}) {
   fixture.componentRef.setInput('eliminated', options.eliminated ?? []);
   fixture.componentRef.setInput('cellGrades', options.cellGrades ?? []);
   fixture.componentRef.setInput('noneGrade', options.noneGrade ?? null);
+  if (options.locked) {
+    fixture.componentRef.setInput('locked', options.locked);
+  }
   fixture.detectChanges();
   return fixture;
 }
@@ -162,6 +166,19 @@ describe('PayoffMatrixWidget (G14, §12)', () => {
     fixture.detectChanges();
     expect(target.getAttribute('aria-pressed')).toBe('false');
     expect(fixture.componentInstance.selected()).toEqual([]);
+  });
+
+  it('locks a given cell: it is disabled, and a click on it selects nothing', () => {
+    const fixture = render({ locked: [{ r: 0, c: 0 }] });
+    const el = root(fixture);
+    const given = cell(el, 0, 0);
+
+    expect(given.disabled).toBe(true);
+    given.click();
+    fixture.detectChanges();
+    expect(given.getAttribute('aria-pressed')).toBe('false');
+    expect(fixture.componentInstance.selected()).toEqual([]);
+    expect(cell(el, 1, 1).disabled).toBe(false);
   });
 
   it('shows a selected cell with the accent look and the visible word Selected', () => {
