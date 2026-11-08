@@ -224,17 +224,32 @@ function isDominated(sub: PayoffMatrix, player: Player, a: number): boolean {
   return range(count).some((b) => b !== a && strictlyDominates(sub, player, b, a));
 }
 
+/** Every strategy still in the game, per player, after the moves already made. */
+function remainingIndices(m: PayoffMatrix, made: readonly Move[]): { rows: number[]; cols: number[] } {
+  return {
+    rows: range(m.rows).filter((r) => !made.some((mv) => mv.player === 'row' && mv.index === r)),
+    cols: range(m.cols).filter((c) => !made.some((mv) => mv.player === 'col' && mv.index === c)),
+  };
+}
+
+/**
+ * Every strategy still in the game, each offered as a removal. Only the strictly dominated ones are
+ * legal, so a player has to tell them apart (spec §5.2).
+ */
+function remainingMoves(m: PayoffMatrix, made: readonly Move[]): Move[] {
+  const { rows, cols } = remainingIndices(m, made);
+  return [
+    ...rows.map((index) => ({ player: 'row' as const, index })),
+    ...cols.map((index) => ({ player: 'col' as const, index })),
+  ];
+}
+
 /**
  * Every removal that strict dominance allows now, after the moves already made (spec §5.1, §11
  * M14). Dominance is judged in the reduced game, as the grader does.
  */
 function legalEliminations(m: PayoffMatrix, made: readonly Move[]): Move[] {
-  const rows = range(m.rows).filter(
-    (r) => !made.some((mv) => mv.player === 'row' && mv.index === r),
-  );
-  const cols = range(m.cols).filter(
-    (c) => !made.some((mv) => mv.player === 'col' && mv.index === c),
-  );
+  const { rows, cols } = remainingIndices(m, made);
   const sub: PayoffMatrix = {
     rows: rows.length,
     cols: cols.length,
@@ -403,12 +418,13 @@ export class PuzzleSetPage {
   protected readonly eliminatedLines = computed<EliminatedLine[]>(() =>
     this.moves().map((move, i) => ({ player: move.player, index: move.index, step: i + 1 })),
   );
-  protected readonly eliminations = computed<Move[]>(() => {
+  /** Every strategy still in the game, each offered as a removal. */
+  protected readonly remaining = computed<Move[]>(() => {
     const item = this.current();
     if (!item || item.grade || item.kind !== 'eliminate') {
       return [];
     }
-    return legalEliminations(item.puzzle.game.payoffs, this.moves());
+    return remainingMoves(item.puzzle.game.payoffs, this.moves());
   });
 
   constructor() {
@@ -453,9 +469,18 @@ export class PuzzleSetPage {
     if (!item || item.grade || item.kind !== 'eliminate') {
       return;
     }
+    const { payoffs } = item.puzzle.game;
+    const legal = legalEliminations(payoffs, this.moves()).some(
+      (m) => m.player === move.player && m.index === move.index,
+    );
     const moves = [...this.moves(), move];
     this.moves.set(moves);
-    if (legalEliminations(item.puzzle.game.payoffs, moves).length === 0) {
+    // The grader stops at the first removal dominance does not allow, so that item is wrong at once.
+    if (!legal) {
+      this.gradeWith({ kind: 'eliminate', moves, done: false });
+      return;
+    }
+    if (legalEliminations(payoffs, moves).length === 0) {
       this.gradeWith({ kind: 'eliminate', moves, done: true });
     }
   }

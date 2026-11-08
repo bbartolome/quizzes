@@ -166,7 +166,7 @@
               </div>
               @if (!item.grade) {
                 <div class="flex flex-wrap gap-2">
-                  @for (move of eliminations(); track move.player + ':' + move.index) {
+                  @for (move of remaining(); track move.player + ':' + move.index) {
                     <button
                       type="button"
                       uiButton
