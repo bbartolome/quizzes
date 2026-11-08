@@ -149,6 +149,40 @@ describe('CalibrationResultsPage', () => {
     expect(back?.className).toContain('border-strong');
   });
 
+  it('titles the page "Results for" the quiz, with a single colon', async () => {
+    configure();
+    submitRound(twoWayPick);
+
+    const fixture = await render();
+
+    expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe(
+      'Results for Calibration',
+    );
+  });
+
+  it('uses the round page column width, so the title and cards do not jump when the round ends', async () => {
+    configure();
+    submitRound(twoWayPick);
+
+    const fixture = await render();
+
+    expect(fixture.nativeElement.querySelector('.max-w-2xl')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.max-w-5xl')).toBeNull();
+  });
+
+  it('stacks the sections with a vertical gap, so no heading touches the card above', async () => {
+    configure();
+    submitRound(twoWayPick);
+
+    const fixture = await render();
+    const card = fixture.nativeElement.querySelector('app-confidence-card') as HTMLElement;
+    const stack = card.parentElement as HTMLElement;
+
+    expect(stack.classList.contains('flex')).toBe(true);
+    expect(stack.classList.contains('flex-col')).toBe(true);
+    expect(stack.classList.contains('gap-6')).toBe(true);
+  });
+
   it('redirects to the home page, replacing the URL, when no round has been submitted', async () => {
     configure();
 
