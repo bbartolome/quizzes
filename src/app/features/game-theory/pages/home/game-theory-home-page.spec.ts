@@ -186,6 +186,20 @@ describe('GameTheoryHomePage', () => {
       expect(strip.endsWith('✓')).toBe(true);
     });
 
+    it('labels the strip on the page, and gives it an accessible name with the counts', () => {
+      const root = create({
+        introduced: ['nash-equilibrium'],
+        daily: { [TODAY]: { kind: 'equilibrium', correct: true, reasonCorrect: false } },
+      }).nativeElement as HTMLElement;
+
+      expect(root.querySelector('[data-testid="today-strip-caption"]')?.textContent).toContain(
+        'Daily puzzles, last 14 days',
+      );
+      const strip = root.querySelector('[data-testid="today-strip"]');
+      expect(strip?.getAttribute('role')).toBe('img');
+      expect(strip?.getAttribute('aria-label')).toBe('1 right, 0 wrong, 13 no answer');
+    });
+
     it('resets every game-theory key after one confirmation, and keeps other keys', () => {
       const store = new MemoryStorage();
       vi.stubGlobal('localStorage', store);
