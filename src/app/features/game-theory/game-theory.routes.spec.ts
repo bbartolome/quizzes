@@ -75,6 +75,22 @@ describe('GAME_THEORY_ROUTES', () => {
     });
   });
 
+  it('lists the three auction games on the hub, each at its play route, with no requirement', () => {
+    const auctions = [
+      { id: 'auction-first-price', title: 'First-price auction', game: 'first-price' },
+      { id: 'auction-second-price', title: 'Second-price auction', game: 'second-price' },
+      { id: 'auction-common-value', title: 'Common-value auction', game: 'common-value' },
+    ];
+    for (const auction of auctions) {
+      expect(GAME_THEORY_MODES).toContainEqual({
+        id: auction.id,
+        title: auction.title,
+        path: `game-theory/play/${auction.game}`,
+        requires: [],
+      });
+    }
+  });
+
   it('lists one puzzle set per kind on the hub, each requiring nash-equilibrium', () => {
     const sets = [
       { id: 'puzzles-equilibrium', title: 'Equilibrium puzzles', kind: 'equilibrium' },
