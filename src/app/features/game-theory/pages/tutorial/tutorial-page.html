@@ -172,23 +172,25 @@
                     You have already passed it.
                   }
                 </p>
-                @if (solo(); as route) {
-                  <a
-                    uiButton
-                    data-testid="tutorial-solo-link"
-                    [routerLink]="route.commands"
-                    [queryParams]="route.query"
-                  >Start the solo set</a>
-                }
-                @if (testOut(); as route) {
-                  <a
-                    uiButton
-                    variant="link"
-                    data-testid="tutorial-test-out-link"
-                    [routerLink]="route.commands"
-                    [queryParams]="route.query"
-                  >Test out instead: three right in a row skips the lesson</a>
-                }
+                <div class="flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
+                  @if (solo(); as route) {
+                    <a
+                      uiButton
+                      data-testid="tutorial-solo-link"
+                      [routerLink]="route.commands"
+                      [queryParams]="route.query"
+                    >Start the solo set</a>
+                  }
+                  @if (testOut(); as route) {
+                    <a
+                      uiButton
+                      variant="link"
+                      data-testid="tutorial-test-out-link"
+                      [routerLink]="route.commands"
+                      [queryParams]="route.query"
+                    >Test out instead: three right in a row skips the lesson</a>
+                  }
+                </div>
               </section>
             }
           }
