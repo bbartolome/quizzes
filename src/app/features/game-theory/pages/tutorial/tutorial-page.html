@@ -60,6 +60,9 @@
                   @case ('find-equilibrium') {
                     Select each cell that is an equilibrium, or choose None of these.
                   }
+                  @case ('find-pareto') {
+                    Select each cell that is Pareto efficient: no other cell pays both players at least as much, and one of them more.
+                  }
                   @case ('eliminate-next') {
                     Choose a strategy that is strictly dominated now.
                   }
@@ -85,6 +88,7 @@
                   [rowLabels]="current.game.rowLabels"
                   [colLabels]="current.game.colLabels"
                   [bestResponseMarks]="blank"
+                  [showNone]="current.task !== 'find-pareto'"
                   [(selected)]="answer"
                   [(noneChosen)]="noneChosen"
                 />

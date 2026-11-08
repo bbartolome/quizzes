@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "tutorials": [
     {
       "conceptId": "best-response",
@@ -119,10 +119,10 @@
             "colLabels": ["Cooperate", "Defect"],
             "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
           },
-          "task": "find-equilibrium",
+          "task": "find-pareto",
           "hints": [
-            "Find the stable cells first. Those are the equilibria, and they may not be efficient.",
-            "Defect and Defect is the only stable cell here."
+            "Look for a cell that another cell beats for both players. Those cells are not efficient, and a stable cell may still be one.",
+            "Cooperate and Cooperate, Cooperate and Defect, and Defect and Cooperate are efficient. Defect and Defect is not, because Cooperate and Cooperate pays both players more."
           ]
         },
         { "stage": 3, "kind": "solo", "source": { "puzzle": "equilibrium", "difficulty": 2 }, "count": 3, "passAt": 2 }

@@ -431,7 +431,7 @@ interface TutorialScript {
   steps: TutorialStep[];
 }
 type MarkName = 'best-response-row' | 'best-response-col' | 'equilibrium' | 'dominated' | 'pareto';
-type FadedTask = 'underline-best-responses' | 'find-equilibrium' | 'eliminate-next';
+type FadedTask = 'underline-best-responses' | 'find-equilibrium' | 'find-pareto' | 'eliminate-next';
 type SoloSource =
   { puzzle: PuzzleKind; difficulty: Difficulty } | 'cards' | 'name-bot' | 'reason-check';
 ```

@@ -87,6 +87,7 @@ function dominatedNow(game: MatrixGame): Strategy[] {
  * Grades one faded task against the solver (spec §7.1). Try records nothing, so this only says
  * whether to show the next hint.
  * - find-equilibrium: the chosen cells are the pure equilibria. An empty choice is right when there are none.
+ * - find-pareto: the chosen cells are the Pareto-efficient cells. There is always at least one, so there is no None.
  * - underline-best-responses: the chosen cells are the row player's best responses not already given.
  * - eliminate-next: the chosen strategy is strictly dominated now.
  */
@@ -100,7 +101,7 @@ export function checkFaded(
     case 'find-equilibrium':
       return Array.isArray(answer) && sameCells(answer, resolveMark('equilibrium', game).cells);
     case 'find-pareto':
-      return false;
+      return Array.isArray(answer) && sameCells(answer, resolveMark('pareto', game).cells);
     case 'underline-best-responses': {
       if (!Array.isArray(answer)) return false;
       const already = new Set(given.map(cellKey));
