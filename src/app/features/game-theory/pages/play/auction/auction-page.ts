@@ -67,6 +67,11 @@ const POLICY_LABEL: Record<BidPolicyId, string> = {
   'curse-aware': 'with the winner\'s-curse adjustment',
   'noisy-shade': 'with a noisy shade',
 };
+/** The same policies, read after "The other bidders bid". A naive-signal bidder bids their own signal. */
+const OTHER_BIDDER_LABEL: Record<BidPolicyId, string> = {
+  ...POLICY_LABEL,
+  'naive-signal': 'at their own signal',
+};
 const SIMULATIONS = 1000;
 const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
 
@@ -241,6 +246,6 @@ export class AuctionPage {
 
   protected otherPolicyLabel(): string {
     const s = this.setup();
-    return s ? POLICY_LABEL[otherPolicy(s)] : '';
+    return s ? OTHER_BIDDER_LABEL[otherPolicy(s)] : '';
   }
 }
