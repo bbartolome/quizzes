@@ -53,7 +53,7 @@ import { dateKeyOf } from '../../../../core/utils/dates';
 /** A set is one puzzle kind, or `mixed`, which interleaves all three (spec §5.2, §7.2). */
 type SetKind = PuzzleKind | 'mixed';
 type Phase = 'empty' | 'unsupported' | 'blocked' | 'locked' | 'set' | 'summary';
-type ChoiceOutcome = 'correct' | 'wrong';
+type ChoiceOutcome = 'correct' | 'wrong' | 'missed';
 
 /** A row or column the player removes. `index` is the strategy's index in the full game. */
 interface Move {
@@ -177,6 +177,7 @@ const CELL_OUTCOME: Record<'tp' | 'fp' | 'fn' | 'tn', CellOutcome | null> = {
 const OUTCOME_WORDS: Record<ChoiceOutcome, string> = {
   correct: 'Correct answer',
   wrong: 'Your pick',
+  missed: 'Correct answer',
 };
 const CHOICE_BASE =
   'flex w-full cursor-pointer items-center gap-3 rounded-lg border p-3 text-left focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface disabled:cursor-default';
@@ -817,8 +818,9 @@ export class PuzzleSetPage {
     if (!item.grade || item.puzzle.kind !== 'classify') {
       return null;
     }
+    // A wrong pick reveals the true class as missed (a warning, as on the cards), not as a pass.
     if (choice === item.puzzle.solution) {
-      return 'correct';
+      return item.choice === choice ? 'correct' : 'missed';
     }
     return item.choice === choice ? 'wrong' : null;
   }
