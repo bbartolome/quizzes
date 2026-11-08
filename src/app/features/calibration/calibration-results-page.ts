@@ -41,7 +41,7 @@ export class CalibrationResultsPage {
   readonly ctx = signal<CalibrationContext | null>(null);
   readonly view = signal<ResultsView | null>(null);
   readonly loadError = signal(false);
-  readonly title = computed(() => (this.ctx() ? `${this.ctx()!.entry.title}: results` : ''));
+  readonly title = computed(() => (this.ctx() ? `Results for ${this.ctx()!.entry.title}` : ''));
 
   constructor() {
     this.load();

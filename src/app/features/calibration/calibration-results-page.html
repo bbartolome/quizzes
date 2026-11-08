@@ -1,8 +1,8 @@
-<ui-page-shell [title]="title()" width="wide">
+<ui-page-shell [title]="title()" width="narrow">
   @if (loadError()) {
     <app-bank-unavailable (retry)="load()" />
   } @else if (view(); as v) {
-    <div class="space-y-6">
+    <div class="flex flex-col gap-6">
       <app-badge-line surface="confidence" />
 
       <app-confidence-card [side]="v.round" [before]="v.before" />
