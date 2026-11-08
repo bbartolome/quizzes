@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { map } from 'rxjs';
+import { distinctUntilChanged, map, skip } from 'rxjs';
 import type { GameTheoryConcept, GameTheoryContent } from '../../../../core/models/quiz.models';
 import { FlashCard, buildCard } from '../../../flash-cards/card-builder';
 import { Feedback, buildFeedback } from '../../../flash-cards/feedback';
@@ -191,6 +191,17 @@ export class TutorialPage {
 
   constructor() {
     this.loadContent(false);
+    // Only the concept in the URL can change while this page stays mounted, so a new concept starts its own lesson.
+    this.route.paramMap
+      .pipe(
+        map((params) => params.get('concept') ?? ''),
+        distinctUntilChanged(),
+        skip(1),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => {
+        if (this.status() === 'ready') this.startLesson();
+      });
   }
 
   protected retry(): void {
@@ -280,6 +291,16 @@ export class TutorialPage {
     }
   }
 
+  /** Starts the lesson at the step the learner's stage returns to, as a fresh visit does. */
+  private startLesson(): void {
+    const stage = this.learn.read().concepts[this.conceptId()]?.stage ?? 0;
+    this.resetStep();
+    this.index.set(this.startIndexFor(this.steps(), stage));
+    if (this.step()?.kind === 'card') {
+      this.startCard();
+    }
+  }
+
   /** The stage a learner returns to: Explore done goes to the Try, Try done goes to the Solo. */
   private startIndexFor(steps: readonly TutorialStep[], stage: number): number {
     const want = stage >= 2 ? 3 : stage === 1 ? 2 : 1;
@@ -313,9 +334,7 @@ export class TutorialPage {
         this.content.set(loaded.concepts);
         this.scripts.set(loaded.tutorials.tutorials);
         this.status.set('ready');
-        const stage = this.learn.read().concepts[this.conceptId()]?.stage ?? 0;
-        this.index.set(this.startIndexFor(this.steps(), stage));
-        if (this.step()?.kind === 'card') this.startCard();
+        this.startLesson();
       },
       error: () => this.status.set('failed'),
     });
