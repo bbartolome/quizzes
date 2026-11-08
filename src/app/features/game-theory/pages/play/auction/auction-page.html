@@ -18,10 +18,11 @@
       }
 
       <div class="space-y-2">
-        <label class="type-detail" for="auction-bidders">Bidders: {{ bidders() }}</label>
+        <label class="type-detail block" for="auction-bidders">Bidders: {{ bidders() }}</label>
         <input
           id="auction-bidders"
           data-testid="auction-bidders"
+          class="accent-accent"
           type="range"
           min="3"
           max="8"
@@ -33,10 +34,11 @@
       <button type="button" uiButton data-testid="auction-draw" (click)="draw()">New auction</button>
 
       <div class="space-y-2">
-        <label class="type-detail" for="auction-bid">Your bid: {{ bid() }}</label>
+        <label class="type-detail block" for="auction-bid">Your bid: {{ bid() }}</label>
         <input
           id="auction-bid"
           data-testid="auction-bid"
+          class="accent-accent"
           type="range"
           step="1"
           [min]="bidBounds().min"
