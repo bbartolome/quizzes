@@ -108,11 +108,13 @@
                 </ui-feedback>
               }
 
-              <ul class="space-y-1">
-                @for (hint of visibleHints(); track $index) {
-                  <li class="type-detail" data-testid="tutorial-hint">Hint: {{ hint }}</li>
-                }
-              </ul>
+              @if (verdict() !== 'correct') {
+                <ul class="space-y-1">
+                  @for (hint of visibleHints(); track $index) {
+                    <li class="type-detail" data-testid="tutorial-hint">Hint: {{ hint }}</li>
+                  }
+                </ul>
+              }
 
               <div class="flex flex-wrap gap-2">
                 @if (verdict() === 'correct') {
