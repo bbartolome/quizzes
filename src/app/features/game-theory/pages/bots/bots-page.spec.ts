@@ -318,7 +318,9 @@ describe('BotsPage tournament mode (spec §8.1)', () => {
     for (const id of ['copycat', 'always-cooperate', 'copykitten', 'simpleton'] as const) {
       expect(winner).toContain(ROSTER[id].name);
     }
-    const rows = Array.from(fixture.nativeElement.querySelectorAll('[data-testid="tournament-row"]')) as HTMLElement[];
+    const rows = Array.from(
+      fixture.nativeElement.querySelectorAll('[data-testid="tournament-row"]'),
+    ) as HTMLElement[];
     expect(rows).toHaveLength(4);
     for (const row of rows) {
       expect(normalised(row)).toContain('tied for first');

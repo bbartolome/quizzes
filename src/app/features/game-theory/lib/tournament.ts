@@ -81,3 +81,12 @@ export function roundRobin(
     ranking,
   };
 }
+
+/**
+ * The bots tied for first: every bot whose mean payoff per turn equals the top bot's, in ranking
+ * order. One bot when nobody ties, so a caller can tell a single winner from a tie.
+ */
+export function leadersOf(result: TournamentResult): BotId[] {
+  const top = result.meanPerTurn[result.ranking[0]];
+  return result.ranking.filter((id) => result.meanPerTurn[id] === top);
+}

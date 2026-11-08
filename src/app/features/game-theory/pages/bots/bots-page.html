@@ -214,13 +214,22 @@
         </button>
 
         @if (lastRun(); as run) {
-          <p class="type-section" data-testid="tournament-winner">
-            Winner in this run: {{ nameOf(run.result.ranking[0]) }}
-          </p>
+          @if (leadersIn(run).length > 1) {
+            <p class="type-section" data-testid="tournament-winner">
+              Tie for first: {{ namesOf(leadersIn(run)) }} at
+              {{ meanOf(run, leadersIn(run)[0]) }} per turn
+            </p>
+          } @else {
+            <p class="type-section" data-testid="tournament-winner">
+              Winner in this run: {{ nameOf(run.result.ranking[0]) }}
+            </p>
+          }
           <ol class="space-y-1">
             @for (id of run.result.ranking; track id) {
               <li class="type-body" data-testid="tournament-row">
-                {{ nameOf(id) }}: {{ meanOf(run, id) }} per turn
+                {{ nameOf(id) }}: {{ meanOf(run, id) }} per turn{{
+                  tiedForFirst(run, id) ? ', tied for first' : ''
+                }}
               </li>
             }
           </ol>

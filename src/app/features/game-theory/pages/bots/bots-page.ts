@@ -27,7 +27,7 @@ import {
   type MatchState,
 } from '../../lib/match';
 import { nameOptions, pickHiddenBot } from '../../lib/name-bot';
-import { roundRobin } from '../../lib/tournament';
+import { leadersOf, roundRobin } from '../../lib/tournament';
 import { GtEvidenceService } from '../../state/gt-evidence.service';
 import { GtGamesService } from '../../state/gt-games.service';
 import { GAME_THEORY_RNG } from '../../state/gt-tokens';
@@ -293,6 +293,24 @@ export class BotsPage {
 
   meanOf(run: Run, id: BotId): string {
     return run.result.meanPerTurn[id].toFixed(2);
+  }
+
+  /** The bots tied for first in a run. One bot when nobody ties. */
+  leadersIn(run: Run): BotId[] {
+    return leadersOf(run.result);
+  }
+
+  /** Whether a bot shares first place with another bot in this run. */
+  tiedForFirst(run: Run, id: BotId): boolean {
+    const leaders = this.leadersIn(run);
+    return leaders.length > 1 && leaders.includes(id);
+  }
+
+  /** Names bots for a sentence: "A", "A and B", or "A, B and C". */
+  namesOf(ids: readonly BotId[]): string {
+    const names = ids.map((id) => ROSTER[id].name);
+    if (names.length < 2) return names.join('');
+    return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
   }
 
   /**
