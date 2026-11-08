@@ -44,6 +44,13 @@ describe('BipolarScale', () => {
     expect(buttons().map((b) => b.getAttribute('aria-label'))).toEqual(expectedLabels);
   });
 
+  it('lays the stops out in two rows on a phone and one row from sm up, with 44px-tall targets', () => {
+    const grid = buttons()[0].parentElement as HTMLElement;
+    expect(grid.classList.contains('grid-cols-6')).toBe(true);
+    expect(grid.classList.contains('sm:grid-cols-11')).toBe(true);
+    expect(buttons().every((b) => b.classList.contains('min-h-11'))).toBe(true);
+  });
+
   it('shows each stop as a percentage', () => {
     expect(buttons().map((b) => b.textContent?.trim())).toEqual([
       '100%',
