@@ -272,6 +272,34 @@ describe('TutorialPage', () => {
     expect(evidence.records).toEqual([]);
   });
 
+  it('clears the wrong-attempt hint once the matrix check is right, so only the Continue step is left', () => {
+    const fixture = open('nash-equilibrium');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root);
+    fixture.detectChanges();
+    next(root);
+    fixture.detectChanges();
+    next(root);
+    fixture.detectChanges();
+    // Top and Right is not stable, so the first check fails and reveals a hint.
+    (root.querySelector('button[aria-label^="Row Top, column Right"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    (root.querySelector('[data-testid="tutorial-check"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(root.querySelector('[data-testid="tutorial-hint"]')).not.toBeNull();
+
+    // Cells toggle, so the wrong pick is cleared first. Bottom and Right is the one stable cell.
+    (root.querySelector('button[aria-label^="Row Top, column Right"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    (root.querySelector('button[aria-label^="Row Bottom, column Right"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    (root.querySelector('[data-testid="tutorial-check"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="tutorial-next"]')).not.toBeNull();
+    expect(root.querySelector('[data-testid="tutorial-hint"]')).toBeNull();
+  });
+
   it('asks a Pareto try-it for the efficient cells, with no None button, since one cell is always efficient', () => {
     const fixture = open('pareto-efficiency');
     const root = fixture.nativeElement as HTMLElement;
