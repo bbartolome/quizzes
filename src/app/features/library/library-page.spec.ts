@@ -402,6 +402,18 @@ describe('LibraryPage today panel and reset copy', () => {
     expect(panel!.closest('section')).toBeNull();
   });
 
+  it('stacks the today panel and the collections in one flex column with a gap, so no card touches the next', async () => {
+    const root = await render();
+    const today = root.querySelector<HTMLElement>('app-today-panel')!;
+    const collections = root.querySelector<HTMLElement>('section[aria-label="Quiz collections"]')!;
+    const stack = today.parentElement!;
+
+    expect(collections.parentElement).toBe(stack);
+    expect(stack.classList.contains('flex')).toBe(true);
+    expect(stack.classList.contains('flex-col')).toBe(true);
+    expect(stack.classList.contains('gap-8')).toBe(true);
+  });
+
   it('mentions the practice streak in the Reset all progress confirmation', async () => {
     const ask = vi.fn(() => false);
     vi.stubGlobal('confirm', ask);
