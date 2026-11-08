@@ -34,7 +34,7 @@ import type {
   PuzzleKind,
   ReasonCheck,
 } from '../../lib/puzzle.types';
-import { generatePuzzle, gradePuzzle, matrixSignature } from '../../lib/puzzles';
+import { classOf, generatePuzzle, gradePuzzle, matrixSignature } from '../../lib/puzzles';
 import { GtEvidenceService } from '../../state/gt-evidence.service';
 import { EVIDENCE_QUIZ_IDS, GtLearnService, countOf } from '../../state/gt-learn.service';
 import { GAME_THEORY_RNG } from '../../state/gt-tokens';
@@ -755,9 +755,11 @@ export class PuzzleSetPage {
   private drawPuzzle(kind: PuzzleKind, difficulty: Difficulty): Puzzle | null {
     const introduced = this.learn.introduced;
     const avoid = this.drawn.map((p) => matrixSignature(p.game));
+    // A solo classify set is one class: the lesson's own, so its items test and credit that concept.
+    const onlyClass = this.isSolo() && kind === 'classify' ? classOf(this.soloParams()?.conceptId) : undefined;
     for (let tries = 0; tries < DRAW_TRIES; tries++) {
       const stream = this.isDaily() && this.dailyStream ? this.dailyStream : this.rng;
-      const puzzle = generatePuzzle(kind, difficulty, stream, { avoid });
+      const puzzle = generatePuzzle(kind, difficulty, stream, { avoid, onlyClass });
       // A solo set draws without the introduced gate, since a test-out is what introduces its concept.
       if (this.isSolo() || puzzle.conceptIds.every((id) => introduced.has(id))) {
         return puzzle;

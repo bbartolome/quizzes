@@ -7,6 +7,7 @@ import { GameTheoryData, GameTheoryDataService } from '../../data/game-theory-da
 import type { CellRef, PayoffMatrix } from '../../lib/matrix.types';
 import type { Difficulty, Puzzle, PuzzleKind, ReasonCheck } from '../../lib/puzzle.types';
 import { generatePuzzle, matrixSignature } from '../../lib/puzzles';
+import type { PuzzleOptions } from '../../lib/puzzles/shared';
 import { mulberry32 } from '../../lib/rng';
 import { GAME_THEORY_RNG } from '../../state/gt-tokens';
 import { GtEvidenceService } from '../../state/gt-evidence.service';
@@ -178,6 +179,8 @@ function open(options: OpenOptions = {}): ComponentFixture<PuzzleSetPage> {
 interface Step {
   kind: PuzzleKind;
   difficulty: Difficulty;
+  /** A solo classify set draws one class (spec §7.1). */
+  onlyClass?: PuzzleOptions['onlyClass'];
 }
 
 /**
@@ -189,7 +192,9 @@ function expectedSet(plan: Step[]): Puzzle[] {
   const items: Puzzle[] = [];
   for (const step of plan) {
     const avoid = items.map((p) => matrixSignature(p.game));
-    items.push(generatePuzzle(step.kind, step.difficulty, rng, { avoid }));
+    items.push(
+      generatePuzzle(step.kind, step.difficulty, rng, { avoid, onlyClass: step.onlyClass }),
+    );
   }
   return items;
 }
@@ -445,7 +450,9 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
         introduced: CLASSIFY_IDS,
         query: { solo: 'prisoners-dilemma', level: '3', mode: 'tutorial' },
       });
-      const [puzzle] = expectedSet([{ kind: 'classify', difficulty: 3 }]);
+      const [puzzle] = expectedSet([
+        { kind: 'classify', difficulty: 3, onlyClass: 'prisoners-dilemma' },
+      ]);
       expect(puzzle.game.story).toEqual(expect.any(String));
 
       expect(text(fixture, '[data-testid="puzzle-story"]')).toBe(puzzle.game.story);

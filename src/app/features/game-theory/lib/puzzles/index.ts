@@ -6,6 +6,7 @@ import { drawEquilibrium, gradeEquilibrium } from './equilibrium';
 import type { PuzzleOptions } from './shared';
 
 export { matrixSignature } from './signature';
+export { classOf } from './classify-puzzle';
 
 /**
  * A puzzle of the given kind and difficulty, drawn from rng. Each generator documents its own draw

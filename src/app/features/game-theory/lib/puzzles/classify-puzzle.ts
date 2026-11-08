@@ -5,7 +5,7 @@ import { MAX_TRIES, seedKeyFor, tagsFor, type PuzzleOptions } from './shared';
 import { matrixSignature } from './signature';
 
 // Classify puzzles (spec §5.2). Draw order for one candidate:
-//   1. the class: one draw, uniform over the five classes;
+//   1. the class: one draw, uniform over the five classes, or none when opts.onlyClass fixes it;
 //   2. the payoffs, from the class's ordinal layout:
 //      - prisoner's dilemma, stag hunt and chicken: four distinct integers 0..9 for the row player,
 //        sorted ascending, then four for the column player;
@@ -288,7 +288,8 @@ function flipCols(o: Oriented): Oriented {
 }
 
 function drawOnce(difficulty: Difficulty, rng: Rng, opts: PuzzleOptions): ClassifyPuzzle {
-  const cls = CLASSES[Math.floor(rng() * CLASSES.length)];
+  // With opts.onlyClass the class is fixed, and this draw is skipped.
+  const cls = opts.onlyClass ?? CLASSES[Math.floor(rng() * CLASSES.length)];
   const { row, col } = layout(cls, rng);
   let oriented: Oriented = {
     row,
@@ -331,6 +332,11 @@ function drawOnce(difficulty: Difficulty, rng: Rng, opts: PuzzleOptions): Classi
     solution: cls,
     choices: [...CLASSES],
   };
+}
+
+/** The class a concept id names, or undefined when the id is not one of the five classes. */
+export function classOf(conceptId: string | undefined): Canonical | undefined {
+  return CLASSES.find((cls) => cls === conceptId);
 }
 
 /**
