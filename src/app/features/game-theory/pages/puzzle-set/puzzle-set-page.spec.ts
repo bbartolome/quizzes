@@ -613,7 +613,7 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
 
       expect(text(fixture, '[data-testid="puzzle-difficulty"]')).toBe('Difficulty 1');
       expect(text(fixture, '[data-testid="puzzle-held-back"]')).toContain(
-        'difficulty 2 needs Nash equilibrium Practised',
+        'Held at difficulty 1. Practise Nash equilibrium to unlock difficulty 2.',
       );
       expect(readout(fixture.nativeElement)).toEqual(expectedReadout(items[1]));
     });
@@ -652,8 +652,11 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
 
       expect(text(fixture, '[data-testid="puzzle-difficulty"]')).toBe('Difficulty 2');
       expect(text(fixture, '[data-testid="puzzle-held-back"]')).toContain(
-        'difficulty 3 needs Nash equilibrium Mastered',
+        'Held at difficulty 2. Master Nash equilibrium to unlock difficulty 3.',
       );
+      expect(
+        must<HTMLAnchorElement>(fixture.nativeElement, '[data-testid="puzzle-held-back-lesson"]').getAttribute('href'),
+      ).toBe('/game-theory/learn/nash-equilibrium');
     });
 
     it('draws a difficulty-3 item once nash-equilibrium is Mastered', () => {
