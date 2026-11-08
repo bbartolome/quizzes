@@ -76,7 +76,17 @@
             <p class="type-detail" data-testid="puzzle-solo-note">{{ note }}</p>
           }
           @if (heldBackNote(item); as note) {
-            <ui-callout data-testid="puzzle-held-back">{{ note }}</ui-callout>
+            <ui-callout data-testid="puzzle-held-back">
+              {{ note }}
+              <a
+                uiButton
+                variant="link"
+                [routerLink]="heldBackLesson(item)"
+                data-testid="puzzle-held-back-lesson"
+              >
+                Open the lesson
+              </a>
+            </ui-callout>
           }
 
           @switch (item.kind) {

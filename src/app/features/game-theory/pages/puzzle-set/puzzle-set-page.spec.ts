@@ -691,7 +691,7 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
 
       expect(text(fixture, '[data-testid="puzzle-difficulty"]')).toBe('Difficulty 1');
       expect(text(fixture, '[data-testid="puzzle-held-back"]')).toContain(
-        'Dominant strategy Practised',
+        'Held at difficulty 1. Practise Dominant strategy to unlock difficulty 2.',
       );
     });
   });

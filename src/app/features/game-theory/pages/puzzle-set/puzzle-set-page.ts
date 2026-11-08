@@ -61,11 +61,11 @@ interface Move {
   index: number;
 }
 
-/** A gate on difficulty: a concept at Practised or Mastered (spec §7.2). */
+/** A gate on difficulty: a concept at Practised or Mastered (spec §7.2). `name` is how a note names it. */
 interface Gate {
   conceptId: string;
   need: 'practised' | 'mastered';
-  label: string;
+  name: string;
 }
 
 interface ReasonRound {
@@ -152,17 +152,17 @@ const DOMINANT = 'dominant-strategy';
 const NASH_PRACTISED: Gate = {
   conceptId: NASH,
   need: 'practised',
-  label: 'Nash equilibrium Practised',
+  name: 'Nash equilibrium',
 };
 const NASH_MASTERED: Gate = {
   conceptId: NASH,
   need: 'mastered',
-  label: 'Nash equilibrium Mastered',
+  name: 'Nash equilibrium',
 };
 const DOMINANT_PRACTISED: Gate = {
   conceptId: DOMINANT,
   need: 'practised',
-  label: 'Dominant strategy Practised (3×3 elimination)',
+  name: 'Dominant strategy',
 };
 const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
 /** The test-out for the first concept: a solo equilibrium set that needs all three to pass. */
@@ -546,7 +546,13 @@ export class PuzzleSetPage {
     if (!item.heldBack) {
       return null;
     }
-    return `Held at difficulty ${item.difficulty}: difficulty ${item.requested} needs ${item.heldBack.label}.`;
+    const verb = item.heldBack.need === 'mastered' ? 'Master' : 'Practise';
+    return `Held at difficulty ${item.difficulty}. ${verb} ${item.heldBack.name} to unlock difficulty ${item.requested}.`;
+  }
+
+  /** The lesson that teaches the concept a held-back item needs, or null. */
+  protected heldBackLesson(item: Item): string | null {
+    return item.heldBack ? `/game-theory/learn/${item.heldBack.conceptId}` : null;
   }
 
   protected choices(item: Item): GameClass[] {
