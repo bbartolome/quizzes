@@ -136,18 +136,19 @@
                   <p class="type-body">{{ r.card.legend }}</p>
                   <p class="type-body">{{ r.card.prompt }}</p>
                   @for (option of r.card.options; track $index; let i = $index) {
-                    <button type="button" uiButton variant="secondary" [attr.aria-pressed]="r.picked === i" (click)="pickCard(i)">
+                    <button type="button" uiButton variant="secondary" [attr.aria-pressed]="r.picked === i" [disabled]="r.feedback !== null" (click)="pickCard(i)">
                       {{ option }}
                     </button>
                   }
                   @if (r.feedback; as fb) {
                     <ui-feedback [verdict]="fb.verdict === 'Correct' ? 'correct' : 'incorrect'" data-testid="tutorial-feedback">
+                      <p class="type-detail">Answer: {{ fb.answer }}</p>
                       {{ fb.explanation }}
                     </ui-feedback>
                   } @else {
                     <button type="button" uiButton data-testid="tutorial-check" (click)="checkCard()">Check</button>
                   }
-                  @if (hintsLeft()) {
+                  @if (hintsLeft() && !r.feedback) {
                     <button type="button" uiButton variant="link" data-testid="tutorial-hint-button" (click)="revealHint()">
                       Show a hint
                     </button>
