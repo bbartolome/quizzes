@@ -237,6 +237,16 @@ describe('GameTheoryHomePage', () => {
       expect(href).toBe('/game-theory/learn/nash-equilibrium');
     });
 
+    it('fills each grid cell with its card, so cards in a row end at the same height', () => {
+      const fixture = create();
+      const cards = nodes(fixture.nativeElement as HTMLElement);
+
+      expect(cards.length).toBeGreaterThan(1);
+      for (const card of cards) {
+        expect(card.classList).toContain('h-full');
+      }
+    });
+
     it('names the first unmet prerequisite as Recommended first', () => {
       const root = create().nativeElement as HTMLElement;
 
