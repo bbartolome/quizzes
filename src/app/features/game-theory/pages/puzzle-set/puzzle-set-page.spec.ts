@@ -100,6 +100,8 @@ interface OpenOptions {
   daily?: boolean;
   /** A daily plan already stored before the page opens. */
   plan?: DailyPlan;
+  /** An answer for today already stored before the page opens (spec §9.2). */
+  savedDaily?: { kind: PuzzleKind; correct: boolean; reasonCorrect: boolean };
 }
 
 let evidence: FakeGtEvidenceService;
@@ -123,6 +125,9 @@ function open(options: OpenOptions = {}): ComponentFixture<PuzzleSetPage> {
   }
   if (options.saveFails) {
     evidence.setSaveFailed(true);
+  }
+  if (options.savedDaily) {
+    learn.recordDailyAnswer(dateKeyOf(NOW), options.savedDaily);
   }
   const challenges = options.challenges ?? {};
   const days = options.days ?? {};
@@ -819,6 +824,17 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(text(fixture, '[data-testid="puzzle-feedback"]')).toContain('No cell is stable');
       expect(fixture.nativeElement.querySelector('[data-testid="puzzle-reason-check"]')).toBeNull();
       expect(fixture.nativeElement.querySelector('[data-testid="puzzle-next"]')).not.toBeNull();
+    });
+
+    it('a reopened daily shows today\'s saved answer, and offers no second answer', () => {
+      const saved = { kind: 'equilibrium' as const, correct: false, reasonCorrect: false };
+      const fixture = open({ daily: true, introduced: BOTH, savedDaily: saved });
+
+      expect(text(fixture, '[data-testid="puzzle-summary"]')).toContain('0 of 1 correct');
+      expect(fixture.nativeElement.querySelector('[data-testid="puzzle-submit"]')).toBeNull();
+      expect(fixture.nativeElement.querySelector('[data-testid="puzzle-progress"]')).toBeNull();
+      expect(evidence.records).toEqual([]);
+      expect(learn.read().daily[TODAY]).toEqual(saved);
     });
 
     it('is locked until nash-equilibrium is introduced', () => {
