@@ -22,7 +22,7 @@
         type="number"
         min="0"
         max="100"
-        step="any"
+        step="1"
         class="rounded-lg border border-strong bg-raised px-4 py-2 type-body outline-none focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
         [value]="guessText()"
         (input)="setGuess($event)"
@@ -37,7 +37,7 @@
       </p>
     }
     @if (invalid()) {
-      <p class="type-detail" data-testid="beauty-invalid">Enter a number from 0 to 100.</p>
+      <p class="type-detail" data-testid="beauty-invalid">Enter a whole number from 0 to 100.</p>
     }
 
     @if (reveal(); as r) {

@@ -92,7 +92,7 @@ export class BeautyContestPage {
 
   submit(): void {
     const value = Number(this.guessText());
-    if (this.guessText().trim() === '' || !Number.isFinite(value) || value < 0 || value > 100) {
+    if (this.guessText().trim() === '' || !Number.isInteger(value) || value < 0 || value > 100) {
       this.invalid.set(true);
       this.result.set(null);
       return;
