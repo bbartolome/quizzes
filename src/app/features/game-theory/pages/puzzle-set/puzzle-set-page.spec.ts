@@ -434,6 +434,18 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(root.querySelectorAll('[data-testid="puzzle-matrix-readonly"] p')).toHaveLength(0);
     });
 
+    it('classify: shows a difficulty 3 item\'s cover story, which is the setting it describes', () => {
+      const fixture = open({
+        kind: 'classify',
+        introduced: CLASSIFY_IDS,
+        query: { solo: 'prisoners-dilemma', level: '3', mode: 'tutorial' },
+      });
+      const [puzzle] = expectedSet([{ kind: 'classify', difficulty: 3 }]);
+      expect(puzzle.game.story).toEqual(expect.any(String));
+
+      expect(text(fixture, '[data-testid="puzzle-story"]')).toBe(puzzle.game.story);
+    });
+
     it('eliminate: offers the legal eliminations as buttons, and finishing grades it correct', () => {
       const fixture = open({ kind: 'eliminate', introduced: ELIMINATE_IDS });
       const [puzzle] = expectedSet([{ kind: 'eliminate', difficulty: 1 }]);
