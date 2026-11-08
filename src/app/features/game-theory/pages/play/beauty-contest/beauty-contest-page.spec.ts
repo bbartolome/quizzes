@@ -239,6 +239,24 @@ describe('BeautyContestPage', () => {
     expect(games.record).not.toHaveBeenCalled();
   });
 
+  it('does not accept a decimal guess, and asks for a whole number instead', () => {
+    const fixture = open();
+
+    guess(fixture, '33.5');
+
+    expect(el(fixture, 'beauty-reveal')).toBeNull();
+    expect(el(fixture, 'beauty-invalid')?.textContent).toContain(
+      'Enter a whole number from 0 to 100.',
+    );
+    expect(games.record).not.toHaveBeenCalled();
+  });
+
+  it('steps the guess field by whole numbers', () => {
+    const fixture = open();
+
+    expect((el(fixture, 'beauty-guess') as HTMLInputElement).step).toBe('1');
+  });
+
   it('draws the guess field with a visible border and background, like the other form controls', () => {
     const fixture = open();
     const field = el(fixture, 'beauty-guess') as HTMLInputElement;
