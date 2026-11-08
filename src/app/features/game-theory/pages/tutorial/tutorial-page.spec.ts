@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { TestBed, type ComponentFixture } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { TutorialPage } from './tutorial-page';
 import { GameTheoryData, GameTheoryDataService } from '../../data/game-theory-data.service';
 import { GtLearnService } from '../../state/gt-learn.service';
@@ -14,7 +14,7 @@ import { FakeGtLearnService } from '../../../../../testing/fake-gt-learn.service
 import conceptsJson from '../../../../../../public/data/quizzes/game-theory/concepts.json';
 import tutorialsJson from '../../../../../../public/data/quizzes/game-theory/tutorials.json';
 import checksJson from '../../../../../../public/data/quizzes/game-theory/checks.json';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, type ParamMap } from '@angular/router';
 
 // The tutorial page runs the shipped scripts (spec §7.1). These specs use the real content, so
 // they also exercise the authored text and games.
@@ -33,7 +33,14 @@ describe('TutorialPage', () => {
   /** Opens the tutorial for one concept. A failed first load is shown when contentFails is set. */
   function open(
     id: string,
-    options: { introduced?: string[]; stage?: 0 | 1 | 2 | 3; contentFails?: boolean; rng?: () => number } = {},
+    options: {
+      introduced?: string[];
+      stage?: 0 | 1 | 2 | 3;
+      contentFails?: boolean;
+      rng?: () => number;
+      /** Route params the test can change, to move the open lesson to another concept. */
+      params?: BehaviorSubject<ParamMap>;
+    } = {},
   ): ComponentFixture<TutorialPage> {
     learn = new FakeGtLearnService();
     learn.seedIntroduced(options.introduced ?? []);
@@ -48,7 +55,10 @@ describe('TutorialPage', () => {
       imports: [TutorialPage],
       providers: [
         provideRouter([]),
-        { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ concept: id })) } },
+        {
+          provide: ActivatedRoute,
+          useValue: { paramMap: options.params ?? of(convertToParamMap({ concept: id })) },
+        },
         { provide: GameTheoryDataService, useValue: data },
         { provide: GtLearnService, useValue: learn },
         { provide: GtEvidenceService, useValue: evidence },
@@ -195,6 +205,25 @@ describe('TutorialPage', () => {
     const feedback = root.querySelector('[data-testid="tutorial-feedback"]')?.textContent ?? '';
     expect(feedback).toContain('Correct');
     expect(feedback).not.toContain('Incorrect');
+  });
+
+  it('starts the new lesson at its first step when the URL changes to another concept', () => {
+    const params = new BehaviorSubject(convertToParamMap({ concept: 'dominant-strategy' }));
+    const fixture = open('dominant-strategy', { params });
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done
+    fixture.detectChanges();
+    next(root); // reveal annotation 2
+    fixture.detectChanges();
+    next(root); // worked done, the eliminate-next try-it starts
+    fixture.detectChanges();
+    expect(text(root)).toContain('Choose a strategy that is strictly dominated now.');
+
+    params.next(convertToParamMap({ concept: 'iterated-elimination' }));
+    fixture.detectChanges();
+
+    expect(text(root)).toContain('Iterated elimination removes a strictly dominated strategy');
+    expect(text(root)).not.toContain('Choose a strategy that is strictly dominated now.');
   });
 
   it('keeps the None button on the find-equilibrium try-it', () => {
