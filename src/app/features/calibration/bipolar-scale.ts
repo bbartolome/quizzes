@@ -17,14 +17,14 @@ const STOP_CONFIDENCES: readonly number[] = [100, 90, 80, 70, 60];
         <span>{{ options()[0] }}</span>
         <span>{{ options()[1] }}</span>
       </div>
-      <div class="grid grid-cols-11 gap-0.5">
+      <div class="grid grid-cols-6 gap-1 sm:grid-cols-11">
         @for (stop of stops; track stop) {
           <button
             type="button"
             [attr.aria-label]="label(stop)"
             [attr.aria-pressed]="isPressed(stop) ? 'true' : 'false'"
             [class]="isPressed(stop) ? pressedLook : idleLook"
-            class="min-h-6 min-w-6 rounded-lg border px-0.5 py-1.5 text-xs font-medium leading-none transition focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
+            class="min-h-11 rounded-lg border px-0.5 py-1.5 text-xs font-medium leading-none transition focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
             (click)="answer.emit({ side: stop.side, confidence: stop.confidence })"
           >
             {{ stop.confidence }}%
