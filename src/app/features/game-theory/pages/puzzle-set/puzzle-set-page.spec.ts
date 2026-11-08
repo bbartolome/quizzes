@@ -790,6 +790,25 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(fixture.nativeElement.textContent).toContain('Come back tomorrow');
     });
 
+    it('asks no equilibrium reason check when the item has no pure equilibrium, as there is no stable cell to ask about', () => {
+      const plan: DailyPlan = {
+        version: 1,
+        dateKey: TODAY,
+        kind: 'equilibrium',
+        difficulty: 2,
+        seedKey: 'gt-daily/v1/' + TODAY,
+      };
+      const fixture = open({ daily: true, introduced: BOTH, plan, checks: [NASH_CHECK] });
+      const puzzle = firstIntroduced(2, BOTH);
+      expect(puzzle).toMatchObject({ kind: 'equilibrium', solution: [] });
+
+      expect(readout(fixture.nativeElement)).toEqual(expectedReadout(puzzle));
+      equilibriumAnswer(fixture, puzzle, true);
+      expect(text(fixture, '[data-testid="puzzle-feedback"]')).toContain('No cell is stable');
+      expect(fixture.nativeElement.querySelector('[data-testid="puzzle-reason-check"]')).toBeNull();
+      expect(fixture.nativeElement.querySelector('[data-testid="puzzle-next"]')).not.toBeNull();
+    });
+
     it('is locked until nash-equilibrium is introduced', () => {
       const fixture = open({ daily: true, introduced: [] });
 
