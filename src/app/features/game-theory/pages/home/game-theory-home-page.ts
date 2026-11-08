@@ -126,4 +126,11 @@ export class GameTheoryHomePage {
       return entry.correct ? '\u2713' : '\u2717';
     }).join('');
   }
+
+  /** The strip's accessible name: the count of each mark, so a screen reader hears the result, not the dots. */
+  protected stripLabel(): string {
+    const marks = [...this.strip()];
+    const count = (mark: string) => marks.filter((m) => m === mark).length;
+    return `${count('\u2713')} right, ${count('\u2717')} wrong, ${count('\u00b7')} no answer`;
+  }
 }

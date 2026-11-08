@@ -65,7 +65,15 @@
           }
         }
       }
-      <p class="type-detail" data-testid="today-strip" aria-label="Daily history, last fourteen days">{{ strip() }}</p>
+      <p class="type-detail" data-testid="today-strip-caption">
+        Daily puzzles, last 14 days, oldest first: ✓ right, ✗ wrong, · no answer.
+      </p>
+      <p
+        class="type-detail"
+        role="img"
+        data-testid="today-strip"
+        [attr.aria-label]="stripLabel()"
+      >{{ strip() }}</p>
     }
   </section>
 
