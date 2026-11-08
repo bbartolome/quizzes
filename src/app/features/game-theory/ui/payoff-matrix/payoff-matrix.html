@@ -8,7 +8,7 @@
       <tr>
         <td></td>
         @for (head of colHeads(); track head.index) {
-          <th scope="col" class="p-2 align-bottom text-sm font-semibold text-text">
+          <th scope="col" class="p-2 align-bottom text-center text-sm font-semibold text-text">
             <span [class.line-through]="head.note !== null">{{ head.label }}</span>
             @if (head.note) {
               <span class="block text-sm font-normal">{{ head.note }}</span>
