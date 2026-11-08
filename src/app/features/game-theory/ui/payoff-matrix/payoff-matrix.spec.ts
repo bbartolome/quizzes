@@ -181,6 +181,19 @@ describe('PayoffMatrixWidget (G14, §12)', () => {
     expect(cell(el, 1, 1).disabled).toBe(false);
   });
 
+  it('keeps the columns fixed and reserves each cell status line, so picking a cell moves nothing', () => {
+    const fixture = render();
+    const el = root(fixture);
+    const table = el.querySelector('[data-testid="payoff-matrix"]') as HTMLElement;
+    expect(table.classList.contains('table-fixed')).toBe(true);
+
+    const target = cell(el, 0, 0);
+    expect(target.querySelector('[data-slot="status"]')).not.toBeNull();
+    target.click();
+    fixture.detectChanges();
+    expect(cell(el, 0, 0).querySelector('[data-slot="status"]')).not.toBeNull();
+  });
+
   it('shows a selected cell with the accent look and the visible word Selected', () => {
     const fixture = render();
     const target = cell(root(fixture), 1, 2);
