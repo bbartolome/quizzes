@@ -477,6 +477,51 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       ]);
     });
 
+    it('eliminate: offers every strategy still in the game, so recognising dominance matters', () => {
+      const fixture = open({ kind: 'eliminate', introduced: ELIMINATE_IDS });
+      const [puzzle] = expectedSet([{ kind: 'eliminate', difficulty: 1 }]);
+      if (puzzle.kind !== 'eliminate') {
+        throw new Error('expected an elimination puzzle');
+      }
+      const { rows, cols } = puzzle.game.payoffs;
+
+      for (let r = 0; r < rows; r++) {
+        expect(fixture.nativeElement.querySelector(`[data-testid="puzzle-eliminate-row-${r}"]`)).not.toBeNull();
+      }
+      for (let c = 0; c < cols; c++) {
+        expect(fixture.nativeElement.querySelector(`[data-testid="puzzle-eliminate-col-${c}"]`)).not.toBeNull();
+      }
+    });
+
+    it('eliminate: removing a strategy that is not dominated grades the item incorrect at once', () => {
+      const fixture = open({ kind: 'eliminate', introduced: ELIMINATE_IDS });
+      const [puzzle] = expectedSet([{ kind: 'eliminate', difficulty: 1 }]);
+      if (puzzle.kind !== 'eliminate') {
+        throw new Error('expected an elimination puzzle');
+      }
+      // A strategy that is left after every legal removal is never dominated, so it is not legal now.
+      const survives = (player: 'row' | 'col', index: number) =>
+        !puzzle.solution.some((step) => step.player === player && step.eliminated === index);
+      const count = (player: 'row' | 'col') =>
+        player === 'row' ? puzzle.game.payoffs.rows : puzzle.game.payoffs.cols;
+      const pick = (['row', 'col'] as const)
+        .flatMap((player) => Array.from({ length: count(player) }, (_, index) => ({ player, index })))
+        .find((move) => survives(move.player, move.index));
+      if (!pick) {
+        throw new Error('every strategy is removed, so no survivor exists');
+      }
+
+      tap(fixture, `[data-testid="puzzle-eliminate-${pick.player}-${pick.index}"]`);
+      expect(text(fixture, '[data-testid="puzzle-feedback"]')).toContain('Incorrect');
+      expect(evidence.records).toEqual([
+        {
+          conceptIds: ['dominant-strategy', 'iterated-elimination'],
+          correct: false,
+          facet: 'challenges',
+        },
+      ]);
+    });
+
     it('eliminate: stopping while a strategy is still dominated grades it incorrect', () => {
       const fixture = open({ kind: 'eliminate', introduced: ELIMINATE_IDS });
       expectedSet([{ kind: 'eliminate', difficulty: 1 }]);
