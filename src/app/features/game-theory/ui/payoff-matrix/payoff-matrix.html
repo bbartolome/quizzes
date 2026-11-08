@@ -1,5 +1,5 @@
 <div class="space-y-3">
-  <table class="w-full border-separate border-spacing-2 text-left" data-testid="payoff-matrix">
+  <table class="w-full table-fixed border-separate border-spacing-2 text-left" data-testid="payoff-matrix">
     <caption class="sr-only">
       Payoff matrix. Each cell shows the row player's payoff, then the column player's payoff.
       Underlined payoffs are best responses.
@@ -42,9 +42,11 @@
                   >,
                   <span [class.underline]="cell.colBest">{{ cell.colPayoff }}</span>
                 </span>
-                @if (cell.status; as status) {
-                  <ui-status [tone]="status.tone" [label]="status.label" />
-                }
+                <span class="flex h-5 items-center justify-center" data-slot="status">
+                  @if (cell.status; as status) {
+                    <ui-status [tone]="status.tone" [label]="status.label" />
+                  }
+                </span>
               </button>
             </td>
           }
@@ -68,9 +70,11 @@
     (click)="toggleNone()"
   >
     <span class="font-semibold">None of these (no pure equilibrium)</span>
-    @if (none().status; as status) {
-      <ui-status [tone]="status.tone" [label]="status.label" />
-    }
+    <span class="flex h-5 items-center justify-center" data-slot="status">
+      @if (none().status; as status) {
+        <ui-status [tone]="status.tone" [label]="status.label" />
+      }
+    </span>
   </button>
   }
 </div>
