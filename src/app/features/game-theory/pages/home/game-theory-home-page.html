@@ -14,7 +14,7 @@
           @for (node of tier.nodes; track node.id) {
             <li>
               <a
-                class="flex min-h-12 flex-col rounded-lg border border-default p-3 focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
+                class="flex h-full min-h-12 flex-col rounded-lg border border-default p-3 focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
                 [routerLink]="['/game-theory/learn', node.id]"
                 [attr.data-testid]="'map-node-' + node.id"
               >
