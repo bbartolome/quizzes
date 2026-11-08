@@ -574,8 +574,13 @@ export class PuzzleSetPage {
       });
       this.evidence.recordDaily(this.clock());
     }
-    // Solo items ask no reason check (spec §7.1).
-    const check = this.isSolo() ? null : reasonCheckFor(this.checks(), item.kind, item.puzzle.conceptIds);
+    // Solo items ask no reason check (spec §7.1). The equilibrium check asks about a stable cell, so
+    // an item with no pure equilibrium, where "None of these" is right, asks none.
+    const noStableCell = item.puzzle.kind === 'equilibrium' && item.puzzle.solution.length === 0;
+    const check =
+      this.isSolo() || noStableCell
+        ? null
+        : reasonCheckFor(this.checks(), item.kind, item.puzzle.conceptIds);
     this.current.set({ ...item, grade, reason: check ? { check, picked: null } : null });
     if (this.isSolo() && this.results().length === SOLO_ITEMS) {
       this.finishSolo();
