@@ -46,4 +46,22 @@ export const GAME_THEORY_MODES: readonly GameTheoryMode[] = [
     path: 'game-theory/play/beauty-contest',
     requires: [],
   },
+  {
+    id: 'auction-first-price',
+    title: 'First-price auction',
+    path: 'game-theory/play/first-price',
+    requires: [],
+  },
+  {
+    id: 'auction-second-price',
+    title: 'Second-price auction',
+    path: 'game-theory/play/second-price',
+    requires: [],
+  },
+  {
+    id: 'auction-common-value',
+    title: 'Common-value auction',
+    path: 'game-theory/play/common-value',
+    requires: [],
+  },
 ];
