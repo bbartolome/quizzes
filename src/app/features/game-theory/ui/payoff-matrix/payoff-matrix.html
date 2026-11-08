@@ -33,6 +33,7 @@
                 [attr.data-testid]="cell.testId"
                 [attr.aria-label]="cell.label"
                 [attr.aria-pressed]="cell.pressed"
+                [disabled]="cell.locked"
                 [class]="cell.classes"
                 (click)="toggleCell(cell.r, cell.c)"
               >

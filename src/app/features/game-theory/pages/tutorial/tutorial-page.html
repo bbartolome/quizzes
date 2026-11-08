@@ -75,6 +75,7 @@
                   [rowLabels]="current.game.rowLabels"
                   [colLabels]="current.game.colLabels"
                   [bestResponseMarks]="blank"
+                  [locked]="current.given ?? []"
                   [showNone]="current.task === 'find-equilibrium'"
                   [showCaption]="current.task !== 'eliminate-next'"
                   [(selected)]="answer"

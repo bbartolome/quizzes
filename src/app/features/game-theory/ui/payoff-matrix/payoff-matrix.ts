@@ -57,6 +57,7 @@ interface CellView {
   rowBest: boolean;
   colBest: boolean;
   pressed: boolean;
+  locked: boolean;
   classes: string;
   status: StatusView | null;
 }
@@ -151,6 +152,8 @@ export class PayoffMatrixWidget {
   readonly colLabels = input.required<string[]>();
   readonly bestResponseMarks = input.required<BestResponseMarks>();
   readonly eliminated = input<EliminatedLine[]>([]);
+  /** Cells shown as already given, such as a best response the lesson underlines. They cannot be picked. */
+  readonly locked = input<CellRef[]>([]);
   readonly cellGrades = input<CellGrade[]>([]);
   readonly noneGrade = input<CellOutcome | null>(null);
   /** Equilibrium items show the none button and the best-response caption. Classify and eliminate do not. */
@@ -173,6 +176,7 @@ export class PayoffMatrixWidget {
     const colLabels = this.colLabels();
     const grades = new Map(this.cellGrades().map((g) => [keyOf(g.r, g.c), g.outcome] as const));
     const picked = new Set(this.selected().map((p) => keyOf(p.r, p.c)));
+    const locked = new Set(this.locked().map((p) => keyOf(p.r, p.c)));
 
     return lineViews(m.rows, rowLabels, 'row', this.eliminated()).map((line) => ({
       line,
@@ -186,6 +190,7 @@ export class PayoffMatrixWidget {
         const rowBest = marks.row[r][c];
         const colBest = marks.col[r][c];
         const state = stateOf(outcome, pressed);
+        const isLocked = locked.has(key);
         return {
           r,
           c,
@@ -206,7 +211,8 @@ export class PayoffMatrixWidget {
           rowBest,
           colBest,
           pressed,
-          classes: `${CELL_BASE} ${STATE_LOOK[state]}`,
+          locked: isLocked,
+          classes: `${CELL_BASE} ${STATE_LOOK[state]}${isLocked ? ' cursor-default' : ''}`,
           status: statusFor(outcome, pressed),
         };
       }),
@@ -223,6 +229,9 @@ export class PayoffMatrixWidget {
   });
 
   protected toggleCell(r: number, c: number): void {
+    if (this.locked().some((p) => p.r === r && p.c === c)) {
+      return;
+    }
     const picked = this.selected();
     const isOn = picked.some((p) => p.r === r && p.c === c);
     this.noneChosen.set(false);

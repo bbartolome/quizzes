@@ -88,7 +88,7 @@ function dominatedNow(game: MatrixGame): Strategy[] {
  * whether to show the next hint.
  * - find-equilibrium: the chosen cells are the pure equilibria. An empty choice is right when there are none.
  * - find-pareto: the chosen cells are the Pareto-efficient cells. There is always at least one, so there is no None.
- * - underline-best-responses: the chosen cells are the row player's best responses not already given.
+ * - underline-best-responses: the chosen cells, not counting given ones, are the row player's best responses not already given.
  * - eliminate-next: the chosen strategy is strictly dominated now.
  */
 export function checkFaded(
@@ -108,7 +108,8 @@ export function checkFaded(
       const remaining = resolveMark('best-response-row', game).cells.filter(
         (cell) => !already.has(cellKey(cell)),
       );
-      return sameCells(answer, remaining);
+      const picked = answer.filter((cell) => !already.has(cellKey(cell)));
+      return sameCells(picked, remaining);
     }
     case 'eliminate-next': {
       if (!isStrategy(answer)) return false;
