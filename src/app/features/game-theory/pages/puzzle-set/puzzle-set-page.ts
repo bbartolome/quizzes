@@ -623,6 +623,13 @@ export class PuzzleSetPage {
       if (plan) this.learn.setPlan(plan);
     }
     this.dailyPlan.set(plan);
+    // One answer a day (spec §9.2). A reopened daily shows today's saved answer and draws nothing.
+    const saved = this.learn.read().daily[today];
+    if (saved) {
+      this.results.set([saved.correct]);
+      this.current.set(null);
+      return;
+    }
     this.dailyStream = dailyRng(today);
     this.drawItem();
   }
