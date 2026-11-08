@@ -1,5 +1,5 @@
 import { bestResponses, paretoOptimal, pureNash } from '../matrix';
-import type { CellRef, PayoffMatrix } from '../matrix.types';
+import type { CellRef, GameClass, PayoffMatrix } from '../matrix.types';
 import type { Difficulty, PuzzleKind, PuzzleTag } from '../puzzle.types';
 import type { Rng } from '../rng';
 import { payoffSignature } from './signature';
@@ -11,6 +11,8 @@ export const MAX_TRIES = 500;
 export interface PuzzleOptions {
   avoid?: string[];
   seedKey?: string;
+  /** Classify only: every item is this class, for a solo set or test-out of that concept (spec §7.1). */
+  onlyClass?: Exclude<GameClass, 'other'>;
 }
 
 /** One integer payoff from 0 to 9. Draws one value from rng. */

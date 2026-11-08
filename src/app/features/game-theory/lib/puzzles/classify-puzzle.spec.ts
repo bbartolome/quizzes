@@ -294,6 +294,18 @@ describe('classify puzzles, the strict-ordinal rule and its limit', () => {
   });
 });
 
+describe('classify puzzles, one class (solo and test-out sets, spec §7.1, §7.2)', () => {
+  it('draws only the class it is given, at every difficulty', () => {
+    for (const difficulty of [1, 2, 3] as const) {
+      for (let seed = 1; seed <= 50; seed++) {
+        const puzzle = drawClassify(difficulty, mulberry32(seed), { onlyClass: 'stag-hunt' });
+        expect(puzzle.solution).toBe('stag-hunt');
+        expect(puzzle.conceptIds).toEqual(['stag-hunt']);
+      }
+    }
+  });
+});
+
 describe('gradeClassify', () => {
   it.each(CLASSES)('scores the right class 1 and names its separating feature (%s)', (cls) => {
     const grade = gradeClassify(puzzleFor(cls), { kind: 'classify', choice: cls });

@@ -736,6 +736,27 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(fixture.nativeElement.querySelector('[data-testid="puzzle-reason"]')).toBeNull();
     });
 
+    it('a classify solo set draws only its concept\'s class, so every item tests and credits that concept', () => {
+      const fixture = open({
+        kind: 'classify',
+        introduced: CLASSIFY_IDS,
+        query: { solo: 'prisoners-dilemma', level: '1', mode: 'tutorial' },
+      });
+
+      for (let i = 0; i < 3; i++) {
+        tap(fixture, '[data-testid="puzzle-choice-prisoners-dilemma"]');
+        expect(text(fixture, '[data-testid="puzzle-feedback"]')).toContain('Correct');
+        tap(fixture, '[data-testid="puzzle-next"]');
+      }
+      expect(evidence.records).toEqual(
+        Array.from({ length: 3 }, () => ({
+          conceptIds: ['prisoners-dilemma'],
+          correct: true,
+          facet: 'challenges',
+        })),
+      );
+    });
+
     it('draws a test-out set even though its concept is not introduced yet', () => {
       const fixture = open({ introduced: [], query: TEST });
 
