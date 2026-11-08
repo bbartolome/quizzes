@@ -112,6 +112,9 @@
               }
             }
             @case ('classify') {
+              @if (item.puzzle.game.story; as story) {
+                <p class="type-body" data-testid="puzzle-story">{{ story }}</p>
+              }
               <p class="type-body">Look at the payoffs. Which game is this? Choose one.</p>
               <p class="type-detail">Each cell shows the row player's payoff, then the column player's.</p>
               @if (marks(); as blank) {
