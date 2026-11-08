@@ -300,6 +300,40 @@ describe('TutorialPage', () => {
     expect(root.querySelector('[data-testid="tutorial-hint"]')).toBeNull();
   });
 
+  it('names the right answer once a card is checked, as the cards page does', () => {
+    const target = (conceptsJson as unknown as { concepts: { id: string; name: string }[] }).concepts.find(
+      (concept) => concept.id === 'level-k-reasoning',
+    );
+    const fixture = open('level-k-reasoning');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done, the card Try starts
+    fixture.detectChanges();
+    (root.querySelector('[data-testid="tutorial-card"] button[aria-pressed]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    (root.querySelector('[data-testid="tutorial-check"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    expect(target?.name).toBeTruthy();
+    expect(root.querySelector('[data-testid="tutorial-feedback"]')?.textContent).toContain(
+      `Answer: ${target?.name}`,
+    );
+  });
+
+  it('stops offering a hint once the card is checked, whether the answer was right or wrong', () => {
+    const fixture = open('level-k-reasoning');
+    const root = fixture.nativeElement as HTMLElement;
+    next(root); // text done, the card Try starts
+    fixture.detectChanges();
+    (root.querySelector('[data-testid="tutorial-card"] button[aria-pressed]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    expect(root.querySelector('[data-testid="tutorial-hint-button"]')).not.toBeNull();
+
+    (root.querySelector('[data-testid="tutorial-check"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    expect(root.querySelector('[data-testid="tutorial-hint-button"]')).toBeNull();
+  });
+
   it('asks a Pareto try-it for the efficient cells, with no None button, since one cell is always efficient', () => {
     const fixture = open('pareto-efficiency');
     const root = fixture.nativeElement as HTMLElement;
