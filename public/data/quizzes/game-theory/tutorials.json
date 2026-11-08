@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "tutorials": [
     {
       "conceptId": "best-response",
@@ -32,7 +32,7 @@
           "game": {
             "rowLabels": ["Top", "Bottom"],
             "colLabels": ["Left", "Right"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [1, 3]], "col": [[2, 1], [0, 3]] }
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 1], [1, 4]], "col": [[2, 0], [0, 3]] }
           },
           "task": "underline-best-responses",
           "given": [{ "r": 0, "c": 0 }],
@@ -75,12 +75,12 @@
           "game": {
             "rowLabels": ["Top", "Bottom"],
             "colLabels": ["Left", "Right"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [1, 3]], "col": [[2, 1], [0, 3]] }
+            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 1], [4, 3]], "col": [[2, 4], [1, 3]] }
           },
           "task": "find-equilibrium",
           "hints": [
             "A cell is an equilibrium when the row player's number is the largest in its column and the column player's number is the largest in its row.",
-            "Check each of the four cells. Two of them pass both checks."
+            "Check each of the four cells. Only one of them passes both checks."
           ]
         },
         { "stage": 3, "kind": "solo", "source": { "puzzle": "equilibrium", "difficulty": 1 }, "count": 3, "passAt": 2 }
@@ -115,14 +115,14 @@
           "stage": 2,
           "kind": "faded",
           "game": {
-            "rowLabels": ["Cooperate", "Defect"],
-            "colLabels": ["Cooperate", "Defect"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+            "rowLabels": ["Top", "Bottom"],
+            "colLabels": ["Left", "Right"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 9], [5, 4]], "col": [[8, 6], [2, 0]] }
           },
           "task": "find-pareto",
           "hints": [
             "Look for a cell that another cell beats for both players. Those cells are not efficient, and a stable cell may still be one.",
-            "Cooperate and Cooperate, Cooperate and Defect, and Defect and Cooperate are efficient. Defect and Defect is not, because Cooperate and Cooperate pays both players more."
+            "Top and Left, and Top and Right, are efficient. Bottom and Left is not, because Top and Right pays both players more."
           ]
         },
         { "stage": 3, "kind": "solo", "source": { "puzzle": "equilibrium", "difficulty": 2 }, "count": 3, "passAt": 2 }
@@ -157,14 +157,14 @@
           "stage": 2,
           "kind": "faded",
           "game": {
-            "rowLabels": ["Cooperate", "Defect"],
-            "colLabels": ["Cooperate", "Defect"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+            "rowLabels": ["Wait", "Rush"],
+            "colLabels": ["Wait", "Rush"],
+            "payoffs": { "rows": 2, "cols": 2, "row": [[1, 2], [3, 4]], "col": [[2, 1], [0, 3]] }
           },
           "task": "eliminate-next",
           "hints": [
             "Compare the two rows column by column. Is one strategy better in every column?",
-            "Cooperate is worse for the row player in both columns, so it can go."
+            "Wait is worse for the row player in both columns, so it can go."
           ]
         },
         { "stage": 3, "kind": "solo", "source": { "puzzle": "eliminate", "difficulty": 1 }, "count": 3, "passAt": 2 }
@@ -201,12 +201,12 @@
           "game": {
             "rowLabels": ["Hold", "Push"],
             "colLabels": ["Left", "Right"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[0, 1], [2, 3]], "col": [[0, 1], [1, 0]] }
+            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 1], [1, 3]], "col": [[3, 1], [2, 0]] }
           },
           "task": "eliminate-next",
           "hints": [
-            "Look for a row that is better than another in every column.",
-            "Hold is beaten by Push in both columns."
+            "Look for a column that is better for the column player than another in every row.",
+            "Right is beaten by Left in both rows."
           ]
         },
         { "stage": 3, "kind": "solo", "source": { "puzzle": "eliminate", "difficulty": 1 }, "count": 3, "passAt": 2 }
@@ -243,7 +243,7 @@
           "game": {
             "rowLabels": ["Cooperate", "Defect"],
             "colLabels": ["Cooperate", "Defect"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [5, 1]], "col": [[3, 5], [0, 1]] }
+            "payoffs": { "rows": 2, "cols": 2, "row": [[4, 0], [6, 2]], "col": [[4, 6], [0, 2]] }
           },
           "task": "find-equilibrium",
           "hints": [
@@ -285,7 +285,7 @@
           "game": {
             "rowLabels": ["Stag", "Hare"],
             "colLabels": ["Stag", "Hare"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[4, 1], [3, 2]], "col": [[4, 3], [1, 2]] }
+            "payoffs": { "rows": 2, "cols": 2, "row": [[5, 1], [3, 2]], "col": [[5, 3], [1, 2]] }
           },
           "task": "find-equilibrium",
           "hints": [
@@ -327,7 +327,7 @@
           "game": {
             "rowLabels": ["Swerve", "Straight"],
             "colLabels": ["Swerve", "Straight"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 2], [4, 1]], "col": [[3, 4], [2, 1]] }
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 2], [5, 1]], "col": [[3, 5], [2, 1]] }
           },
           "task": "find-equilibrium",
           "hints": [
@@ -369,7 +369,7 @@
           "game": {
             "rowLabels": ["Option A", "Option B"],
             "colLabels": ["Option A", "Option B"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[1, 0], [0, 1]], "col": [[1, 0], [0, 1]] }
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [0, 1]], "col": [[1, 0], [0, 3]] }
           },
           "task": "find-equilibrium",
           "hints": [
@@ -411,7 +411,7 @@
           "game": {
             "rowLabels": ["Opera", "Football"],
             "colLabels": ["Opera", "Football"],
-            "payoffs": { "rows": 2, "cols": 2, "row": [[2, 0], [0, 1]], "col": [[1, 0], [0, 2]] }
+            "payoffs": { "rows": 2, "cols": 2, "row": [[3, 0], [0, 2]], "col": [[2, 0], [0, 3]] }
           },
           "task": "find-equilibrium",
           "hints": [
