@@ -102,6 +102,15 @@ describe('PayoffMatrixWidget (G14, §12)', () => {
     expect(el.querySelectorAll('th[scope="col"]')).toHaveLength(3);
   });
 
+  it('centers each column header over its column, as the cells below it are centered', () => {
+    const el = root(render());
+
+    for (let index = 0; index < 3; index++) {
+      expect(colHeader(el, index).classList, `column header ${index}`).toContain('text-center');
+    }
+    expect(rowHeader(el, 0).classList).not.toContain('text-center');
+  });
+
   it('makes each cell a native button with type, aria-pressed, a test id and the row and column aria-label', () => {
     const el = root(render());
     expect(el.querySelectorAll('tbody button')).toHaveLength(9);
