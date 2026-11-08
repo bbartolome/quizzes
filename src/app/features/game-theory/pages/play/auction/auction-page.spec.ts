@@ -169,6 +169,16 @@ describe('AuctionPage (play/:game, §8.3)', () => {
     expect(result).not.toContain(' times.');
   });
 
+  it('styles both sliders in the app accent, and sets each label on its own line so the gap shows', () => {
+    const fixture = open('first-price');
+
+    for (const id of ['auction-bidders', 'auction-bid']) {
+      expect(el(fixture, id)?.classList).toContain('accent-accent');
+      const label = fixture.nativeElement.querySelector(`label[for="${id}"]`) as HTMLElement;
+      expect(label.classList).toContain('block');
+    }
+  });
+
   it('simulates a thousand auctions with a chosen policy, and says the result is in this setup', () => {
     const fixture = open('first-price');
     click(fixture, 'auction-simulate');
