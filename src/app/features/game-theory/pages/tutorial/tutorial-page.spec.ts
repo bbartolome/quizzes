@@ -435,6 +435,18 @@ describe('TutorialPage', () => {
     expect(link.getAttribute('href')).toContain('mode=tutorial');
   });
 
+  it('stacks the solo button and the test-out link in one column, so the link never runs under the button', () => {
+    const root = open('best-response', { introduced: ['best-response'] }).nativeElement as HTMLElement;
+
+    const solo = root.querySelector('[data-testid="tutorial-solo-link"]') as HTMLElement;
+    const testOut = root.querySelector('[data-testid="tutorial-test-out-link"]') as HTMLElement;
+    expect(testOut).not.toBeNull();
+    const row = solo.parentElement as HTMLElement;
+    expect(testOut.parentElement).toBe(row);
+    expect(row.classList.contains('flex')).toBe(true);
+    expect(row.classList.contains('flex-col')).toBe(true);
+  });
+
   it('says so for an id with no tutorial', () => {
     const root = open('no-such-concept').nativeElement as HTMLElement;
 
