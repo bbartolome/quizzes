@@ -175,17 +175,19 @@ describe('FlashCardReportPage', () => {
   });
 
   describe('heading and empty state (S9, §6.3, §7.2)', () => {
-    it('the h1 is "<Quiz title>: report" for the bias route', () => {
+    it('the h1 is "Results for <Quiz title>" for the bias route', () => {
       const { fixture } = setup('bias', mixed);
 
-      expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Biases: report');
+      expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe(
+        'Results for Biases',
+      );
     });
 
-    it('the h1 is "<Quiz title>: report" for the fallacy route', () => {
+    it('the h1 is "Results for <Quiz title>" for the fallacy route', () => {
       const { fixture } = setup('fallacy', mixed);
 
       expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe(
-        'Fallacies: report',
+        'Results for Fallacies',
       );
     });
 

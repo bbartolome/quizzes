@@ -248,12 +248,24 @@ describe('ReportPage', () => {
       return fixture;
     }
 
-    it('renders the quiz title as the only h1, inside the page shell', async () => {
+    it('renders "Results for <quiz title>" as the only h1, inside the page shell', async () => {
       const fixture = await load([makeResult()]);
 
       expect(fixture.nativeElement.querySelectorAll('h1').length).toBe(1);
       const title = fixture.nativeElement.querySelector('ui-page-shell h1.type-title');
-      expect(title?.textContent?.trim()).toBe('Logic Quiz');
+      expect(title?.textContent?.trim()).toBe('Results for Logic Quiz');
+    });
+
+    it('titles the empty report "Results", so it still has one h1 without loading the quiz', async () => {
+      setHistoryState(undefined);
+      configure();
+      const fixture = TestBed.createComponent(ReportPage);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const title = fixture.nativeElement.querySelector('ui-page-shell h1.type-title');
+      expect(fixture.nativeElement.querySelectorAll('h1').length).toBe(1);
+      expect(title?.textContent?.trim()).toBe('Results');
     });
 
     it('renders each result as a raised Card with an h3 type-card heading', async () => {
