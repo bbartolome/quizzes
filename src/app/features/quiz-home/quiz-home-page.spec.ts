@@ -202,6 +202,15 @@ describe('QuizHomePage', () => {
     expect(start?.getAttribute('href')).toContain('/quiz/rt/round');
   });
 
+  it('leaves 24px between the description and Start quiz, as the flash-card homes do', async () => {
+    const fixture = await renderPage();
+    const description = fixture.nativeElement.querySelector('p.type-detail') as HTMLElement;
+    const content = description.nextElementSibling as HTMLElement;
+
+    expect(content.querySelector('a[href*="/quiz/rt/round"]')).not.toBeNull();
+    expect(content.classList.contains('mt-6')).toBe(true);
+  });
+
   it('shows Weak spots as a secondary Button once the quiz has stats', async () => {
     stats.getStats = vi.fn(() => ({ perTrait: { kb1: {} } }));
     const fixture = await renderPage();
