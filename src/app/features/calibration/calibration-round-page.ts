@@ -171,6 +171,13 @@ export class CalibrationRoundPage {
     this.index.update((i) => Math.max(0, i - 1));
   }
 
+  /** Leaves the round for the Confidence home. The pending answers are kept, so Resume round picks them up. */
+  endRound(): void {
+    const ctx = this.ctx();
+    if (!ctx) return;
+    this.router.navigate(['/calibration', ctx.quizId]);
+  }
+
   submit(): void {
     if (this.submitted || !this.allAnswered()) return;
     const ctx = this.ctx();

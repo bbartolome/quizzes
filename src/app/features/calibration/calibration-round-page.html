@@ -43,15 +43,26 @@
       }
 
       <div class="mt-8 flex items-center justify-between gap-3">
-        <button
-          uiButton
-          variant="secondary"
-          type="button"
-          [disabled]="index() <= 0"
-          (click)="back()"
-        >
-          Back
-        </button>
+        <div class="flex flex-wrap items-center gap-3">
+          <button
+            uiButton
+            variant="secondary"
+            type="button"
+            [disabled]="index() <= 0"
+            (click)="back()"
+          >
+            Back
+          </button>
+          <button
+            uiButton
+            variant="secondary"
+            type="button"
+            data-testid="end-round"
+            (click)="endRound()"
+          >
+            End round
+          </button>
+        </div>
         <button
           uiButton
           variant="primary"
