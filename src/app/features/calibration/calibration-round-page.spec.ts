@@ -267,6 +267,14 @@ describe('CalibrationRoundPage (two-way)', () => {
       expect(root(fixture).textContent).toContain('Prompt 1');
     });
 
+    it('offers End round on the first item, where Back is disabled, and leaves for the Confidence home', async () => {
+      const fixture = await render();
+
+      await click(fixture, buttonByText(fixture, /end round/i));
+
+      expect(navigate).toHaveBeenCalledWith(['/calibration', QUIZ_ID]);
+    });
+
     it('replaces an earlier answer when a revisited item is answered again', async () => {
       const fixture = await render();
       await click(fixture, buttonByLabel(fixture, 'Alpha1 80%'));
