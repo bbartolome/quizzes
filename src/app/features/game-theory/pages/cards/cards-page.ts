@@ -1,3 +1,4 @@
+import { GAME_THEORY_BACK } from '../../back-link';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -43,7 +44,7 @@ interface Round {
   feedback: Feedback | null;
 }
 
-const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
+const BACK: PageBack = GAME_THEORY_BACK;
 /** A solo set has three cards. A tutorial's passes at two right; a test-out needs all three (spec §7.1, §7.2). */
 const SOLO_ITEMS = 3;
 const SOLO_PASS: Record<SoloMode, number> = { tutorial: 2, test: SOLO_ITEMS };

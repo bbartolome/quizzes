@@ -48,7 +48,7 @@ export class GameTheoryHomePage {
   private readonly clock = inject(APP_CLOCK);
 
   readonly modes = GAME_THEORY_MODES;
-  readonly back: PageBack = { label: 'All collections', link: '/' };
+  readonly back: PageBack = { label: '← Back to library', link: '/' };
 
   protected readonly status = signal<LoadStatus>('loading');
   protected readonly tiers = signal<ConceptMapTier[]>([]);

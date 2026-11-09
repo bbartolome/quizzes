@@ -1,4 +1,4 @@
-<ui-page-shell [title]="title()" width="narrow">
+<ui-page-shell [title]="title()" width="narrow" [back]="back()">
   @if (loadError()) {
     <app-bank-unavailable (retry)="load()" />
   } @else if (view(); as v) {
@@ -47,9 +47,6 @@
       <div class="flex flex-wrap items-center gap-3">
         <a uiButton variant="primary" [routerLink]="['/calibration', ctx()!.quizId, 'round']">
           Next round
-        </a>
-        <a uiButton variant="secondary" [routerLink]="['/calibration', ctx()!.quizId]">
-          Back to quiz
         </a>
       </div>
     </div>

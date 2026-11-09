@@ -12,7 +12,7 @@ import { ConfidenceCard } from './confidence-card';
 import { ReviewList } from './review-list';
 import { BankUnavailable } from './bank-unavailable';
 import { BadgeLine } from '../badges/badge-line';
-import { PageShell } from '../../shared/ui/page-shell';
+import { PageBack, PageShell } from '../../shared/ui/page-shell';
 import { Button } from '../../shared/ui/button.directive';
 
 @Component({
@@ -42,6 +42,11 @@ export class CalibrationResultsPage {
   readonly view = signal<ResultsView | null>(null);
   readonly loadError = signal(false);
   readonly title = computed(() => (this.ctx() ? `Results for ${this.ctx()!.entry.title}` : ''));
+  /** The back link at the top: the Confidence home for this quiz. */
+  readonly back = computed<PageBack | undefined>(() => {
+    const c = this.ctx();
+    return c ? { label: `← Back to ${c.entry.title}`, link: `/calibration/${c.quizId}` } : undefined;
+  });
 
   constructor() {
     this.load();

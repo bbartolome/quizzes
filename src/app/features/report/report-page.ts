@@ -16,7 +16,7 @@ import { Callout } from '../../shared/ui/callout';
 import { Card } from '../../shared/ui/card.directive';
 import { EmptyState } from '../../shared/ui/empty-state';
 import { OUTCOME_LOOK } from '../../shared/ui/outcome-look';
-import { PageShell } from '../../shared/ui/page-shell';
+import { PageBack, PageShell } from '../../shared/ui/page-shell';
 import { StatusBadge } from '../../shared/ui/status-badge';
 
 /** Shape of the data passed to the report page through history.state. */
@@ -52,6 +52,12 @@ export class ReportPage implements OnInit {
 
   /** The scored results for this round, taken from history.state. */
   readonly results = signal<ScoredQuestionResult[]>([]);
+
+  /** The back link at the top, named for the quiz the way the stats and glossary pages name theirs. */
+  readonly back = computed<PageBack>(() => ({
+    label: `← Back to ${this.quizTitle() || 'quiz'}`,
+    link: `/quiz/${this.id()}`,
+  }));
 
   /** The h1: "Results for <quiz>", or plain "Results" when a visit has no round in history. */
   readonly reportTitle = computed(() =>

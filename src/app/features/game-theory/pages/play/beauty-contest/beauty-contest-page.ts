@@ -1,3 +1,4 @@
+import { GAME_THEORY_BACK } from '../../../back-link';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { APP_CLOCK } from '../../../../../core/app-clock';
@@ -11,7 +12,7 @@ import type { ReasonCheck } from '../../../lib/puzzle.types';
 import { GtEvidenceService } from '../../../state/gt-evidence.service';
 import { GtGamesService } from '../../../state/gt-games.service';
 
-const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
+const BACK: PageBack = GAME_THEORY_BACK;
 const LEVELS: readonly LevelLabel[] = ['L0', 'L1', 'L2', 'L3', 'L4+'];
 
 /** The reveal, already formatted for the template. */

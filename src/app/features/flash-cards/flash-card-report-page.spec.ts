@@ -213,11 +213,9 @@ describe('FlashCardReportPage', () => {
     });
 
     it('with no results, the back link goes to the home page', () => {
-      const { fixture, route, navigate } = setup('fallacy', []);
+      const { fixture } = setup('fallacy', []);
 
-      button(fixture, 'back').click();
-
-      expect(navigate).toHaveBeenCalledWith(['..'], { relativeTo: route });
+      expect(button(fixture, 'back').getAttribute('href')).toMatch(/\/fallacies\/[^/]+$/);
     });
   });
 
@@ -230,12 +228,10 @@ describe('FlashCardReportPage', () => {
       expect(navigate).toHaveBeenCalledWith(['../round'], { relativeTo: route });
     });
 
-    it('the back action navigates to the home page relative to the route', () => {
-      const { fixture, route, navigate } = setup('bias', mixed);
+    it('the back link at the top goes to the home page, not the report', () => {
+      const { fixture } = setup('bias', mixed);
 
-      button(fixture, 'back').click();
-
-      expect(navigate).toHaveBeenCalledWith(['..'], { relativeTo: route });
+      expect(button(fixture, 'back').getAttribute('href')).toMatch(/\/biases\/[^/]+$/);
     });
 
     it('labels the back action "Back to Biases" for the bias route', () => {

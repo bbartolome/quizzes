@@ -1,19 +1,10 @@
-<ui-page-shell width="narrow" [title]="reportTitle()">
+<ui-page-shell width="narrow" [title]="reportTitle()" [back]="backLink()" backTestId="back">
   <div class="mt-6 space-y-8">
     @if (empty()) {
       <ui-empty-state
         message="No cards were checked this round, so there is no report yet."
         messageTestId="empty"
       >
-        <button
-          uiButton
-          variant="secondary"
-          type="button"
-          data-testid="back"
-          (click)="back()"
-        >
-          {{ backLabel() }}
-        </button>
       </ui-empty-state>
     } @else {
       <p data-testid="summary" class="type-section">
@@ -40,15 +31,6 @@
       <div class="flex flex-wrap gap-3">
         <button uiButton type="button" data-testid="next-round" (click)="nextRound()">
           Next round
-        </button>
-        <button
-          uiButton
-          variant="secondary"
-          type="button"
-          data-testid="back"
-          (click)="back()"
-        >
-          {{ backLabel() }}
         </button>
       </div>
     }

@@ -1,4 +1,4 @@
-<ui-page-shell width="narrow" [title]="reportTitle()">
+<ui-page-shell width="narrow" [title]="reportTitle()" [back]="back()">
   <div class="mt-6 space-y-8">
     @if (hasResults()) {
       <div data-testid="summary" uiCard>
@@ -36,10 +36,7 @@
         }
       </div>
 
-      <div class="flex flex-wrap items-center justify-between gap-4 border-t border-default pt-6">
-        <a uiButton variant="secondary" data-testid="back-home" [routerLink]="['/quiz', id()]">
-          Back to quiz
-        </a>
+      <div class="flex flex-wrap items-center justify-end gap-4 border-t border-default pt-6">
         <a uiButton data-testid="next-round" [routerLink]="['/quiz', id(), 'round']">
           Next round
         </a>

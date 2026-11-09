@@ -1,3 +1,4 @@
+import { GAME_THEORY_BACK } from '../../back-link';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -36,7 +37,7 @@ interface CardRound {
   feedback: Feedback | null;
 }
 
-const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
+const BACK: PageBack = GAME_THEORY_BACK;
 const NO_MARKS = (game: MatrixGame): BestResponseMarks => {
   const grid = () =>
     Array.from({ length: game.payoffs.rows }, () =>

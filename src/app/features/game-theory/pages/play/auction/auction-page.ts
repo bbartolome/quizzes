@@ -1,3 +1,4 @@
+import { GAME_THEORY_BACK } from '../../../back-link';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -73,7 +74,7 @@ const OTHER_BIDDER_LABEL: Record<BidPolicyId, string> = {
   'naive-signal': 'at their own signal',
 };
 const SIMULATIONS = 1000;
-const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
+const BACK: PageBack = GAME_THEORY_BACK;
 
 function policiesFor(setup: AuctionSetup): BidPolicyId[] {
   if (setup.model === 'common') return ['naive-signal', 'curse-aware'];

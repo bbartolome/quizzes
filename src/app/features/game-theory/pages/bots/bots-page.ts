@@ -1,3 +1,4 @@
+import { GAME_THEORY_BACK } from '../../back-link';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -34,7 +35,7 @@ import { GAME_THEORY_RNG } from '../../state/gt-tokens';
 
 const MAX_NOISE = 0.1;
 const CONTINUE_PERCENT = PLAY_HORIZON.kind === 'continue' ? Math.round(PLAY_HORIZON.p * 100) : 0;
-const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
+const BACK: PageBack = GAME_THEORY_BACK;
 const MODES = ['play', 'name', 'tournament'] as const;
 type Mode = (typeof MODES)[number];
 

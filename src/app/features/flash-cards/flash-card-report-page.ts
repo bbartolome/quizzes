@@ -14,7 +14,10 @@ import { BACK_LABELS, ReportResult, buildReportSummary, isReportEmpty } from './
 import { Button } from '../../shared/ui/button.directive';
 import { Card } from '../../shared/ui/card.directive';
 import { EmptyState } from '../../shared/ui/empty-state';
-import { PageShell } from '../../shared/ui/page-shell';
+import { PageBack, PageShell } from '../../shared/ui/page-shell';
+
+/** The home route of each flash-card quiz kind, from app.routes. */
+const HOME_PATH: Record<'bias' | 'fallacy', string> = { bias: 'biases', fallacy: 'fallacies' };
 
 @Component({
   selector: 'app-flash-card-report-page',
@@ -36,12 +39,19 @@ export class FlashCardReportPage implements OnInit {
   readonly summary = computed(() => buildReportSummary(this.results(), this.names()));
   readonly empty = computed(() => isReportEmpty(this.results()));
   readonly backLabel = computed(() => BACK_LABELS[this.conceptType()]);
+  readonly quizId = signal('');
+  /** The back link at the top: the quiz's home. Written out, since '..' from the report route goes to the root. */
+  readonly backLink = computed<PageBack>(() => ({
+    label: this.backLabel(),
+    link: `/${HOME_PATH[this.conceptType()]}/${this.quizId()}`,
+  }));
   readonly reportTitle = computed(() =>
     this.quizTitle() ? `Results for ${this.quizTitle()}` : 'Results',
   );
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.quizId.set(id);
     this.conceptType.set(this.route.snapshot.data['conceptType'] as Concept['type']);
     // Results are passed by the round page's End quiz in history.state; a reload loses them.
     const results: ReportResult[] =
@@ -59,7 +69,4 @@ export class FlashCardReportPage implements OnInit {
     this.router.navigate(['../round'], { relativeTo: this.route });
   }
 
-  back(): void {
-    this.router.navigate(['..'], { relativeTo: this.route });
-  }
 }

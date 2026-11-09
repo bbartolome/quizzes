@@ -1,3 +1,4 @@
+import { GAME_THEORY_BACK } from '../../back-link';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -164,7 +165,7 @@ const DOMINANT_PRACTISED: Gate = {
   need: 'practised',
   name: 'Dominant strategy',
 };
-const BACK: PageBack = { label: 'Game Theory', link: '/game-theory' };
+const BACK: PageBack = GAME_THEORY_BACK;
 /** The test-out for the first concept: a solo equilibrium set that needs all three to pass. */
 const START_LINK = '/game-theory/puzzles/equilibrium';
 const START_QUERY = { solo: 'best-response', level: 1, mode: 'test' } as const;

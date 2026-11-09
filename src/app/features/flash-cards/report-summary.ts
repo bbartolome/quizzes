@@ -18,8 +18,8 @@ export interface ReportSummary {
 }
 
 export const BACK_LABELS: Record<'bias' | 'fallacy', string> = {
-  bias: 'Back to Biases',
-  fallacy: 'Back to Fallacies',
+  bias: '← Back to Biases',
+  fallacy: '← Back to Fallacies',
 };
 
 /**
