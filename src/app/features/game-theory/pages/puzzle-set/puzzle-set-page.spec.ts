@@ -108,6 +108,8 @@ interface OpenOptions {
 let evidence: FakeGtEvidenceService;
 let learn: FakeGtLearnService;
 let data: { load: ReturnType<typeof vi.fn> };
+/** The route's query, so a test can change it on an open page, as the Test out link does. */
+let queryParams: BehaviorSubject<ReturnType<typeof convertToParamMap>>;
 
 function quizStats(quizId: string, counts: Record<string, Counts>): QuizStats {
   const perTrait: Record<string, PerTraitStats> = Object.fromEntries(
@@ -132,6 +134,7 @@ function open(options: OpenOptions = {}): ComponentFixture<PuzzleSetPage> {
   }
   const challenges = options.challenges ?? {};
   const days = options.days ?? {};
+  queryParams = new BehaviorSubject(convertToParamMap(options.query ?? {}));
   data = {
     load: vi.fn((): Observable<GameTheoryData> => {
       if (options.checksFail) {
@@ -150,7 +153,7 @@ function open(options: OpenOptions = {}): ComponentFixture<PuzzleSetPage> {
           paramMap: new BehaviorSubject(
             convertToParamMap({ kind: options.kind ?? 'equilibrium' }),
           ).asObservable(),
-          queryParamMap: new BehaviorSubject(convertToParamMap(options.query ?? {})).asObservable(),
+          queryParamMap: queryParams.asObservable(),
           data: of(options.daily ? { daily: true } : {}),
         },
       },
@@ -319,6 +322,18 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(root.textContent).toContain('Start with Best response');
       expect(root.querySelector('[data-testid="puzzles-test-out-link"]')).not.toBeNull();
       expect(root.querySelector('[data-testid="payoff-matrix"]')).toBeNull();
+    });
+
+    it('starts the test-out set when Test out changes only the query on the open hub', () => {
+      const fixture = open({ introduced: [] });
+      const root: HTMLElement = fixture.nativeElement;
+      expect(root.querySelector('[data-testid="puzzles-test-out-link"]')).not.toBeNull();
+
+      queryParams.next(convertToParamMap({ solo: 'best-response', level: '1', mode: 'test' }));
+      fixture.detectChanges();
+
+      expect(root.textContent).not.toContain('Not yet');
+      expect(text(fixture, '[data-testid="puzzle-progress"]')).toBe('Item 1 of 3');
     });
 
     it('shows an unsupported state with a link to the hub for an unknown kind', () => {
