@@ -336,6 +336,14 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(text(fixture, '[data-testid="puzzle-progress"]')).toBe('Item 1 of 3');
     });
 
+    for (const kind of ['classify', 'eliminate', 'mixed']) {
+      it(`offers no Test out on the ${kind} hub, since its link opens the equilibrium set`, () => {
+        const fixture = open({ kind, introduced: [] });
+
+        expect(fixture.nativeElement.querySelector('[data-testid="puzzles-test-out-link"]')).toBeNull();
+      });
+    }
+
     it('shows an unsupported state with a link to the hub for an unknown kind', () => {
       const fixture = open({ kind: 'nonsense', introduced: EQUILIBRIUM_IDS });
       const root: HTMLElement = fixture.nativeElement;
