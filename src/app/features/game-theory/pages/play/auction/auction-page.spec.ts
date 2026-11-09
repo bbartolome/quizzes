@@ -169,6 +169,14 @@ describe('AuctionPage (play/:game, §8.3)', () => {
     expect(result).not.toContain(' times.');
   });
 
+  it('lets both sliders fill the column width instead of the native 129px track', () => {
+    const fixture = open('first-price');
+
+    for (const id of ['auction-bidders', 'auction-bid']) {
+      expect(el(fixture, id)?.classList).toContain('w-full');
+    }
+  });
+
   it('styles both sliders in the app accent, and sets each label on its own line so the gap shows', () => {
     const fixture = open('first-price');
 
