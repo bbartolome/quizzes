@@ -5,9 +5,9 @@
   @let p = pending();
   @if (e !== null && p !== null && bank() !== null) {
     <ui-page-shell [title]="e.title" [eyebrow]="eyebrowFor(e.format)" width="narrow">
-      <div class="flex items-center justify-center">
+      <div class="flex items-center">
         <ui-progress-dots
-          class="flex flex-wrap items-center justify-center gap-1"
+          class="flex flex-wrap items-center gap-1"
           [count]="p.items.length"
           [current]="index()"
           [answered]="answeredFlags()"
