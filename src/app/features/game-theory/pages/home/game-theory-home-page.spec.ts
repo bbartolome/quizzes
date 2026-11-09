@@ -237,9 +237,32 @@ describe('GameTheoryHomePage', () => {
 
       expect(headings).toEqual(['Tier 1', 'Tier 2']);
       const bestResponse = root.querySelector('[data-testid="map-node-best-response"]');
-      expect(bestResponse?.textContent).toContain('●');
       expect(bestResponse?.textContent).toContain('Mastered');
       expect(nodes(root)).toHaveLength(3);
+    });
+
+    it('shows each node status as an icon, not a text glyph that reads as a bullet', () => {
+      const fixture = create({ mastery: { 'best-response': 'mastered' } });
+      const root = fixture.nativeElement as HTMLElement;
+      const bestResponse = root.querySelector('[data-testid="map-node-best-response"]');
+
+      expect(bestResponse?.textContent).not.toContain('●');
+      expect(bestResponse?.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
+    });
+
+    it('draws each node as a library Card, so the hub matches the library cards', () => {
+      const fixture = create();
+
+      for (const card of nodes(fixture.nativeElement as HTMLElement)) {
+        expect(card.hasAttribute('uiCard')).toBe(true);
+      }
+    });
+
+    it('starts the concept map 24px below the title, as the other homes do', () => {
+      const fixture = create();
+      const map = (fixture.nativeElement as HTMLElement).querySelector('[data-slot="map"]');
+
+      expect(map?.classList).toContain('mt-6');
     });
 
     it('links each node to its tutorial', () => {
