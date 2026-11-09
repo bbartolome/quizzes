@@ -36,7 +36,9 @@ export class FlashCardReportPage implements OnInit {
   readonly summary = computed(() => buildReportSummary(this.results(), this.names()));
   readonly empty = computed(() => isReportEmpty(this.results()));
   readonly backLabel = computed(() => BACK_LABELS[this.conceptType()]);
-  readonly reportTitle = computed(() => (this.quizTitle() ? `${this.quizTitle()}: report` : ''));
+  readonly reportTitle = computed(() =>
+    this.quizTitle() ? `Results for ${this.quizTitle()}` : 'Results',
+  );
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? '';

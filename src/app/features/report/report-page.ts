@@ -53,6 +53,11 @@ export class ReportPage implements OnInit {
   /** The scored results for this round, taken from history.state. */
   readonly results = signal<ScoredQuestionResult[]>([]);
 
+  /** The h1: "Results for <quiz>", or plain "Results" when a visit has no round in history. */
+  readonly reportTitle = computed(() =>
+    this.quizTitle() ? `Results for ${this.quizTitle()}` : 'Results',
+  );
+
   /** Loaded knowledge base entries (empty until the page pattern resolves). */
   readonly kb = signal<KnowledgeBase>({ concepts: [], pairs: [] });
 
