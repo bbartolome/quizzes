@@ -13,7 +13,7 @@ const CLASSES: Record<ButtonVariant, string> = {
   primary: `${SIZE} bg-accent text-on-accent hover:bg-accent-hover aria-pressed:bg-accent-subtle aria-pressed:text-accent ${FOCUS} ${DISABLED}`,
   secondary: `${SIZE} border border-strong bg-raised text-text hover:bg-sunken aria-pressed:border-accent aria-pressed:bg-accent-subtle ${FOCUS} ${DISABLED}`,
   danger: `${SIZE} bg-danger text-on-accent hover:opacity-90 aria-pressed:bg-danger-subtle aria-pressed:text-danger ${FOCUS} ${DISABLED}`,
-  link: `text-sm font-semibold text-accent hover:underline aria-pressed:underline ${FOCUS} ${DISABLED}`,
+  link: `inline-flex min-h-11 min-w-11 items-center justify-center text-sm font-semibold text-accent hover:underline aria-pressed:underline ${FOCUS} ${DISABLED}`,
 };
 
 @Directive({

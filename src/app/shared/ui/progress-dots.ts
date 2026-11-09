@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
     @for (i of indices(); track i) {
       <button
         type="button"
-        class="flex h-6 w-6 items-center justify-center rounded-full focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
+        class="flex h-11 w-11 items-center justify-center rounded-full focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
         [attr.aria-label]="'Item ' + (i + 1)"
         [attr.aria-current]="i === current() ? 'true' : null"
         (click)="select.emit(i)"
