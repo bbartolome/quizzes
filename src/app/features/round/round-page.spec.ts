@@ -406,6 +406,15 @@ describe('RoundPage', () => {
       ) as HTMLButtonElement[];
     }
 
+    it('gives each info button a 44px touch target, not 24px', async () => {
+      const fixture = await load();
+
+      for (const button of infoButtons(fixture)) {
+        expect(button.classList).toContain('min-h-11');
+        expect(button.classList).toContain('min-w-11');
+      }
+    });
+
     it('renders an info button only for the option that matches a knowledge-base entry', async () => {
       const fixture = await load();
 

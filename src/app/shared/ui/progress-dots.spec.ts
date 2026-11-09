@@ -50,11 +50,11 @@ describe('ProgressDots (S3, §7.2, §7.3, §9)', () => {
     expect(labels).toEqual(['Item 1', 'Item 2', 'Item 3']);
   });
 
-  it('gives each button a 24px hit area (h-6 w-6)', () => {
+  it('gives each button a 44px touch target (h-11 w-11), the recommended size', () => {
     const { root } = render();
     for (const button of dots(root)) {
-      expect(button.classList).toContain('h-6');
-      expect(button.classList).toContain('w-6');
+      expect(button.classList).toContain('h-11');
+      expect(button.classList).toContain('w-11');
     }
   });
 

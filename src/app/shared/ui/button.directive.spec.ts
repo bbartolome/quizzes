@@ -55,6 +55,12 @@ describe('Button (S2, §7.1)', () => {
     expect(classes.some((name) => name === 'px-5' || name === 'py-2.5' || name.startsWith('bg-'))).toBe(false);
   });
 
+  it('gives link a 44px minimum touch target, so a standalone link is not 16 or 20px tall', () => {
+    const classes = classesOf(render(), 'Stats');
+    expect(classes).toContain('min-h-11');
+    expect(classes).toContain('min-w-11');
+  });
+
   it('gives every variant the §9 focus ring', () => {
     const root = render();
     for (const text of ['Start', 'Back', 'Reset', 'Stats']) {
