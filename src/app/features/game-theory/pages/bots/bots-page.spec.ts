@@ -115,6 +115,12 @@ describe('BotsPage (play mode)', () => {
     expect(headings[0].textContent).toContain('Bots');
   });
 
+  it('names the page type in the kicker, so the Game Theory link is not repeated above it', () => {
+    const fixture = open();
+
+    expect(fixture.nativeElement.querySelector('p.type-eyebrow')?.textContent?.trim()).toBe('Bots');
+  });
+
   it('offers every bot of the roster to play against', () => {
     const fixture = open();
 

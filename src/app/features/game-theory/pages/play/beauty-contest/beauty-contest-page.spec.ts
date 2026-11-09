@@ -114,6 +114,12 @@ describe('BeautyContestPage', () => {
     expect(headings[0].textContent).toContain('Beauty contest');
   });
 
+  it('names the page type in the kicker, so the Game Theory link is not repeated above it', () => {
+    const fixture = open();
+
+    expect(fixture.nativeElement.querySelector('p.type-eyebrow')?.textContent?.trim()).toBe('Play');
+  });
+
   it('labels the simulated players as a model, not real people', () => {
     const fixture = open();
 

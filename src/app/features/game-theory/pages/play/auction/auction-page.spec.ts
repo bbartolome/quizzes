@@ -177,6 +177,12 @@ describe('AuctionPage (play/:game, §8.3)', () => {
     }
   });
 
+  it('names the page type in the kicker, so the Game Theory link is not repeated above it', () => {
+    const fixture = open('first-price');
+
+    expect(fixture.nativeElement.querySelector('p.type-eyebrow')?.textContent?.trim()).toBe('Play');
+  });
+
   it('styles both sliders in the app accent, and sets each label on its own line so the gap shows', () => {
     const fixture = open('first-price');
 
