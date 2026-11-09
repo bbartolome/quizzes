@@ -241,13 +241,13 @@ describe('FlashCardReportPage', () => {
     it('labels the back action "Back to Biases" for the bias route', () => {
       const { fixture } = setup('bias', mixed);
 
-      expect(button(fixture, 'back').textContent?.trim()).toBe('Back to Biases');
+      expect(button(fixture, 'back').textContent?.trim()).toBe('← Back to Biases');
     });
 
     it('labels the back action "Back to Fallacies" for the fallacy route', () => {
       const { fixture } = setup('fallacy', mixed);
 
-      expect(button(fixture, 'back').textContent?.trim()).toBe('Back to Fallacies');
+      expect(button(fixture, 'back').textContent?.trim()).toBe('← Back to Fallacies');
     });
   });
 

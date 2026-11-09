@@ -111,10 +111,10 @@ describe('isReportEmpty', () => {
 
 describe('BACK_LABELS', () => {
   it('labels the bias back action', () => {
-    expect(BACK_LABELS.bias).toBe('Back to Biases');
+    expect(BACK_LABELS.bias).toBe('← Back to Biases');
   });
 
   it('labels the fallacy back action', () => {
-    expect(BACK_LABELS.fallacy).toBe('Back to Fallacies');
+    expect(BACK_LABELS.fallacy).toBe('← Back to Fallacies');
   });
 });

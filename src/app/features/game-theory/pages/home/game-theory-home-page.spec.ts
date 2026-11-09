@@ -153,7 +153,7 @@ describe('GameTheoryHomePage', () => {
     expect(headings).toHaveLength(1);
     expect(headings[0].textContent?.trim()).toBe('Game Theory');
     expect(root.querySelector('[data-testid="back-home"]')?.textContent?.trim()).toBe(
-      'All collections',
+      '← Back to library',
     );
   });
 

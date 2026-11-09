@@ -132,21 +132,21 @@ describe('CalibrationResultsPage', () => {
     vi.unstubAllGlobals();
   });
 
-  it('ends with a primary Next round and a secondary Back to quiz', async () => {
+  it('puts the back link above the title, and ends with a primary Next round', async () => {
     configure();
     submitRound(twoWayPick);
 
     const fixture = await render();
-    const actions = Array.from(
-      (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('a, button'),
-    );
+    const root = fixture.nativeElement as HTMLElement;
+    const actions = Array.from(root.querySelectorAll<HTMLElement>('a, button'));
     const next = actions.find((e) => /next round/i.test(e.textContent ?? ''));
-    const back = actions.find((e) => /back to quiz/i.test(e.textContent ?? ''));
+    const back = root.querySelector<HTMLElement>('[data-testid="back-home"]');
+    const title = root.querySelector('h1') as HTMLElement;
 
+    expect(back?.textContent?.trim()).toMatch(/^← Back to /);
+    expect(back!.compareDocumentPosition(title) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(next?.hasAttribute('uiButton')).toBe(true);
     expect(next?.className).toContain('bg-accent');
-    expect(back?.hasAttribute('uiButton')).toBe(true);
-    expect(back?.className).toContain('border-strong');
   });
 
   it('titles the page "Results for" the quiz, with a single colon', async () => {

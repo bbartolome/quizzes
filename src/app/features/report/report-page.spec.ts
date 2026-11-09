@@ -327,12 +327,15 @@ describe('ReportPage', () => {
       expect(empty.querySelector('a').classList).toContain('bg-accent');
     });
 
-    it('makes Back to quiz a secondary button and Next round the primary one', async () => {
+    it('puts the back link above the title, and keeps Next round as the primary action', async () => {
       const fixture = await load([makeResult()]);
+      const root = fixture.nativeElement as HTMLElement;
+      const backHome = root.querySelector('[data-testid="back-home"]') as HTMLElement;
+      const title = root.querySelector('h1') as HTMLElement;
+      const nextRound = root.querySelector('[data-testid="next-round"]') as HTMLElement;
 
-      const backHome = fixture.nativeElement.querySelector('[data-testid="back-home"]');
-      const nextRound = fixture.nativeElement.querySelector('[data-testid="next-round"]');
-      expect(backHome.classList).toContain('border-strong');
+      expect(backHome.textContent?.trim()).toBe('← Back to Logic Quiz');
+      expect(backHome.compareDocumentPosition(title) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       expect(nextRound.classList).toContain('bg-accent');
     });
   });
