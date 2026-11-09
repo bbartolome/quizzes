@@ -316,11 +316,11 @@ describe('PuzzleSetPage (puzzles/:kind, §5.2, §5.3, §7.2, §9.1)', () => {
       expect(evidence.records).toHaveLength(0);
     });
 
-    it('shows the same empty state for an unknown kind when nothing is introduced', () => {
+    it('shows the empty state without Test out for an unknown kind when nothing is introduced', () => {
       const fixture = open({ kind: 'nonsense', introduced: [] });
       const root: HTMLElement = fixture.nativeElement;
       expect(root.textContent).toContain('Start with Best response');
-      expect(root.querySelector('[data-testid="puzzles-test-out-link"]')).not.toBeNull();
+      expect(root.querySelector('[data-testid="puzzles-test-out-link"]')).toBeNull();
       expect(root.querySelector('[data-testid="payoff-matrix"]')).toBeNull();
     });
 

@@ -5,9 +5,11 @@
         heading="No puzzles yet"
         message="Start with Best response. Puzzles are drawn from the ideas you have introduced."
       >
-        <a uiButton variant="link" [routerLink]="startLink" [queryParams]="startQuery" data-testid="puzzles-test-out-link">
-          Test out
-        </a>
+        @if (setKind() === 'equilibrium') {
+          <a uiButton variant="link" [routerLink]="startLink" [queryParams]="startQuery" data-testid="puzzles-test-out-link">
+            Test out
+          </a>
+        }
       </ui-empty-state>
     }
     @case ('unsupported') {
