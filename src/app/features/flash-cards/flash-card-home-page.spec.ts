@@ -158,4 +158,11 @@ describe('FlashCardHomePage', () => {
     expect(byTestId(el, 'start-round')).toBeNull();
     expect(byTestId(el, 'deck-item')).toBeNull();
   });
+
+  it('C9 uses the same wide column as the other game home pages, not the narrow reading column', async () => {
+    const { el } = await setup();
+
+    expect(el.querySelector('ui-page-shell .max-w-5xl')).not.toBeNull();
+    expect(el.querySelector('ui-page-shell .max-w-2xl')).toBeNull();
+  });
 });
