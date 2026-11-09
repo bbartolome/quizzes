@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
-import { map } from 'rxjs';
+import { combineLatest, map } from 'rxjs';
 import { APP_CLOCK } from '../../../../core/app-clock';
 import type { MasteryState } from '../../../../core/models/practice.models';
 import { PracticeService } from '../../../../core/services/practice.service';
@@ -429,13 +429,15 @@ export class PuzzleSetPage {
   });
 
   constructor() {
-    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((query) => {
-      this.soloParams.set(soloFrom(query));
-    });
-    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
-      this.kindParam.set(params.get('kind') ?? '');
-      this.startSet();
-    });
+    // One subscription for the kind and the query: a Test out link that changes only the query on the
+    // open page must start its set too, or the page keeps the set it drew before (a dead end).
+    combineLatest([this.route.paramMap, this.route.queryParamMap])
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(([params, query]) => {
+        this.kindParam.set(params.get('kind') ?? '');
+        this.soloParams.set(soloFrom(query));
+        this.startSet();
+      });
     this.data
       .load()
       .pipe(takeUntilDestroyed(this.destroyRef))
