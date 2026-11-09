@@ -296,6 +296,15 @@ describe('CalibrationRoundPage (two-way)', () => {
       expect(submit?.className).toContain('bg-accent');
     });
 
+    it('left-aligns the progress dots under the heading, so they wrap from the left edge on a phone', async () => {
+      const fixture = await render();
+      const dots = root(fixture).querySelector('ui-progress-dots') as HTMLElement;
+      const row = dots.parentElement as HTMLElement;
+
+      expect(row.className).not.toContain('justify-center');
+      expect(dots.className).not.toContain('justify-center');
+    });
+
     it('keeps Submit round disabled until every item is answered, then enables it', async () => {
       const fixture = await render();
       expect(buttonByText(fixture, /submit round/i).disabled).toBe(true);
