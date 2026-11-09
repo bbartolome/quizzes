@@ -169,6 +169,14 @@ describe('AuctionPage (play/:game, §8.3)', () => {
     expect(result).not.toContain(' times.');
   });
 
+  it('draws both sliders with the app range control, not the browser default', () => {
+    const fixture = open('first-price');
+
+    for (const id of ['auction-bidders', 'auction-bid']) {
+      expect(el(fixture, id)?.classList).toContain('range-control');
+    }
+  });
+
   it('lets both sliders fill the column width instead of the native 129px track', () => {
     const fixture = open('first-price');
 
