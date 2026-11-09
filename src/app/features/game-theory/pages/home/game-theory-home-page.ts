@@ -12,6 +12,7 @@ import type { GameTheoryContent } from '../../../../core/models/quiz.models';
 import { APP_CLOCK } from '../../../../core/app-clock';
 import { addDays, dateKeyOf } from '../../../../core/utils/dates';
 import { Button } from '../../../../shared/ui/button.directive';
+import { Card } from '../../../../shared/ui/card.directive';
 import { PageBack, PageShell } from '../../../../shared/ui/page-shell';
 import { GameTheoryDataService } from '../../data/game-theory-data.service';
 import { buildConceptMap, type ConceptMapTier } from '../../lib/concept-map';
@@ -37,7 +38,7 @@ type LoadStatus = 'loading' | 'failed' | 'ready';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './game-theory-home-page.html',
-  imports: [Button, PageShell, RouterLink],
+  imports: [Button, Card, PageShell, RouterLink],
 })
 export class GameTheoryHomePage {
   private readonly data = inject(GameTheoryDataService);

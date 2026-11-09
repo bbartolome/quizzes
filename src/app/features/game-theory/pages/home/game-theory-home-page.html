@@ -1,5 +1,5 @@
 <ui-page-shell title="Game Theory" width="wide" [back]="back">
-  <section data-slot="map" class="space-y-4">
+  <section data-slot="map" class="mt-6 space-y-4">
     @if (status() === 'loading') {
       <p class="type-detail" data-testid="map-loading">Loading the concept map…</p>
     } @else if (status() === 'failed') {
@@ -14,12 +14,33 @@
           @for (node of tier.nodes; track node.id) {
             <li>
               <a
-                class="flex h-full min-h-12 flex-col rounded-lg border border-default p-3 focus-visible:ring-2 ring-focus ring-offset-2 ring-offset-surface"
+                uiCard
+                interactive
+                class="flex h-full min-h-12 flex-col gap-1"
                 [routerLink]="['/game-theory/learn', node.id]"
                 [attr.data-testid]="'map-node-' + node.id"
               >
-                <span class="type-body">
-                  <span aria-hidden="true">{{ node.glyph }}</span>
+                <span class="flex items-center gap-2 type-body">
+                  <!-- Mastery icon: empty ring for New, a quarter for Learning, half for Practised, full for Mastered. -->
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 16 16"
+                    class="h-4 w-4 shrink-0 text-accent"
+                    fill="currentColor"
+                  >
+                    <circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+                    @switch (node.state) {
+                      @case ('learning') {
+                        <path d="M8 8V1.5A6.5 6.5 0 0 1 14.5 8Z" />
+                      }
+                      @case ('practised') {
+                        <path d="M8 1.5a6.5 6.5 0 0 1 0 13Z" />
+                      }
+                      @case ('mastered') {
+                        <circle cx="8" cy="8" r="6.5" />
+                      }
+                    }
+                  </svg>
                   {{ node.name }}
                 </span>
                 <span class="type-detail">{{ node.word }}</span>
